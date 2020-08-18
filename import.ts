@@ -1,24 +1,29 @@
 import * as cheerio from "cheerio";
 import download from "download";
-import * as data from "./src/data";
+import * as imdb from "./src/data-imdb";
+import * as data from "./src/data-internal";
+
+(async () => {
+  //await parseSCBPages();
+  console.log(await imdb.searchIMDBTitle("The Terminator")); // TEST
+  console.log(await imdb.searchIMDBTitle("Matrix: Revolutions")); // TEST
+})();
 
 async function parseSCBPages() {
-
-  const scbPages = data.readSCBUrls();
-
+  const scbPages = await data.readSCBUrls();
   for (const decade of Object.keys(scbPages)) {
-    if (!data.readDecageRankings(decade)) {
+    if (!await data.readDecageRankings(decade)) {
       console.log(`Downloading rankings for decade ${decade}...`);
       const scbPage = await download(scbPages[decade]);
       const $ = cheerio.load(scbPage);
       const rankings = parseRanking($);
       console.log(`${rankings.length} movies found`);
-      data.writeDecageRankings(decade, rankings);
+      await data.writeDecageRankings(decade, rankings);
     } else {
       console.log(`Rankings already downloaded for decade ${decade}...`);
     }
   }
-  
+
 }
 
 function parseRanking($: CheerioStatic) {
@@ -44,5 +49,3 @@ function parseRanking($: CheerioStatic) {
 
   return rankings;
 }
-
-parseSCBPages();
