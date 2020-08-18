@@ -1,0 +1,20 @@
+{
+  "name": "supercinemarble",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node import.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cheerio": "^0.22.21",
+    "@types/download": "^6.2.4",
+    "@types/node": "^14.6.0",
+    "cheerio": "^1.0.0-rc.3",
+    "download": "^8.0.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
+}

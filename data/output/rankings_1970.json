@@ -1,0 +1,857 @@
+[
+  {
+    "ranking": 1,
+    "title": "Apocalypse Now",
+    "episode": 71
+  },
+  {
+    "ranking": 2,
+    "title": "Le Parrain 2",
+    "episode": 74
+  },
+  {
+    "ranking": 3,
+    "title": "Monty Python: Sacré Graal",
+    "episode": 16
+  },
+  {
+    "ranking": 4,
+    "title": "Taxi Driver",
+    "episode": 21
+  },
+  {
+    "ranking": 5,
+    "title": "Un après-midi de chien",
+    "episode": 74
+  },
+  {
+    "ranking": 6,
+    "title": "Le Parrain",
+    "episode": 74
+  },
+  {
+    "ranking": 7,
+    "title": "Network",
+    "episode": 119
+  },
+  {
+    "ranking": 8,
+    "title": "Croix de fer",
+    "episode": 71
+  },
+  {
+    "ranking": 9,
+    "title": "Stalker",
+    "episode": 74
+  },
+  {
+    "ranking": 10,
+    "title": "Dirty Harry",
+    "episode": 15
+  },
+  {
+    "ranking": 11,
+    "title": "Rollerball",
+    "episode": 21
+  },
+  {
+    "ranking": 12,
+    "title": "Baby Cart",
+    "episode": 17
+  },
+  {
+    "ranking": 13,
+    "title": "L’homme des Hautes Plaines",
+    "episode": 15
+  },
+  {
+    "ranking": 14,
+    "title": "Voyage au bout de l’enfer",
+    "episode": 21
+  },
+  {
+    "ranking": 15,
+    "title": "Les moissons du ciel",
+    "episode": 118
+  },
+  {
+    "ranking": 16,
+    "title": "Lady Snowblood",
+    "episode": 17
+  },
+  {
+    "ranking": 17,
+    "title": "La fureur de vaincre",
+    "episode": 117
+  },
+  {
+    "ranking": 18,
+    "title": "La fureur du dragon",
+    "episode": 17
+  },
+  {
+    "ranking": 19,
+    "title": "Le Cercle rouge",
+    "episode": 18
+  },
+  {
+    "ranking": 20,
+    "title": "Soleil Vert",
+    "episode": 22
+  },
+  {
+    "ranking": 21,
+    "title": "De l’or pour les braves",
+    "episode": 115
+  },
+  {
+    "ranking": 22,
+    "title": "Superman",
+    "episode": 20
+  },
+  {
+    "ranking": 23,
+    "title": "Les aventures de Rabbi Jacob",
+    "episode": 16
+  },
+  {
+    "ranking": 24,
+    "title": "La femme scorpion",
+    "episode": 17
+  },
+  {
+    "ranking": 25,
+    "title": "Drunken Master",
+    "episode": 15
+  },
+  {
+    "ranking": 26,
+    "title": "Barry Lindon",
+    "episode": 18
+  },
+  {
+    "ranking": 27,
+    "title": "I… comme Icare",
+    "episode": 22
+  },
+  {
+    "ranking": 28,
+    "title": "Papillon",
+    "episode": 73
+  },
+  {
+    "ranking": 29,
+    "title": "Frankenstein Junior",
+    "episode": 72
+  },
+  {
+    "ranking": 30,
+    "title": "Halloween",
+    "episode": 70
+  },
+  {
+    "ranking": 31,
+    "title": "Nous nous sommes tant aimés",
+    "episode": 22
+  },
+  {
+    "ranking": 32,
+    "title": "Les 3 jours du condor",
+    "episode": 16
+  },
+  {
+    "ranking": 33,
+    "title": "The Warriors",
+    "episode": 22
+  },
+  {
+    "ranking": 34,
+    "title": "L’épreuve de force",
+    "episode": 21
+  },
+  {
+    "ranking": 35,
+    "title": "The duellist",
+    "episode": 75
+  },
+  {
+    "ranking": 36,
+    "title": "The street fighter",
+    "episode": 22
+  },
+  {
+    "ranking": 37,
+    "title": "Annie Hall",
+    "episode": 20
+  },
+  {
+    "ranking": 38,
+    "title": "Dersou Ouzala",
+    "episode": 17
+  },
+  {
+    "ranking": 39,
+    "title": "Zombie",
+    "episode": 21
+  },
+  {
+    "ranking": 40,
+    "title": "Chinatown",
+    "episode": 73
+  },
+  {
+    "ranking": 41,
+    "title": "Le cimetierre de la morale",
+    "episode": 118
+  },
+  {
+    "ranking": 42,
+    "title": "Les proies",
+    "episode": 116
+  },
+  {
+    "ranking": 43,
+    "title": "Peur sur la ville",
+    "episode": 22
+  },
+  {
+    "ranking": 44,
+    "title": "Rocky Horror Picture Show",
+    "episode": 18
+  },
+  {
+    "ranking": 45,
+    "title": "Mon nom est Personne",
+    "episode": 15
+  },
+  {
+    "ranking": 46,
+    "title": "Le Locataire",
+    "episode": 22
+  },
+  {
+    "ranking": 47,
+    "title": "Le justicier de Shanghai",
+    "episode": 22
+  },
+  {
+    "ranking": 48,
+    "title": "Le convoi de la peur",
+    "episode": 15
+  },
+  {
+    "ranking": 49,
+    "title": "Mad Max",
+    "episode": 21
+  },
+  {
+    "ranking": 50,
+    "title": "La balade sauvage",
+    "episode": 22
+  },
+  {
+    "ranking": 51,
+    "title": "Duel",
+    "episode": 21
+  },
+  {
+    "ranking": 52,
+    "title": "Les frissons de l’angoisse",
+    "episode": 117
+  },
+  {
+    "ranking": 53,
+    "title": "Le chateau de Cagliostro",
+    "episode": 15
+  },
+  {
+    "ranking": 54,
+    "title": "Mes chers amis",
+    "episode": 75
+  },
+  {
+    "ranking": 55,
+    "title": "La rage du tigre",
+    "episode": 73
+  },
+  {
+    "ranking": 56,
+    "title": "Opération Dragon",
+    "episode": 72
+  },
+  {
+    "ranking": 57,
+    "title": "Sex and Fury",
+    "episode": 71
+  },
+  {
+    "ranking": 58,
+    "title": "Il était une fois la révolution",
+    "episode": 118
+  },
+  {
+    "ranking": 59,
+    "title": "L’espion qui m’aimait",
+    "episode": 18
+  },
+  {
+    "ranking": 60,
+    "title": "Baby Cart 2 : l’enfant massacre",
+    "episode": 70
+  },
+  {
+    "ranking": 61,
+    "title": "Combat sans code d’honneur",
+    "episode": 17
+  },
+  {
+    "ranking": 62,
+    "title": "Un éléphant ça trompe énormément",
+    "episode": 17
+  },
+  {
+    "ranking": 63,
+    "title": "Le corps de mon ennemi",
+    "episode": 22
+  },
+  {
+    "ranking": 64,
+    "title": "Les hommes du président",
+    "episode": 16
+  },
+  {
+    "ranking": 65,
+    "title": "L’Homme qui voulut être roi",
+    "episode": 16
+  },
+  {
+    "ranking": 66,
+    "title": "Dodes’kaden",
+    "episode": 118
+  },
+  {
+    "ranking": 67,
+    "title": "Phantasm",
+    "episode": 75
+  },
+  {
+    "ranking": 68,
+    "title": "Star Wars",
+    "episode": 117
+  },
+  {
+    "ranking": 69,
+    "title": "Pink Flamingos",
+    "episode": 18
+  },
+  {
+    "ranking": 70,
+    "title": "Le Magnifique",
+    "episode": 17
+  },
+  {
+    "ranking": 71,
+    "title": "Les bronzés font du ski",
+    "episode": 22
+  },
+  {
+    "ranking": 72,
+    "title": "Mais où est donc passé la 7e compagnie",
+    "episode": 116
+  },
+  {
+    "ranking": 73,
+    "title": "La folie des grandeurs",
+    "episode": 22
+  },
+  {
+    "ranking": 74,
+    "title": "L’empire des sens",
+    "episode": 18
+  },
+  {
+    "ranking": 75,
+    "title": "Les chinois à Paris",
+    "episode": 15
+  },
+  {
+    "ranking": 76,
+    "title": "Aguirre, la colère de Dieu",
+    "episode": 20
+  },
+  {
+    "ranking": 77,
+    "title": "Delivrance",
+    "episode": 17
+  },
+  {
+    "ranking": 78,
+    "title": "Solaris",
+    "episode": 15
+  },
+  {
+    "ranking": 79,
+    "title": "French Connection",
+    "episode": 15
+  },
+  {
+    "ranking": 80,
+    "title": "M.A.S.H",
+    "episode": 71
+  },
+  {
+    "ranking": 81,
+    "title": "Vivre et laisser mourir",
+    "episode": 21
+  },
+  {
+    "ranking": 82,
+    "title": "The Frisco Kid",
+    "episode": 72
+  },
+  {
+    "ranking": 83,
+    "title": "The Driver",
+    "episode": 21
+  },
+  {
+    "ranking": 84,
+    "title": "L’évadé d’Alcatraz",
+    "episode": 73
+  },
+  {
+    "ranking": 85,
+    "title": "Soldier of Orange",
+    "episode": 72
+  },
+  {
+    "ranking": 86,
+    "title": "Tintin et le lac aux requins",
+    "episode": 20
+  },
+  {
+    "ranking": 87,
+    "title": "Les diamants sont éternels",
+    "episode": 20
+  },
+  {
+    "ranking": 88,
+    "title": "Le grand blond avec une chaussure noire",
+    "episode": 116
+  },
+  {
+    "ranking": 89,
+    "title": "Les douze travaux d’Astérix",
+    "episode": 17
+  },
+  {
+    "ranking": 90,
+    "title": "La montagne sacrée",
+    "episode": 20
+  },
+  {
+    "ranking": 91,
+    "title": "L’arnaque",
+    "episode": 16
+  },
+  {
+    "ranking": 92,
+    "title": "Conversation secrète",
+    "episode": 16
+  },
+  {
+    "ranking": 93,
+    "title": "Tommy",
+    "episode": 117
+  },
+  {
+    "ranking": 94,
+    "title": "Les aristochats",
+    "episode": 71
+  },
+  {
+    "ranking": 95,
+    "title": "Le couvent de la bête sacrée",
+    "episode": 70
+  },
+  {
+    "ranking": 96,
+    "title": "Les bronzés",
+    "episode": 16
+  },
+  {
+    "ranking": 97,
+    "title": "La ballade des daltons",
+    "episode": 20
+  },
+  {
+    "ranking": 98,
+    "title": "Lacombe Lucien",
+    "episode": 15
+  },
+  {
+    "ranking": 99,
+    "title": "La scoumoune",
+    "episode": 17
+  },
+  {
+    "ranking": 100,
+    "title": "American Graffiti",
+    "episode": 17
+  },
+  {
+    "ranking": 101,
+    "title": "Le vieux fusil",
+    "episode": 16
+  },
+  {
+    "ranking": 102,
+    "title": "Patton",
+    "episode": 115
+  },
+  {
+    "ranking": 103,
+    "title": "Robin des bois",
+    "episode": 71
+  },
+  {
+    "ranking": 104,
+    "title": "Le charme discret de la bourgeoisie",
+    "episode": 119
+  },
+  {
+    "ranking": 105,
+    "title": "La baie sanglante",
+    "episode": 70
+  },
+  {
+    "ranking": 106,
+    "title": "Bernard & Bianca",
+    "episode": 71
+  },
+  {
+    "ranking": 107,
+    "title": "L’inspecteur Harry ne renonce jamais",
+    "episode": 119
+  },
+  {
+    "ranking": 108,
+    "title": "L’aile ou la cuisse",
+    "episode": 22
+  },
+  {
+    "ranking": 109,
+    "title": "Un pont trop loin",
+    "episode": 20
+  },
+  {
+    "ranking": 110,
+    "title": "L’homme au pistolet d’or",
+    "episode": 74
+  },
+  {
+    "ranking": 111,
+    "title": "Jeremiah Johnson",
+    "episode": 20
+  },
+  {
+    "ranking": 112,
+    "title": "MondWest / West World",
+    "episode": 22
+  },
+  {
+    "ranking": 113,
+    "title": "La tour infernale",
+    "episode": 71
+  },
+  {
+    "ranking": 114,
+    "title": "La grande bouffe",
+    "episode": 22
+  },
+  {
+    "ranking": 115,
+    "title": "Vanishing Point",
+    "episode": 21
+  },
+  {
+    "ranking": 116,
+    "title": "Yakuza",
+    "episode": 74
+  },
+  {
+    "ranking": 117,
+    "title": "Le viager",
+    "episode": 15
+  },
+  {
+    "ranking": 118,
+    "title": "Nous irons tous au paradis",
+    "episode": 72
+  },
+  {
+    "ranking": 119,
+    "title": "Un justicier dans la ville",
+    "episode": 119
+  },
+  {
+    "ranking": 120,
+    "title": "Moonraker",
+    "episode": 15
+  },
+  {
+    "ranking": 121,
+    "title": "Hanzo the Razor: sword of justice",
+    "episode": 22
+  },
+  {
+    "ranking": 122,
+    "title": "Manhattan",
+    "episode": 73
+  },
+  {
+    "ranking": 123,
+    "title": "L’aventure du Poséidon",
+    "episode": 71
+  },
+  {
+    "ranking": 124,
+    "title": "Le serpent",
+    "episode": 118
+  },
+  {
+    "ranking": 125,
+    "title": "Godzilla vs Mecha Godzilla",
+    "episode": 22
+  },
+  {
+    "ranking": 126,
+    "title": "Tora ! Tora ! Tora !",
+    "episode": 115
+  },
+  {
+    "ranking": 127,
+    "title": "Zardoz",
+    "episode": 20
+  },
+  {
+    "ranking": 128,
+    "title": "Grease",
+    "episode": 17
+  },
+  {
+    "ranking": 129,
+    "title": "La cage aux folles",
+    "episode": 18
+  },
+  {
+    "ranking": 130,
+    "title": "Le dernier des géants",
+    "episode": 70
+  },
+  {
+    "ranking": 131,
+    "title": "Nos plus belles années",
+    "episode": 119
+  },
+  {
+    "ranking": 132,
+    "title": "Le Grand Bazar",
+    "episode": 17
+  },
+  {
+    "ranking": 133,
+    "title": "Calmos",
+    "episode": 22
+  },
+  {
+    "ranking": 134,
+    "title": "Vincent, François, Paul et les autres",
+    "episode": 117
+  },
+  {
+    "ranking": 135,
+    "title": "Obsession",
+    "episode": 116
+  },
+  {
+    "ranking": 136,
+    "title": "La horse",
+    "episode": 119
+  },
+  {
+    "ranking": 137,
+    "title": "Death Race 2000",
+    "episode": 21
+  },
+  {
+    "ranking": 138,
+    "title": "On l’appellait Trinita",
+    "episode": 20
+  },
+  {
+    "ranking": 139,
+    "title": "Les pirates du métro",
+    "episode": 21
+  },
+  {
+    "ranking": 140,
+    "title": "Daisy Town",
+    "episode": 20
+  },
+  {
+    "ranking": 141,
+    "title": "Charlie et la chocolaterie",
+    "episode": 72
+  },
+  {
+    "ranking": 142,
+    "title": "Les Valseuses",
+    "episode": 16
+  },
+  {
+    "ranking": 143,
+    "title": "Histoire d’O",
+    "episode": 18
+  },
+  {
+    "ranking": 144,
+    "title": "Dark Star",
+    "episode": 15
+  },
+  {
+    "ranking": 145,
+    "title": "Emmanuelle",
+    "episode": 18
+  },
+  {
+    "ranking": 146,
+    "title": "Black Christmas",
+    "episode": 70
+  },
+  {
+    "ranking": 147,
+    "title": "Vous n’aurez pas l’Alsace et la Lorraine",
+    "episode": 74
+  },
+  {
+    "ranking": 148,
+    "title": "Zorro",
+    "episode": 73
+  },
+  {
+    "ranking": 149,
+    "title": "Tout ce que vous avez toujours voulu savoir sur le sexe sans jamais oser le demander",
+    "episode": 117
+  },
+  {
+    "ranking": 150,
+    "title": "Jo",
+    "episode": 115
+  },
+  {
+    "ranking": 151,
+    "title": "Tremblement de terre",
+    "episode": 71
+  },
+  {
+    "ranking": 152,
+    "title": "Le Bus en Folie",
+    "episode": 21
+  },
+  {
+    "ranking": 153,
+    "title": "Doux, dur et dingue",
+    "episode": 74
+  },
+  {
+    "ranking": 154,
+    "title": "Le Jouet",
+    "episode": 115
+  },
+  {
+    "ranking": 155,
+    "title": "Elle boit pas, elle fume pas, elle drague mais… elle cause",
+    "episode": 117
+  },
+  {
+    "ranking": 156,
+    "title": "Salo ou les 120 journées de Sodome",
+    "episode": 18
+  },
+  {
+    "ranking": 157,
+    "title": "The Sugarland Express",
+    "episode": 17
+  },
+  {
+    "ranking": 158,
+    "title": "Le Survivant",
+    "episode": 21
+  },
+  {
+    "ranking": 159,
+    "title": "Star Trek: the motion picture",
+    "episode": 15
+  },
+  {
+    "ranking": 160,
+    "title": "Peau d’âne",
+    "episode": 116
+  },
+  {
+    "ranking": 161,
+    "title": "Lâchez les bolides",
+    "episode": 74
+  },
+  {
+    "ranking": 162,
+    "title": "Amityville",
+    "episode": 70
+  },
+  {
+    "ranking": 163,
+    "title": "Le commando des morts-vivants",
+    "episode": 16
+  },
+  {
+    "ranking": 164,
+    "title": "Star Wars Holiday Special",
+    "episode": 16
+  },
+  {
+    "ranking": 165,
+    "title": "Les gendarmes et les extra-terrestres",
+    "episode": 117
+  },
+  {
+    "ranking": 166,
+    "title": "Un nouvel amour de coccinelle",
+    "episode": 15
+  },
+  {
+    "ranking": 167,
+    "title": "La bataille de la Planète des Singes",
+    "episode": 15
+  },
+  {
+    "ranking": 168,
+    "title": "Driller Killer",
+    "episode": 16
+  },
+  {
+    "ranking": 169,
+    "title": "Les bidasses en folie",
+    "episode": 116
+  },
+  {
+    "ranking": 170,
+    "title": "Lady Oscar",
+    "episode": 15
+  },
+  {
+    "ranking": 171,
+    "title": "Le dernier tango à Paris",
+    "episode": 18
+  }
+]
