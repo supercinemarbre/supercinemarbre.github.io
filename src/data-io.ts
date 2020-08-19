@@ -3,6 +3,7 @@ import { createReadStream, createWriteStream, existsSync, readFileSync, unlinkSy
 import { resolve } from "path";
 import download from "download";
 import { ungzip } from "node-gzip";
+import sqlite3 from 'sqlite3';
 
 export function readDataString(file: string) {
   try {
@@ -62,6 +63,26 @@ export async function downloadGzipped(url: string, folder: string, filename: str
   const fileFullname = resolve(dataPath(folder), filename);
   writeData(dataPath(fileFullname), decompressed);
   console.log("Ungzipping OK");
+}
+
+
+export async function runInDb<T>(file: string, callback: (db: sqlite3.Database) => Promise<T>) {
+  let db = new sqlite3.Database(dataPath(file));
+
+  process.on('SIGINT', function() {
+    if (db) {
+      console.log("Closing DB connection to exit.");
+      db.close();
+      db = null;
+      process.exit(0);
+    } 
+  });
+
+  try {
+    return callback(db);
+  } finally {
+    db.close();
+  }
 }
 
 

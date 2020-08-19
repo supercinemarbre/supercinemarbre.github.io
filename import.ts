@@ -6,7 +6,7 @@ import * as data from "./src/data-internal";
 (async () => {
   //await parseSCBPages();
   console.log(await imdb.searchIMDBTitle("The Terminator")); // TEST
-  console.log(await imdb.searchIMDBTitle("Matrix: Revolutions")); // TEST
+  console.log(await imdb.searchIMDBTitle("Matrix Revolutions")); // TEST
 })();
 
 async function parseSCBPages() {

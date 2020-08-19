@@ -58,12 +58,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.downloadGzipped = exports.writeData = exports.readData = exports.writeDataString = exports.readDataString = void 0;
+exports.runInDb = exports.downloadGzipped = exports.writeData = exports.readData = exports.writeDataString = exports.readDataString = void 0;
 var bigJson = __importStar(require("big-json"));
 var fs_1 = require("fs");
 var path_1 = require("path");
 var download_1 = __importDefault(require("download"));
 var node_gzip_1 = require("node-gzip");
+var sqlite3_1 = __importDefault(require("sqlite3"));
 function readDataString(file) {
     try {
         return fs_1.readFileSync(dataPath(file)).toString();
@@ -133,6 +134,30 @@ function downloadGzipped(url, folder, filename) {
     });
 }
 exports.downloadGzipped = downloadGzipped;
+function runInDb(file, callback) {
+    return __awaiter(this, void 0, void 0, function () {
+        var db;
+        return __generator(this, function (_a) {
+            db = new sqlite3_1.default.Database(dataPath(file));
+            process.on('SIGINT', function () {
+                if (db) {
+                    console.log("Closing DB connection to exit.");
+                    db.close();
+                    db = null;
+                    process.exit(0);
+                }
+            });
+            try {
+                return [2 /*return*/, callback(db)];
+            }
+            finally {
+                db.close();
+            }
+            return [2 /*return*/];
+        });
+    });
+}
+exports.runInDb = runInDb;
 function dataPath(file) {
     if (__filename.endsWith('.js')) {
         return path_1.resolve(__dirname, "../../data", file);

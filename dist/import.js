@@ -74,7 +74,7 @@ var data = __importStar(require("./src/data-internal"));
                 //await parseSCBPages();
                 _b.apply(_a, [_e.sent()]); // TEST
                 _d = (_c = console).log;
-                return [4 /*yield*/, imdb.searchIMDBTitle("Matrix: Revolutions")];
+                return [4 /*yield*/, imdb.searchIMDBTitle("Matrix Revolutions")];
             case 2:
                 _d.apply(_c, [_e.sent()]); // TEST
                 return [2 /*return*/];

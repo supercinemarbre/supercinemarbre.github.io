@@ -56,62 +56,157 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchIMDBTitle = void 0;
-var data_io_1 = require("./data-io");
 var levenshtein = __importStar(require("fast-levenshtein"));
+var data_io_1 = require("./data-io");
+var sqlite_async_1 = require("./sqlite-async");
 function searchIMDBTitle(title) {
     return __awaiter(this, void 0, void 0, function () {
-        var tsv, lines, header, search, matches, bestMatch, bestMatchDistance, _i, matches_1, match, matchDistance;
+        var dbPath;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, readIMDBSourceAsTSV("title.basics")];
+                case 0:
+                    console.log("Searching: " + title);
+                    return [4 /*yield*/, initializeIMDBTitleBasicsDb()];
                 case 1:
-                    tsv = _a.sent();
-                    lines = tsv.split('\n');
-                    header = lines[0].split('\t');
-                    search = title.toLowerCase();
-                    matches = lines
-                        .filter(function (line) { return line.toLowerCase().includes(search); })
-                        .map(function (line) {
-                        var values = line.split('\t');
-                        var row = {};
-                        header.forEach(function (name, i) {
-                            row[name] = values[i];
-                        });
-                        return row;
-                    })
-                        .filter(function (movie) { return movie.titleType === 'movie'; });
-                    if (matches.length === 0) {
-                        return [2 /*return*/, undefined];
-                    }
-                    bestMatch = matches[0];
-                    bestMatchDistance = 999;
-                    for (_i = 0, matches_1 = matches; _i < matches_1.length; _i++) {
-                        match = matches_1[_i];
-                        matchDistance = levenshtein.get(match.primaryTitle, search, { useCollator: true });
-                        if (matchDistance === 0) {
-                            return [2 /*return*/, match];
-                        }
-                        else if (matchDistance < bestMatchDistance) {
-                            bestMatch = match;
-                            bestMatchDistance = matchDistance;
-                        }
-                    }
-                    return [2 /*return*/, bestMatch];
+                    dbPath = _a.sent();
+                    return [2 /*return*/, data_io_1.runInDb(dbPath, function (db) {
+                            return new Promise(function (resolve, reject) {
+                                db.all('select * from title_basics where primaryTitle LIKE ?', '%' + title + '%', function (err, rows) {
+                                    if (err)
+                                        reject(err);
+                                    var movies = rows
+                                        .map(function (movie) {
+                                        return { movie: movie, distance: levenshtein.get(movie.primaryTitle, title, { useCollator: true }) };
+                                    })
+                                        .sort(function (a, b) { return a.distance - b.distance; });
+                                    resolve(movies);
+                                });
+                            });
+                        })];
             }
         });
     });
 }
 exports.searchIMDBTitle = searchIMDBTitle;
-var imdbSourcesCache = {};
+function initializeIMDBTitleBasicsDb() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, initializeIMDBSourceDb({
+                    sourceName: 'title.basics',
+                    tableColumns: "tconst TEXT PRIMARY KEY,\n      primaryTitle TEXT,\n      originalTitle TEXT,\n      startYear INTEGER,\n      runtimeMinutes TEXT,\n      genres TEXT",
+                    lineFilter: function (line) { return line.includes('\tmovie\t'); },
+                    insertQuery: "INSERT INTO title_basics(\n      tconst,\n      primaryTitle,\n      originalTitle,\n      startYear,\n      runtimeMinutes,\n      genres)\n    VALUES (?, ?, ?, ?, ?, ?)\n    ON CONFLICT(tconst) DO NOTHING;",
+                    // header: "tconst	titleType	primaryTitle	originalTitle	isAdult	startYear	endYear	runtimeMinutes	genres"
+                    insertParamsProvider: function (values) { return [values[0], values[2], values[3], values[5], values[7], values[8]]; },
+                    indexesQuery: 'CREATE INDEX IF NOT EXISTS primaryTitle ON title_basics (primaryTitle)'
+                })];
+        });
+    });
+}
+var imdbInitializedSources = {};
+function initializeIMDBSourceDb(_a) {
+    var sourceName = _a.sourceName, tableColumns = _a.tableColumns, lineFilter = _a.lineFilter, insertQuery = _a.insertQuery, insertParamsProvider = _a.insertParamsProvider, indexesQuery = _a.indexesQuery;
+    return __awaiter(this, void 0, void 0, function () {
+        var dbFilePath, tsv, tableName, e_1;
+        var _this = this;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    dbFilePath = "input/imdb." + sourceName + ".db";
+                    if (!imdbInitializedSources[sourceName]) {
+                        imdbInitializedSources[sourceName] = true;
+                    }
+                    else {
+                        return [2 /*return*/, dbFilePath];
+                    }
+                    console.log("INITIALIZING IMDB SOURCE: " + sourceName);
+                    console.log("Reading TSV...");
+                    return [4 /*yield*/, readIMDBSourceAsTSV(sourceName)];
+                case 1:
+                    tsv = _b.sent();
+                    tableName = sourceName.replace(/\./g, '_');
+                    _b.label = 2;
+                case 2:
+                    _b.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, data_io_1.runInDb(dbFilePath, function (db) { return __awaiter(_this, void 0, void 0, function () {
+                            var existingTitles, linesToInsert, insertStmt, i, _i, linesToInsert_1, line, values;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0: return [4 /*yield*/, sqlite_async_1.run(db, 'PRAGMA page_size = 10000')];
+                                    case 1:
+                                        _a.sent();
+                                        return [4 /*yield*/, sqlite_async_1.run(db, 'PRAGMA synchronous = OFF')];
+                                    case 2:
+                                        _a.sent(); // Can corrupt the DB in case of a hardware crash
+                                        return [4 /*yield*/, sqlite_async_1.run(db, "\n        CREATE TABLE IF NOT EXISTS " + tableName + " (" + tableColumns + ")\n    ")];
+                                    case 3:
+                                        _a.sent();
+                                        return [4 /*yield*/, sqlite_async_1.all(db, "SELECT count(*) as c FROM " + tableName)];
+                                    case 4:
+                                        existingTitles = _a.sent();
+                                        console.log("Skipping " + existingTitles[0]['c'] + " lines already inserted...");
+                                        linesToInsert = tsv.split('\n')
+                                            .filter(lineFilter)
+                                            .slice(existingTitles[0]['c']);
+                                        insertStmt = db.prepare(insertQuery);
+                                        i = 0;
+                                        return [4 /*yield*/, sqlite_async_1.run(db, 'BEGIN TRANSACTION;')];
+                                    case 5:
+                                        _a.sent();
+                                        _i = 0, linesToInsert_1 = linesToInsert;
+                                        _a.label = 6;
+                                    case 6:
+                                        if (!(_i < linesToInsert_1.length)) return [3 /*break*/, 11];
+                                        line = linesToInsert_1[_i];
+                                        values = line.split('\t').map(function (value) { return value.replace('\\N', ''); });
+                                        if (i++ % 10000 === 0) {
+                                            console.log("Insert progress: " + i + "/" + linesToInsert.length + " (" + Math.floor(100. * i / linesToInsert.length) + "%)...");
+                                        }
+                                        if (!(i % 1000 === 0)) return [3 /*break*/, 8];
+                                        return [4 /*yield*/, sqlite_async_1.run(db, 'END TRANSACTION; BEGIN TRANSACTION;')];
+                                    case 7:
+                                        _a.sent();
+                                        _a.label = 8;
+                                    case 8: return [4 /*yield*/, sqlite_async_1.runStmt(insertStmt, insertParamsProvider(values))];
+                                    case 9:
+                                        _a.sent();
+                                        _a.label = 10;
+                                    case 10:
+                                        _i++;
+                                        return [3 /*break*/, 6];
+                                    case 11: return [4 /*yield*/, sqlite_async_1.finalizeStmt(insertStmt)];
+                                    case 12:
+                                        _a.sent();
+                                        return [4 /*yield*/, sqlite_async_1.run(db, 'END TRANSACTION;')];
+                                    case 13:
+                                        _a.sent();
+                                        console.log("Inserts complete");
+                                        return [4 /*yield*/, sqlite_async_1.run(db, indexesQuery)];
+                                    case 14:
+                                        _a.sent();
+                                        console.log("Indexes created");
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); })];
+                case 3:
+                    _b.sent();
+                    return [2 /*return*/, dbFilePath];
+                case 4:
+                    e_1 = _b.sent();
+                    console.error("ERROR: ", e_1, e_1.stack);
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
 function readIMDBSourceAsTSV(sourceFileName) {
     return __awaiter(this, void 0, void 0, function () {
         var tsv;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (imdbSourcesCache[sourceFileName]) {
-                        return [2 /*return*/, imdbSourcesCache[sourceFileName]];
-                    }
                     tsv = data_io_1.readDataString("input/imdb." + sourceFileName + ".tsv");
                     if (!!tsv) return [3 /*break*/, 2];
                     return [4 /*yield*/, data_io_1.downloadGzipped("https://datasets.imdbws.com/" + sourceFileName + ".tsv.gz", 'input', "imdb." + sourceFileName + ".tsv")];
@@ -119,57 +214,8 @@ function readIMDBSourceAsTSV(sourceFileName) {
                     _a.sent();
                     tsv = data_io_1.readDataString("input/imdb." + sourceFileName + ".tsv");
                     _a.label = 2;
-                case 2:
-                    imdbSourcesCache[sourceFileName] = tsv;
-                    return [2 /*return*/, tsv];
+                case 2: return [2 /*return*/, tsv];
             }
         });
     });
 }
-/*
-async function readIMDBSourceAsJson<T>(sourceFileName: string): Promise<T> {
-  let json = await readData<T>(`input/imdb.${sourceFileName}.json`);
-
-  if (json) {
-    return json;
-  } else {
-    const tsv = await readIMDBSourceAsTSV(sourceFileName);
-    console.log(`Converting imdb.${sourceFileName}.tsv to json...`);
-    let jsonObject = tsvToJson(tsv) as any;
-    console.log(`Serializing imdb.${sourceFileName}.json...`)
-    await writeData(`input/imdb.${sourceFileName}.json`, jsonObject);
-    return jsonObject;
-  }
-}
-
-
-function tsvToJson(data: String) {
-  const rows = [];
-  const lines = data.split('\n');
-  const columnNames = [];
-  lines.forEach((line, lineIndex) => {
-    const columns = line.trim().split('\t');
-    if (columns.length <= 1) {
-      return;
-    }
-
-    // First line = header
-    if (columnNames.length === 0) {
-      columns.forEach(columnName => columnNames.push(columnName));
-      return;
-    }
-
-    const row = {};
-    columnNames.forEach((name, i) => {
-      row[name] = columns[i];
-    });
-    rows.push(row);
-
-    if (lineIndex % 100000 === 0) {
-      console.log(`Progress: ${Math.floor((1.*lineIndex/lines.length)*100)}%, used heap: ${Math.floor(process.memoryUsage().heapUsed/1000000)}MB`);
-    }
-
-  })
-  return rows;
-}
-*/ 
