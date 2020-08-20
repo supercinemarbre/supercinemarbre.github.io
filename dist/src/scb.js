@@ -117,8 +117,8 @@ function matchMoviesWithIMDB() {
                     if (!(_i < scbRankings_1.length)) return [3 /*break*/, 8];
                     ranking = scbRankings_1[_i];
                     if (!!ranking.tconst) return [3 /*break*/, 7];
-                    console.log("Matching " + ranking.decade + "s movie " + ranking.title);
-                    return [4 /*yield*/, imdb.searchIMDBTitle(ranking.title)];
+                    console.log("Matching " + ranking.decade + "s movie " + ranking.scbTitle);
+                    return [4 /*yield*/, imdb.searchIMDBTitle(ranking.scbTitle)];
                 case 3:
                     results = _a.sent();
                     matchingResult = chooseMatchingResult(ranking, results);
@@ -159,7 +159,7 @@ function chooseMatchingResult(ranking, results) {
 }
 function mergeRankings(existingRankings, newRankings) {
     var _loop_1 = function (newRanking) {
-        if (!existingRankings.find(function (r) { return r.rawTitle === newRanking.rawTitle; })) {
+        if (!existingRankings.find(function (r) { return r.scbTitle === newRanking.scbTitle; })) {
             existingRankings.push(newRanking);
         }
     };
@@ -176,14 +176,13 @@ function parseRankings($, decade) {
         var cells = $("td", row);
         if (cells.length > 0) {
             var episode = parseInt($(cells.get(2)).text().trim(), 10);
-            var title = $(cells.get(1)).text().trim();
+            var scbTitle = $(cells.get(1)).text().trim();
             var ranking = parseInt($(cells.get(0)).text().trim(), 10);
-            if (ranking && title) {
+            if (ranking && scbTitle) {
                 rankings.push({
                     decade: decade,
                     episode: episode,
-                    title: title,
-                    rawTitle: title,
+                    scbTitle: scbTitle,
                     ranking: ranking
                 });
             }

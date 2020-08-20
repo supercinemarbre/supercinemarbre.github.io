@@ -4,8 +4,7 @@ import { ImdbMovie } from "./imdb";
 export interface Ranking {
   decade: string;
   episode: number;
-  title: string;
-  rawTitle: string;
+  scbTitle: string;
   ranking: number;
 }
 

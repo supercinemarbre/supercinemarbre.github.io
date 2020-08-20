@@ -28,9 +28,9 @@ export async function matchMoviesWithIMDB() {
   let i = 0;
   for (const ranking of scbRankings) {
     if (!ranking.tconst) {
-      console.log(`Matching ${ranking.decade}s movie ${ranking.title}`);
+      console.log(`Matching ${ranking.decade}s movie ${ranking.scbTitle}`);
 
-      const results = await imdb.searchIMDBTitle(ranking.title);
+      const results = await imdb.searchIMDBTitle(ranking.scbTitle);
       const matchingResult = chooseMatchingResult(ranking, results);
       if (!matchingResult) {
         console.log(` - No match found among ${results.length} results`);
@@ -61,7 +61,7 @@ function chooseMatchingResult(ranking: data.Ranking, results: Array<{ movie: imd
 
 function mergeRankings(existingRankings: data.Ranking[], newRankings: data.Ranking[]) {
   for (const newRanking of newRankings) {
-    if (!existingRankings.find(r => r.rawTitle === newRanking.rawTitle)) {
+    if (!existingRankings.find(r => r.scbTitle === newRanking.scbTitle)) {
       existingRankings.push(newRanking);
     }
   }
@@ -76,14 +76,13 @@ function parseRankings($: CheerioStatic, decade: string): data.Ranking[] {
     const cells = $("td", row);
     if (cells.length > 0) {
       const episode = parseInt($(cells.get(2)).text().trim(), 10);
-      const title = $(cells.get(1)).text().trim();
+      const scbTitle = $(cells.get(1)).text().trim();
       const ranking = parseInt($(cells.get(0)).text().trim(), 10);
-      if (ranking && title) {
+      if (ranking && scbTitle) {
         rankings.push({
           decade,
           episode,
-          title,
-          rawTitle: title,
+          scbTitle,
           ranking
         });
       }
