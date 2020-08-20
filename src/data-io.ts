@@ -1,9 +1,11 @@
 import * as bigJson from "big-json";
+import download from "download";
 import { createReadStream, createWriteStream, existsSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import download from "download";
-import { ungzip } from "node-gzip";
 import sqlite3 from 'sqlite3';
+import { pipeline } from "stream";
+import { promisify } from "util";
+import { createGunzip } from "zlib";
 
 export function readDataString(file: string) {
   try {
@@ -50,19 +52,21 @@ export function writeData(file: string, object: any): Promise<void> {
 
 export async function downloadGzipped(url: string, folder: string, filename: string) {
   const gzFilename = filename + ".gz";
-  const gzFileFullname = resolve(dataPath(folder), filename + ".gz");
-
-  if (!existsSync(gzFileFullname)) {
+  if (!existsSync(resolve(dataPath(folder), gzFilename))) {
     console.log(`Downloading ${filename}...`);
     await download(url, dataPath(folder), { filename: gzFilename });
     console.log("Download OK");
   }
 
   console.log(`Ungzipping ${filename}...`);
-  const decompressed = await ungzip(readFileSync(gzFileFullname), {});
-  const fileFullname = resolve(dataPath(folder), filename);
-  writeData(dataPath(fileFullname), decompressed);
+  await ungzip(resolve(folder, gzFilename), resolve(folder, filename));
   console.log("Ungzipping OK");
+}
+
+async function ungzip(fromFile: string, toFile: string) {
+  const readStream = createReadStream(dataPath(fromFile));
+  const writeStream = createWriteStream(dataPath(toFile));
+  await promisify(pipeline)(readStream, createGunzip(), writeStream);
 }
 
 
