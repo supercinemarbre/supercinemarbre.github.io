@@ -4,11 +4,13 @@ Projet de site pour exploration des listes [Super Cine Battle](https://www.super
 
 ## Application web
 
-> A venir...
+```
+npm i
+npm start
+```
+
 
 ## Importeur de listes
-
-### Installation
 
 ```
 cd importer
@@ -24,6 +26,7 @@ Le premier lancement peut être long (téléchargement et extraction de bases IM
 * `npm run start:prod` : Lancement de la version JS
 * `SKIP_SCB_INIT=true npm...` : Considérer les listes SCB comme déjà à jour
 * `SKIP_IMDB_INIT=true npm...` : Considérer la base IMDB comme déjà initialisée
+
 
 ## Feuille de route
 
