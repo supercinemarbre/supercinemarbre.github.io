@@ -1,8 +1,8 @@
 import * as levenshtein from 'fast-levenshtein';
-import { downloadGzipped, readDataString, runInDb } from "./data-io";
-import { all, finalizeStmt, run, runStmt } from './sqlite-async';
+import { downloadGzipped, readDataString, runInDb } from "./io";
+import { all, finalizeStmt, run, runStmt } from './sqlite-utils';
 
-interface ImdbName {
+export interface ImdbPerson {
   nconst: string;
   primaryName: string;
   birthYear: string;
@@ -11,7 +11,7 @@ interface ImdbName {
   knownForTitles: string;
 }
 
-interface ImdbMovie {
+export interface ImdbMovie {
   tconst: string;
   titleType: string;
   primaryTitle: string;
@@ -24,8 +24,6 @@ interface ImdbMovie {
 }
 
 export async function searchIMDBTitle(title: string): Promise<Array<{ movie: ImdbMovie; distance: number; }>> {
-  console.log(`Searching: ${title}`);
-
   const dbPath = await initializeIMDBTitleBasicsDb();
 
   return runInDb(dbPath, (db) => {
@@ -88,28 +86,27 @@ async function initializeIMDBSourceDb({
   indexesQuery: string
 }) {
   const dbFilePath = `input/imdb.${sourceName}.db`;
-  if (!imdbInitializedSources[sourceName]) {
+  if (!imdbInitializedSources[sourceName] && !process.env.SKIP_INIT) {
     imdbInitializedSources[sourceName] = true;
   } else {
     return dbFilePath;
   }
 
-  console.log(`INITIALIZING IMDB SOURCE: ${sourceName}`);
-  console.log("Reading TSV...");
+  console.log(`Initializing IMDB source ${sourceName}`);
+  console.log(" - Reading TSV...");
   const tsv = await readIMDBSourceAsTSV(sourceName);
   const tableName = sourceName.replace(/\./g, '_');
 
   try {
+    console.log(" - Extracting data to database...");
     await runInDb(dbFilePath, async (db) => {
-      await run(db, 'PRAGMA page_size = 10000');
-      await run(db, 'PRAGMA synchronous = OFF'); // Can corrupt the DB in case of a hardware crash
+      await run(db, 'PRAGMA page_size = 10000;');
+      await run(db, 'PRAGMA synchronous = OFF;'); // Can corrupt the DB in case of a hardware crash
 
-      await run(db, `
-        CREATE TABLE IF NOT EXISTS ${tableName} (${tableColumns})
-    `);
+      await run(db, `CREATE TABLE IF NOT EXISTS ${tableName} (${tableColumns})`);
 
       const existingTitles = await all(db, `SELECT count(*) as c FROM ${tableName}`);
-      console.log(`Skipping ${existingTitles[0]['c']} lines already inserted...`);
+      console.log(` - Skipping ${existingTitles[0]['c']} lines already inserted...`);
 
       const linesToInsert = tsv.split('\n')
         .filter(lineFilter)
@@ -118,25 +115,26 @@ async function initializeIMDBSourceDb({
       const insertStmt = db.prepare(insertQuery);
 
       let i = 0;
-      await run(db, 'BEGIN TRANSACTION;')
+      await run(db, 'BEGIN TRANSACTION');
       for (const line of linesToInsert) {
         const values = line.split('\t').map(value => value.replace('\\N', ''));
 
         if (i++ % 10000 === 0) {
-          console.log(`Insert progress: ${i}/${linesToInsert.length} (${Math.floor(100. * i / linesToInsert.length)}%)...`);
+          console.log(` - Progress: ${i}/${linesToInsert.length} (${Math.floor(100. * i / linesToInsert.length)}%)...`);
         }
         if (i % 1000 === 0) {
-          await run(db, 'END TRANSACTION; BEGIN TRANSACTION;')
+          await run(db, 'END TRANSACTION');
+          await run(db, 'BEGIN TRANSACTION');
         }
 
         await runStmt(insertStmt, insertParamsProvider(values));
       }
       await finalizeStmt(insertStmt);
-      await run(db, 'END TRANSACTION;')
-      console.log("Inserts complete");
+      await run(db, 'END TRANSACTION')
+      console.log(" - Inserts complete");
 
       await run(db, indexesQuery);
-      console.log("Indexes created");
+      console.log(" - Indexes created");
     });
 
     return dbFilePath;

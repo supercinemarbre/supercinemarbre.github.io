@@ -88,9 +88,7 @@ function readData(file) {
         }
         var readStream = fs_1.createReadStream(dataPath(file));
         var parseStream = bigJson.createParseStream();
-        parseStream.on('data', function (pojo) {
-            resolve(pojo);
-        });
+        parseStream.on('data', resolve);
         readStream.pipe(parseStream);
     });
 }

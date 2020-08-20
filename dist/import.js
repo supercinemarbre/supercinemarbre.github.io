@@ -54,89 +54,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var cheerio = __importStar(require("cheerio"));
-var download_1 = __importDefault(require("download"));
-var imdb = __importStar(require("./src/data-imdb"));
-var data = __importStar(require("./src/data-internal"));
+var scb = __importStar(require("./src/scb"));
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, _b, _c, _d;
-    return __generator(this, function (_e) {
-        switch (_e.label) {
+    var e_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                //await parseSCBPages();
-                _b = (_a = console).log;
-                return [4 /*yield*/, imdb.searchIMDBTitle("The Terminator")];
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, scb.importMovieRankings()];
             case 1:
-                //await parseSCBPages();
-                _b.apply(_a, [_e.sent()]); // TEST
-                _d = (_c = console).log;
-                return [4 /*yield*/, imdb.searchIMDBTitle("Matrix Revolutions")];
+                _a.sent();
+                return [4 /*yield*/, scb.matchMoviesWithIMDB()];
             case 2:
-                _d.apply(_c, [_e.sent()]); // TEST
-                return [2 /*return*/];
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                e_1 = _a.sent();
+                console.error("ERROR: ", e_1, e_1.stack);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); })();
-function parseSCBPages() {
-    return __awaiter(this, void 0, void 0, function () {
-        var scbPages, _i, _a, decade, scbPage, $, rankings;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4 /*yield*/, data.readSCBUrls()];
-                case 1:
-                    scbPages = _b.sent();
-                    _i = 0, _a = Object.keys(scbPages);
-                    _b.label = 2;
-                case 2:
-                    if (!(_i < _a.length)) return [3 /*break*/, 8];
-                    decade = _a[_i];
-                    return [4 /*yield*/, data.readDecageRankings(decade)];
-                case 3:
-                    if (!!(_b.sent())) return [3 /*break*/, 6];
-                    console.log("Downloading rankings for decade " + decade + "...");
-                    return [4 /*yield*/, download_1.default(scbPages[decade])];
-                case 4:
-                    scbPage = _b.sent();
-                    $ = cheerio.load(scbPage);
-                    rankings = parseRanking($);
-                    console.log(rankings.length + " movies found");
-                    return [4 /*yield*/, data.writeDecageRankings(decade, rankings)];
-                case 5:
-                    _b.sent();
-                    return [3 /*break*/, 7];
-                case 6:
-                    console.log("Rankings already downloaded for decade " + decade + "...");
-                    _b.label = 7;
-                case 7:
-                    _i++;
-                    return [3 /*break*/, 2];
-                case 8: return [2 /*return*/];
-            }
-        });
-    });
-}
-function parseRanking($) {
-    var rankings = [];
-    var rows = $("table tr");
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows.get(i);
-        var cells = $("td", row);
-        if (cells.length > 0) {
-            var ranking = parseInt($(cells.get(0)).text().trim(), 10);
-            var title = $(cells.get(1)).text().trim();
-            var episode = parseInt($(cells.get(2)).text().trim(), 10);
-            if (ranking && title) {
-                rankings.push({
-                    ranking: ranking,
-                    title: title,
-                    episode: episode
-                });
-            }
-        }
-    }
-    return rankings;
-}

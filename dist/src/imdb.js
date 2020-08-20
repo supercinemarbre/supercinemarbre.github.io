@@ -57,19 +57,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchIMDBTitle = void 0;
 var levenshtein = __importStar(require("fast-levenshtein"));
-var data_io_1 = require("./data-io");
-var sqlite_async_1 = require("./sqlite-async");
+var io_1 = require("./io");
+var sqlite_utils_1 = require("./sqlite-utils");
 function searchIMDBTitle(title) {
     return __awaiter(this, void 0, void 0, function () {
         var dbPath;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    console.log("Searching: " + title);
-                    return [4 /*yield*/, initializeIMDBTitleBasicsDb()];
+                case 0: return [4 /*yield*/, initializeIMDBTitleBasicsDb()];
                 case 1:
                     dbPath = _a.sent();
-                    return [2 /*return*/, data_io_1.runInDb(dbPath, function (db) {
+                    return [2 /*return*/, io_1.runInDb(dbPath, function (db) {
                             return new Promise(function (resolve, reject) {
                                 db.all('select * from title_basics where primaryTitle LIKE ?', '%' + title + '%', function (err, rows) {
                                     if (err)
@@ -129,20 +127,20 @@ function initializeIMDBSourceDb(_a) {
                 case 2:
                     _b.trys.push([2, 4, , 5]);
                     console.log(" - Extracting data to database...");
-                    return [4 /*yield*/, data_io_1.runInDb(dbFilePath, function (db) { return __awaiter(_this, void 0, void 0, function () {
+                    return [4 /*yield*/, io_1.runInDb(dbFilePath, function (db) { return __awaiter(_this, void 0, void 0, function () {
                             var existingTitles, linesToInsert, insertStmt, i, _i, linesToInsert_1, line, values;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
-                                    case 0: return [4 /*yield*/, sqlite_async_1.run(db, 'PRAGMA page_size = 10000;')];
+                                    case 0: return [4 /*yield*/, sqlite_utils_1.run(db, 'PRAGMA page_size = 10000;')];
                                     case 1:
                                         _a.sent();
-                                        return [4 /*yield*/, sqlite_async_1.run(db, 'PRAGMA synchronous = OFF;')];
+                                        return [4 /*yield*/, sqlite_utils_1.run(db, 'PRAGMA synchronous = OFF;')];
                                     case 2:
                                         _a.sent(); // Can corrupt the DB in case of a hardware crash
-                                        return [4 /*yield*/, sqlite_async_1.run(db, "CREATE TABLE IF NOT EXISTS " + tableName + " (" + tableColumns + ")")];
+                                        return [4 /*yield*/, sqlite_utils_1.run(db, "CREATE TABLE IF NOT EXISTS " + tableName + " (" + tableColumns + ")")];
                                     case 3:
                                         _a.sent();
-                                        return [4 /*yield*/, sqlite_async_1.all(db, "SELECT count(*) as c FROM " + tableName)];
+                                        return [4 /*yield*/, sqlite_utils_1.all(db, "SELECT count(*) as c FROM " + tableName)];
                                     case 4:
                                         existingTitles = _a.sent();
                                         console.log(" - Skipping " + existingTitles[0]['c'] + " lines already inserted...");
@@ -151,7 +149,7 @@ function initializeIMDBSourceDb(_a) {
                                             .slice(existingTitles[0]['c']);
                                         insertStmt = db.prepare(insertQuery);
                                         i = 0;
-                                        return [4 /*yield*/, sqlite_async_1.run(db, 'BEGIN TRANSACTION')];
+                                        return [4 /*yield*/, sqlite_utils_1.run(db, 'BEGIN TRANSACTION')];
                                     case 5:
                                         _a.sent();
                                         _i = 0, linesToInsert_1 = linesToInsert;
@@ -164,28 +162,28 @@ function initializeIMDBSourceDb(_a) {
                                             console.log(" - Progress: " + i + "/" + linesToInsert.length + " (" + Math.floor(100. * i / linesToInsert.length) + "%)...");
                                         }
                                         if (!(i % 1000 === 0)) return [3 /*break*/, 9];
-                                        return [4 /*yield*/, sqlite_async_1.run(db, 'END TRANSACTION')];
+                                        return [4 /*yield*/, sqlite_utils_1.run(db, 'END TRANSACTION')];
                                     case 7:
                                         _a.sent();
-                                        return [4 /*yield*/, sqlite_async_1.run(db, 'BEGIN TRANSACTION')];
+                                        return [4 /*yield*/, sqlite_utils_1.run(db, 'BEGIN TRANSACTION')];
                                     case 8:
                                         _a.sent();
                                         _a.label = 9;
-                                    case 9: return [4 /*yield*/, sqlite_async_1.runStmt(insertStmt, insertParamsProvider(values))];
+                                    case 9: return [4 /*yield*/, sqlite_utils_1.runStmt(insertStmt, insertParamsProvider(values))];
                                     case 10:
                                         _a.sent();
                                         _a.label = 11;
                                     case 11:
                                         _i++;
                                         return [3 /*break*/, 6];
-                                    case 12: return [4 /*yield*/, sqlite_async_1.finalizeStmt(insertStmt)];
+                                    case 12: return [4 /*yield*/, sqlite_utils_1.finalizeStmt(insertStmt)];
                                     case 13:
                                         _a.sent();
-                                        return [4 /*yield*/, sqlite_async_1.run(db, 'END TRANSACTION')];
+                                        return [4 /*yield*/, sqlite_utils_1.run(db, 'END TRANSACTION')];
                                     case 14:
                                         _a.sent();
                                         console.log(" - Inserts complete");
-                                        return [4 /*yield*/, sqlite_async_1.run(db, indexesQuery)];
+                                        return [4 /*yield*/, sqlite_utils_1.run(db, indexesQuery)];
                                     case 15:
                                         _a.sent();
                                         console.log(" - Indexes created");
@@ -211,12 +209,12 @@ function readIMDBSourceAsTSV(sourceFileName) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    tsv = data_io_1.readDataString("input/imdb." + sourceFileName + ".tsv");
+                    tsv = io_1.readDataString("input/imdb." + sourceFileName + ".tsv");
                     if (!!tsv) return [3 /*break*/, 2];
-                    return [4 /*yield*/, data_io_1.downloadGzipped("https://datasets.imdbws.com/" + sourceFileName + ".tsv.gz", 'input', "imdb." + sourceFileName + ".tsv")];
+                    return [4 /*yield*/, io_1.downloadGzipped("https://datasets.imdbws.com/" + sourceFileName + ".tsv.gz", 'input', "imdb." + sourceFileName + ".tsv")];
                 case 1:
                     _a.sent();
-                    tsv = data_io_1.readDataString("input/imdb." + sourceFileName + ".tsv");
+                    tsv = io_1.readDataString("input/imdb." + sourceFileName + ".tsv");
                     _a.label = 2;
                 case 2: return [2 /*return*/, tsv];
             }

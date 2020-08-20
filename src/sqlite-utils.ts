@@ -1,5 +1,19 @@
 import { Database, Statement } from "sqlite3";
 
+export function serialize(db: Database, callback: Function): Promise<any[]> {
+  return new Promise((resolve, reject) => {
+    db.serialize(async function() {
+      try {
+        await callback();
+        resolve();
+      } catch(e) {
+        reject();
+      }
+    });
+  });
+}
+
+
 export function runStmt(stmt: Statement, params: any[] = []): Promise<any[]> {
   return new Promise((resolve, reject) => {
     stmt.run(params, (err) => {
@@ -10,7 +24,6 @@ export function runStmt(stmt: Statement, params: any[] = []): Promise<any[]> {
     })
   });
 }
-
 
 export function finalizeStmt(stmt: Statement): Promise<any[]> {
   return new Promise((resolve, reject) => {

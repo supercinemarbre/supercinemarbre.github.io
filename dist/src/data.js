@@ -36,76 +36,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.all = exports.run = exports.finalizeStmt = exports.runStmt = exports.serialize = void 0;
-function serialize(db, callback) {
-    return new Promise(function (resolve, reject) {
-        db.serialize(function () {
-            return __awaiter(this, void 0, void 0, function () {
-                var e_1;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            _a.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, callback()];
-                        case 1:
-                            _a.sent();
-                            resolve();
-                            return [3 /*break*/, 3];
-                        case 2:
-                            e_1 = _a.sent();
-                            reject();
-                            return [3 /*break*/, 3];
-                        case 3: return [2 /*return*/];
-                    }
-                });
-            });
-        });
-    });
+exports.writeDb = exports.readDb = exports.writeScbRankings = exports.readScbRankings = exports.readSCBUrls = void 0;
+var io_1 = require("./io");
+function readSCBUrls() {
+    return io_1.readData("input/scb_urls.json");
 }
-exports.serialize = serialize;
-function runStmt(stmt, params) {
-    if (params === void 0) { params = []; }
-    return new Promise(function (resolve, reject) {
-        stmt.run(params, function (err) {
-            if (err) {
-                reject(err);
+exports.readSCBUrls = readSCBUrls;
+function readScbRankings() {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, _b, e_1;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    _c.trys.push([0, 2, , 3]);
+                    _b = (_a = Object).values;
+                    return [4 /*yield*/, io_1.readData("output/scb_rankings.json")];
+                case 1: return [2 /*return*/, _b.apply(_a, [_c.sent()])];
+                case 2:
+                    e_1 = _c.sent();
+                    return [2 /*return*/, undefined];
+                case 3: return [2 /*return*/];
             }
-            resolve();
         });
     });
 }
-exports.runStmt = runStmt;
-function finalizeStmt(stmt) {
-    return new Promise(function (resolve, reject) {
-        stmt.finalize(function (err) {
-            if (err) {
-                reject(err);
-            }
-            resolve();
-        });
-    });
+exports.readScbRankings = readScbRankings;
+function writeScbRankings(rankings) {
+    io_1.writeData("output/scb_rankings.json", rankings);
 }
-exports.finalizeStmt = finalizeStmt;
-function run(db, sql, params) {
-    if (params === void 0) { params = []; }
-    return new Promise(function (resolve, reject) {
-        db.run(sql, params, function (err) {
-            if (err) {
-                reject(err);
-            }
-            resolve();
-        });
-    });
+exports.writeScbRankings = writeScbRankings;
+function readDb() {
+    try {
+        return io_1.readData("output/db.json");
+    }
+    catch (e) {
+        return undefined;
+    }
 }
-exports.run = run;
-function all(db, sql) {
-    return new Promise(function (resolve, reject) {
-        db.all(sql, function (err, rows) {
-            if (err) {
-                reject(err);
-            }
-            resolve(rows);
-        });
-    });
+exports.readDb = readDb;
+function writeDb(movies) {
+    io_1.writeData("output/db.json", movies);
 }
-exports.all = all;
+exports.writeDb = writeDb;

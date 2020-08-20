@@ -1,32 +1,30 @@
-import { readData, writeData } from "./data-io";
+import { readData, writeData } from "./io";
+import { ImdbMovie } from "./imdb";
 
 export interface Ranking {
-  ranking: number;
-  title: string;
+  decade: string;
   episode: number;
+  title: string;
+  rawTitle: string;
+  ranking: number;
 }
 
-export interface Movie extends Ranking {
-  imdb_id: string;
-  imdb_title: string;
-  imdb_original_title: string;
-  year: number;
-}
+export interface Movie extends Ranking, Partial<ImdbMovie> { }
 
 export function readSCBUrls(): Promise<Record<string, string>> {
   return readData("input/scb_urls.json");
 }
 
-export function readDecageRankings(decade: string): Promise<Ranking[] | undefined> {
+export async function readScbRankings(): Promise<Movie[] | undefined> {
   try {
-    return readData(`output/rankings_${decade}.json`);
+    return Object.values(await readData(`output/scb_rankings.json`)) as any;
   } catch (e) {
     return undefined;
   }
 }
 
-export function writeDecageRankings(decade: string, rankings: Ranking[]) {
-  writeData(`output/rankings_${decade}.json`, rankings);
+export function writeScbRankings(rankings: Movie[]) {
+  writeData(`output/scb_rankings.json`, rankings);
 }
 
 export function readDb(): Promise<Movie[] | undefined> {

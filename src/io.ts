@@ -29,9 +29,7 @@ export function readData<T>(file: string): Promise<T> {
     const readStream = createReadStream(dataPath(file));
     const parseStream = bigJson.createParseStream();
     
-    parseStream.on('data', function(pojo) {
-      resolve(pojo);
-    });
+    parseStream.on('data', resolve);
     
     readStream.pipe(parseStream);
   })
@@ -59,7 +57,7 @@ export async function downloadGzipped(url: string, folder: string, filename: str
   }
 
   console.log(`Ungzipping ${filename}...`);
-  await ungzip(resolve(folder, gzFilename), resolve(folder, filename));
+  await ungzip(resolve(dataPath(folder), gzFilename), resolve(dataPath(folder), filename));
   console.log("Ungzipping OK");
 }
 
