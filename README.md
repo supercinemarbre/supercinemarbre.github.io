@@ -9,6 +9,10 @@ npm i
 npm start
 ```
 
+### Commandes
+
+* `npm run build` : Build JS
+* `npm run lint` : Lint des sources
 
 ## Importeur de listes
 
@@ -26,7 +30,6 @@ Le premier lancement peut être long (téléchargement et extraction de bases IM
 * `npm run start:prod` : Lancement de la version JS
 * `SKIP_SCB_INIT=true npm...` : Considérer les listes SCB comme déjà à jour
 * `SKIP_IMDB_INIT=true npm...` : Considérer la base IMDB comme déjà initialisée
-
 
 ## Feuille de route
 
