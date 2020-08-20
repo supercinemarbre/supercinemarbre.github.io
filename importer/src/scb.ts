@@ -4,10 +4,6 @@ import * as data from "./data";
 import * as imdb from "./imdb";
 
 export async function importMovieRankings() {
-  if (process.env.SKIP_SCB_INIT) {
-    return;
-  }
-
   const scbPages = await data.readSCBUrls();
   const scbRankings = await data.readScbRankings() || [];
 
@@ -37,7 +33,7 @@ export async function matchMoviesWithIMDB() {
     if (!ranking.tconst) {
       let results;
       if (patch[ranking.scbTitle]) {
-        results = await imdb.getIMDBTitleById(patch[ranking.scbTitle]);
+        results = [{movie: await imdb.getIMDBTitleById(patch[ranking.scbTitle]), distance: 0}];
       } else {
         results = await imdb.searchIMDBTitle(ranking.scbTitle);
       }
@@ -45,28 +41,24 @@ export async function matchMoviesWithIMDB() {
       const matchingResult = chooseMatchingResult(ranking, results);
       if (!matchingResult) {
         console.log(`${i}/${scbRankings.length}: No match found for ${ranking.scbTitle} among ${results.length} results`);
-        patch[ranking.scbTitle] = null;
+        if (!patch[ranking.scbTitle]) {
+          patch[ranking.scbTitle] = null;
+        }
+        data.writeScbRankingsPatch(patch);
       } else {
         console.log(`${i}/${scbRankings.length}: OK for ${ranking.scbTitle}`)
         Object.assign(ranking, matchingResult.movie);
-        if (i % 10 === 0) {
-          await data.writeScbRankings(scbRankings);
-          await data.writeScbRankingsPatch(patch);
-        }
+        await data.writeScbRankings(scbRankings);
       }
     }
     i++;
   }
-
-  await data.writeScbRankings(scbRankings);
-  await data.writeScbRankingsPatch(patch);
-
 }
 
 function chooseMatchingResult(ranking: data.Ranking, results: Array<{ movie: imdb.ImdbMovie; distance: number; }>) {
   const expectedDecade = parseInt(ranking.decade, 10);
   for (const result of results) {
-    if (!result.movie.startYear || Math.abs(expectedDecade - parseInt(ranking.decade, 10)) <= 10) {
+    if (!result.movie.startYear || Math.abs(expectedDecade - result.movie.startYear) <= 10) {
       return result;
     }
   }

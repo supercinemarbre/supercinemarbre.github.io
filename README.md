@@ -28,8 +28,8 @@ Le premier lancement peut être long (téléchargement et extraction de bases IM
 
 * `npm run build [-- -w]` : Build JS
 * `npm run start:prod` : Lancement de la version JS
-* `SKIP_SCB_INIT=true npm...` : Considérer les listes SCB comme déjà à jour
-* `SKIP_IMDB_INIT=true npm...` : Considérer la base IMDB comme déjà initialisée
+* `SCB_INIT=true npm...` : Mettre à jour les listes SCB depuis supercinebattle.fr
+* `IMDB_INIT=true npm...` : Mettre à jour les bases IMDB depuis imdb.com
 
 ## Feuille de route
 

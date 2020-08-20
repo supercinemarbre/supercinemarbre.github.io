@@ -1,7 +1,7 @@
+import download from 'download';
 import * as levenshtein from 'fast-levenshtein';
 import { downloadGzipped, readDataString, runInDb } from "./io";
 import { all, finalizeStmt, run, runStmt } from './sqlite-utils';
-import download from 'download';
 
 export interface ImdbPerson {
   nconst: string;
@@ -18,9 +18,9 @@ export interface ImdbMovie {
   primaryTitle: string;
   originalTitle: string;
   isAdult: string;
-  startYear: string;
-  endYear: string;
-  runtimeMinutes: string;
+  startYear: number;
+  endYear: number;
+  runtimeMinutes: number;
   genres: string;
 }
 
@@ -43,19 +43,25 @@ export async function searchIMDBTitle(title: string): Promise<Array<{ movie: Imd
   });
 
   if (movies.length === 0) {
-    const movie = await getIMDBSuggestion(title);
-    if (movie) {
-      return [{ distance: 0, movie }];
+    const movies = await getIMDBSuggestions(title);
+    if (movies) {
+      return movies.map(movie => ({ distance: 0, movie }));
     }
   }
 
   return movies;
 }
 
-async function getIMDBSuggestion(title: string): Promise<ImdbMovie | undefined> {
+async function getIMDBSuggestions(title: string): Promise<ImdbMovie[] | undefined> {
   try {
-    const searchString = title.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/ /g, '_').replace(/[^a-z0-9_]/g, '');
-    const resultString = await download(`https://v2.sg.media-imdb.com/suggestion/${searchString[0]}/${searchString}.json`);
+    const searchString = title.trim()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/ /g, '_')
+      .replace(/[^a-z0-9_]/g, '')
+      .slice(0, 20);
+    const imdbUrl = `https://v2.sg.media-imdb.com/suggestion/${searchString[0]}/${searchString}.json`;
+    const resultString = await download(imdbUrl);
     const result = JSON.parse(resultString.toString()) as {
       d: Array<{
         i: {
@@ -65,7 +71,14 @@ async function getIMDBSuggestion(title: string): Promise<ImdbMovie | undefined> 
       }>
     };
     if (result.d) {
-      return getIMDBTitleById(result.d[0].id);
+      const movies = [];
+      for (const suggestion of result.d.slice(0, 5)) {
+        const found = await getIMDBTitleById(suggestion.id);
+        if (found) {
+          movies.push(found);
+        }
+      }
+      return movies;
     }
   } catch (e) {
     console.warn(`Failed to search ${title} on IMDB suggestions endpoint`);
@@ -134,7 +147,7 @@ async function initializeIMDBSourceDb({
   indexesQuery: string
 }) {
   const dbFilePath = `input/imdb.${sourceName}.db`;
-  if (!imdbInitializedSources[sourceName] && !process.env.SKIP_IMDB_INIT) {
+  if (process.env.IMDB_INIT && !imdbInitializedSources[sourceName]) {
     imdbInitializedSources[sourceName] = true;
   } else {
     return dbFilePath;

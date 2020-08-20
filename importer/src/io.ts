@@ -15,7 +15,7 @@ export function readDataString(file: string) {
   }
 }
 
-export function writeDataString(file: string, data: string | Buffer) {
+export function writeDataString(file: string, data: string | Buffer): void {
   writeFileSync(dataPath(file), data);
 }
 
@@ -36,15 +36,18 @@ export function readData<T>(file: string): Promise<T> {
 }
 
 export function writeData(file: string, object: any): Promise<void> {
-  const filePath = dataPath(file);
   return new Promise((resolve) => {
+    const filePath = dataPath(file);
     if (existsSync(filePath)) {
       unlinkSync(filePath);
     }
 
-    const stringifyStream = bigJson.createStringifyStream({ body: object }, resolve);
+    const stringifyStream = bigJson.createStringifyStream({ body: object });
     const fileStream = createWriteStream(filePath, {flags: 'a'});
     stringifyStream.pipe(fileStream);
+    stringifyStream.on('end', function() {
+      resolve(undefined);
+    });
   })
 }
 
@@ -87,11 +90,10 @@ export async function runInDb<T>(file: string, callback: (db: sqlite3.Database) 
   }
 }
 
-
 function dataPath(file: string) {
   if (__filename.endsWith('.js')) {
-    return resolve(__dirname, "../../../docs/data", file);
+    return resolve(__dirname, "../../../public/data", file);
   } else {
-    return resolve(__dirname, "../../docs/data", file);
+    return resolve(__dirname, "../../public/data", file);
   }
 }

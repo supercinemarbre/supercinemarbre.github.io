@@ -27,14 +27,14 @@ export async function readScbRankings(): Promise<Movie[] | undefined> {
   }
 }
 
-export function writeScbRankings(rankings: Movie[]) {
-  writeData(`output/scb_rankings.json`, rankings);
+export function writeScbRankings(rankings: Movie[]): Promise<void> {
+  return writeData(`output/scb_rankings.json`, rankings);
 }
 
 export function readScbRankingsPatch(): Promise<Record<string, string>> {
   return readData("patch/scb_rankings_patch.json");
 }
 
-export function writeScbRankingsPatch(patch: Record<string, string>) {
+export function writeScbRankingsPatch(patch: Record<string, string>): void {
   writeDataString(`patch/scb_rankings_patch.json`, JSON.stringify(patch, null, 2));
 }
