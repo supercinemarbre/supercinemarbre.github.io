@@ -4,6 +4,10 @@ import * as data from "./data";
 import * as imdb from "./imdb";
 
 export async function importMovieRankings() {
+  if (process.env.SKIP_SCB_INIT) {
+    return;
+  }
+
   const scbPages = await data.readSCBUrls();
   const scbRankings = await data.readScbRankings() || [];
 
