@@ -32,15 +32,20 @@ export async function matchMoviesWithIMDB() {
   for (const ranking of scbRankings) {
     if (!ranking.tconst) {
       let results;
-      if (patch[ranking.scbTitle]) {
+      const hasPatch = Boolean(patch[ranking.scbTitle]);
+      if (hasPatch) {
         const patchValue = patch[ranking.scbTitle];
         const tconst = (typeof patchValue === 'string') ? patchValue : patchValue.tconst;
-        results = [{movie: await imdb.getIMDBTitleById(tconst), distance: 0}];
+        const movie = await imdb.getIMDBTitleById(tconst);
+        if (!movie) {
+          throw new Error("Unknown IMDB ID " + tconst);
+        }
+        results = [{movie, distance: 0}];
       } else {
         results = await imdb.searchIMDBTitle(ranking.scbTitle);
       }
 
-      const matchingResult = chooseMatchingResult(ranking, results);
+      const matchingResult = chooseMatchingResult(ranking, results, { acceptResultFromWrongDecade: hasPatch });
       if (!matchingResult) {
         console.log(`${i}/${scbRankings.length}: No match found for ${ranking.scbTitle} among ${results.length} results`);
         if (!patch[ranking.scbTitle]) {
@@ -61,12 +66,16 @@ export async function matchMoviesWithIMDB() {
   }
 }
 
-function chooseMatchingResult(ranking: data.Ranking, results: Array<{ movie: imdb.ImdbMovie; distance: number; }>) {
+function chooseMatchingResult(ranking: data.Ranking, results: Array<{ movie: imdb.ImdbMovie; distance: number; }>,
+    options: { acceptResultFromWrongDecade?: boolean } = {}) {
   const expectedDecade = parseInt(ranking.decade, 10);
   for (const result of results) {
     if (!result.movie.startYear || Math.abs(expectedDecade - result.movie.startYear) <= 10) {
       return result;
     }
+  }
+  if (options.acceptResultFromWrongDecade && results.length > 0) {
+    return results[0];
   }
 }
 

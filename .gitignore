@@ -24,3 +24,4 @@ pnpm-debug.log*
 
 # Custom
 public/data/input/imdb*
+dist/

@@ -46,7 +46,9 @@ export function writeData(file: string, object: any): Promise<void> {
     const fileStream = createWriteStream(filePath, {flags: 'a'});
     stringifyStream.pipe(fileStream);
     stringifyStream.on('end', function() {
-      resolve(undefined);
+      setTimeout(() => {
+        resolve(undefined);
+      }, 100); // XXX Prevent crashes with file being deleted
     });
   })
 }

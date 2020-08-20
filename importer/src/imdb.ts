@@ -61,7 +61,6 @@ async function getIMDBSuggestions(title: string): Promise<ImdbMovie[] | undefine
       .replace(/[^a-z0-9_]/g, '')
       .slice(0, 20);
     const imdbUrl = `https://v2.sg.media-imdb.com/suggestion/${searchString[0]}/${searchString}.json`;
-    console.log(imdbUrl);
     const resultString = await download(imdbUrl);
     const result = JSON.parse(resultString.toString()) as {
       d: Array<{
@@ -113,7 +112,9 @@ async function initializeIMDBTitleBasicsDb() {
       startYear INTEGER,
       runtimeMinutes TEXT,
       genres TEXT`,
-    lineFilter: line => line.includes('\tmovie\t'),
+    lineFilter: line => line.includes('\tmovie\t')
+      || line.includes('\ttvMovie\t') /* eg. SW Holiday Special */
+      || line.includes('\tvideo\t') /* eg. Fucking Kassovitz */,
     insertQuery: `INSERT INTO title_basics(
       tconst,
       primaryTitle,
