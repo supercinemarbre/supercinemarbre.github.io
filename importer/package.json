@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cross-env NODE_OPTIONS=--max-old-space-size=3000 ts-node import.ts",
     "build": "tsc",
-    "start:prod": "cross-env NODE_OPTIONS=--max-old-space-size=3000 node dist/import.js"
+    "start:prod": "cross-env NODE_OPTIONS=--max-old-space-size=3000 node dist/import.js",
+    "invalidate": "ts-node invalidate.ts"
   },
   "author": "",
   "license": "ISC",

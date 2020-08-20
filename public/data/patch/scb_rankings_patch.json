@@ -131,5 +131,39 @@
   },
   "Tron: l’héritage": "tt1104001",
   "Jason Bourne: l’héritage": "tt1194173",
-  "Si j’étais un homme": "tt5598172"
+  "Si j’étais un homme": "tt5598172",
+  "Fatal": "tt1473357",
+  "If": {
+    "scbTitle": "If....",
+    "tconst": "tt0063850"
+  },
+  "Lolita": "tt0056193",
+  "Batman": "tt0060153",
+  "Stalker": "tt0079944",
+  "Chinatown": "tt0071315",
+  "Star Wars": "tt0076759",
+  "Yakuza": "tt0073918",
+  "Obsession": "tt0074991",
+  "Amityville": "tt0078767",
+  "The Fountain": "tt9678588",
+  "Monster": "tt0340855",
+  "Alerte !": "tt0114069",
+  "Elle boit pas, elle fume pas, elle drague mais… elle cause": {
+    "scbTitle": "Elle boit pas, elle fume pas, elle drague pas, mais... elle cause !",
+    "tconst": "tt0065686"
+  },
+  "Le Magnifique": "tt0070354",
+  "M.A.S.H": "tt0066026",
+  "Baby Cart": "tt0068815",
+  "L'arnaque": "tt0070735",
+  "Les Valseuses": "tt0072353",
+  "Jumeaux": "tt0096320",
+  "La cité de la peur": "tt0109440",
+  "Thief (Le Solitaire)": {
+    "scbTitle": "Le Solitaire",
+    "tconst": "tt0083190"
+  },
+  "Les Sous doués": "tt0081541",
+  "J’ai rencontré le diable": "tt1588170",
+  "Fast & Furious 5": "tt1596343"
 }

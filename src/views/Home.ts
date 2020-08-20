@@ -13,7 +13,8 @@ export default class Home extends Vue {
   movies: Movie[] = [];
 
   async created() {
-    this.movies = await fetchMovies();
+    this.movies = (await fetchMovies())
+      .sort((a, b) => (a.startYear || 0) - (b.startYear || 0));
   }
 
 }

@@ -13,9 +13,9 @@ export interface ImdbMovie {
   primaryTitle: string;
   originalTitle: string;
   isAdult: string;
-  startYear: string;
-  endYear: string;
-  runtimeMinutes: string;
+  startYear: number;
+  endYear: number;
+  runtimeMinutes: number;
   genres: string;
 }
 
