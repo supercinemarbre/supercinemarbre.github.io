@@ -1,6 +1,7 @@
 import * as levenshtein from 'fast-levenshtein';
 import { downloadGzipped, readDataString, runInDb } from "./io";
 import { all, finalizeStmt, run, runStmt } from './sqlite-utils';
+import download from 'download';
 
 export interface ImdbPerson {
   nconst: string;
@@ -26,7 +27,7 @@ export interface ImdbMovie {
 export async function searchIMDBTitle(title: string): Promise<Array<{ movie: ImdbMovie; distance: number; }>> {
   const dbPath = await initializeIMDBTitleBasicsDb();
 
-  return runInDb(dbPath, (db) => {
+  const movies = await runInDb<Array<{ movie: ImdbMovie; distance: number; }>>(dbPath, (db) => {
     return new Promise((resolve, reject) => {
       db.all('select * from title_basics where primaryTitle LIKE ?', '%' + title + '%', (err, rows) => {
         if (err) reject(err);
@@ -37,6 +38,53 @@ export async function searchIMDBTitle(title: string): Promise<Array<{ movie: Imd
           })
           .sort((a, b) => a.distance - b.distance);
         resolve(movies);
+      })
+    })
+  });
+
+  if (movies.length === 0) {
+    const movie = await getIMDBSuggestion(title);
+    if (movie) {
+      return [{ distance: 0, movie }];
+    }
+  }
+
+  return movies;
+}
+
+async function getIMDBSuggestion(title: string): Promise<ImdbMovie | undefined> {
+  try {
+    const searchString = title.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/ /g, '_').replace(/[^a-z0-9_]/g, '');
+    const resultString = await download(`https://v2.sg.media-imdb.com/suggestion/${searchString[0]}/${searchString}.json`);
+    const result = JSON.parse(resultString.toString()) as {
+      d: Array<{
+        i: {
+          imageUrl: string;
+        },
+        id: string;
+      }>
+    };
+    if (result.d) {
+      return getIMDBTitleById(result.d[0].id);
+    }
+  } catch (e) {
+    console.warn(`Failed to search ${title} on IMDB suggestions endpoint`);
+  }
+}
+
+
+export async function getIMDBTitleById(tconst: string): Promise<ImdbMovie | undefined> {
+  const dbPath = await initializeIMDBTitleBasicsDb();
+
+  return runInDb(dbPath, (db) => {
+    return new Promise((resolve, reject) => {
+      db.all('select * from title_basics where tconst = ?', tconst, (err, rows) => {
+        if (err) reject(err);
+        if (rows.length > 0) {
+          resolve(rows[0]);
+        } else {
+          resolve(undefined);
+        }
       })
     })
   })
@@ -86,7 +134,7 @@ async function initializeIMDBSourceDb({
   indexesQuery: string
 }) {
   const dbFilePath = `input/imdb.${sourceName}.db`;
-  if (!imdbInitializedSources[sourceName] && !process.env.SKIP_INIT) {
+  if (!imdbInitializedSources[sourceName] && !process.env.SKIP_IMDB_INIT) {
     imdbInitializedSources[sourceName] = true;
   } else {
     return dbFilePath;

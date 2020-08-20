@@ -61,19 +61,18 @@ var scb = __importStar(require("./src/scb"));
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, scb.importMovieRankings()];
-            case 1:
-                _a.sent();
+                _a.trys.push([0, 2, , 3]);
+                //await scb.importMovieRankings();
                 return [4 /*yield*/, scb.matchMoviesWithIMDB()];
-            case 2:
+            case 1:
+                //await scb.importMovieRankings();
                 _a.sent();
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 3];
+            case 2:
                 e_1 = _a.sent();
                 console.error("ERROR: ", e_1, e_1.stack);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); })();

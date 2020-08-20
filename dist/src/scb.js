@@ -104,43 +104,62 @@ function importMovieRankings() {
 exports.importMovieRankings = importMovieRankings;
 function matchMoviesWithIMDB() {
     return __awaiter(this, void 0, void 0, function () {
-        var scbRankings, i, _i, scbRankings_1, ranking, results, matchingResult;
+        var scbRankings, patch, i, _i, scbRankings_1, ranking, results, matchingResult;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, data.readScbRankings()];
                 case 1:
                     scbRankings = (_a.sent()) || [];
+                    if (scbRankings.length < 1000)
+                        throw new Error('wtf'); // XXX
+                    return [4 /*yield*/, data.readScbRankingsPatch()];
+                case 2:
+                    patch = _a.sent();
                     i = 0;
                     _i = 0, scbRankings_1 = scbRankings;
-                    _a.label = 2;
-                case 2:
-                    if (!(_i < scbRankings_1.length)) return [3 /*break*/, 8];
-                    ranking = scbRankings_1[_i];
-                    if (!!ranking.tconst) return [3 /*break*/, 7];
-                    console.log("Matching " + ranking.decade + "s movie " + ranking.scbTitle);
-                    return [4 /*yield*/, imdb.searchIMDBTitle(ranking.scbTitle)];
+                    _a.label = 3;
                 case 3:
-                    results = _a.sent();
-                    matchingResult = chooseMatchingResult(ranking, results);
-                    if (!!matchingResult) return [3 /*break*/, 4];
-                    console.log(" - No match found among " + results.length + " results");
-                    return [3 /*break*/, 6];
+                    if (!(_i < scbRankings_1.length)) return [3 /*break*/, 13];
+                    ranking = scbRankings_1[_i];
+                    if (!!ranking.tconst) return [3 /*break*/, 11];
+                    results = void 0;
+                    if (!patch[ranking.scbTitle]) return [3 /*break*/, 5];
+                    return [4 /*yield*/, imdb.getIMDBTitleById(patch[ranking.scbTitle])];
                 case 4:
-                    console.log(" - OK!");
-                    Object.assign(ranking, matchingResult.movie);
-                    if (!(i % 10 === 0)) return [3 /*break*/, 6];
-                    return [4 /*yield*/, data.writeScbRankings(scbRankings)];
-                case 5:
-                    _a.sent();
-                    _a.label = 6;
+                    results = _a.sent();
+                    return [3 /*break*/, 7];
+                case 5: return [4 /*yield*/, imdb.searchIMDBTitle(ranking.scbTitle)];
                 case 6:
-                    i++;
+                    results = _a.sent();
                     _a.label = 7;
                 case 7:
-                    _i++;
-                    return [3 /*break*/, 2];
-                case 8: return [4 /*yield*/, data.writeScbRankings(scbRankings)];
+                    matchingResult = chooseMatchingResult(ranking, results);
+                    if (!!matchingResult) return [3 /*break*/, 8];
+                    console.log(i + "/" + scbRankings.length + ": No match found for " + ranking.scbTitle + " among " + results.length + " results");
+                    patch[ranking.scbTitle] = null;
+                    return [3 /*break*/, 11];
+                case 8:
+                    console.log(i + "/" + scbRankings.length + ": OK for " + ranking.scbTitle);
+                    Object.assign(ranking, matchingResult.movie);
+                    if (!(i % 10 === 0)) return [3 /*break*/, 11];
+                    return [4 /*yield*/, data.writeScbRankings(scbRankings)];
                 case 9:
+                    _a.sent();
+                    return [4 /*yield*/, data.writeScbRankingsPatch(patch)];
+                case 10:
+                    _a.sent();
+                    _a.label = 11;
+                case 11:
+                    i++;
+                    _a.label = 12;
+                case 12:
+                    _i++;
+                    return [3 /*break*/, 3];
+                case 13: return [4 /*yield*/, data.writeScbRankings(scbRankings)];
+                case 14:
+                    _a.sent();
+                    return [4 /*yield*/, data.writeScbRankingsPatch(patch)];
+                case 15:
                     _a.sent();
                     return [2 /*return*/];
             }

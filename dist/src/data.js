@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeDb = exports.readDb = exports.writeScbRankings = exports.readScbRankings = exports.readSCBUrls = void 0;
+exports.writeScbRankingsPatch = exports.readScbRankingsPatch = exports.writeScbRankings = exports.readScbRankings = exports.readSCBUrls = void 0;
 var io_1 = require("./io");
 function readSCBUrls() {
     return io_1.readData("input/scb_urls.json");
@@ -44,16 +44,23 @@ function readSCBUrls() {
 exports.readSCBUrls = readSCBUrls;
 function readScbRankings() {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, _b, e_1;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var rankings, e_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _c.trys.push([0, 2, , 3]);
-                    _b = (_a = Object).values;
+                    _a.trys.push([0, 2, , 3]);
                     return [4 /*yield*/, io_1.readData("output/scb_rankings.json")];
-                case 1: return [2 /*return*/, _b.apply(_a, [_c.sent()])];
+                case 1:
+                    rankings = _a.sent();
+                    if (Array.isArray(rankings)) {
+                        return [2 /*return*/, rankings];
+                    }
+                    else {
+                        return [2 /*return*/, Object.values(rankings)]; // XXX
+                    }
+                    return [3 /*break*/, 3];
                 case 2:
-                    e_1 = _c.sent();
+                    e_1 = _a.sent();
                     return [2 /*return*/, undefined];
                 case 3: return [2 /*return*/];
             }
@@ -65,16 +72,11 @@ function writeScbRankings(rankings) {
     io_1.writeData("output/scb_rankings.json", rankings);
 }
 exports.writeScbRankings = writeScbRankings;
-function readDb() {
-    try {
-        return io_1.readData("output/db.json");
-    }
-    catch (e) {
-        return undefined;
-    }
+function readScbRankingsPatch() {
+    return io_1.readData("patch/scb_rankings_patch.json");
 }
-exports.readDb = readDb;
-function writeDb(movies) {
-    io_1.writeData("output/db.json", movies);
+exports.readScbRankingsPatch = readScbRankingsPatch;
+function writeScbRankingsPatch(patch) {
+    io_1.writeDataString("patch/scb_rankings_patch.json", JSON.stringify(patch, null, 2));
 }
-exports.writeDb = writeDb;
+exports.writeScbRankingsPatch = writeScbRankingsPatch;

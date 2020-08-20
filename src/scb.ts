@@ -24,29 +24,38 @@ export async function importMovieRankings() {
 
 export async function matchMoviesWithIMDB() {
   const scbRankings = await data.readScbRankings() || [];
+  if (scbRankings.length < 1000) throw new Error('wtf'); // XXX
+
+  const patch = await data.readScbRankingsPatch();
 
   let i = 0;
   for (const ranking of scbRankings) {
     if (!ranking.tconst) {
-      console.log(`Matching ${ranking.decade}s movie ${ranking.scbTitle}`);
+      let results;
+      if (patch[ranking.scbTitle]) {
+        results = await imdb.getIMDBTitleById(patch[ranking.scbTitle]);
+      } else {
+        results = await imdb.searchIMDBTitle(ranking.scbTitle);
+      }
 
-      const results = await imdb.searchIMDBTitle(ranking.scbTitle);
       const matchingResult = chooseMatchingResult(ranking, results);
       if (!matchingResult) {
-        console.log(` - No match found among ${results.length} results`);
+        console.log(`${i}/${scbRankings.length}: No match found for ${ranking.scbTitle} among ${results.length} results`);
+        patch[ranking.scbTitle] = null;
       } else {
-        console.log(` - OK!`)
+        console.log(`${i}/${scbRankings.length}: OK for ${ranking.scbTitle}`)
         Object.assign(ranking, matchingResult.movie);
         if (i % 10 === 0) {
           await data.writeScbRankings(scbRankings);
+          await data.writeScbRankingsPatch(patch);
         }
       }
-      i++;
     }
-
+    i++;
   }
 
   await data.writeScbRankings(scbRankings);
+  await data.writeScbRankingsPatch(patch);
 
 }
 

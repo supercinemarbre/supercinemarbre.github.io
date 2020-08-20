@@ -15,13 +15,14 @@ Le premier lancement peut être long (téléchargement et extraction de bases IM
 
 * `npm run build [-- -w]` : Build JS
 * `npm run start:prod` : Lancement de la version JS
+* `SKIP_IMDB_INIT=true npm...` : Skip checking the IMDB sources for missing data
 
 ## Feuille de route
 
 ### V1
 
 - [x] Extraire les listes depuis supercinebattle.fr
-- [ ] Croiser les informations avec IMDB
+- [x] Croiser les informations avec IMDB
 - [ ] Compléter les informations avec OMDB (notamment les URLs d'affiches)
 - [ ] Créer une première version fonctionnelle de l'interface, avec liens IMDB
 - [ ] Corriger les films non ou mal identifiés

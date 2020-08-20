@@ -54,20 +54,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchIMDBTitle = void 0;
+exports.getIMDBTitleById = exports.searchIMDBTitle = void 0;
 var levenshtein = __importStar(require("fast-levenshtein"));
 var io_1 = require("./io");
 var sqlite_utils_1 = require("./sqlite-utils");
+var download_1 = __importDefault(require("download"));
 function searchIMDBTitle(title) {
     return __awaiter(this, void 0, void 0, function () {
-        var dbPath;
+        var dbPath, movies, movie;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, initializeIMDBTitleBasicsDb()];
                 case 1:
                     dbPath = _a.sent();
-                    return [2 /*return*/, io_1.runInDb(dbPath, function (db) {
+                    return [4 /*yield*/, io_1.runInDb(dbPath, function (db) {
                             return new Promise(function (resolve, reject) {
                                 db.all('select * from title_basics where primaryTitle LIKE ?', '%' + title + '%', function (err, rows) {
                                     if (err)
@@ -81,11 +85,74 @@ function searchIMDBTitle(title) {
                                 });
                             });
                         })];
+                case 2:
+                    movies = _a.sent();
+                    if (!(movies.length === 0)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, getIMDBSuggestion(title)];
+                case 3:
+                    movie = _a.sent();
+                    if (movie) {
+                        return [2 /*return*/, [{ distance: 0, movie: movie }]];
+                    }
+                    _a.label = 4;
+                case 4: return [2 /*return*/, movies];
             }
         });
     });
 }
 exports.searchIMDBTitle = searchIMDBTitle;
+function getIMDBSuggestion(title) {
+    return __awaiter(this, void 0, void 0, function () {
+        var searchString, resultString, result, e_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    searchString = title.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/ /g, '_').replace(/[^a-z0-9_]/g, '');
+                    return [4 /*yield*/, download_1.default("https://v2.sg.media-imdb.com/suggestion/" + searchString[0] + "/" + searchString + ".json")];
+                case 1:
+                    resultString = _a.sent();
+                    result = JSON.parse(resultString.toString());
+                    if (result.d) {
+                        return [2 /*return*/, getIMDBTitleById(result.d[0].id)];
+                    }
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_1 = _a.sent();
+                    console.warn("Failed to search " + title + " on IMDB suggestions endpoint");
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+function getIMDBTitleById(tconst) {
+    return __awaiter(this, void 0, void 0, function () {
+        var dbPath;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, initializeIMDBTitleBasicsDb()];
+                case 1:
+                    dbPath = _a.sent();
+                    return [2 /*return*/, io_1.runInDb(dbPath, function (db) {
+                            return new Promise(function (resolve, reject) {
+                                db.all('select * from title_basics where tconst = ?', tconst, function (err, rows) {
+                                    if (err)
+                                        reject(err);
+                                    if (rows.length > 0) {
+                                        resolve(rows[0]);
+                                    }
+                                    else {
+                                        resolve(undefined);
+                                    }
+                                });
+                            });
+                        })];
+            }
+        });
+    });
+}
+exports.getIMDBTitleById = getIMDBTitleById;
 function initializeIMDBTitleBasicsDb() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -105,13 +172,13 @@ var imdbInitializedSources = {};
 function initializeIMDBSourceDb(_a) {
     var sourceName = _a.sourceName, tableColumns = _a.tableColumns, lineFilter = _a.lineFilter, insertQuery = _a.insertQuery, insertParamsProvider = _a.insertParamsProvider, indexesQuery = _a.indexesQuery;
     return __awaiter(this, void 0, void 0, function () {
-        var dbFilePath, tsv, tableName, e_1;
+        var dbFilePath, tsv, tableName, e_2;
         var _this = this;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     dbFilePath = "input/imdb." + sourceName + ".db";
-                    if (!imdbInitializedSources[sourceName] && !process.env.SKIP_INIT) {
+                    if (!imdbInitializedSources[sourceName] && !process.env.SKIP_IMDB_INIT) {
                         imdbInitializedSources[sourceName] = true;
                     }
                     else {
@@ -195,8 +262,8 @@ function initializeIMDBSourceDb(_a) {
                     _b.sent();
                     return [2 /*return*/, dbFilePath];
                 case 4:
-                    e_1 = _b.sent();
-                    console.error("ERROR: ", e_1, e_1.stack);
+                    e_2 = _b.sent();
+                    console.error("ERROR: ", e_2, e_2.stack);
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];
             }
