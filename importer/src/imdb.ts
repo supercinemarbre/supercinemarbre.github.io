@@ -61,6 +61,7 @@ async function getIMDBSuggestions(title: string): Promise<ImdbMovie[] | undefine
       .replace(/[^a-z0-9_]/g, '')
       .slice(0, 20);
     const imdbUrl = `https://v2.sg.media-imdb.com/suggestion/${searchString[0]}/${searchString}.json`;
+    console.log(imdbUrl);
     const resultString = await download(imdbUrl);
     const result = JSON.parse(resultString.toString()) as {
       d: Array<{
