@@ -33,7 +33,9 @@ export async function matchMoviesWithIMDB() {
     if (!ranking.tconst) {
       let results;
       if (patch[ranking.scbTitle]) {
-        results = [{movie: await imdb.getIMDBTitleById(patch[ranking.scbTitle]), distance: 0}];
+        const patchValue = patch[ranking.scbTitle];
+        const tconst = (typeof patchValue === 'string') ? patchValue : patchValue.tconst;
+        results = [{movie: await imdb.getIMDBTitleById(tconst), distance: 0}];
       } else {
         results = await imdb.searchIMDBTitle(ranking.scbTitle);
       }
@@ -48,6 +50,10 @@ export async function matchMoviesWithIMDB() {
       } else {
         console.log(`${i}/${scbRankings.length}: OK for ${ranking.scbTitle}`)
         Object.assign(ranking, matchingResult.movie);
+        const patchValue = patch[ranking.scbTitle];
+        if (typeof patchValue !== 'string') {
+          Object.assign(ranking, patchValue);
+        }
         await data.writeScbRankings(scbRankings);
       }
     }

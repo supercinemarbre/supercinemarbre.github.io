@@ -10,6 +10,8 @@ export interface Ranking {
 
 export interface Movie extends Ranking, Partial<ImdbMovie> { }
 
+export type Patch = 'string' | Partial<Movie>;
+
 export function readSCBUrls(): Promise<Record<string, string>> {
   return readData("input/scb_urls.json");
 }
@@ -31,10 +33,10 @@ export function writeScbRankings(rankings: Movie[]): Promise<void> {
   return writeData(`output/scb_rankings.json`, rankings);
 }
 
-export function readScbRankingsPatch(): Promise<Record<string, string>> {
+export function readScbRankingsPatch(): Promise<Record<string, Patch>> {
   return readData("patch/scb_rankings_patch.json");
 }
 
-export function writeScbRankingsPatch(patch: Record<string, string>): void {
+export function writeScbRankingsPatch(patch: Record<string, Patch>): void {
   writeDataString(`patch/scb_rankings_patch.json`, JSON.stringify(patch, null, 2));
 }
