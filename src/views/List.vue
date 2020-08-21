@@ -37,10 +37,6 @@
 <script src="./List.ts" lang="ts"></script>
 
 <style lang="scss">
-h1 {
-  padding: 15px;
-}
-
 .movie-title {
   font-size: 120%;
   font-weight: bold;

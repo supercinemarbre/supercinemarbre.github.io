@@ -21,6 +21,7 @@ export function writeDataString(file: string, data: string | Buffer): void {
 
 export function readData<T>(file: string): Promise<T> {
   return new Promise((resolve) => {
+    console.log(dataPath(file))
     if (!existsSync(dataPath(file))) {
       resolve(undefined);
       return;

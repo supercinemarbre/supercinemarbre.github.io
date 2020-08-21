@@ -59,3 +59,9 @@ Le premier lancement peut être long (téléchargement et extraction de base IMD
 - [ ] Intégration audio (*)
 
 > (*) Sous réserve d'obtenir l'autorisation
+
+## Licence
+
+Copyright (C) 2020 Marwane Kalam-Alami
+
+Distribué sous licence [ISC/OpenBSD](https://fr.wikipedia.org/wiki/Licence_ISC).

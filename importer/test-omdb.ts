@@ -6,7 +6,7 @@ import * as scb from "./src/scb";
   try {
     const movies = await scb.readMovieRankings();
     const testMovie = movies.filter(movie => movie.primaryTitle === "The Matrix");
-    await omdb.synchronizeWithIMDB(testMovie);
+    await omdb.synchronizeWithOMDB(testMovie);
   } catch (e) {
     console.error("ERROR: ", e, e.stack);
   }

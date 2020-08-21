@@ -8,6 +8,7 @@
         <SidebarLink to="/1990" icon="mdi-numeric-9-box-multiple" label="Années 1990" />
         <SidebarLink to="/2000" icon="mdi-numeric-0-box-multiple" label="Années 2000" />
         <SidebarLink to="/2010" icon="mdi-numeric-1-box-multiple" label="Années 2010" />
+        <SidebarLink to="/about" icon="mdi-information-outline" label="A propos" />
       </v-list>
     </v-navigation-drawer>
 
@@ -15,7 +16,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <a id="app-logo" to="/">
-          <img src="logo.png" title="Super Ciné Marbre" />
+          <img src="/img/logo.png" title="Super Ciné Marbre" />
         </a>
       </v-toolbar-title>
     </v-app-bar>
@@ -27,7 +28,7 @@
     </v-main>
 
     <v-footer app>
-      <span>Utilise des informations de <a href="http://www.imdb.com">IMDb</a> avec leur permission. Utilise des données de <a href="http://www.omdbapi.com/">OMDB</a> sous licence CC BY-NC 4.0.</span>
+      <a style="margin-right: 15px" href="https://github.com/mkalam-alami/supercinemarbre">Contribuez au projet sur Github <v-icon>mdi-github-circle</v-icon></a> 
     </v-footer>
   </v-app>
 </template>

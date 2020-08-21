@@ -9,7 +9,7 @@
   }
 
   & .v-toolbar__content {
-    background: url('assets/bgmarbre.jpg');
+    background: url('/img/bgmarbre.jpg');
   }
 
   & .v-main {
@@ -18,6 +18,18 @@
 
   & .theme--dark.v-data-table > .v-data-table__wrapper > table > tbody > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
     background: rgba(255, 255, 255, 0.1);
+  }
+
+  & .container > div > h1 {
+    margin: 15px;
+  }
+
+  & .container > div > h1,
+    & .container > div > h2,
+    & .container > div > p,
+    & .container > div > ul {
+    margin-left: 15px;
+    margin-right: 15px;
   }
 }
 

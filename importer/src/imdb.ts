@@ -24,7 +24,7 @@ export interface ImdbMovie {
 }
 
 export async function synchronizeWithIMDB(rankings: Movie[]) {
-  const patch = await scb.readMoviePatch();
+  const patch = await scb.readMoviesPatch();
 
   let i = 0;
   for (const ranking of rankings) {
@@ -49,7 +49,7 @@ export async function synchronizeWithIMDB(rankings: Movie[]) {
         if (!patch[ranking.scbTitle]) {
           patch[ranking.scbTitle] = null;
         }
-        scb.writeMoviePatch(patch);
+        scb.writeMoviesPatch(patch);
       } else {
         console.log(`${i}/${rankings.length}: OK for ${ranking.scbTitle}`)
         Object.assign(ranking, matchingResult);

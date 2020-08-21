@@ -6,7 +6,7 @@ import { Movie } from "./types";
 export type MoviePatch = 'string' | Partial<Movie>;
 
 export function readListUrls(): Promise<Record<string, string>> {
-  return readData("input/scb_urls.json");
+  return readData("scb_urls.json");
 }
 
 export async function readMovieRankings(): Promise<Movie[] | undefined> {
@@ -26,12 +26,12 @@ export function writeMovieRankings(rankings: Movie[]): Promise<void> {
   return writeData(`../../public/scb_rankings.json`, rankings);
 }
 
-export function readMoviePatch(): Promise<Record<string, MoviePatch>> {
-  return readData("patch/scb_rankings_patch.json");
+export function readMoviesPatch(): Promise<Record<string, MoviePatch>> {
+  return readData("scb_rankings_patch.json");
 }
 
-export function writeMoviePatch(patch: Record<string, MoviePatch>): void {
-  writeDataString(`patch/scb_rankings_patch.json`, JSON.stringify(patch, null, 2));
+export function writeMoviesPatch(patch: Record<string, MoviePatch>): void {
+  writeDataString(`scb_rankings_patch.json`, JSON.stringify(patch, null, 2));
 }
 
 export async function importMovieRankings(): Promise<Movie[]> {

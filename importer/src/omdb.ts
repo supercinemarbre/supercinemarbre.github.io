@@ -43,7 +43,7 @@ export async function synchronizeWithOMDB(rankings: Movie[]) {
     Get a free key at http://www.omdbapi.com'
   `;
 
-  const patch = await scb.readMoviePatch();
+  const patch = await scb.readMoviesPatch();
 
   let i = 0;
   for (const ranking of rankings) {
