@@ -31,7 +31,7 @@ export async function matchMoviesWithIMDB() {
   let i = 0;
   for (const ranking of scbRankings) {
     if (!ranking.tconst) {
-      let results;
+      let results: imdb.ImdbMovie[];
       const hasPatch = Boolean(patch[ranking.scbTitle]);
       if (hasPatch) {
         const patchValue = patch[ranking.scbTitle];
@@ -40,9 +40,9 @@ export async function matchMoviesWithIMDB() {
         if (!movie) {
           throw new Error("Unknown IMDB ID " + tconst);
         }
-        results = [{movie, distance: 0}];
+        results = [movie];
       } else {
-        results = await imdb.searchIMDBTitle(ranking.scbTitle);
+        results = await imdb.getIMDBSuggestions(ranking.scbTitle);
       }
 
       const matchingResult = chooseMatchingResult(ranking, results, { acceptResultFromWrongDecade: hasPatch });
@@ -54,7 +54,7 @@ export async function matchMoviesWithIMDB() {
         data.writeScbRankingsPatch(patch);
       } else {
         console.log(`${i}/${scbRankings.length}: OK for ${ranking.scbTitle}`)
-        Object.assign(ranking, matchingResult.movie);
+        Object.assign(ranking, matchingResult);
         const patchValue = patch[ranking.scbTitle];
         if (typeof patchValue !== 'string') {
           Object.assign(ranking, patchValue);
@@ -66,16 +66,21 @@ export async function matchMoviesWithIMDB() {
   }
 }
 
-function chooseMatchingResult(ranking: data.Ranking, results: Array<{ movie: imdb.ImdbMovie; distance: number; }>,
+function chooseMatchingResult(ranking: data.Ranking, results: imdb.ImdbMovie[],
     options: { acceptResultFromWrongDecade?: boolean } = {}) {
   const expectedDecade = parseInt(ranking.decade, 10);
   for (const result of results) {
-    if (!result.movie.startYear || Math.abs(expectedDecade - result.movie.startYear) <= 10) {
+    if (result.startYear && Math.abs(expectedDecade - result.startYear) <= 10) {
       return result;
     }
   }
   if (options.acceptResultFromWrongDecade && results.length > 0) {
     return results[0];
+  } else {
+    const resultsWithoutDate = results.filter(result => !result.startYear);
+    if (resultsWithoutDate.length > 0) {
+      return resultsWithoutDate[0];
+    }
   }
 }
 

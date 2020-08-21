@@ -5,6 +5,7 @@ export interface Ranking {
   episode: number;
   scbTitle: string;
   ranking: number;
+  comment?: string;
 }
 
 export interface ImdbMovie {

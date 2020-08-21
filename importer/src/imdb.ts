@@ -1,5 +1,4 @@
 import download from 'download';
-import * as levenshtein from 'fast-levenshtein';
 import { downloadGzipped, readDataString, runInDb } from "./io";
 import { all, finalizeStmt, run, runStmt } from './sqlite-utils';
 
@@ -24,35 +23,7 @@ export interface ImdbMovie {
   genres: string;
 }
 
-export async function searchIMDBTitle(title: string): Promise<Array<{ movie: ImdbMovie; distance: number; }>> {
-  const dbPath = await initializeIMDBTitleBasicsDb();
-
-  const movies = await runInDb<Array<{ movie: ImdbMovie; distance: number; }>>(dbPath, (db) => {
-    return new Promise((resolve, reject) => {
-      db.all('select * from title_basics where primaryTitle LIKE ?', '%' + title + '%', (err, rows) => {
-        if (err) reject(err);
-
-        const movies = rows
-          .map((movie: ImdbMovie) => {
-            return { movie, distance: levenshtein.get(movie.primaryTitle, title, { useCollator: true }) };
-          })
-          .sort((a, b) => a.distance - b.distance);
-        resolve(movies);
-      })
-    })
-  });
-
-  if (movies.length === 0) {
-    const movies = await getIMDBSuggestions(title);
-    if (movies) {
-      return movies.map(movie => ({ distance: 0, movie }));
-    }
-  }
-
-  return movies;
-}
-
-async function getIMDBSuggestions(title: string): Promise<ImdbMovie[] | undefined> {
+export async function getIMDBSuggestions(title: string): Promise<ImdbMovie[] | undefined> {
   try {
     const searchString = title.trim()
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "")

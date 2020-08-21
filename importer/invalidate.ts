@@ -1,26 +1,28 @@
 import { readScbRankings, writeScbRankings } from "./src/data";
 
-const movieName = process.argv[2];
+const movieNames = process.argv.slice(2)
+  .map(movieName => movieName.replace(/'/g, '’'));
 
-console.log(`Invalidating ${movieName}...`);
+console.log(`Invalidating ${movieNames.join(', ')}...`);
 
 (async () => {
   const movies = await readScbRankings();
-  let found = false;
+  let found = [];
 
   for (const movie of movies) {
-    if (movie.scbTitle === movieName) {
-      found = true;
+    if (movieNames.includes(movie.scbTitle)) {
+      found.push(movie.scbTitle);
       delete movie.tconst;
       delete movie.primaryTitle;
       delete movie.startYear;
     }
   }
 
-  if (found) {
+  if (found.length === movieNames.length) {
     await writeScbRankings(movies);
     console.log("Done");
   } else {
-    console.error("Movie not found");
+    const notFound = movieNames.filter(movieName => !found.includes(movieName));
+    console.error(`Movie not found: ${notFound.join(', ')}`);
   }
 })();

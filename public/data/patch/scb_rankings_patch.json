@@ -145,7 +145,7 @@
   "Yakuza": "tt0073918",
   "Obsession": "tt0074991",
   "Amityville": "tt0078767",
-  "The Fountain": "tt9678588",
+  "The Fountain": "tt0414993",
   "Monster": "tt0340855",
   "Alerte !": "tt0114069",
   "Elle boit pas, elle fume pas, elle drague mais… elle cause": {
@@ -165,5 +165,49 @@
   },
   "Les Sous doués": "tt0081541",
   "J’ai rencontré le diable": "tt1588170",
-  "Fast & Furious 5": "tt1596343"
+  "Fast & Furious 5": "tt1596343",
+  "Reel Steal": {
+    "scbTitle": "Real Steel",
+    "tconst": "tt0433035"
+  },
+  "Possessions": {
+    "scbTitle": "Possession",
+    "tconst": "tt0082933"
+  },
+  "Legends": {
+    "scbTitle": "Legend",
+    "tconst": "tt0089469"
+  },
+  "L’impasse": "tt0106519",
+  "Cartouche": "tt0055832",
+  "Spy": "tt3079380",
+  "Unstoppable": "tt0477080",
+  "La guerre des mondes": "tt0407304",
+  "Le livre d’Eli": "tt1037705",
+  "La plage": "tt0163978",
+  "T’aime": "tt0224209",
+  "Indigènes": "tt0444182",
+  "Un secret" : "tt0490234",
+  "Les 11 Commandements": "tt0386695",
+  "Predictions": {
+    "scbTitle": "Prédictions",
+    "tconst": "tt0448011"
+  },
+  "Smoke": "tt0114478",
+  "Scream": "tt0117571",
+  "ID4": {
+    "scbTitle": "Independence Day",
+    "tconst": "tt0116629"
+  },
+  "Nostalghia": "tt0086022",
+  "Ghostbusters 2": "tt0097428",
+  "Back to the Future 2": "tt0096874",
+  "Pulsions": "tt0080661",
+  "Retour vers le futur 3": "tt0099088",
+  "Tiger on the Beat": "tt0095491",
+  "Bouge !": "tt0118757",
+  "Dragon Ball Z Le Film": {
+    "tconst": "tt0142236",
+    "comment": "La sortie cinéma en France était composée de Fusions + L’Attaque du dragon"
+  }
 }
