@@ -23,6 +23,6 @@ export interface ImdbMovie {
 export interface Movie extends Ranking, Partial<ImdbMovie> { }
 
 export async function fetchMovies(): Promise<Movie[]> {
-  const response = await axios.get("data/output/scb_rankings.json", { responseType: "json" });
+  const response = await axios.get("scb_rankings.json", { responseType: "json" });
   return response.data;
 }

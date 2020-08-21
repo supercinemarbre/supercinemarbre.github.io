@@ -23,5 +23,5 @@ pnpm-debug.log*
 *.sw?
 
 # Custom
-public/data/input/imdb*
+importer/data/imdb*
 dist/

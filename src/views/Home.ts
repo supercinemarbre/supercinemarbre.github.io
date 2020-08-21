@@ -15,6 +15,7 @@ export default class Home extends Vue {
   async created() {
     this.movies = (await fetchMovies())
       .sort((a, b) => (a.startYear || 0) - (b.startYear || 0));
+    this.state = 'loaded';
   }
 
 }

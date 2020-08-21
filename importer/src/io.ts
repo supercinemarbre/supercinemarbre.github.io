@@ -94,8 +94,8 @@ export async function runInDb<T>(file: string, callback: (db: sqlite3.Database) 
 
 function dataPath(file: string) {
   if (__filename.endsWith('.js')) {
-    return resolve(__dirname, "../../../public/data", file);
+    return resolve(__dirname, "../../data", file);
   } else {
-    return resolve(__dirname, "../../public/data", file);
+    return resolve(__dirname, "../data", file);
   }
 }

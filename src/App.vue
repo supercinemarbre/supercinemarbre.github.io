@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-cloak>
    <!-- <div id="nav">
       <router-link to="/">Home</router-link>
     </div> -->
@@ -8,4 +8,7 @@
 </template>
 
 <style lang="scss">
+[v-cloak] {
+  display: none;
+}
 </style>
