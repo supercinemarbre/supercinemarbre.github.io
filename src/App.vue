@@ -22,9 +22,9 @@
       </v-container>
     </v-main>
 
-    <!--<v-footer app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>-->
+    <v-footer app>
+      <span>Utilise des informations de <a href="http://www.imdb.com">IMDb</a> avec leur permission. Utilise des données de <a href="http://www.omdbapi.com/">OMDB</a> sous licence CC BY-NC 4.0.</span>
+    </v-footer>
   </v-app>
 </template>
 

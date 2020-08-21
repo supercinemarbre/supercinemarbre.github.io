@@ -1,4 +1,5 @@
-import { fetchMovies, Movie } from '@/services/api.service';
+import { fetchMovies } from '@/services/api.service';
+import { Movie } from '@/types';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
 @Component
@@ -6,7 +7,7 @@ export default class Home extends Vue {
 
   currentDecade?: string = '';
   state: 'loading' | 'loaded' = 'loading';
-  allMovies: Movie[] = [];
+  allMovies: Movies[] = [];
 
   async created() {
     this.allMovies = await fetchMovies();
