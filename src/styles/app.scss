@@ -1,0 +1,10 @@
+#app {
+  & a {
+    color: #7ec6ff;
+    text-decoration: none;
+
+    &:hover {
+      color: white;
+    }
+  }
+}

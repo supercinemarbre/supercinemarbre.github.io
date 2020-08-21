@@ -1,4 +1,4 @@
-# Super Cine Marble
+# Super Cine Marbre
 
 Projet de site pour exploration des listes [Super Cine Battle](https://www.supercinebattle.fr/).
 
@@ -39,8 +39,8 @@ Le premier lancement peut être long (téléchargement et extraction de bases IM
 - [x] Extraire les listes depuis supercinebattle.fr
 - [x] Croiser les informations avec IMDB
 - [x] Corriger les films non ou mal identifiés
+- [x] Créer une première version fonctionnelle de l'interface, avec liens IMDB
 - [ ] Compléter les informations avec OMDB (notamment les URLs d'affiches)
-- [ ] Créer une première version fonctionnelle de l'interface, avec liens IMDB
 
 ### Backlog
 
