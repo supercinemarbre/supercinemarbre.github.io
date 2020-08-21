@@ -1,10 +1,10 @@
-import { Movie } from "./types";
-import * as scb from "./scb";
-import { readFileSync } from "fs";
-import { resolve } from "path";
 import download from "download";
+import * as data from "./io";
+import * as scb from "./scb";
+import { Movie } from "./types";
+import { type } from "os";
 
-const OMDB_API_KEY = readApiKey();
+const OMDB_API_KEY = data.readApiKey();
 
 interface OmdbMovie {
   Title: string;
@@ -37,41 +37,64 @@ interface OmdbMovie {
   Response: "True" | any;
 }
 
-export async function synchronizeWithOMDB(rankings: Movie[]) {
+export async function synchronizeWithOMDB(sublist?: Movie[]) {
   if (!OMDB_API_KEY) return `
     Cannot synchronize with OMDB, an API key must first be set in the importer root directory, in a file called "omdbapikey".
     Get a free key at http://www.omdbapi.com'
   `;
 
+  console.log("Synchronizing rankings with OMDB");
+  const rankings = sublist ?? await scb.readMovieRankings();
   const patch = await scb.readMoviesPatch();
 
-  let i = 0;
+  let i = 1;
   for (const ranking of rankings) {
     if (!ranking.imdbRating) {
       const omdbString = await download(`http://www.omdbapi.com/?i=${ranking.tconst}&apikey=${OMDB_API_KEY}`);
       const omdbMovie = JSON.parse(omdbString.toString()) as OmdbMovie;
       if (omdbMovie.Response === "True") {
+        Object.keys(omdbMovie).forEach(key => {
+          if (omdbMovie[key] === 'N/A') {
+            omdbMovie[key] = '';
+          }
+        });
+
+        ranking.posterUrl = omdbMovie.Poster;
         ranking.imdbRating = parseFloat(omdbMovie.imdbRating);
         ranking.imdbVotes = parseInt(omdbMovie.imdbVotes.replace(/,/g, ''));
+        ranking.metascore = parseInt(omdbMovie.Metascore, 10);
+
+        const rottenTomatoesRating = omdbMovie.Ratings.find(r => r.Source === "Rotten Tomatoes")?.Value;
+        ranking.rottenTomatoesRating = rottenTomatoesRating ? parseInt(rottenTomatoesRating, 10) : undefined;
+        ranking.usaRating = omdbMovie.Rated;
         ranking.directors = omdbMovie.Actors.split(', ');
         ranking.writers = omdbMovie.Actors.split(', ');
         ranking.actors = omdbMovie.Actors.split(', ');
-        // await scb.writeMovieRankings(rankings);
-        console.log(`${i}/${rankings.length}: OK for ${ranking.scbTitle}`);
+        ranking.production = omdbMovie.Production;
+
+        if (omdbMovie.Released) {
+          const releaseDateWithOffset = new Date(omdbMovie.Released);
+          const releaseDate = new Date(releaseDateWithOffset.getTime() - releaseDateWithOffset.getTimezoneOffset() * 60000);
+          ranking.releaseDate = releaseDate.toISOString();
+        }
+        ranking.country = omdbMovie.Country;
+        ranking.language = omdbMovie.Language;
+        if (patch[ranking.tconst] && typeof patch[ranking.tconst] === 'object') {
+          Object.assign(ranking, patch[ranking.tconst]);
+        }
+
+        if (!sublist) {
+          await scb.writeMovieRankings(rankings);
+        }
+        console.log(` - ${i}/${rankings.length}: OK for ${ranking.scbTitle}`);
       } else {
-        console.log(`${i}/${rankings.length}: ${ranking.scbTitle} not found in OMDB`);
+        console.log(` - ${i}/${rankings.length}: ${ranking.scbTitle} not found in OMDB`);
       }
     }
     i++;
   }
 
-  // await scb.writeMovieRankings(rankings);
-}
-
-function readApiKey() {
-  try {
-    return readFileSync(resolve(__dirname, "../omdbapikey")).toString().trim();
-  } catch (e) {
-    return undefined;
+  if (!sublist) {
+    await scb.writeMovieRankings(rankings);
   }
 }

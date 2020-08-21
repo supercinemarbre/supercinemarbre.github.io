@@ -27,6 +27,11 @@
         <b v-if="!!currentDecade">{{ item.ranking }}</b>
         <span v-if="!currentDecade">{{ item.ranking }} (années {{ item.decade }})</span>
       </template>
+      <template v-slot:item.posterUrl="{ item }">
+        <a v-if="item.posterUrl" class="movie-poster" :href="'https://www.imdb.com/title/' + item.tconst">
+          <v-img :src="item.posterUrl" width="70" aspect-ratio="1" />
+        </a>
+      </template>
       <template v-slot:item.primaryTitle="{ item }">
         <a class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.primaryTitle }}</a>
       </template>

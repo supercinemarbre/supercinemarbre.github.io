@@ -44,6 +44,7 @@ export default class Home extends Vue {
       headers.push({ text: "", value: "ranking" });
     }
     headers = headers.concat([
+      { text: "Poster", value: "posterUrl", align: "center" },
       { text: "Titre", value: "primaryTitle" },
       { text: "Nom Super Ciné Battle", value: "scbTitle" },
       { text: "Année", value: "startYear" },

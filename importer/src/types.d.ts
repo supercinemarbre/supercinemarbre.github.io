@@ -71,7 +71,7 @@ export interface Movie {
   /**
    * Rotten Tomatoes rating, in percents (from OMDB)
    */
-  rottenTomatorsRating?: number;
+  rottenTomatoesRating?: number;
   /**
    * USA age rating (from OMDB)
    */

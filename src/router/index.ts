@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 
   const routes: Array<RouteConfig> = [
     { path: '/', name: 'Tous les films', component: List },
+    { path: '/1960', name: 'Années 1960', component: List, meta: { decade: "1960" } },
     { path: '/1970', name: 'Années 1970', component: List, meta: { decade: "1970" } },
     { path: '/1980', name: 'Années 1980', component: List, meta: { decade: "1980" } },
     { path: '/1990', name: 'Années 1990', component: List, meta: { decade: "1990" } },

@@ -1,4 +1,4 @@
-# Super Cine Marbre
+# <img src="https://raw.githubusercontent.com/mkalam-alami/supercinemarbre/master/public/img/logo.png" width="300">  
 
 Projet de site pour exploration des listes [Super Cine Battle](https://www.supercinebattle.fr/).
 

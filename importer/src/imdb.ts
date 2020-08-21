@@ -23,7 +23,9 @@ export interface ImdbMovie {
   genres: string;
 }
 
-export async function synchronizeWithIMDB(rankings: Movie[]) {
+export async function synchronizeWithIMDB(sublist?: Movie[]) {
+  console.log("Synchronizing rankings with IMDB");
+  const rankings = sublist ?? await scb.readMovieRankings();
   const patch = await scb.readMoviesPatch();
 
   let i = 0;
@@ -45,19 +47,23 @@ export async function synchronizeWithIMDB(rankings: Movie[]) {
 
       const matchingResult = chooseMatchingResult(ranking, results, { acceptResultFromWrongDecade: hasPatch });
       if (!matchingResult) {
-        console.log(`${i}/${rankings.length}: No match found for ${ranking.scbTitle} among ${results.length} results`);
+        console.log(` - ${i}/${rankings.length}: No match found for ${ranking.scbTitle} among ${results.length} results`);
         if (!patch[ranking.scbTitle]) {
           patch[ranking.scbTitle] = null;
         }
-        scb.writeMoviesPatch(patch);
+        if (!sublist) {
+          await scb.writeMoviesPatch(patch);
+        }
       } else {
-        console.log(`${i}/${rankings.length}: OK for ${ranking.scbTitle}`)
+        console.log(` - ${i}/${rankings.length}: OK for ${ranking.scbTitle}`)
         Object.assign(ranking, matchingResult);
         const patchValue = patch[ranking.scbTitle];
         if (typeof patchValue !== 'string') {
           Object.assign(ranking, patchValue);
         }
-        await scb.writeMovieRankings(rankings);
+        if (!sublist) {
+          await scb.writeMovieRankings(rankings);
+        }
       }
     }
     i++;

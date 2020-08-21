@@ -21,7 +21,6 @@ export function writeDataString(file: string, data: string | Buffer): void {
 
 export function readData<T>(file: string): Promise<T> {
   return new Promise((resolve) => {
-    console.log(dataPath(file))
     if (!existsSync(dataPath(file))) {
       resolve(undefined);
       return;
@@ -86,6 +85,14 @@ export async function runInDb<T>(file: string, callback: (db: sqlite3.Database) 
     return callback(db);
   } finally {
     db.close();
+  }
+}
+
+export function readApiKey() {
+  try {
+    return readFileSync(dataPath("omdbapikey")).toString().trim();
+  } catch (e) {
+    return undefined;
   }
 }
 
