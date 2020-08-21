@@ -177,7 +177,7 @@ async function initializeIMDBSourceDb({
   insertParamsProvider: (values: any[]) => any[],
   indexesQuery: string
 }) {
-  const dbFilePath = `input/imdb.${sourceName}.db`;
+  const dbFilePath = `imdb.${sourceName}.db`;
   if (process.env.IMDB_INIT && !imdbInitializedSources[sourceName]) {
     imdbInitializedSources[sourceName] = true;
   } else {
@@ -236,10 +236,10 @@ async function initializeIMDBSourceDb({
 }
 
 async function readIMDBSourceAsTSV(sourceFileName: string): Promise<string> {
-  let tsv = readDataString(`input/imdb.${sourceFileName}.tsv`);
+  let tsv = readDataString(`imdb.${sourceFileName}.tsv`);
   if (!tsv) {
-    await downloadGzipped(`https://datasets.imdbws.com/${sourceFileName}.tsv.gz`, 'input', `imdb.${sourceFileName}.tsv`);
-    tsv = readDataString(`input/imdb.${sourceFileName}.tsv`);
+    await downloadGzipped(`https://datasets.imdbws.com/${sourceFileName}.tsv.gz`, `imdb.${sourceFileName}.tsv`);
+    tsv = readDataString(`imdb.${sourceFileName}.tsv`);
   }
   return tsv;
 }

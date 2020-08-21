@@ -54,17 +54,18 @@ export function writeData(file: string, object: any): Promise<void> {
   })
 }
 
-export async function downloadGzipped(url: string, folder: string, filename: string) {
+export async function downloadGzipped(url: string, filename: string) {
+  const dataFolder = dataPath('.');
   const gzFilename = filename + ".gz";
-  if (!existsSync(resolve(dataPath(folder), gzFilename))) {
+  if (!existsSync(dataPath(gzFilename))) {
     console.log(`Downloading ${filename}...`);
-    await download(url, dataPath(folder), { filename: gzFilename });
+    await download(url, dataFolder, { filename: gzFilename });
     console.log("Download OK");
   }
 
   console.log(`Ungzipping ${filename}...`);
-  const readStream = createReadStream(resolve(dataPath(folder), gzFilename));
-  const writeStream = createWriteStream(resolve(dataPath(folder), filename));
+  const readStream = createReadStream(dataPath(gzFilename));
+  const writeStream = createWriteStream(dataPath(filename));
   await promisify(pipeline)(readStream, createGunzip(), writeStream);
   console.log("Ungzipping OK");
 }
