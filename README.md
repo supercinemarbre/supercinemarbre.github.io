@@ -40,7 +40,8 @@ Le premier lancement peut être long (téléchargement et extraction de bases IM
 - [x] Croiser les informations avec IMDB
 - [x] Corriger les films non ou mal identifiés
 - [x] Créer une première version fonctionnelle de l'interface, avec liens IMDB
-- [ ] Compléter les informations avec OMDB (notamment les URLs d'affiches)
+- [ ] Compléter les informations avec OMDB (notamment URLs d'affiches, classements, titre français)
+- [ ] Mettre au propre
 
 ### Backlog
 

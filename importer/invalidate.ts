@@ -1,4 +1,4 @@
-import { readScbRankings, writeScbRankings } from "./src/data";
+import * as scb from "./src/scb";
 
 const movieNames = process.argv.slice(2)
   .map(movieName => movieName.replace(/'/g, '’'));
@@ -6,7 +6,7 @@ const movieNames = process.argv.slice(2)
 console.log(`Invalidating ${movieNames.join(', ')}...`);
 
 (async () => {
-  const movies = await readScbRankings();
+  const movies = await scb.readMovieRankings();
   let found = [];
 
   for (const movie of movies) {
@@ -19,7 +19,7 @@ console.log(`Invalidating ${movieNames.join(', ')}...`);
   }
 
   if (found.length === movieNames.length) {
-    await writeScbRankings(movies);
+    await scb.writeMovieRankings(movies);
     console.log("Done");
   } else {
     const notFound = movieNames.filter(movieName => !found.includes(movieName));

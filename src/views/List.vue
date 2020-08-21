@@ -9,18 +9,18 @@
       <table>
         <tr>
           <th v-if="currentDecade"></th>
-          <th>Titre</th>
-          <th class="test">Nom Super Ciné Battle</th>
+          <th class="left">Titre</th>
+          <th class="left test">Nom Super Ciné Battle</th>
           <th>Année</th>
+          <th>Episode</th>
           <th v-if="!currentDecade">Classement</th>
         </tr>
         <tr v-for="movie in movies" :key="movie.tconst + movie.scbTitle">
           <td v-if="currentDecade"><b>{{ movie.ranking }}</b></td>
-          <td>
-            <a v-if="movie.tconst" :href="'https://www.imdb.com/title/' + movie.tconst">{{ movie.primaryTitle }}</a>
-          </td>
-          <td class="test">{{ movie.scbTitle }}</td>
+          <td class="left"><a v-if="movie.tconst" :href="'https://www.imdb.com/title/' + movie.tconst">{{ movie.primaryTitle }}</a></td>
+          <td class="left test">{{ movie.scbTitle }}</td>
           <td>{{ movie.startYear }}</td>
+          <td>{{ movie.episode }}</td>
           <td v-if="!currentDecade">{{ movie.ranking }}</td>
         </tr>
       </table>
@@ -33,10 +33,14 @@
 <style lang="scss">
 td, th {
   padding: 5px;
-  text-align: left;
   font-size: 18px;
   min-width: 50px;
   max-width: 400px;
+  text-align: center;
+}
+
+.left {
+  text-align: left;
 }
 
 .test {

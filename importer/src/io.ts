@@ -62,16 +62,11 @@ export async function downloadGzipped(url: string, folder: string, filename: str
   }
 
   console.log(`Ungzipping ${filename}...`);
-  await ungzip(resolve(dataPath(folder), gzFilename), resolve(dataPath(folder), filename));
+  const readStream = createReadStream(resolve(dataPath(folder), gzFilename));
+  const writeStream = createWriteStream(resolve(dataPath(folder), filename));
+  await promisify(pipeline)(readStream, createGunzip(), writeStream);
   console.log("Ungzipping OK");
 }
-
-async function ungzip(fromFile: string, toFile: string) {
-  const readStream = createReadStream(dataPath(fromFile));
-  const writeStream = createWriteStream(dataPath(toFile));
-  await promisify(pipeline)(readStream, createGunzip(), writeStream);
-}
-
 
 export async function runInDb<T>(file: string, callback: (db: sqlite3.Database) => Promise<T>) {
   let db = new sqlite3.Database(dataPath(file));

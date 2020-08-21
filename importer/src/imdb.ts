@@ -1,6 +1,8 @@
 import download from 'download';
 import { downloadGzipped, readDataString, runInDb } from "./io";
+import * as scb from "./scb";
 import { all, finalizeStmt, run, runStmt } from './sqlite-utils';
+import { Movie } from './types';
 
 export interface ImdbPerson {
   nconst: string;
@@ -16,14 +18,71 @@ export interface ImdbMovie {
   titleType: string;
   primaryTitle: string;
   originalTitle: string;
-  isAdult: string;
   startYear: number;
-  endYear: number;
   runtimeMinutes: number;
   genres: string;
 }
 
-export async function getIMDBSuggestions(title: string): Promise<ImdbMovie[] | undefined> {
+export async function synchronizeWithIMDB(rankings: Movie[]) {
+  const patch = await scb.readMoviePatch();
+
+  let i = 0;
+  for (const ranking of rankings) {
+    if (!ranking.tconst) {
+      let results: ImdbMovie[];
+      const hasPatch = Boolean(patch[ranking.scbTitle]);
+      if (hasPatch) {
+        const patchValue = patch[ranking.scbTitle];
+        const tconst = (typeof patchValue === 'string') ? patchValue : patchValue.tconst;
+        const movie = await getIMDBTitleById(tconst);
+        if (!movie) {
+          throw new Error("Unknown IMDB ID " + tconst);
+        }
+        results = [movie];
+      } else {
+        results = await getIMDBSuggestions(ranking.scbTitle);
+      }
+
+      const matchingResult = chooseMatchingResult(ranking, results, { acceptResultFromWrongDecade: hasPatch });
+      if (!matchingResult) {
+        console.log(`${i}/${rankings.length}: No match found for ${ranking.scbTitle} among ${results.length} results`);
+        if (!patch[ranking.scbTitle]) {
+          patch[ranking.scbTitle] = null;
+        }
+        scb.writeMoviePatch(patch);
+      } else {
+        console.log(`${i}/${rankings.length}: OK for ${ranking.scbTitle}`)
+        Object.assign(ranking, matchingResult);
+        const patchValue = patch[ranking.scbTitle];
+        if (typeof patchValue !== 'string') {
+          Object.assign(ranking, patchValue);
+        }
+        await scb.writeMovieRankings(rankings);
+      }
+    }
+    i++;
+  }
+}
+
+function chooseMatchingResult(ranking: Movie, results: ImdbMovie[],
+  options: { acceptResultFromWrongDecade?: boolean } = {}) {
+const expectedDecade = parseInt(ranking.decade, 10);
+for (const result of results) {
+  if (result.startYear && Math.abs(expectedDecade - result.startYear) <= 10) {
+    return result;
+  }
+}
+if (options.acceptResultFromWrongDecade && results.length > 0) {
+  return results[0];
+} else {
+  const resultsWithoutDate = results.filter(result => !result.startYear);
+  if (resultsWithoutDate.length > 0) {
+    return resultsWithoutDate[0];
+  }
+}
+}
+
+async function getIMDBSuggestions(title: string): Promise<ImdbMovie[] | undefined> {
   try {
     const searchString = title.trim()
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -56,8 +115,7 @@ export async function getIMDBSuggestions(title: string): Promise<ImdbMovie[] | u
   }
 }
 
-
-export async function getIMDBTitleById(tconst: string): Promise<ImdbMovie | undefined> {
+async function getIMDBTitleById(tconst: string): Promise<ImdbMovie | undefined> {
   const dbPath = await initializeIMDBTitleBasicsDb();
 
   return runInDb(dbPath, (db) => {
