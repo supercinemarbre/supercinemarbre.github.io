@@ -26,3 +26,4 @@ pnpm-debug.log*
 importer/data/imdb*
 dist/
 omdbapikey
+*.psd

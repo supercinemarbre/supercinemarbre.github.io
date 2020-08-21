@@ -5,9 +5,10 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 @Component
 export default class Home extends Vue {
 
-  currentDecade?: string = '';
+  currentDecade? = '';
   state: 'loading' | 'loaded' = 'loading';
-  allMovies: Movies[] = [];
+  allMovies: Movie[] = [];
+  search = '';
 
   async created() {
     this.allMovies = await fetchMovies();
@@ -35,6 +36,23 @@ export default class Home extends Vue {
     } else {
       return `La liste ultime des années ${this.currentDecade}`;
     }
+  }
+
+  get headers() {
+    let headers = [];
+    if (this.currentDecade) {
+      headers.push({ text: "", value: "ranking" });
+    }
+    headers = headers.concat([
+      { text: "Titre", value: "primaryTitle" },
+      { text: "Nom Super Ciné Battle", value: "scbTitle" },
+      { text: "Année", value: "startYear" },
+      { text: "Episode", value: "episode" }
+    ])
+    if (!this.currentDecade) {
+      headers.push({ text: "Classement", value: "ranking" });
+    }
+    return headers;
   }
 
 }

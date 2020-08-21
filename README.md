@@ -22,14 +22,14 @@ npm i
 npm start
 ```
 
-Le premier lancement peut être long (téléchargement et extraction de bases IMDB).
+Le premier lancement peut être long (téléchargement et extraction de base IMDB).
 
 ### Commandes
 
 * `npm run build [-- -w]` : Build JS
 * `npm run start:prod` : Lancement de la version JS
 * `SCB_INIT=true npm...` : Mettre à jour les listes SCB depuis supercinebattle.fr
-* `IMDB_INIT=true npm...` : Mettre à jour les bases IMDB depuis imdb.com
+* `IMDB_INIT=true npm...` : Mettre à jour la base IMDB depuis imdb.com
 * `npm run invalidate -- [nom de film SCB]` : Invalider le lien entre un film SCB et IMDB
 
 ## Feuille de route

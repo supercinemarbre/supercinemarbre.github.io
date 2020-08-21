@@ -1,7 +1,7 @@
 {
   "name": "supercinemarbre",
+  "description": "Super Ciné Marbre",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build && npm run deploy",
@@ -13,6 +13,7 @@
     "@mdi/font": "^3.6.95",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "material-design-icons-iconfont": "^5.0.1",
     "roboto-fontface": "*",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",

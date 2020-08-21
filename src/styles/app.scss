@@ -7,4 +7,28 @@
       color: white;
     }
   }
+
+  & .v-toolbar__content {
+    background: url('assets/bgmarbre.jpg');
+  }
+
+  & .v-main {
+    background-color: #222222;
+  }
+
+  & .theme--dark.v-data-table > .v-data-table__wrapper > table > tbody > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+#app-logo {
+  & img {
+    margin-top: 3px;
+    max-height: 32px;
+    transition: 0.2s;
+  }
+
+  &:hover, &:hover img {
+    filter: brightness(1.2);
+  }
 }
