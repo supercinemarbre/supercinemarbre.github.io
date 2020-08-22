@@ -33,8 +33,8 @@ export default class Home extends Vue {
   public onRouteChange() {
     this.currentDecade = this.$route.meta?.decade;
     this.search = '';
-    this.sortBy = [];
-    this.sortDesc = [];
+    this.sortBy = this.currentDecade ? [] : ['episode'];
+    this.sortDesc = this.currentDecade ? [] : ['desc'];
   }
 
   get movies(): Movie[] {
@@ -47,10 +47,8 @@ export default class Home extends Vue {
     }
   }
 
-  get title(): string {
-    if (!this.currentDecade) {
-      return "Tous les films classés";
-    } else {
+  get decadeTitle(): string {
+    if (this.currentDecade) {
       return `La liste ultime des années ${this.currentDecade}`;
     }
   }

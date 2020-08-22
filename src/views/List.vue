@@ -1,6 +1,11 @@
 <template>
   <div>
-    <h1><span v-if="state !== 'loading'">{{ title }}</span></h1>
+    <h1>
+      <span v-if="state !== 'loading'">
+        <span v-if="decadeTitle">{{ decadeTitle }}</span>
+        <span v-if="!decadeTitle">Tous les films classés par <a href="http://supercinebattle.fr/">Super Ciné Battle</a></span>
+      </span>
+    </h1>
 
     <v-card style="margin-bottom: 15px">
       <v-card-title>

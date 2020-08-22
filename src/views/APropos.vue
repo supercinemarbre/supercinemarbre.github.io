@@ -5,7 +5,7 @@
     <p>Le site <b>Super Ciné Marbre</b> est réalisé par un fan (<a href="https://twitter.com/mkalamalami">@mkalamalami</a> / <code>Wan#2191</code>) et n'est pas affilié à <a href="http://supercinebattle.fr/">Super Ciné Battle</a>.<br />
     Les sources du projet sont open source et sous licence libre, <a href="https://github.com/mkalam-alami/supercinemarbre">disponibles sur Github</a>.</p>
 
-    <h2>Sources de données</h2>
+    <h2>Données</h2>
 
     <ul>
       <li>Utilise des données de <a href="http://www.omdbapi.com/">OMDB</a> sous licence CC BY-NC 4.0.</li>
