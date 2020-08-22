@@ -39,7 +39,7 @@
   "L’aventure du Poséidon": "tt0069113",
   "Le serpent": "tt0069251",
   "On l’appellait Trinita": {
-    "scbTitle": "On l'appelle Trinita",
+    "scbTitle": "On l’appelle Trinita",
     "tconst": "tt0067355"
   },
   "Vous n’aurez pas l’Alsace et la Lorraine": "tt0076897",
@@ -120,7 +120,7 @@
   "La môme": "tt0450188",
   "G.I.Joe: Le réveil du Cobra": "tt1046173",
   "Star Wars II: l’attaque des clones": {
-    "scbTitle": "Star Wars, Episode II : L'Attaque des clones",
+    "scbTitle": "Star Wars, Episode II : L’Attaque des clones",
     "tconst": "tt0121765"
   },
   "Les chansons d’amour": "tt0996605",
@@ -155,7 +155,7 @@
   "Le Magnifique": "tt0070354",
   "M.A.S.H": "tt0066026",
   "Baby Cart": "tt0068815",
-  "L'arnaque": "tt0070735",
+  "L’arnaque": "tt0070735",
   "Les Valseuses": "tt0072353",
   "Jumeaux": "tt0096320",
   "La cité de la peur": "tt0109440",
@@ -240,5 +240,11 @@
   "Babe": "tt0112431",
   "Cobra": "tt0090859",
   "American Pie": "tt0163651",
-  "Zorro": "tt0072448"
+  "Zorro": "tt0072448",
+  "Grease": "tt0077631",
+  "Alexander": "tt0346491",
+  "Le raid": "tt0281108",
+  "Ali G": "tt0284837",
+  "Witness": "tt0090329",
+  "Doomsday": "tt0483607"
 }
