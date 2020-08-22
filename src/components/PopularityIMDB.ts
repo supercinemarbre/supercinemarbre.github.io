@@ -11,8 +11,12 @@ export default class RatingIMDB extends Vue {
   }
 
   get votesLabel() {
-    const kVotes = ((this.votes || 0) / 1000);
-    return kVotes.toFixed(0) + 'k votes';
+    if (this.votes > 1000) {
+      const kVotes = ((this.votes || 0) / 1000);
+      return `${kVotes.toFixed(0)}k votes`;
+    } else {
+      return `${this.votes} votes`;
+    }
   }
 
 }

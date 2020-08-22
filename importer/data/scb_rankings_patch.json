@@ -246,5 +246,21 @@
   "Le raid": "tt0281108",
   "Ali G": "tt0284837",
   "Witness": "tt0090329",
-  "Doomsday": "tt0483607"
+  "Doomsday": "tt0483607",
+  "Spinal Tap": {
+    "scbTitle": "Spinal Tap",
+    "tconst": "tt0088258",
+    "imdbVotes": 126504
+  },
+  "Mais où est donc passé la 7e compagnie": "tt0070356",
+  "Junior": "tt0110216",
+  "Zatoichi": "tt0363226",
+  "Barbecue": "tt3202120",
+
+  "Le retour": "tt0376968",
+  "Terminus": "tt0092070",
+  "Contagion": "tt1598778",
+  "City on Fire": "tt0093435",
+  "Bug": "tt0470705",
+  "Les autres": "tt0230600"
 }

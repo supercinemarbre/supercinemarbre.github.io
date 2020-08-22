@@ -79,8 +79,8 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
         }
         ranking.country = omdbMovie.Country;
         ranking.language = omdbMovie.Language;
-        if (patch[ranking.tconst] && typeof patch[ranking.tconst] === 'object') {
-          Object.assign(ranking, patch[ranking.tconst]);
+        if (patch[ranking.scbTitle] && typeof patch[ranking.scbTitle] === 'object') {
+          Object.assign(ranking, patch[ranking.scbTitle]);
         }
 
         if (!sublist && ++pendingWrites % 50 === 0) {
