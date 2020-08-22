@@ -28,7 +28,7 @@ export async function synchronizeWithIMDB(sublist?: Movie[]) {
   const rankings = sublist ?? await scb.readMovieRankings();
   const patch = await scb.readMoviesPatch();
 
-  let i = 0;
+  let i = 1, pendingWrites = 0;
   for (const ranking of rankings) {
     if (!ranking.tconst) {
       let results: ImdbMovie[];
@@ -61,12 +61,17 @@ export async function synchronizeWithIMDB(sublist?: Movie[]) {
         if (typeof patchValue !== 'string') {
           Object.assign(ranking, patchValue);
         }
-        if (!sublist) {
+        if (!sublist && ++pendingWrites % 50 == 0) {
           await scb.writeMovieRankings(rankings);
+          pendingWrites = 0;
         }
       }
     }
     i++;
+  }
+
+  if (!sublist) {
+    await scb.writeMovieRankings(rankings);
   }
 }
 

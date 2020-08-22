@@ -48,7 +48,7 @@ export function writeData(file: string, object: any): Promise<void> {
     stringifyStream.on('end', function() {
       setTimeout(() => {
         resolve(undefined);
-      }, 100); // XXX Prevent crashes with file being deleted
+      }, 300); // XXX Prevent crashes with file being deleted
     });
   })
 }

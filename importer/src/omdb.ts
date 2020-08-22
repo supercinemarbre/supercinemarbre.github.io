@@ -47,7 +47,7 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
   const rankings = sublist ?? await scb.readMovieRankings();
   const patch = await scb.readMoviesPatch();
 
-  let i = 1;
+  let i = 1, pendingWrites = 0;
   for (const ranking of rankings) {
     if (!ranking.imdbRating) {
       const omdbString = await download(`http://www.omdbapi.com/?i=${ranking.tconst}&apikey=${OMDB_API_KEY}`);
@@ -83,8 +83,9 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
           Object.assign(ranking, patch[ranking.tconst]);
         }
 
-        if (!sublist) {
+        if (!sublist && ++pendingWrites % 50 === 0) {
           await scb.writeMovieRankings(rankings);
+          pendingWrites = 0;
         }
         console.log(` - ${i}/${rankings.length}: OK for ${ranking.scbTitle}`);
       } else {
