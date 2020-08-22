@@ -25,6 +25,7 @@
       :headers="headers"
       :items="movies"
       :items-per-page="10"
+      :mobile-breakpoint="800"
       :disable-pagination="!!currentDecade"
       :hide-default-footer="!!currentDecade"
       :sort-by="sortBy"
@@ -76,12 +77,26 @@
   font-size: 200%;
   font-weight: bold;
 }
+@media (max-width: 991px) {
+  .movie-ranking {
+    font-size: 120%;
+  }
+}
 
 .movie-poster {
   display: inline-block;
   height: 110px;
   padding: 5px;
   box-sizing: border-box;
+  overflow: hidden;
+}
+@media (max-width: 991px) {
+  .movie-poster {
+    height: 60px;
+  }
+  .movie-poster .v-image {
+    margin-top: 25px;
+  }
 }
 
 .movie-rating {

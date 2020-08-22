@@ -35,6 +35,12 @@
     margin-left: 15px;
     margin-right: 15px;
   }
+
+  @media (max-width: 991px) {
+    .desktop-only {
+      display: none;
+    }
+  }
 }
 
 #app-logo {
