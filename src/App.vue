@@ -17,7 +17,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <a id="app-logo" to="/">
-          <img src="/img/logo.png" title="Super Ciné Marbre" />
+          <img src="../public/img/logo.png" title="Super Ciné Marbre" />
         </a>
       </v-toolbar-title>
     </v-app-bar>
@@ -29,7 +29,8 @@
     </v-main>
 
     <v-footer app>
-      <a style="margin-right: 15px" href="https://github.com/mkalam-alami/supercinemarbre">Contribuez au projet sur Github <v-icon>mdi-github-circle</v-icon></a> 
+      Contribuez à ce projet de la communauté
+      <a style="margin: 0 5px" href="https://github.com/mkalam-alami/supercinemarbre"><v-icon>mdi-github-circle</v-icon>{{' '}}sur Github </a> 
     </v-footer>
   </v-app>
 </template>

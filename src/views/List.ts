@@ -1,8 +1,18 @@
 import { fetchMovies } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Vue, Watch } from 'vue-property-decorator';
+import RatingIMDB from '@/components/RatingIMDB.vue';
+import RatingRT from '@/components/RatingRT.vue';
+import RatingMetacritic from '@/components/RatingMetacritic.vue';
+import { shuffle } from 'lodash-es';
 
-@Component
+@Component({
+  components: {
+    RatingIMDB,
+    RatingRT,
+    RatingMetacritic
+  }
+})
 export default class Home extends Vue {
 
   currentDecade? = '';
@@ -13,6 +23,7 @@ export default class Home extends Vue {
   async created() {
     this.allMovies = await fetchMovies();
     this.state = 'loaded';
+    this.onRouteChange();
   }
 
   @Watch('$route')
@@ -41,17 +52,18 @@ export default class Home extends Vue {
   get headers() {
     let headers = [];
     if (this.currentDecade) {
-      headers.push({ text: "", value: "ranking" });
+      headers.push({ text: "Classement", value: "ranking", align: "center" });
     }
     headers = headers.concat([
       { text: "Poster", value: "posterUrl", align: "center" },
       { text: "Titre", value: "primaryTitle" },
+      { text: "Notes", value: "ratings" },
       { text: "Nom Super Ciné Battle", value: "scbTitle" },
-      { text: "Année", value: "startYear" },
-      { text: "Episode", value: "episode" }
+      { text: "Année", value: "startYear", align: "center" },
+      { text: "Episode", value: "episode", align: "center" }
     ])
     if (!this.currentDecade) {
-      headers.push({ text: "Classement", value: "ranking" });
+      headers.push({ text: "Classement", value: "ranking", align: "center" });
     }
     return headers;
   }

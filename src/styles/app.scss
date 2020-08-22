@@ -9,7 +9,7 @@
   }
 
   & .v-toolbar__content {
-    background: url('/img/bgmarbre.jpg');
+    background: url('../public/img/bgmarbre.jpg');
   }
 
   & .v-main {
@@ -22,6 +22,10 @@
 
   & .container > div > h1 {
     margin: 15px;
+  }
+
+  & .container > div > ul {
+    margin-bottom: 15px;
   }
 
   & .container > div > h1,

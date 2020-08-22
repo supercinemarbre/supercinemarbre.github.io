@@ -40,25 +40,26 @@ Le premier lancement peut être long (téléchargement et extraction de base IMD
 - [x] Croiser les informations avec IMDB
 - [x] Corriger les films non ou mal identifiés
 - [x] Créer une première version fonctionnelle de l'interface, avec liens IMDB
-- [ ] Compléter les informations avec OMDB (notamment URLs d'affiches, classements, titre français)
-- [ ] Mettre au propre (licences, liens etc.)
+- [x] Compléter les informations avec OMDB (notamment URLs d'affiches, classements, titre français)
+- [x] Mettre au propre (licences, liens etc.)
 
 ### Backlog
 
-- [ ] Faire un joli thème
+- [x] Faire un joli thème
+- [x] Moteur de recherche simple (multi-décennie)
+- [x] Tri des films
 - [ ] Associer les numéros d'épisodes aux pages du site
-- [ ] Détecter les films dispo sur Netflix, etc.
-- [ ] Moteur de recherche simple (multi-décennie)
-- [ ] Tri des films
+- [ ] Permettre de cliquer sur les liens Metascore/Rotten Tomatoes
+- [ ] Compléter avec un lien Just Watch (pour disponibilité VOD/streaming)
+- [ ] Compléter avec infos TMDB (titre français, budget/box office)
 - [ ] Recherche de films par acteur/réalisateur
+- [ ] Graphes et stats fun
 
 ### Idées folles
 
 - [ ] Contributions communautaires : soumettre des timestamps de films spécifiques
 - [ ] Contributions communautaires : soumettre des transcriptions
-- [ ] Intégration audio (*)
-
-> (*) Sous réserve d'obtenir l'autorisation
+- [ ] Intégration audio (sous réserve d'obtenir l'autorisation du RPU)
 
 ## Licence
 
