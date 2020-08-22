@@ -2,7 +2,7 @@
   <div>
     <h1>A propos</h1>
 
-    <p>Le site <b>Super Ciné Marbre</b> est réalisé par un fan (<a href="https://twitter.com/mkalamalami">@mkalamalami</a> / <code>Wan#2191</code>) et n'est pas affilié à <a href="http://supercinebattle.fr/">Super Ciné Battle</a>.<br />
+    <p>Le site <b>Super Ciné Marbre</b> est réalisé par un membre de la communauté (<a href="https://twitter.com/mkalamalami">@mkalamalami</a> / <code>Wan#2191</code>) et n'est pas affilié à <a href="http://supercinebattle.fr/">Super Ciné Battle</a>.<br />
     Les sources du projet sont open source et sous licence libre, <a href="https://github.com/mkalam-alami/supercinemarbre">disponibles sur Github</a>.</p>
 
     <h2>Données</h2>

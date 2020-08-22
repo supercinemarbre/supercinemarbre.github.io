@@ -2,6 +2,7 @@ import PopularityIMDB from '@/components/PopularityIMDB.vue';
 import RatingIMDB from '@/components/RatingIMDB.vue';
 import RatingMetacritic from '@/components/RatingMetacritic.vue';
 import RatingRT from '@/components/RatingRT.vue';
+import Ordinal from '@/components/Ordinal.vue';
 import { fetchMovies } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Vue, Watch } from 'vue-property-decorator';
@@ -11,7 +12,8 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
     RatingIMDB,
     RatingRT,
     RatingMetacritic,
-    PopularityIMDB
+    PopularityIMDB,
+    Ordinal
   }
 })
 export default class Home extends Vue {
@@ -35,6 +37,15 @@ export default class Home extends Vue {
     this.search = '';
     this.sortBy = this.currentDecade ? [] : ['episode'];
     this.sortDesc = this.currentDecade ? [] : ['desc'];
+
+    setTimeout(() => {
+      if (this.$route.hash && document.querySelector) {
+        const target = document.querySelector(`[name=${this.$route.hash.slice(1)}]`) as HTMLElement;
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: "center" });
+        }
+      }
+    }, 1);
   }
 
   get movies(): Movie[] {
@@ -61,15 +72,17 @@ export default class Home extends Vue {
     headers = headers.concat([
       { text: "Poster", value: "posterUrl", align: "center", sortable: false, filterable: false },
       { text: "Titre", value: "primaryTitle" },
-      { text: "Notes", value: "imdbRating", sort: (a, b) => (b||0) - (a||0), filterable: false },
-      { text: "Popularité IMDB", value: "imdbVotes", sort: (a, b) => (b||0) - (a||0), filterable: false },
-      { text: "Nom Super Ciné Battle", value: "scbTitle" },
-      { text: "Année", value: "startYear", align: "center" },
-      { text: "Episode", value: "episode", align: "center" }
-    ])
+      { text: "Année", value: "startYear", align: "center" }
+    ]);
     if (!this.currentDecade) {
       headers.push({ text: "Classement", value: "ranking", align: "center" });
     }
+    headers = headers.concat([
+      { text: "Notes", value: "imdbRating", sort: (a, b) => (b||0) - (a||0), filterable: false },
+      { text: "Popularité IMDB", value: "imdbVotes", sort: (a, b) => (b||0) - (a||0), filterable: false },
+      { text: "Nom Super Ciné Battle", value: "scbTitle" },
+      { text: "Episode", value: "episode", align: "center" }
+    ])
     return headers;
   }
 

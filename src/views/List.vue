@@ -31,8 +31,13 @@
       :sort-desc="sortDesc"
       :fixed-header="true">
       <template v-slot:item.ranking="{ item }">
-        <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}</span>
-        <span v-if="!currentDecade">{{ item.ranking }} (années {{ item.decade }})</span>
+        <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}<Ordinal :value="item.ranking" /></span>
+        <span v-if="!currentDecade">
+          <router-link :to="'/' + item.decade + '#' + item.tconst">
+            <div class="movie-ranking">{{ item.ranking }}<Ordinal :value="item.ranking" /></div>
+            Années {{ item.decade }}
+          </router-link>
+        </span>
       </template>
       <template v-slot:item.posterUrl="{ item }">
         <a v-if="item.posterUrl" class="movie-poster" :href="'https://www.imdb.com/title/' + item.tconst">
@@ -58,7 +63,7 @@
         <PopularityIMDB :votes="item.imdbVotes" />
       </template>
       <template v-slot:item.primaryTitle="{ item }">
-        <a class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.primaryTitle }}</a>
+        <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.primaryTitle }}</a>
       </template>
     </v-data-table>
   </div>
