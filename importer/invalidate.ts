@@ -12,9 +12,13 @@ console.log(`Invalidating ${movieNames.join(', ')}...`);
   for (const movie of movies) {
     if (movieNames.includes(movie.scbTitle)) {
       found.push(movie.scbTitle);
+      // IMDB
       delete movie.tconst;
       delete movie.primaryTitle;
       delete movie.startYear;
+      // OMDB
+      delete movie.imdbRating;
+      delete movie.posterUrl;
     }
   }
 
