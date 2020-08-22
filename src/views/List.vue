@@ -22,6 +22,8 @@
       :items-per-page="10"
       :disable-pagination="!!currentDecade"
       :hide-default-footer="!!currentDecade"
+      :sort-by="sortBy"
+      :sort-desc="sortDesc"
       :fixed-header="true">
       <template v-slot:item.ranking="{ item }">
         <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}</span>
@@ -32,16 +34,23 @@
           <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
         </a>
       </template>
-      <template v-slot:item.ratings="{ item }">
-        <a class="movie-rating" v-if="!!item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">
-          <RatingIMDB :rating="item.imdbRating" />
-        </a>
-        <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
-          <RatingRT :rating="item.rottenTomatoesRating" />
-        </div>
-        <div class="movie-rating" v-if="!!item.metascore">
-          <RatingMetacritic :rating="item.metascore" />
-        </div>
+      <template v-slot:item.imdbRating="{ item }">
+        <v-lazy>
+          <div>
+            <a class="movie-rating" v-if="!!item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">
+              <RatingIMDB :rating="item.imdbRating" />
+            </a>
+            <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
+              <RatingRT :rating="item.rottenTomatoesRating" />
+            </div>
+            <div class="movie-rating" v-if="!!item.metascore">
+              <RatingMetacritic :rating="item.metascore" />
+            </div>
+          </div>
+        </v-lazy>
+      </template>
+      <template v-slot:item.imdbVotes="{ item }">
+        <PopularityIMDB :votes="item.imdbVotes" />
       </template>
       <template v-slot:item.primaryTitle="{ item }">
         <a class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.primaryTitle }}</a>

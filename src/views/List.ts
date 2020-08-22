@@ -1,16 +1,17 @@
+import PopularityIMDB from '@/components/PopularityIMDB.vue';
+import RatingIMDB from '@/components/RatingIMDB.vue';
+import RatingMetacritic from '@/components/RatingMetacritic.vue';
+import RatingRT from '@/components/RatingRT.vue';
 import { fetchMovies } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import RatingIMDB from '@/components/RatingIMDB.vue';
-import RatingRT from '@/components/RatingRT.vue';
-import RatingMetacritic from '@/components/RatingMetacritic.vue';
-import { shuffle } from 'lodash-es';
 
 @Component({
   components: {
     RatingIMDB,
     RatingRT,
-    RatingMetacritic
+    RatingMetacritic,
+    PopularityIMDB
   }
 })
 export default class Home extends Vue {
@@ -19,6 +20,8 @@ export default class Home extends Vue {
   state: 'loading' | 'loaded' = 'loading';
   allMovies: Movie[] = [];
   search = '';
+  sortBy = [];
+  sortDesc = [];
 
   async created() {
     this.allMovies = await fetchMovies();
@@ -29,6 +32,9 @@ export default class Home extends Vue {
   @Watch('$route')
   public onRouteChange() {
     this.currentDecade = this.$route.meta?.decade;
+    this.search = '';
+    this.sortBy = [];
+    this.sortDesc = [];
   }
 
   get movies(): Movie[] {
@@ -55,9 +61,10 @@ export default class Home extends Vue {
       headers.push({ text: "Classement", value: "ranking", align: "center" });
     }
     headers = headers.concat([
-      { text: "Poster", value: "posterUrl", align: "center" },
+      { text: "Poster", value: "posterUrl", align: "center", sortable: false, filterable: false },
       { text: "Titre", value: "primaryTitle" },
-      { text: "Notes", value: "ratings" },
+      { text: "Notes", value: "imdbRating", sort: (a, b) => (b||0) - (a||0), filterable: false },
+      { text: "Popularité IMDB", value: "imdbVotes", sort: (a, b) => (b||0) - (a||0), filterable: false },
       { text: "Nom Super Ciné Battle", value: "scbTitle" },
       { text: "Année", value: "startYear", align: "center" },
       { text: "Episode", value: "episode", align: "center" }

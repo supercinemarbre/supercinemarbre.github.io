@@ -48,6 +48,7 @@ Le premier lancement peut être long (téléchargement et extraction de base IMD
 - [x] Faire un joli thème
 - [x] Moteur de recherche simple (multi-décennie)
 - [x] Tri des films
+- [ ] Pagination custom
 - [ ] Associer les numéros d'épisodes aux pages du site
 - [ ] Permettre de cliquer sur les liens Metascore/Rotten Tomatoes
 - [ ] Compléter avec un lien Just Watch (pour disponibilité VOD/streaming)

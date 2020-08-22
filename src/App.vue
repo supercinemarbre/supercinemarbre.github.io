@@ -52,6 +52,7 @@ export default Vue.extend({
   }),
   created () {
     this.$vuetify.theme.dark = true;
+    this.$vuetify.lang.current = 'fr';
   },
 });
 </script>
