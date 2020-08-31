@@ -24,11 +24,20 @@ export default class Home extends Vue {
   search = '';
   sortBy = [];
   sortDesc = [];
+  mobileMode = false;
+
+  mounted() {
+    this.onResize();
+  }
 
   async created() {
     this.allMovies = await fetchMovies();
     this.state = 'loaded';
     this.onRouteChange();
+  }
+
+  onResize() {
+    this.mobileMode = window.innerWidth < 800;
   }
 
   @Watch('$route')
@@ -71,19 +80,22 @@ export default class Home extends Vue {
     }
     headers = headers.concat([
       { text: "Poster", value: "posterUrl", align: "center", sortable: false, filterable: false },
-      { text: "Titre", value: "primaryTitle" },
+      { text: "Titre", value: "scbTitle" },
       { text: "Année", value: "startYear", align: "center" }
     ]);
     if (!this.currentDecade) {
       headers.push({ text: "Classement", value: "ranking", align: "center" });
     }
     headers = headers.concat([
-      { text: "Notes", value: "imdbRating", sort: (a, b) => (b||0) - (a||0), filterable: false },
+      { text: "Notes", value: "imdbRating", sort: (a, b) => (b||0) - (a||0), filterable: false, class: "column-imdb-ranking" },
       { text: "Popularité IMDB", value: "imdbVotes", sort: (a, b) => (b||0) - (a||0), filterable: false },
-      { text: "Nom Super Ciné Battle", value: "scbTitle" },
       { text: "Episode", value: "episode", align: "center" }
     ])
     return headers;
+  }
+
+  shortDecade(decade: string) {
+    return decade.slice(2) + 's';
   }
 
 }

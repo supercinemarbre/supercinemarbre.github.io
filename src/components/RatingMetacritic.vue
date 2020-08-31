@@ -15,9 +15,10 @@ img {
 }
 .badge {
   display: inline-block;
-  padding: 3px 6px;
+  padding: 1px 4px;
   margin-right: 4px;
-  border-radius: 6px;
+  border-radius: 4px;
+  font-weight: bold;
 }
 .badge.green {
   background-color: #66cc33;

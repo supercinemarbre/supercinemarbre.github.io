@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-resize="onResize">
     <h1>
       <span v-if="state !== 'loading'">
         <span v-if="decadeTitle">{{ decadeTitle }}</span>
@@ -20,6 +20,7 @@
     </v-card>
 
     <v-data-table
+      v-if="!mobileMode"
       :loading="state === 'loading'"
       :search="search"
       :headers="headers"
@@ -63,8 +64,66 @@
       <template v-slot:item.imdbVotes="{ item }">
         <PopularityIMDB :votes="item.imdbVotes" />
       </template>
-      <template v-slot:item.primaryTitle="{ item }">
-        <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.primaryTitle }}</a>
+      <template v-slot:item.scbTitle="{ item }">
+        <div>
+          <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.scbTitle }}</a>
+          <div class="movie-alt-title" v-if="item.scbTitle !== item.primaryTitle">{{ item.primaryTitle }}</div>
+        </div>
+        <!--<p>
+          De {{ item.directors.join(', ') }} avec {{ item.actors.join(', ') }}
+        </p>-->
+
+      </template>
+    </v-data-table>
+
+    <v-data-table
+      v-if="mobileMode"
+      :loading="state === 'loading'"
+      :search="search"
+      :headers="['movie']"
+      :items="movies"
+      :items-per-page="10"
+      :mobile-breakpoint="0"
+      :disable-pagination="!!currentDecade"
+      :hide-default-footer="!!currentDecade"
+      :sort-by="sortBy"
+      :sort-desc="sortDesc"
+      :fixed-header="true">
+      <template v-slot:item="{ item }">
+        <div class="mobile-item">
+          <a v-if="item.posterUrl" class="mobile-poster" :href="'https://www.imdb.com/title/' + item.tconst">
+            <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
+            <div class="mobile-ranking" v-if="!!currentDecade">{{ item.ranking }}<Ordinal :value="item.ranking" /></div>
+            <div class="mobile-ranking" v-if="!currentDecade">
+              <router-link :to="'/' + item.decade + '#' + item.tconst">
+                <span>{{ item.ranking }}<Ordinal :value="item.ranking" /></span>
+                <span class="mobile-decade">({{ shortDecade(item.decade) }})</span>
+              </router-link>
+            </div>
+          </a>
+          <div class="mobile-details">
+            <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.scbTitle }}</a>
+            <div class="movie-alt-title" v-if="item.scbTitle !== item.primaryTitle">{{ item.primaryTitle }}</div>
+     
+            <div class="mobile-ratings">
+              <a class="movie-rating" v-if="!!item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">
+                <RatingIMDB :rating="item.imdbRating" />
+              </a>
+              <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
+                <RatingRT :rating="item.rottenTomatoesRating" />
+              </div>
+              <div class="movie-rating" v-if="!!item.metascore">
+                <RatingMetacritic :rating="item.metascore" />
+              </div>
+            </div>
+
+            <!--
+            <div class="mobile-popularity">
+              <PopularityIMDB :votes="item.imdbVotes" />
+            </div>
+            -->
+          </div>
+        </div>
       </template>
     </v-data-table>
   </div>
@@ -73,6 +132,12 @@
 <script src="./List.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
+@media (min-width: 991px) {
+  ::v-deep .column-imdb-ranking {
+    width: 200px;
+  }
+}
+
 .movie-ranking {
   font-size: 200%;
   font-weight: bold;
@@ -101,9 +166,16 @@
 
 .movie-rating {
   white-space: nowrap;
-  display: block;
-  margin-bottom: 4px;
+  display: inline-block;
+  margin-right: 10px;
 }
+@media (min-width: 800px) and (max-width: 991px) {
+  .movie-rating {
+    display: block;
+    margin-bottom: 4px;
+  }
+}
+
 .icon {
   margin-top: -4px;
   margin-right: 4px;
@@ -117,5 +189,30 @@
   display: block;
   font-size: 120%;
   font-weight: bold;
+}
+
+.movie-alt-title {
+  color: gray;
+}
+
+.mobile-item {
+  display: flex;
+  padding: 5px 10px;
+}
+.mobile-poster {
+  margin-right: 15px;
+}
+.mobile-ranking {
+  text-align: center;
+}
+.mobile-decade {
+  font-size: 80%;
+  margin-left: 5px;
+}
+.mobile-ratings {
+  margin-bottom: 10px;
+}
+.mobile-popularity {
+  width: 150px;
 }
 </style>

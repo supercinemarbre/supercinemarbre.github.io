@@ -1,7 +1,7 @@
 <template>
   <span v-if="isValid">
-    {{ ratingLabel }}
     <img src="../../public/img/imdb.png" />
+    {{ ratingLabel }}
   </span>
 </template>
 
@@ -10,8 +10,8 @@
 <style lang="scss" scoped>
 img {
   margin-top: -4px;
-  margin-left: 6px;
+  margin-right: 2px;
   vertical-align: middle;
-  height: 30px;
+  height: 24px;
 }
 </style>
