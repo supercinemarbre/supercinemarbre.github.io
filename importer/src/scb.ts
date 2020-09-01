@@ -26,12 +26,12 @@ export function writeMovieRankings(rankings: Movie[]): Promise<void> {
   return writeData(`../../public/scb_rankings.json`, rankings);
 }
 
-export function readMoviesPatch(): Promise<Record<string, MoviePatch>> {
-  return readData("scb_rankings_patch.json");
+export function readScbPatch(): Promise<Record<string, MoviePatch>> {
+  return readData("scb_patch.json");
 }
 
-export function writeMoviesPatch(patch: Record<string, MoviePatch>): void {
-  writeDataString(`scb_rankings_patch.json`, JSON.stringify(patch, null, 2));
+export function writeScbPatch(patch: Record<string, MoviePatch>): void {
+  writeDataString(`scb_patch.json`, JSON.stringify(patch, null, 2));
 }
 
 export async function importMovieRankings(): Promise<Movie[]> {

@@ -19,14 +19,8 @@ import { Movie } from "./src/types";
     }
 
     await imdb.synchronizeWithIMDB();
-
-    try {
-      // await omdb.synchronizeWithOMDB();
-    } catch (e) {
-      console.error(e); // Will fail with a 401 when key reaches OMDB limit
-    }
-
-    await patch.patchMovieRankings();
+    await omdb.synchronizeWithOMDB();
+    await patch.patchMovies();
   } catch (e) {
     console.error("ERROR: ", e, e.stack);
   }

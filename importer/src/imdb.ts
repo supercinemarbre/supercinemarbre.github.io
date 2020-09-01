@@ -26,7 +26,7 @@ export interface ImdbMovie {
 export async function synchronizeWithIMDB(sublist?: Movie[]) {
   console.log("Synchronizing rankings with IMDB");
   const rankings = sublist ?? await scb.readMovieRankings();
-  const patch = await scb.readMoviesPatch();
+  const patch = await scb.readScbPatch();
 
   let i = 1, pendingWrites = 0;
   for (const ranking of rankings) {
@@ -52,7 +52,7 @@ export async function synchronizeWithIMDB(sublist?: Movie[]) {
           patch[ranking.scbTitle] = null;
         }
         if (!sublist) {
-          await scb.writeMoviesPatch(patch);
+          await scb.writeScbPatch(patch);
         }
       } else {
         console.log(` - ${i}/${rankings.length}: OK for ${ranking.scbTitle}`)
@@ -77,20 +77,20 @@ export async function synchronizeWithIMDB(sublist?: Movie[]) {
 
 function chooseMatchingResult(ranking: Movie, results: ImdbMovie[],
   options: { acceptResultFromWrongDecade?: boolean } = {}) {
-const expectedDecade = parseInt(ranking.decade, 10);
-for (const result of results) {
-  if (result.startYear && Math.abs(expectedDecade - result.startYear) <= 10) {
-    return result;
+  const expectedDecade = parseInt(ranking.decade, 10);
+  for (const result of results) {
+    if (result.startYear && Math.abs(expectedDecade - result.startYear) <= 10) {
+      return result;
+    }
   }
-}
-if (options.acceptResultFromWrongDecade && results.length > 0) {
-  return results[0];
-} else {
-  const resultsWithoutDate = results.filter(result => !result.startYear);
-  if (resultsWithoutDate.length > 0) {
-    return resultsWithoutDate[0];
+  if (options.acceptResultFromWrongDecade && results.length > 0) {
+    return results[0];
+  } else {
+    const resultsWithoutDate = results.filter(result => !result.startYear);
+    if (resultsWithoutDate.length > 0) {
+      return resultsWithoutDate[0];
+    }
   }
-}
 }
 
 async function getIMDBSuggestions(title: string): Promise<ImdbMovie[] | undefined> {
@@ -143,7 +143,7 @@ async function getIMDBTitleById(tconst: string): Promise<ImdbMovie | undefined> 
   })
 }
 
-async function initializeIMDBTitleBasicsDb() {
+export async function initializeIMDBTitleBasicsDb() {
   return initializeIMDBSourceDb({
     sourceName: 'title.basics',
     tableColumns: `tconst TEXT PRIMARY KEY,
@@ -166,7 +166,14 @@ async function initializeIMDBTitleBasicsDb() {
     insertParamsProvider: (values) => [values[0], values[2], values[3], values[5], values[7]],
     indexesQuery: 'CREATE INDEX IF NOT EXISTS primaryTitle ON title_basics (primaryTitle)'
   });
+}
 
+export function invalidateIMDBData(movie: Movie) {
+  delete movie.tconst;
+  delete movie.primaryTitle;
+  delete movie.originalTitle;
+  delete movie.startYear;
+  delete movie.runtimeMinutes;
 }
 
 let imdbInitializedSources: Record<string, boolean> = {};
@@ -185,7 +192,7 @@ async function initializeIMDBSourceDb({
   insertQuery: string,
   insertParamsProvider: (values: any[]) => any[],
   indexesQuery: string
-}) {
+}): Promise<string> {
   const dbFilePath = `imdb.${sourceName}.db`;
   if (process.env.IMDB_INIT && !imdbInitializedSources[sourceName]) {
     imdbInitializedSources[sourceName] = true;

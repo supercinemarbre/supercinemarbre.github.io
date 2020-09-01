@@ -1,11 +1,13 @@
 import * as scb from "./src/scb";
+import * as imdb from "./src/imdb";
+import * as omdb from "./src/omdb";
 
 const movieNames = process.argv.slice(2)
   .map(movieName => movieName.replace(/'/g, '’'));
 
 console.log(`Invalidating ${movieNames.join(', ')}...`);
 
-const selective = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
+const partialInvalidation = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
 
 (async () => {
   const movies = await scb.readMovieRankings();
@@ -14,26 +16,12 @@ const selective = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
 
   for (const movie of moviesToInvalidate) {
     // IMDB
-    if (!selective || process.env.IMDB_ONLY) {
-      delete movie.tconst;
-      delete movie.primaryTitle;
-      delete movie.startYear;
+    if (!partialInvalidation || process.env.IMDB_ONLY) {
+      imdb.invalidateIMDBData(movie);
     }
     // OMDB
-    if (!selective || process.env.OMDB_ONLY) {
-      delete movie.imdbRating;
-      delete movie.posterUrl;
-      delete movie.directors;
-      delete movie.writers;
-      delete movie.actors;
-      delete movie.countries;
-      delete movie.languages;
-      delete movie.usaRating;
-      delete movie.production;
-      delete movie.genres;
-      // TMP
-      delete (movie as any).country;
-      delete (movie as any).language;
+    if (!partialInvalidation || process.env.OMDB_ONLY) {
+      omdb.invalidateOMDBData(movie);
     }
   }
 
@@ -43,6 +31,6 @@ const selective = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
   } else {
     const movieNames = moviesToInvalidate.map(movie => movie.scbTitle);
     const notFound = movieNames.filter(movieName => !movieNames.includes(movieName));
-    console.error(`Movie not found: ${notFound.join(', ')}`);
+    console.error(`ERROR: Movie(s) not found: ${notFound.join(', ')}`);
   }
 })();

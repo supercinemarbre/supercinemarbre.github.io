@@ -1,7 +1,7 @@
 import { readData } from "./io";
 import * as scb from "./scb";
 
-export async function patchMovieRankings(): Promise<void> {
+export async function patchMovies(): Promise<void> {
   console.log("Patching movie data");
 
   const movies = await scb.readMovieRankings() || [];

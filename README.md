@@ -30,18 +30,19 @@ npm start
 ```
 cd importer
 npm i
-npm start
+SCB_INIT=true IMDB_INIT=true npm start
 ```
 
-Le premier lancement peut être long (téléchargement et extraction de base IMDB).
+Attention :
+
+1. Le premier lancement peut être long, à cause du téléchargement et de l'extraction d'une base IMDB.
+2. Pour que l'import OMDB fonctionne (couvertures de films etc.), il faudra obtenir une clef d'API (gratuite) à http://www.omdbapi.com et la mettre dans un fichier `importer/data/omdbapikey`.
 
 ### Commandes
 
-* `npm run build [-- -w]` : Build JS
-* `npm run start:prod` : Lancement de la version JS
 * `SCB_INIT=true npm...` : Mettre à jour les listes SCB depuis supercinebattle.fr
 * `IMDB_INIT=true npm...` : Mettre à jour la base IMDB depuis imdb.com
-* `npm run invalidate -- [nom de film SCB]` : Invalider le lien entre un film SCB et IMDB
+* `[IMDB_ONLY=true] [OMDB_ONLY=true] [ALL=true] npm run invalidate -- [nom(s) de film(s) SCB]` : Invalider des données de films. `IMDB_ONLY` et `OMDB_ONLY` permettent d'annuler seulement les données issues de IMDB, `ALL` annule sur tous les films.
 
 ## Procédures
 
@@ -55,7 +56,7 @@ npm run build
 
 ### Corriger un film
 
-1. Modifier `scb_rankings_patch.json`, en ajoutant une clef avec le nom SCB exact du film dans la liste. En valeur, on peut mettre soit directement l'ID IMDB soit un objet avec toutes les valeurs à écraser sur l'objet `scb_rankings.json`.
+1. Modifier `scb_patch.json`, en ajoutant une clef avec le nom SCB exact du film dans la liste. En valeur, on peut mettre soit directement l'ID IMDB soit un objet avec toutes les valeurs à écraser sur l'objet `scb_rankings.json`.
 
 2. Invalider les données de `scb_rankings.json`, de préférence avec l'outil dédié :
 
