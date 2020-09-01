@@ -27,7 +27,7 @@
       :headers="headers"
       :items="movies"
       :items-per-page="10"
-      :mobile-breakpoint="800"
+      :mobile-breakpoint="991"
       :disable-pagination="!!currentDecade"
       :hide-default-footer="!!currentDecade"
       :sort-by="sortBy"
@@ -71,8 +71,8 @@
           <div class="movie-alt-title" v-if="item.scbTitle !== item.primaryTitle">{{ item.primaryTitle }}</div>
         </div>
         <div class="movie-casting">
-          <div v-if="item.directors">De {{ item.directors.join(', ') }}</div>
-          <div v-if="item.actors">Avec {{ item.actors.join(', ') }}</div>
+          <div v-if="item.directors">de {{ item.directors.join(', ') }}</div>
+          <div v-if="item.actors">avec {{ item.actors.join(', ') }}</div>
         </div>
       </template>
       <template v-slot:top="{ pagination, options, updateOptions }">
@@ -98,35 +98,46 @@
       :sort-desc="sortDesc"
       :fixed-header="true">
       <template v-slot:item="{ item }">
-        <div class="mobile-item">
-          <div v-if="item.posterUrl" class="mobile-poster">
-            <a :href="'https://www.imdb.com/title/' + item.tconst">
-              <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
-            </a>
-            <div class="mobile-ranking">
-              {{ item.ranking }}<Ordinal :value="item.ranking" />
-              <router-link v-if="!currentDecade" :to="'/' + item.decade + '#' + item.tconst">
-                <span class="mobile-decade">({{ shortDecade(item.decade) }})</span>
-              </router-link>
-            </div>
-          </div>
-          <div class="mobile-details">
-            <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.scbTitle }}</a>
-            <div class="movie-alt-title" v-if="item.scbTitle !== item.primaryTitle">{{ item.primaryTitle }}</div>
-     
-            <div class="mobile-ratings">
-              <a class="movie-rating" v-if="!!item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">
-                <RatingIMDB :rating="item.imdbRating" />
+        <v-lazy>
+          <div class="mobile-item">
+            <div v-if="item.posterUrl" class="mobile-poster">
+              <div class="mobile-ranking">
+                {{ item.ranking }}<Ordinal :value="item.ranking" />
+                <router-link v-if="!currentDecade" :to="'/' + item.decade + '#' + item.tconst">
+                  <span class="mobile-decade">({{ shortDecade(item.decade) }})</span>
+                </router-link>
+              </div>
+              <a :href="'https://www.imdb.com/title/' + item.tconst">
+                <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
               </a>
-              <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
-                <RatingRT :rating="item.rottenTomatoesRating" />
+            </div>
+            <div class="mobile-details">
+              <div>
+                <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.scbTitle }}</a>
               </div>
-              <div class="movie-rating" v-if="!!item.metascore">
-                <RatingMetacritic :rating="item.metascore" />
+              <div class="mobile-scb-details">
+                <span style="margin-right: 15px">{{ item.startYear }}</span>
+                <span>Episode {{ item.episode }}</span>
+              </div>
+              <div class="movie-casting">
+                <div v-if="item.directors" > de {{ item.directors.join(', ') }}</div>
+                <div v-if="item.actors">avec {{ item.actors.join(', ') }}</div>
+              </div>
+      
+              <div class="mobile-ratings">
+                <a class="movie-rating" v-if="!!item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">
+                  <RatingIMDB :rating="item.imdbRating" />
+                </a>
+                <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
+                  <RatingRT :rating="item.rottenTomatoesRating" />
+                </div>
+                <div class="movie-rating" v-if="!!item.metascore">
+                  <RatingMetacritic :rating="item.metascore" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </v-lazy>
       </template>
       <template v-slot:top="{ pagination, options, updateOptions }">
         <v-data-footer 
@@ -169,7 +180,7 @@
   display: inline-block;
   margin-right: 10px;
 }
-@media (min-width: 800px) and (max-width: 991px) {
+@media (min-width: 991px) and (max-width: 1600px) {
   .movie-rating {
     display: block;
     margin-bottom: 4px;
@@ -193,21 +204,38 @@
 .movie-alt-title {
   color: gray;
 }
-.movie-casting {
+::v-deep .movie-casting {
   color: #AAA;
   font-size: 90%;
-  margin-top: 5px;
+  margin: 5px 0;
+}
+@media (max-width: 991px) {
+  ::v-deep .movie-casting {
+    line-height: 120%;
+  }
+}
+@media (max-width: 600px) {
+  ::v-deep .movie-casting {
+    font-size: 80%;
+  }
 }
 
 .mobile-item {
   display: flex;
+  line-height: 120%;
   padding: 5px 10px;
+  border-bottom: 1px solid #393939;
 }
 .mobile-poster {
   margin-right: 15px;
 }
+.mobile-scb-details {
+  margin-top: 5px;
+  font-size: 85%;
+}
 .mobile-ranking {
   text-align: center;
+  margin-bottom: 3px;
 }
 .mobile-decade {
   font-size: 80%;

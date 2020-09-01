@@ -44,7 +44,7 @@ export default class Home extends Vue {
   }
 
   onResize() {
-    this.mobileMode = window.innerWidth < 800;
+    this.mobileMode = window.innerWidth < 991;
   }
 
   @Watch('$route')
