@@ -104,4 +104,8 @@ export interface Movie {
    * Original language (from OMDB)
    */
   language?: string;
+
+  // ===================== TRANSIENT ===================== */
+  
+  searchString: string;
 }

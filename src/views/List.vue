@@ -15,6 +15,7 @@
           label="Search"
           single-line
           hide-details
+          placeholder="Chercher un film, réalisateur, acteur..."
         ></v-text-field>
       </v-card-title>
     </v-card>
@@ -64,7 +65,7 @@
       <template v-slot:item.imdbVotes="{ item }">
         <PopularityIMDB :votes="item.imdbVotes" />
       </template>
-      <template v-slot:item.scbTitle="{ item }">
+      <template v-slot:item.searchString="{ item }">
         <div>
           <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.scbTitle }}</a>
           <div class="movie-alt-title" v-if="item.scbTitle !== item.primaryTitle">{{ item.primaryTitle }}</div>
