@@ -74,6 +74,13 @@
           <div v-if="item.actors">Avec {{ item.actors.join(', ') }}</div>
         </div>
       </template>
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <v-data-footer 
+          :pagination="pagination" 
+          :options="options"
+          @update:options="updateOptions"
+          items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
+      </template>
     </v-data-table>
 
     <v-data-table
@@ -119,6 +126,13 @@
             </div>
           </div>
         </div>
+      </template>
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <v-data-footer 
+          :pagination="pagination" 
+          :options="options"
+          @update:options="updateOptions"
+          items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
       </template>
     </v-data-table>
   </div>

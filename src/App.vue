@@ -30,7 +30,7 @@
 
     <v-footer app>
       Contribuez à ce projet 
-      <a style="margin: 0 5px" href="https://github.com/mkalam-alami/supercinemarbre"><v-icon>mdi-github-circle</v-icon>{{' '}}sur Github </a> 
+      <a style="margin: 0 5px" href="https://github.com/supercinemarbre/supercinemarbre.github.io"><v-icon>mdi-github-circle</v-icon>{{' '}}sur Github </a> 
     </v-footer>
   </v-app>
 </template>

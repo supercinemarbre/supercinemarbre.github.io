@@ -6,7 +6,7 @@
 
     <p>Super Ciné Marbre n'est pas affilié à Super Ciné Battle, et ne vise qu'à diffuser humblement le savoir du marbre au plus grand nombre.</p>
     
-    <p>En cas d'erreurs ou de suggestions, vous pouvez me contacter à <a href="https://twitter.com/mkalamalami">@mkalamalami</a> / <code>Wan#2191</code>. Si vous savez utiliser Github c'est encore mieux : <a href="https://github.com/mkalam-alami/supercinemarbre">le projet est open source</a> et sous licence libre, vos contributions y sont les bienvenues.</p>
+    <p>En cas d'erreurs ou de suggestions, vous pouvez me contacter à <a href="https://twitter.com/mkalamalami">@mkalamalami</a> / <code>Wan#2191</code>. Si vous savez utiliser Github c'est encore mieux : <a href="https://github.com/supercinemarbre/supercinemarbre.github.io">le projet est open source</a> et sous licence libre, vos contributions y sont les bienvenues.</p>
 
     <h2>Données</h2>
 
