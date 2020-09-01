@@ -150,8 +150,7 @@ async function initializeIMDBTitleBasicsDb() {
       primaryTitle TEXT,
       originalTitle TEXT,
       startYear INTEGER,
-      runtimeMinutes TEXT,
-      genres TEXT`,
+      runtimeMinutes TEXT`,
     lineFilter: line => line.includes('\tmovie\t')
       || line.includes('\ttvMovie\t') /* eg. SW Holiday Special */
       || line.includes('\tvideo\t') /* eg. Fucking Kassovitz */,
@@ -160,12 +159,11 @@ async function initializeIMDBTitleBasicsDb() {
       primaryTitle,
       originalTitle,
       startYear,
-      runtimeMinutes,
-      genres)
-    VALUES (?, ?, ?, ?, ?, ?)
+      runtimeMinutes)
+    VALUES (?, ?, ?, ?, ?)
     ON CONFLICT(tconst) DO NOTHING;`,
     // header: "tconst	titleType	primaryTitle	originalTitle	isAdult	startYear	endYear	runtimeMinutes	genres"
-    insertParamsProvider: (values) => [values[0], values[2], values[3], values[5], values[7], values[8]],
+    insertParamsProvider: (values) => [values[0], values[2], values[3], values[5], values[7]],
     indexesQuery: 'CREATE INDEX IF NOT EXISTS primaryTitle ON title_basics (primaryTitle)'
   });
 

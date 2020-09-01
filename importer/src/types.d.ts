@@ -45,10 +45,6 @@ export interface Movie {
    * Movie duration in minutes (from IMDB)
    */
   runtimeMinutes?: number;
-  /**
-   * Movie genres, comma-separated (from IMDB)
-   */
-  genres?: string;
 
   // ===================== OMDB ===================== */
   
@@ -97,11 +93,15 @@ export interface Movie {
    */
   releaseDate?: string;
   /**
-   * Production country (from OMDB)
+   * Production countries (from OMDB)
    */
-  country?: string;
+  countries?: string[];
   /**
-   * Original language (from OMDB)
+   * Original languages (from OMDB)
    */
-  language?: string;
+  languages?: string[];
+  /**
+   * Movie genres, comma-separated (from OMDB)
+   */
+  genres?: string[];
 }

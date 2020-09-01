@@ -70,6 +70,14 @@ npm run invalidate "Nom SCB exact" "On peut en mettre plusieurs"
 npm start
 ```
 
+Variables d'environnement optionnelles :
+
+```bash
+IMDB_ONLY=1 npx ts-node invalidate [...] # ne réinitialise que les infos IMDB
+OMDB_ONLY=1 npm run invalidate [...] # ne réinitialise que les infos OMDB
+ALL=1 npm run invalidate [...] # réinitialise tous les films
+```
+
 ### Mettre à jour les listes
 
 Avec l'option `SCB_INIT`, l'outil va aller chercher la dernière version des listes sur supercinebattle.fr :

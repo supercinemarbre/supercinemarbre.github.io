@@ -62,23 +62,24 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
         ranking.posterUrl = omdbMovie.Poster;
         ranking.imdbRating = parseFloat(omdbMovie.imdbRating);
         ranking.imdbVotes = parseInt(omdbMovie.imdbVotes.replace(/,/g, ''));
-        ranking.metascore = parseInt(omdbMovie.Metascore, 10);
+        ranking.metascore = omdbMovie.Metascore ? parseInt(omdbMovie.Metascore, 10) : undefined;
 
         const rottenTomatoesRating = omdbMovie.Ratings.find(r => r.Source === "Rotten Tomatoes")?.Value;
         ranking.rottenTomatoesRating = rottenTomatoesRating ? parseInt(rottenTomatoesRating, 10) : undefined;
-        ranking.usaRating = omdbMovie.Rated;
+        ranking.usaRating = omdbMovie.Rated !== 'N/A' ? omdbMovie.Rated : undefined;
         ranking.directors = omdbMovie.Actors.split(', ');
         ranking.writers = omdbMovie.Actors.split(', ');
         ranking.actors = omdbMovie.Actors.split(', ');
-        ranking.production = omdbMovie.Production;
+        ranking.production = omdbMovie.Production !== 'N/A' ? omdbMovie.Production : undefined;
 
         if (omdbMovie.Released) {
           const releaseDateWithOffset = new Date(omdbMovie.Released);
           const releaseDate = new Date(releaseDateWithOffset.getTime() - releaseDateWithOffset.getTimezoneOffset() * 60000);
           ranking.releaseDate = releaseDate.toISOString();
         }
-        ranking.country = omdbMovie.Country;
-        ranking.language = omdbMovie.Language;
+        ranking.countries = omdbMovie.Country.split(', ');
+        ranking.languages = omdbMovie.Language.split(', ');
+        ranking.genres = omdbMovie.Language.split(', ');
         if (patch[ranking.scbTitle] && typeof patch[ranking.scbTitle] === 'object') {
           Object.assign(ranking, patch[ranking.scbTitle]);
         }
