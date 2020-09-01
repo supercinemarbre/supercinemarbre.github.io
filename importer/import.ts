@@ -1,7 +1,8 @@
 
-import * as scb from "./src/scb";
 import * as imdb from "./src/imdb";
 import * as omdb from "./src/omdb";
+import * as patch from "./src/patch";
+import * as scb from "./src/scb";
 import { Movie } from "./src/types";
 
 (async () => {
@@ -18,7 +19,14 @@ import { Movie } from "./src/types";
     }
 
     await imdb.synchronizeWithIMDB();
-    await omdb.synchronizeWithOMDB();
+
+    try {
+      // await omdb.synchronizeWithOMDB();
+    } catch (e) {
+      console.error(e); // Will fail with a 401 when key reaches OMDB limit
+    }
+
+    await patch.patchMovieRankings();
   } catch (e) {
     console.error("ERROR: ", e, e.stack);
   }
