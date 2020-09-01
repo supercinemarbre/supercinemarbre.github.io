@@ -76,6 +76,7 @@
         <div class="movie-casting">
           <div v-if="item.directors">de {{ item.directors.join(', ') }}</div>
           <div v-if="item.actors">avec {{ item.actors.join(', ') }}</div>
+          <div v-if="item.comment" style="margin-top: 5px"><b>Note:</b> {{ item.comment }}</div>
         </div>
       </template>
       <template v-slot:top="{ pagination, options, updateOptions }">
@@ -127,6 +128,7 @@
               <div class="movie-casting">
                 <div v-if="item.directors" > de {{ item.directors.join(', ') }}</div>
                 <div v-if="item.actors">avec {{ item.actors.join(', ') }}</div>
+                <div v-if="item.comment" style="margin-top: 5px"><b>Note:</b> {{ item.comment }}</div>
               </div>
       
               <div class="mobile-ratings">
