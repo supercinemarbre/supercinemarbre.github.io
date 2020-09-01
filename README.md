@@ -73,7 +73,7 @@ npm start
 Variables d'environnement optionnelles :
 
 ```bash
-IMDB_ONLY=1 npx ts-node invalidate [...] # ne réinitialise que les infos IMDB
+IMDB_ONLY=1 npm run invalidate [...] # ne réinitialise que les infos IMDB
 OMDB_ONLY=1 npm run invalidate [...] # ne réinitialise que les infos OMDB
 ALL=1 npm run invalidate [...] # réinitialise tous les films
 ```
