@@ -74,24 +74,15 @@ export default class Home extends Vue {
   }
 
   get headers() {
-    let headers = [];
-    if (this.currentDecade) {
-      headers.push({ text: "Classement", value: "ranking", align: "center" });
-    }
-    headers = headers.concat([
+    return [
+      { text: "Classement", value: "ranking", align: "center" },
       { text: "Poster", value: "posterUrl", align: "center", sortable: false, filterable: false },
       { text: "Titre", value: "scbTitle" },
-      { text: "Année", value: "startYear", align: "center" }
-    ]);
-    if (!this.currentDecade) {
-      headers.push({ text: "Classement", value: "ranking", align: "center" });
-    }
-    headers = headers.concat([
+      { text: "Année", value: "startYear", align: "center" },
       { text: "Notes", value: "imdbRating", sort: (a, b) => (b||0) - (a||0), filterable: false, class: "column-imdb-ranking" },
       { text: "Popularité IMDB", value: "imdbVotes", sort: (a, b) => (b||0) - (a||0), filterable: false },
       { text: "Episode", value: "episode", align: "center" }
-    ])
-    return headers;
+    ];
   }
 
   shortDecade(decade: string) {
