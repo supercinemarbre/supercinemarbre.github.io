@@ -163,14 +163,6 @@
   box-sizing: border-box;
   overflow: hidden;
 }
-@media (max-width: 991px) {
-  .movie-poster {
-    height: 60px;
-  }
-  .movie-poster .v-image {
-    margin-top: 25px;
-  }
-}
 
 .movie-rating {
   white-space: nowrap;
