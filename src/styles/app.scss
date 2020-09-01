@@ -48,6 +48,10 @@
     margin-top: 3px;
     max-height: 32px;
     transition: 0.2s;
+
+    @media (max-width: 600px) {
+      max-width: 200px;
+    }
   }
 
   &:hover, &:hover img {

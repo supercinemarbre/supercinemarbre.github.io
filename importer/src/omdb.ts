@@ -2,7 +2,6 @@ import download from "download";
 import * as data from "./io";
 import * as scb from "./scb";
 import { Movie } from "./types";
-import { type } from "os";
 
 const OMDB_API_KEY = data.readApiKey();
 
@@ -38,12 +37,15 @@ interface OmdbMovie {
 }
 
 export async function synchronizeWithOMDB(sublist?: Movie[]) {
-  if (!OMDB_API_KEY) return `
-    Cannot synchronize with OMDB, an API key must first be set in the importer root directory, in a file called "omdbapikey".
-    Get a free key at http://www.omdbapi.com'
-  `;
-
   console.log("Synchronizing rankings with OMDB");
+  
+  if (!OMDB_API_KEY) {
+    console.log(`
+      Cannot synchronize with OMDB, an API key must first be set in the importer data/ directory, in a file called "omdbapikey".
+      Get a free key at http://www.omdbapi.com`);
+    return;
+  }
+
   const rankings = sublist ?? await scb.readMovieRankings();
   const patch = await scb.readMoviesPatch();
 
@@ -67,8 +69,8 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
         const rottenTomatoesRating = omdbMovie.Ratings.find(r => r.Source === "Rotten Tomatoes")?.Value;
         ranking.rottenTomatoesRating = rottenTomatoesRating ? parseInt(rottenTomatoesRating, 10) : undefined;
         ranking.usaRating = omdbMovie.Rated !== 'N/A' ? omdbMovie.Rated : undefined;
-        ranking.directors = omdbMovie.Actors.split(', ');
-        ranking.writers = omdbMovie.Actors.split(', ');
+        ranking.directors = omdbMovie.Director.split(', ');
+        ranking.writers = omdbMovie.Writer.split(', ');
         ranking.actors = omdbMovie.Actors.split(', ');
         ranking.production = omdbMovie.Production !== 'N/A' ? omdbMovie.Production : undefined;
 
@@ -79,7 +81,7 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
         }
         ranking.countries = omdbMovie.Country.split(', ');
         ranking.languages = omdbMovie.Language.split(', ');
-        ranking.genres = omdbMovie.Language.split(', ');
+        ranking.genres = omdbMovie.Genre.split(', ');
         if (patch[ranking.scbTitle] && typeof patch[ranking.scbTitle] === 'object') {
           Object.assign(ranking, patch[ranking.scbTitle]);
         }

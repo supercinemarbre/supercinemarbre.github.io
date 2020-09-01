@@ -44,7 +44,7 @@ export interface Movie {
   /**
    * Movie duration in minutes (from IMDB)
    */
-  runtimeMinutes?: number;
+  runtimeMinutes?: string;
 
   // ===================== OMDB ===================== */
   

@@ -44,7 +44,7 @@ export interface Movie {
   /**
    * Movie duration in minutes (from IMDB)
    */
-  runtimeMinutes?: number;
+  runtimeMinutes?: string;
   /**
    * Movie genres, comma-separated (from IMDB)
    */
@@ -81,7 +81,7 @@ export interface Movie {
    */
   directors?: string[];
   /**
-   * Writer(s) (from OMDB)
+   * Writer(s), often suffixed by their writing role in parentheses (from OMDB)
    */
   writers?: string[];
   /**

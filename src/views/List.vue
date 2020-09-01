@@ -69,10 +69,10 @@
           <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.scbTitle }}</a>
           <div class="movie-alt-title" v-if="item.scbTitle !== item.primaryTitle">{{ item.primaryTitle }}</div>
         </div>
-        <!--<p>
-          De {{ item.directors.join(', ') }} avec {{ item.actors.join(', ') }}
-        </p>-->
-
+        <div class="movie-casting">
+          <div v-if="item.directors">De {{ item.directors.join(', ') }}</div>
+          <div v-if="item.actors">Avec {{ item.actors.join(', ') }}</div>
+        </div>
       </template>
     </v-data-table>
 
@@ -91,16 +91,17 @@
       :fixed-header="true">
       <template v-slot:item="{ item }">
         <div class="mobile-item">
-          <a v-if="item.posterUrl" class="mobile-poster" :href="'https://www.imdb.com/title/' + item.tconst">
-            <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
-            <div class="mobile-ranking" v-if="!!currentDecade">{{ item.ranking }}<Ordinal :value="item.ranking" /></div>
-            <div class="mobile-ranking" v-if="!currentDecade">
-              <router-link :to="'/' + item.decade + '#' + item.tconst">
-                <span>{{ item.ranking }}<Ordinal :value="item.ranking" /></span>
+          <div v-if="item.posterUrl" class="mobile-poster">
+            <a :href="'https://www.imdb.com/title/' + item.tconst">
+              <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
+            </a>
+            <div class="mobile-ranking">
+              {{ item.ranking }}<Ordinal :value="item.ranking" />
+              <router-link v-if="!currentDecade" :to="'/' + item.decade + '#' + item.tconst">
                 <span class="mobile-decade">({{ shortDecade(item.decade) }})</span>
               </router-link>
             </div>
-          </a>
+          </div>
           <div class="mobile-details">
             <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.scbTitle }}</a>
             <div class="movie-alt-title" v-if="item.scbTitle !== item.primaryTitle">{{ item.primaryTitle }}</div>
@@ -116,12 +117,6 @@
                 <RatingMetacritic :rating="item.metascore" />
               </div>
             </div>
-
-            <!--
-            <div class="mobile-popularity">
-              <PopularityIMDB :votes="item.imdbVotes" />
-            </div>
-            -->
           </div>
         </div>
       </template>
@@ -132,10 +127,8 @@
 <script src="./List.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
-@media (min-width: 991px) {
-  ::v-deep .column-imdb-ranking {
-    width: 200px;
-  }
+::v-deep .v-progress-linear {
+  width: 150px;
 }
 
 .movie-ranking {
@@ -190,9 +183,13 @@
   font-size: 120%;
   font-weight: bold;
 }
-
 .movie-alt-title {
   color: gray;
+}
+.movie-casting {
+  color: #AAA;
+  font-size: 90%;
+  margin-top: 5px;
 }
 
 .mobile-item {

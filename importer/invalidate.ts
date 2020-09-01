@@ -31,6 +31,9 @@ const selective = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
       delete movie.usaRating;
       delete movie.production;
       delete movie.genres;
+      // TMP
+      delete (movie as any).country;
+      delete (movie as any).language;
     }
   }
 

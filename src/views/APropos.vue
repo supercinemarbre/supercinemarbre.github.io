@@ -2,9 +2,11 @@
   <div>
     <h1>A propos</h1>
 
-    <p><a href="https://www.supercinebattle.fr/">Super Ciné Battle</a> est un podcast de Daniel Andreyev et Stéphane Bouley visant à établir le classement ultime du cinéma.</p>
+    <p><a href="https://www.supercinebattle.fr/">Super Ciné Battle</a> est un podcast de Daniel Andreyev et Stéphane Bouley, visant à établir le classement ultime du cinéma.</p>
 
-    <p><b>Super Ciné Marbre</b> n'est pas affilié à Super Ciné Battle, et ne vise qu'à diffuser humblement le savoir du marbre au plus grand nombre. En cas d'erreurs ou de suggestions, vous pouvez me contacter à <a href="https://twitter.com/mkalamalami">@mkalamalami</a> / <code>Wan#2191</code>. Si vous savez utiliser Github c'est encore mieux : <a href="https://github.com/mkalam-alami/supercinemarbre">le projet est open source</a> et sous licence libre, et vos contributions y sont les bienvenues.</p>
+    <p>Super Ciné Marbre n'est pas affilié à Super Ciné Battle, et ne vise qu'à diffuser humblement le savoir du marbre au plus grand nombre.</p>
+    
+    <p>En cas d'erreurs ou de suggestions, vous pouvez me contacter à <a href="https://twitter.com/mkalamalami">@mkalamalami</a> / <code>Wan#2191</code>. Si vous savez utiliser Github c'est encore mieux : <a href="https://github.com/mkalam-alami/supercinemarbre">le projet est open source</a> et sous licence libre, vos contributions y sont les bienvenues.</p>
 
     <h2>Données</h2>
 
@@ -25,6 +27,8 @@
   </div>
 
 </template>
+
+<script src="./APropos.ts" lang="ts"></script>
 
 <style lang="scss">
 </style>
