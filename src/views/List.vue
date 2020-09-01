@@ -32,7 +32,10 @@
       :hide-default-footer="!!currentDecade"
       :sort-by="sortBy"
       :sort-desc="sortDesc"
-      :fixed-header="true">
+      :footer-props="{
+        showFirstLastPage: true,
+        showCurrentPage: true
+      }">
       <template v-slot:item.ranking="{ item }">
         <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}<Ordinal :value="item.ranking" /></span>
         <span v-if="!currentDecade">
@@ -80,6 +83,8 @@
           :pagination="pagination" 
           :options="options"
           @update:options="updateOptions"
+          showFirstLastPage
+          showCurrentPage
           items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
       </template>
     </v-data-table>
@@ -88,7 +93,7 @@
       v-if="mobileMode"
       :loading="state === 'loading'"
       :search="search"
-      :headers="['movie']"
+      :headers="[{ text: 'Film', value: 'searchString' }]"
       :items="movies"
       :items-per-page="10"
       :mobile-breakpoint="0"
@@ -153,7 +158,15 @@
 <script src="./List.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
-::v-deep .v-progress-linear {
+@media (max-width: 990px) {
+  h1 {
+    font-size: 130%;
+    text-align: center;
+    margin: 5px 5px 10px 5px !important;
+  }
+}
+
+::v-deep td .v-progress-linear {
   width: 150px;
 }
 
@@ -161,7 +174,7 @@
   font-size: 200%;
   font-weight: bold;
 }
-@media (max-width: 991px) {
+@media (max-width: 990px) {
   .movie-ranking {
     font-size: 120%;
   }
@@ -209,7 +222,7 @@
   font-size: 90%;
   margin: 5px 0;
 }
-@media (max-width: 991px) {
+@media (max-width: 990px) {
   ::v-deep .movie-casting {
     line-height: 120%;
   }
@@ -220,6 +233,23 @@
   }
 }
 
+@media (max-width: 990px) {
+  ::v-deep thead {
+    display: none;
+  }
+}
+@media (max-width: 500px) {
+  ::v-deep .v-data-footer {
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+  ::v-deep .v-data-footer__pagination {
+    margin: 0 !important;
+  }
+  ::v-deep .v-data-footer__select {
+    font-size: 0;
+  }
+}
 .mobile-item {
   display: flex;
   line-height: 120%;
