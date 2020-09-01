@@ -104,7 +104,7 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
     }
   } catch (e) {
     if (e.statusCode === 401) {
-      console.warn("SKIPPED: Daily OMDB limit reached");
+      console.warn("  SKIPPED: Daily OMDB limit reached :(");
     } else {
       throw e;
     }
