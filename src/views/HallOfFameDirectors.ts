@@ -1,10 +1,12 @@
-import { Component, Vue } from 'vue-property-decorator';
+import MostPresentDirectors from '@/components/halloffame/MostPresentDirectors.vue';
 import MovieList from '@/components/MovieList.vue';
-import { Movie } from '@/types';
 import { fetchMovies } from '@/services/api.service';
+import { Movie } from '@/types';
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
+    MostPresentDirectors,
     MovieList
   }
 })

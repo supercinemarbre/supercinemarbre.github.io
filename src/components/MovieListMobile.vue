@@ -110,10 +110,10 @@
 .movie-alt-title {
   margin-top: -5px;
   margin-bottom: 5px;
-  color: gray;
+  color: #888888;
 }
 ::v-deep .movie-casting {
-  color: #AAA;
+  color: #BBBBBB;
   font-size: 90%;
   margin-bottom: 5px;
   line-height: 120%;

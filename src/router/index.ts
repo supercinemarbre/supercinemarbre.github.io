@@ -1,5 +1,6 @@
 import APropos from '@/views/APropos.vue'
-import HallOfFame from '@/views/HallOfFame.vue'
+import HallOfFameDirectors from '@/views/HallOfFameDirectors.vue'
+import HallOfFameActors from '@/views/HallOfFameActors.vue'
 import List from '@/views/List.vue'
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
@@ -15,7 +16,8 @@ Vue.use(VueRouter)
     { path: '/2000', name: 'Années 2000', component: List, meta: { decade: "2000" } },
     { path: '/2010', name: 'Années 2010', component: List, meta: { decade: "2010" } },
     { path: '/about', name: 'A propos', component: APropos },
-    { path: '/halloffame', name: 'A propos', component: HallOfFame }
+    { path: '/directors', name: 'Réalisateurs', component: HallOfFameDirectors },
+    { path: '/actors', name: 'Acteurs', component: HallOfFameActors }
 ]
 
 const router = new VueRouter({

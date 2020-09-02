@@ -16,7 +16,7 @@
 <style lang="scss" scoped>
 .legend {
   padding-top: 2px;
-  color: #aaa;
+  color: #888888;
   font-size: 90%;
 }
 </style>

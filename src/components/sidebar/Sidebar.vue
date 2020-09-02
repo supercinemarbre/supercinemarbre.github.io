@@ -1,7 +1,8 @@
 <template>
   <v-list>
     <SidebarLink to="/" icon="mdi-movie" label="Tous les films" />
-    <!--<SidebarLink to="/halloffame" icon="mdi-star" label="Hall of fame" />-->
+    <SidebarLink to="/directors" icon="mdi-star" label="Réalisateurs" />
+    <SidebarLink to="/actors" icon="mdi-star" label="Acteurs" />
 
     <v-divider></v-divider>
     <SidebarLink to="/1960" icon="mdi-earth" label="Années 1960" />
