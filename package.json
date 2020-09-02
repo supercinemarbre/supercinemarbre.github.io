@@ -4,9 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && npm run deploy",
+    "build": "sh env.sh && vue-cli-service build --dest docs",
     "lint": "vue-cli-service lint",
-    "deploy": "sh deploy.sh",
     "start": "vue-cli-service serve"
   },
   "dependencies": {
@@ -14,6 +13,7 @@
     "@types/lodash-es": "^4.17.3",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "cross-env": "^7.0.2",
     "lodash-es": "^4.17.15",
     "material-design-icons-iconfont": "^5.0.1",
     "roboto-fontface": "*",

@@ -27,3 +27,4 @@ importer/data/imdb*
 dist/
 omdbapikey
 *.psd
+.env

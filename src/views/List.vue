@@ -215,14 +215,22 @@
   display: block;
   font-size: 120%;
   font-weight: bold;
+  margin-bottom: 5px;
 }
+@media (max-width: 300px) {
+  .movie-title {
+    font-size: 100%;
+  }
+}
+
+
 .movie-alt-title {
   color: gray;
 }
 ::v-deep .movie-casting {
   color: #AAA;
   font-size: 90%;
-  margin: 5px 0;
+  margin-bottom: 5px;
 }
 @media (max-width: 990px) {
   ::v-deep .movie-casting {
@@ -232,6 +240,18 @@
 @media (max-width: 600px) {
   ::v-deep .movie-casting {
     font-size: 80%;
+  }
+}
+@media (max-width: 300px) {
+  ::v-deep .movie-casting {
+    display: none;
+  }
+  .mobile-scb-details {
+    & span {
+      display: block;
+      font-size: 80%;
+      line-height: 120%;
+    }
   }
 }
 
@@ -255,14 +275,14 @@
 .mobile-item {
   display: flex;
   line-height: 120%;
-  padding: 5px 10px;
+  padding: 8px 10px;
   border-bottom: 1px solid #393939;
 }
 .mobile-poster {
   margin-right: 15px;
 }
 .mobile-scb-details {
-  margin-top: 5px;
+  margin-bottom: 5px;
   font-size: 85%;
 }
 .mobile-ranking {
@@ -272,9 +292,6 @@
 .mobile-decade {
   font-size: 80%;
   margin-left: 5px;
-}
-.mobile-ratings {
-  margin-bottom: 10px;
 }
 .mobile-popularity {
   width: 150px;

@@ -37,6 +37,12 @@
 
 <style lang="scss">
 @import '@/styles/app.scss';
+
+@media (max-height: 700px) {
+  .v-footer {
+    visibility: hidden !important;
+  }
+}
 </style>
 
 <script lang="ts">
