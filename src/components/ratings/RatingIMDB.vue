@@ -1,6 +1,6 @@
 <template>
   <span v-if="isValid">
-    <img src="../../public/img/imdb.png" />
+    <img src="../../../public/img/imdb.png" />
     {{ ratingLabel }}
   </span>
 </template>

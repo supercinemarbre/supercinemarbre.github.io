@@ -1,19 +1,11 @@
-import PopularityIMDB from '@/components/PopularityIMDB.vue';
-import RatingIMDB from '@/components/RatingIMDB.vue';
-import RatingMetacritic from '@/components/RatingMetacritic.vue';
-import RatingRT from '@/components/RatingRT.vue';
-import Ordinal from '@/components/Ordinal.vue';
+import MovieList from '@/components/MovieList.vue';
 import { fetchMovies } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
 @Component({
   components: {
-    RatingIMDB,
-    RatingRT,
-    RatingMetacritic,
-    PopularityIMDB,
-    Ordinal
+    MovieList
   }
 })
 export default class Home extends Vue {
@@ -24,10 +16,9 @@ export default class Home extends Vue {
   search = '';
   sortBy = [];
   sortDesc = [];
-  mobileMode = false;
 
   mounted() {
-    this.onResize();
+    window.scrollTo(0, 0);
   }
 
   async created() {
@@ -44,11 +35,7 @@ export default class Home extends Vue {
     this.state = 'loaded';
     this.onRouteChange();
   }
-
-  onResize() {
-    this.mobileMode = window.innerWidth < 991;
-  }
-
+  
   @Watch('$route')
   public onRouteChange() {
     this.currentDecade = this.$route.meta?.decade;
@@ -80,22 +67,6 @@ export default class Home extends Vue {
     if (this.currentDecade) {
       return `La liste ultime des années ${this.currentDecade}`;
     }
-  }
-
-  get headers() {
-    return [
-      { text: "Classement", value: "ranking", align: "center", filterable: false },
-      { text: "Poster", value: "posterUrl", align: "center", sortable: false, filterable: false },
-      { text: "Titre", value: "searchString" },
-      { text: "Année", value: "startYear", align: "center", filterable: false },
-      { text: "Notes", value: "imdbRating", sort: (a, b) => (b||0) - (a||0), filterable: false, class: "column-imdb-ranking" },
-      { text: "Popularité IMDB", value: "imdbVotes", sort: (a, b) => (b||0) - (a||0), filterable: false },
-      { text: "Episode", value: "episode", align: "center", filterable: false }
-    ];
-  }
-
-  shortDecade(decade: string) {
-    return decade.slice(2) + 's';
   }
 
 }
