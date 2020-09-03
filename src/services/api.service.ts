@@ -2,6 +2,8 @@ import { Episode, Movie } from '@/types';
 import axios from "axios";
 
 export type EpisodeMap = Record<number, Episode>;
+export type TimestampMap = Record<ScbTitle, number>;
+export type ScbTitle = 'string';
 
 const cache: Record<string, unknown> = {};
 
@@ -24,4 +26,6 @@ export async function fetchEpisodes(): Promise<EpisodeMap> {
   return episodeMap;
 }
 
-
+export async function fetchTimestamps(): Promise<TimestampMap> {
+  return fetchJSON('scb_timestamps.json');
+}

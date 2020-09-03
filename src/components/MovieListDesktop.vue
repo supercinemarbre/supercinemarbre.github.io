@@ -58,7 +58,12 @@
       </div>
     </template>
     <template v-slot:item.episode="{ item }">
-      <a :href="episodes[item.episode].url">{{ item.episode }}</a>
+      <div v-if="item.timestamp">
+        <a :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
+          <v-icon>mdi-headphones</v-icon>
+        </a>
+      </div>
+      <a :href="episodes[item.episode].url">Ep. {{ item.episode }}</a>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
       <v-data-footer 

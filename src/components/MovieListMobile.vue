@@ -31,7 +31,10 @@
             </div>
             <div class="mobile-scb-details">
               <span style="margin-right: 15px">{{ item.startYear }}</span>
-              <span>Episode <a :href="episodes[item.episode].url">{{ item.episode }}</a></span>
+              <span><a :href="episodes[item.episode].url">Episode {{ item.episode }}</a></span>
+              <a v-if="item.timestamp" style="margin-left: 3px" :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
+                <v-icon>mdi-headphones</v-icon>
+              </a>
             </div>
             <div class="movie-casting">
               <div v-if="item.directors" > de {{ item.directors.join(', ') }}</div>

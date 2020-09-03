@@ -13,6 +13,7 @@
     <ul>
       <li>Utilise des données de <a href="http://www.omdbapi.com/">OMDB</a> sous licence CC BY-NC 4.0.</li>
       <li>Information courtesy of IMDb (http://www.imdb.com). Used with permission.</li>
+      <li>Remerciements à Quentin Haroche pour les timestamps film par film des épisodes 0 à 60 (en cours d'intégration).</li>
       <li>Sans oublier les listes de <a href="http://supercinebattle.fr/">Super Ciné Battle</a>.</li>
     </ul>
 

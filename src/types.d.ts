@@ -127,5 +127,6 @@ export interface Movie {
 
   // ===================== TRANSIENT ===================== */
   
-  searchString: string;
+  searchString?: string;
+  timestamp?: string;
 }

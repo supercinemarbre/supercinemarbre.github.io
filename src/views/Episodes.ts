@@ -32,7 +32,7 @@ export default class Home extends Vue {
     this.episodes.forEach(episode => {
       episode.searchString = 
         episode.title + '|' +
-        episode.number;
+        this.leftPad(episode.number, '0', 3);
     });
 
     this.allMovies = movies;
@@ -41,6 +41,14 @@ export default class Home extends Vue {
 
   episodeMovies(episodeNumber: number) {
     return this.allMovies.filter(m => m.episode === episodeNumber);
+  }
+
+  leftPad(number: number, char: string, size: number) {
+    let result = number.toString();
+    while (result.length < size) {
+      result = char + result;
+    }
+    return result;
   }
   
 }

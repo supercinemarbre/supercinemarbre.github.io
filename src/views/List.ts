@@ -1,5 +1,5 @@
 import MovieList from '@/components/MovieList.vue';
-import { EpisodeMap, fetchEpisodes, fetchMovies } from '@/services/api.service';
+import { EpisodeMap, fetchEpisodes, fetchMovies, fetchTimestamps } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
@@ -23,14 +23,16 @@ export default class Home extends Vue {
   }
 
   async created() {
-    const [ movies, episodes ] = await Promise.all([
+    const [ movies, episodes, timestamps ] = await Promise.all([
       fetchMovies(),
-      fetchEpisodes()
+      fetchEpisodes(),
+      fetchTimestamps()
     ])
 
     this.episodes = episodes;
     this.allMovies = movies;
     this.allMovies.forEach(movie => {
+      movie.timestamp = timestamps[movie.scbTitle];
       movie.searchString =
         movie.primaryTitle + '|' +
         movie.title + '|' +
