@@ -32,9 +32,9 @@ export async function synchronizeWithIMDB(sublist?: Movie[]) {
   for (const ranking of rankings) {
     if (!ranking.tconst) {
       let results: ImdbMovie[];
-      const hasPatch = Boolean(patch[ranking.scbTitle]);
+      const hasPatch = Boolean(patch[ranking.title]);
       if (hasPatch) {
-        const patchValue = patch[ranking.scbTitle];
+        const patchValue = patch[ranking.title];
         const tconst = (typeof patchValue === 'string') ? patchValue : patchValue.tconst;
         const movie = await getIMDBTitleById(tconst);
         if (!movie) {
@@ -42,22 +42,22 @@ export async function synchronizeWithIMDB(sublist?: Movie[]) {
         }
         results = [movie];
       } else {
-        results = await getIMDBSuggestions(ranking.scbTitle);
+        results = await getIMDBSuggestions(ranking.title);
       }
 
       const matchingResult = chooseMatchingResult(ranking, results, { acceptResultFromWrongDecade: hasPatch });
       if (!matchingResult) {
-        console.log(` - ${i}/${rankings.length}: No match found for ${ranking.scbTitle} among ${results.length} results`);
-        if (!patch[ranking.scbTitle]) {
-          patch[ranking.scbTitle] = null;
+        console.log(` - ${i}/${rankings.length}: No match found for ${ranking.title} among ${results.length} results`);
+        if (!patch[ranking.title]) {
+          patch[ranking.title] = null;
         }
         if (!sublist) {
           await scb.writeScbPatch(patch);
         }
       } else {
-        console.log(` - ${i}/${rankings.length}: OK for ${ranking.scbTitle}`)
+        console.log(` - ${i}/${rankings.length}: OK for ${ranking.title}`)
         Object.assign(ranking, matchingResult);
-        const patchValue = patch[ranking.scbTitle];
+        const patchValue = patch[ranking.title];
         if (typeof patchValue !== 'string') {
           Object.assign(ranking, patchValue);
         }

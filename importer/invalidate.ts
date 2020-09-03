@@ -29,7 +29,7 @@ const partialInvalidation = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
     await scb.writeMovieRankings(movies);
     console.log(`Done (invalidated ${moviesToInvalidate.length} movies)`);
   } else {
-    const movieNames = moviesToInvalidate.map(movie => movie.scbTitle);
+    const movieNames = moviesToInvalidate.map(movie => movie.title);
     const notFound = movieNames.filter(movieName => !movieNames.includes(movieName));
     console.error(`ERROR: Movie(s) not found: ${notFound.join(', ')}`);
   }

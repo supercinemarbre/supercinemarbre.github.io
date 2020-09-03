@@ -89,17 +89,17 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
           movie.countries = omdbMovie.Country.split(', ');
           movie.languages = omdbMovie.Language.split(', ');
           movie.genres = omdbMovie.Genre.split(', ');
-          if (patch[movie.scbTitle] && typeof patch[movie.scbTitle] === 'object') {
-            Object.assign(movie, patch[movie.scbTitle]);
+          if (patch[movie.title] && typeof patch[movie.title] === 'object') {
+            Object.assign(movie, patch[movie.title]);
           }
 
           if (!sublist && ++pendingWrites % 50 === 0) {
             await scb.writeMovieRankings(movies);
             pendingWrites = 0;
           }
-          console.log(` - ${i}/${movies.length}: OK for ${movie.scbTitle}`);
+          console.log(` - ${i}/${movies.length}: OK for ${movie.title}`);
         } else {
-          console.log(` - ${i}/${movies.length}: ${movie.scbTitle} not found in OMDB`);
+          console.log(` - ${i}/${movies.length}: ${movie.title} not found in OMDB`);
         }
       }
       i++;

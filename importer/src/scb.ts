@@ -7,10 +7,11 @@ export type MoviePatch = 'string' | Partial<Movie>;
 
 export interface ScbEpisode {
   number: number;
+  date: string; // ISO
   title: string;
   url: string;
   mp3url: string;
-  decade: string;
+  decade?: string;
 }
 
 export function readListUrls(): Promise<Record<string, string>> {
@@ -59,17 +60,30 @@ export async function scrapeScbEpisodes(): Promise<void> {
   }
 }
 
-function getEpisodeDecade(episodeNumber: number, allMovies: Movie[]): string {
-  return allMovies.find(movie => movie.episode === episodeNumber)?.decade;
+function getEpisodeDecade(episodeNumber: number, allMovies: Movie[]): string | undefined {
+  if (episodeNumber === 30) {
+    return "2000"; // movies are wrongly ranked as episode 29 in the list
+  }
+
+  const decadesOfRankedMovies = allMovies
+    .filter(movie => movie.episode === episodeNumber)
+    .map(movie => movie.decade)
+
+  if (decadesOfRankedMovies.length === 1) {
+    return decadesOfRankedMovies[0];
+  }
+  if (decadesOfRankedMovies.length > 0) {
+    return decadesOfRankedMovies.reduce((e1, e2) => e1 === e2 ? e1 : undefined);
+  }
 }
 
-async function scrapeScbEpisode(episodeNumber: number, episodeDecade: string): Promise<ScbEpisode | undefined> {
-  let titlePrefix = 'pisode';
+async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): Promise<ScbEpisode | undefined> {
+  let titlePrefix = 'Battle';
   if (episodeNumber <= 77) {
-    titlePrefix ='Battle';
+    titlePrefix = 'pisode';
   }
   if ([108, 109].includes(episodeNumber)) {
-    titlePrefix ='Batlle';
+    titlePrefix = 'Batlle';
   }
 
   const searchResults = await download(`https://www.supercinebattle.fr/?s=${titlePrefix}+${episodeNumber}+%3A`);
@@ -79,7 +93,7 @@ async function scrapeScbEpisode(episodeNumber: number, episodeDecade: string): P
   $('.entry-title').each((_, $element) => {
     const linkTitle = $($element).text();
     if (!$titleLink && (linkTitle.includes(`${titlePrefix} ${episodeNumber} :`)
-        || linkTitle.includes(`${titlePrefix} ${episodeNumber}:`))) {
+      || linkTitle.includes(`${titlePrefix} ${episodeNumber}:`))) {
       $titleLink = $element;
     }
   });
@@ -97,13 +111,15 @@ async function scrapeScbEpisode(episodeNumber: number, episodeDecade: string): P
   const episodePage = await download(pageUrl);
   $ = cheerio.load(episodePage);
   const mp3url = $('.podcast-meta-download').attr('href');
+  const date = $('.entry-date').attr('datetime');
 
   return {
     number: episodeNumber,
     title: episodeTitleCapitalized,
     url: pageUrl,
     mp3url,
-    decade: episodeDecade
+    decade: episodeDecade,
+    date
   };
 }
 
@@ -147,7 +163,11 @@ export async function scrapeMovieRankings(): Promise<Movie[]> {
 
     const sizeBefore = scbRankings.length;
     mergeRankings(scbRankings, rankings);
-    console.log(`   ${scbRankings.length - sizeBefore} movies added to list`);
+    if (scbRankings.length > sizeBefore) {
+      console.log(`   ${scbRankings.length - sizeBefore} movies added to the list`);
+    } else {
+      console.log('   (OK, nothing new)')
+    }
   }
 
   await writeMovieRankings(scbRankings);
@@ -179,6 +199,7 @@ function parseRankings($: CheerioStatic, decade: string): Movie[] {
           decade,
           episode,
           scbTitle,
+          title: scbTitle,
           ranking
         });
       }

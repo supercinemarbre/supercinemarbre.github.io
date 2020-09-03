@@ -26,7 +26,7 @@ export default class Home extends Vue {
     this.allMovies.forEach(movie => {
       movie.searchString =
         movie.primaryTitle + '|' +
-        movie.scbTitle + '|' +
+        movie.title + '|' +
         movie.actors?.join('|') + '|' +
         movie.directors?.join('|') +
         movie.startYear + '|' +

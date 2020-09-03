@@ -48,8 +48,8 @@
     </template>
     <template v-slot:item.searchString="{ item }">
       <div>
-        <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.scbTitle }}</a>
-        <div class="movie-alt-title" v-if="item.scbTitle !== item.primaryTitle">{{ item.primaryTitle }}</div>
+        <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
+        <div class="movie-alt-title" v-if="item.title !== item.primaryTitle">{{ item.primaryTitle }}</div>
       </div>
       <div class="movie-casting">
         <div v-if="item.directors">de {{ item.directors.join(', ') }}</div>

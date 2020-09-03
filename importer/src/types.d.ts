@@ -11,9 +11,13 @@ export interface Movie {
    */
   episode: number;
   /**
-   * Title as listed in the raw SCB rankings
+   * Raw title as listed in the raw SCB rankings, for ID purposes only
    */
   scbTitle: string;
+  /**
+   * Display title (usually title, but can be corrected in case of typos)
+   */
+  title: string;
   /**
    * SCB ranking in its decade
    */

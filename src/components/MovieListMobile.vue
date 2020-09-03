@@ -27,7 +27,7 @@
           </div>
           <div class="mobile-details">
             <div>
-              <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.scbTitle }}</a>
+              <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
             </div>
             <div class="mobile-scb-details">
               <span style="margin-right: 15px">{{ item.startYear }}</span>
