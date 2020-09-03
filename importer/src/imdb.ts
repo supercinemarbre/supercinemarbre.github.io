@@ -33,7 +33,7 @@ export async function synchronizeWithIMDB(sublist?: Movie[]) {
     if (!ranking.tconst) {
       let results: ImdbMovie[];
       const hasPatch = Boolean(patch[ranking.title]);
-      if (hasPatch) {
+      if (hasPatch && (typeof patch[ranking.title] === 'object' && (patch[ranking.title] as Partial<Movie>).tconst)) {
         const patchValue = patch[ranking.title];
         const tconst = (typeof patchValue === 'string') ? patchValue : patchValue.tconst;
         const movie = await getIMDBTitleById(tconst);

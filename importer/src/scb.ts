@@ -127,10 +127,9 @@ async function readScbEpisodes(): Promise<Episode[] | undefined> {
   }
 }
 
-function writeScbEpisodes(EpisodeMap): Promise<void> {
+function writeScbEpisodes(episodes: Episode[]): Promise<void> {
   return writeData(`../../public/scb_episodes.json`, episodes);
 }
-
 
 export function readScbPatch(): Promise<Record<string, MoviePatch>> {
   return readData("scb_patch.json");
