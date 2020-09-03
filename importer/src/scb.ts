@@ -5,6 +5,14 @@ import { Movie } from "./types";
 
 export type MoviePatch = 'string' | Partial<Movie>;
 
+export interface ScbEpisode {
+  number: number;
+  title: string;
+  url: string;
+  mp3url: string;
+  decade: string;
+}
+
 export function readListUrls(): Promise<Record<string, string>> {
   return readData("scb_urls.json");
 }
@@ -26,6 +34,97 @@ export function writeMovieRankings(rankings: Movie[]): Promise<void> {
   return writeData(`../../public/scb_rankings.json`, rankings);
 }
 
+export async function scrapeScbEpisodes(): Promise<void> {
+  console.log("Scraping SCB Episodes");
+
+  const allMovies = await readMovieRankings();
+  const episodeCount = allMovies
+    .map(movie => movie.episode)
+    .reduce((e1, e2) => Math.max(e1, e2), 0);
+  const episodes = await readScbEpisodes();
+
+  for (let episodeNumber = 0; episodeNumber <= episodeCount; episodeNumber++) {
+    if (!episodes.find(e => e.number === episodeNumber)) {
+      const episodeDecade = getEpisodeDecade(episodeNumber, allMovies)
+      const episode = await scrapeScbEpisode(episodeNumber, episodeDecade);
+      if (episode) {
+        episodes.push(episode);
+        console.log(` - Episode ${episode.number} ${episode.title}: OK`);
+      } else {
+        console.log(` - Episode ${episodeNumber}: NOT FOUND`);
+      }
+      episodes.sort((e1, e2) => e1.number - e2.number);
+      await writeScbEpisodes(episodes);
+    }
+  }
+}
+
+function getEpisodeDecade(episodeNumber: number, allMovies: Movie[]): string {
+  return allMovies.find(movie => movie.episode === episodeNumber)?.decade;
+}
+
+async function scrapeScbEpisode(episodeNumber: number, episodeDecade: string): Promise<ScbEpisode | undefined> {
+  let titlePrefix = 'pisode';
+  if (episodeNumber <= 77) {
+    titlePrefix ='Battle';
+  }
+  if ([108, 109].includes(episodeNumber)) {
+    titlePrefix ='Batlle';
+  }
+
+  const searchResults = await download(`https://www.supercinebattle.fr/?s=${titlePrefix}+${episodeNumber}+%3A`);
+  let $ = cheerio.load(searchResults);
+
+  let $titleLink: CheerioElement | undefined;
+  $('.entry-title').each((_, $element) => {
+    const linkTitle = $($element).text();
+    if (!$titleLink && (linkTitle.includes(`${titlePrefix} ${episodeNumber} :`)
+        || linkTitle.includes(`${titlePrefix} ${episodeNumber}:`))) {
+      $titleLink = $element;
+    }
+  });
+  if (!$titleLink) {
+    console.warn(`No search result matching episode ${episodeNumber}. Found links :`);
+    $('.entry-title').each((_, $element) => console.log(' > ' + $($element).text()));
+    return;
+  }
+
+  const pageUrl = $('a', $titleLink).attr('href');
+  const linkTitle = $($titleLink).text();
+  const episodeTitle = linkTitle.slice(linkTitle.indexOf(':') + 1).trim();
+  const episodeTitleCapitalized = episodeTitle.slice(0, 1).toUpperCase() + episodeTitle.slice(1);
+
+  const episodePage = await download(pageUrl);
+  $ = cheerio.load(episodePage);
+  const mp3url = $('.podcast-meta-download').attr('href');
+
+  return {
+    number: episodeNumber,
+    title: episodeTitleCapitalized,
+    url: pageUrl,
+    mp3url,
+    decade: episodeDecade
+  };
+}
+
+async function readScbEpisodes(): Promise<ScbEpisode[] | undefined> {
+  try {
+    const rankings = await readData(`../../public/scb_episodes.json`);
+    if (Array.isArray(rankings)) {
+      return rankings;
+    } else {
+      return Object.values(rankings); // FIXME Issue with initial save
+    }
+  } catch (e) {
+    return undefined;
+  }
+}
+
+function writeScbEpisodes(episodes: ScbEpisode[]): Promise<void> {
+  return writeData(`../../public/scb_episodes.json`, episodes);
+}
+
+
 export function readScbPatch(): Promise<Record<string, MoviePatch>> {
   return readData("scb_patch.json");
 }
@@ -34,20 +133,21 @@ export function writeScbPatch(patch: Record<string, MoviePatch>): void {
   writeDataString(`scb_patch.json`, JSON.stringify(patch, null, 2));
 }
 
-export async function importMovieRankings(): Promise<Movie[]> {
+export async function scrapeMovieRankings(): Promise<Movie[]> {
+  console.log(`Downloading Super Cine Battle rankings`);
+
   const scbPages = await readListUrls();
   const scbRankings = await readMovieRankings() || [];
 
   for (const decade of Object.keys(scbPages)) {
-    console.log(`Downloading rankings for decade ${decade}...`);
     const scbPage = await download(scbPages[decade]);
     const $ = cheerio.load(scbPage);
     const rankings = parseRankings($, decade);
-    console.log(` - ${rankings.length} movies found`);
+    console.log(` - ${rankings.length} movies found for decade ${decade}`);
 
     const sizeBefore = scbRankings.length;
     mergeRankings(scbRankings, rankings);
-    console.log(` - ${scbRankings.length - sizeBefore} movies added to list`);
+    console.log(`   ${scbRankings.length - sizeBefore} movies added to list`);
   }
 
   await writeMovieRankings(scbRankings);

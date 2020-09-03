@@ -9,7 +9,8 @@ import { Movie } from "./src/types";
   try {
     let movies: Movie[];
     if (process.env.SCB_INIT) {  
-      await scb.importMovieRankings();
+      await scb.scrapeMovieRankings();
+      await scb.scrapeScbEpisodes();
     } else {
       movies = await scb.readMovieRankings();
     }
