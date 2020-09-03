@@ -12,7 +12,7 @@
         <v-text-field
           v-model="search"
           append-icon="search"
-          label="Search"
+          label="Recherche"
           single-line
           hide-details
           placeholder="Chercher un film, réalisateur, acteur..."
