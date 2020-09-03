@@ -57,6 +57,9 @@
         <div v-if="item.comment" style="margin-top: 5px"><b>Note:</b> {{ item.comment }}</div>
       </div>
     </template>
+    <template v-slot:item.episode="{ item }">
+      <a :href="episodes[item.episode].url">{{ item.episode }}</a>
+    </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
       <v-data-footer 
         :pagination="pagination" 

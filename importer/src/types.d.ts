@@ -1,3 +1,12 @@
+export interface Episode {
+  number: number;
+  date: string; // ISO
+  title: string;
+  url: string;
+  mp3url: string;
+  decade?: string;
+}
+
 export interface Movie {
 
   // ===================== SUPER CINE BATTLE ===================== */

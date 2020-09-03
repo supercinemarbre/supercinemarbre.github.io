@@ -1,5 +1,5 @@
 import MovieList from '@/components/MovieList.vue';
-import { fetchMovies } from '@/services/api.service';
+import { EpisodeMap, fetchEpisodes, fetchMovies } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
@@ -13,6 +13,7 @@ export default class Home extends Vue {
   currentDecade? = '';
   state: 'loading' | 'loaded' = 'loading';
   allMovies: Movie[] = [];
+  episodes: EpisodeMap = [];
   search = '';
   sortBy = [];
   sortDesc = [];
@@ -22,7 +23,13 @@ export default class Home extends Vue {
   }
 
   async created() {
-    this.allMovies = await fetchMovies();
+    const [ movies, episodes ] = await Promise.all([
+      fetchMovies(),
+      fetchEpisodes()
+    ])
+
+    this.episodes = episodes;
+    this.allMovies = movies;
     this.allMovies.forEach(movie => {
       movie.searchString =
         movie.primaryTitle + '|' +

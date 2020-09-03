@@ -1,18 +1,9 @@
 import * as cheerio from "cheerio";
 import download from "download";
 import { readData, writeData, writeDataString } from "./io";
-import { Movie } from "./types";
+import { Movie, Episode } from "./types";
 
 export type MoviePatch = 'string' | Partial<Movie>;
-
-export interface ScbEpisode {
-  number: number;
-  date: string; // ISO
-  title: string;
-  url: string;
-  mp3url: string;
-  decade?: string;
-}
 
 export function readListUrls(): Promise<Record<string, string>> {
   return readData("scb_urls.json");
@@ -77,7 +68,7 @@ function getEpisodeDecade(episodeNumber: number, allMovies: Movie[]): string | u
   }
 }
 
-async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): Promise<ScbEpisode | undefined> {
+async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): Promise<Episode | undefined> {
   let titlePrefix = 'Battle';
   if (episodeNumber <= 77) {
     titlePrefix = 'pisode';
@@ -123,7 +114,7 @@ async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): 
   };
 }
 
-async function readScbEpisodes(): Promise<ScbEpisode[] | undefined> {
+async function readScbEpisodes(): Promise<Episode[] | undefined> {
   try {
     const rankings = await readData(`../../public/scb_episodes.json`);
     if (Array.isArray(rankings)) {
@@ -136,7 +127,7 @@ async function readScbEpisodes(): Promise<ScbEpisode[] | undefined> {
   }
 }
 
-function writeScbEpisodes(episodes: ScbEpisode[]): Promise<void> {
+function writeScbEpisodes(EpisodeMap): Promise<void> {
   return writeData(`../../public/scb_episodes.json`, episodes);
 }
 

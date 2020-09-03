@@ -1,3 +1,4 @@
+import { EpisodeMap } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import MovieListDesktop from './MovieListDesktop.vue';
@@ -14,6 +15,7 @@ export default class MovieList extends Vue {
   @Prop() currentDecade: string | undefined;
   @Prop() state: 'loading' | 'loaded';
   @Prop() movies: Movie[];
+  @Prop() episodes: EpisodeMap;
   @Prop() search: string;
   @Prop() sortBy: object[];
   @Prop() sortDesc: object[];

@@ -3,6 +3,7 @@
     <MovieListDesktop
       v-if="!mobileMode"
       :movies="movies"
+      :episodes="episodes"
       :currentDecade="currentDecade"
       :state="state"
       :search="search"
@@ -12,6 +13,7 @@
     <MovieListMobile
       v-if="mobileMode"
       :movies="movies"
+      :episodes="episodes"
       :currentDecade="currentDecade"
       :state="state"
       :search="search"

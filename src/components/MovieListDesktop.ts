@@ -3,6 +3,7 @@ import PopularityIMDB from '@/components/ratings/PopularityIMDB.vue';
 import RatingIMDB from '@/components/ratings/RatingIMDB.vue';
 import RatingMetacritic from '@/components/ratings/RatingMetacritic.vue';
 import RatingRT from '@/components/ratings/RatingRT.vue';
+import { EpisodeMap } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
@@ -20,6 +21,7 @@ export default class MovieListDesktop extends Vue {
   @Prop() currentDecade: string | undefined;
   @Prop() state: 'loading' | 'loaded';
   @Prop() movies: Movie[];
+  @Prop() episodes: EpisodeMap;
   @Prop() search: string;
   @Prop() sortBy: object[];
   @Prop() sortDesc: object[];

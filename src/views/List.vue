@@ -22,6 +22,7 @@
 
     <MovieList
       :movies="movies"
+      :episodes="episodes"
       :currentDecade="currentDecade"
       :state="state"
       :search="search"

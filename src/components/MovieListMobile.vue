@@ -31,7 +31,7 @@
             </div>
             <div class="mobile-scb-details">
               <span style="margin-right: 15px">{{ item.startYear }}</span>
-              <span>Episode {{ item.episode }}</span>
+              <span>Episode <a :href="episodes[item.episode].url">{{ item.episode }}</a></span>
             </div>
             <div class="movie-casting">
               <div v-if="item.directors" > de {{ item.directors.join(', ') }}</div>

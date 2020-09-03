@@ -1,5 +1,7 @@
-import { Movie } from '@/types';
+import { Episode, Movie } from '@/types';
 import axios from "axios";
+
+export type EpisodeMap = Record<number, Episode>;
 
 const cache: Record<string, unknown> = {};
 
@@ -15,8 +17,11 @@ export async function fetchMovies(): Promise<Movie[]> {
   return fetchJSON('scb_rankings.json');
 }
 
-export async function fetchEpisodes(): Promise<Movie[]> {
-  return fetchJSON('scb_episodes.json');
+export async function fetchEpisodes(): Promise<EpisodeMap> {
+  const episodeList = await fetchJSON<Episode[]>('scb_episodes.json');
+  const episodeMap = {};
+  episodeList.forEach(e => episodeMap[e.number] = e);
+  return episodeMap;
 }
 
 
