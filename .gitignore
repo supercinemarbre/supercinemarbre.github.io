@@ -28,3 +28,4 @@ dist/
 omdbapikey
 *.psd
 .env
+qharoche.txt
