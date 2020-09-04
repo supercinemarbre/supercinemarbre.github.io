@@ -18,9 +18,13 @@ interface TimestampInfo {
 
   fs.watchFile(INPUT_PATH, async (current) => {
     if (current.isFile()) {
-      const input = fs.readFileSync(INPUT_PATH).toString();
-      const output = await runQHarocheParser(movies, input);
-      fs.writeFileSync(INPUT_PATH, input + '\n' + JSON.stringify(output, null, 2));
+      try {
+        const input = fs.readFileSync(INPUT_PATH).toString();
+        const output = await runQHarocheParser(movies, input);
+        fs.writeFileSync(INPUT_PATH, input + '\n' + JSON.stringify(output, null, 2));
+      } catch (e) {
+        console.error(e);
+      }
     }
   });
 
