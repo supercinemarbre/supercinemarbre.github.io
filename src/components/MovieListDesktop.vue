@@ -63,7 +63,7 @@
           <v-icon>mdi-headphones</v-icon>
         </a>
       </div>
-      <a :href="episodes[item.episode].url">Ep. {{ item.episode }}</a>
+      <a v-if="item.episode" :href="episodes[item.episode].url">Ep. {{ item.episode }}</a>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
       <v-data-footer 
