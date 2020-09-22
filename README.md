@@ -30,18 +30,20 @@ npm start
 
 ```
 cd importer
-npm i
-SCB_INIT=true IMDB_INIT=true npm start
+npm install
+IMDB_INIT=true npm start
 ```
 
 Attention :
 
 1. Le premier lancement peut être long, à cause du téléchargement et de l'extraction d'une base IMDB.
 2. Pour que l'import OMDB fonctionne (couvertures de films etc.), il faudra obtenir une clef d'API (gratuite) à http://www.omdbapi.com et la mettre dans un fichier `importer/data/omdbapikey`.
+3. Pour que l'import des timestamps fonctionne, il faudra obtenir une clef d'API (gratuite) à https://console.developers.google.com/apis et la mettre dans un fichier `importer/data/googlesheetsapikey`.
 
 ### Commandes
 
 * `SCB_INIT=true npm...` : Mettre à jour les listes SCB depuis supercinebattle.fr
+* `GSHEETS_INIT=true npm...` : Mettre à jour les timestamps depuis [ce document](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit?pli=1#gid=2128260303) Google Sheets
 * `IMDB_INIT=true npm...` : Mettre à jour la base IMDB depuis imdb.com
 * `[IMDB_ONLY=true] [OMDB_ONLY=true] [ALL=true] npm run invalidate -- [nom(s) de film(s) SCB]` : Invalider des données de films. `IMDB_ONLY` et `OMDB_ONLY` permettent d'annuler seulement les données issues de IMDB, `ALL` annule sur tous les films.
 
@@ -91,11 +93,11 @@ SCB_INIT=true npm start
 
 ### Mettre à jour les timestamps
 
-Les fichiers CSV sont pour le moment exportés à la main [depuis ce Google Docs](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit#gid=563731651), puis transformés à l'aide de :
+Avec l'option `GSHEETS_INIT`, l'outil va aller chercher la dernière version des timestamps sur [ce document Google Sheets](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit?pli=1#gid=2128260303):
 
 ```
 cd importer
-ts-node timestamps.ts
+GSHEETS_INIT=true npm start
 ```
 
 ## Licence

@@ -26,6 +26,7 @@ pnpm-debug.log*
 importer/data/imdb*
 dist/
 omdbapikey
+googlesheetsapikey
 *.psd
 .env
 qharoche.txt

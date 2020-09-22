@@ -1,9 +1,9 @@
 import download from "download";
-import * as data from "./io";
+import { readApiKey, readData } from "./io";
 import * as scb from "./scb";
 import { Movie } from "./types";
 
-const OMDB_API_KEY = data.readApiKey();
+const OMDB_API_KEY = readApiKey("omdbapikey");
 
 interface OmdbMovie {
   Title: string;
@@ -37,7 +37,7 @@ interface OmdbMovie {
 }
 
 export async function synchronizeWithOMDB(sublist?: Movie[]) {
-  console.log("Synchronizing rankings with OMDB");
+  console.log("Filling any missing OMDB data");
 
   if (!OMDB_API_KEY) {
     console.log(`
@@ -140,6 +140,6 @@ export function invalidateOMDBData(movie: Movie) {
 }
 
 async function readOMDBDump(): Promise<OmdbMovie[]> {
-  const dumpObject = await data.readData<Record<string, OmdbMovie>>("omdb_dump.json");
+  const dumpObject = await readData<Record<string, OmdbMovie>>("omdb_dump.json");
   return Object.values(dumpObject);
 }

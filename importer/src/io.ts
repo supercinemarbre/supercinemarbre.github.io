@@ -88,15 +88,15 @@ export async function runInDb<T>(file: string, callback: (db: sqlite3.Database) 
   }
 }
 
-export function readApiKey() {
+export function readApiKey(filename: string) {
   try {
-    return readFileSync(dataPath("omdbapikey")).toString().trim();
+    return readFileSync(dataPath(filename)).toString().trim();
   } catch (e) {
     return undefined;
   }
 }
 
-function dataPath(file: string) {
+export function dataPath(file: string) {
   if (__filename.endsWith('.js')) {
     return resolve(__dirname, "../../data", file);
   } else {

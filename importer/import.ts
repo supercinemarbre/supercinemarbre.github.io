@@ -1,25 +1,39 @@
 
+import * as googleSheets from "./src/google-sheets";
 import * as imdb from "./src/imdb";
 import * as omdb from "./src/omdb";
 import * as patch from "./src/patch";
 import * as scb from "./src/scb";
+import * as timestamps from "./src/timestamps";
 
 (async () => {
   try {
-    if (process.env.SCB_INIT) {  
+
+    // Super Cine Battle lists
+
+    if (process.env.SCB_INIT) {
       await scb.scrapeMovieRankings();
       await scb.scrapeScbEpisodes();
     } else {
       console.log("Skipping Super Cine Battle scraping (use SCB_INIT=true to enable)")
     }
 
-    const movies = await scb.readMovieRankings();
-    if (movies.length < 1000) {
-      throw new Error(`Only ${movies.length} movies read. Try launching again.`); // FIXME Occasional file read issue
+    // Episode timestamps
+
+    if (process.env.GSHEETS_INIT) {
+      await googleSheets.refreshTimestampFiles();
+    } else {
+      console.log("Skipping fetching timestamps from Google Sheets (use GSHEETS_INIT=true to enable)")
     }
+    await timestamps.collectTimestamps();
+
+    // IMDB/OMDB data fetching
 
     await imdb.synchronizeWithIMDB();
     await omdb.synchronizeWithOMDB();
+
+    // Patching of final results
+
     await patch.patchMovies();
   } catch (e) {
     console.error("ERROR: ", e, e.stack);

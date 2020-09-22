@@ -1,52 +1,52 @@
-Classement,Films,Émission,Timestamp,Lien
-1,Dr Folamour,114,0h 55m 08s,Lien
-2,"2001, l’odyssée de l’espace",59,1h 22m 34s,Lien
-3,Il était une fois dans l’Ouest,93,0h 09m 54s,Lien
-4,Harakiri,69,0h 32m 42s,Lien
-5,Un taxi pour Tobrouk,69,0h 59m 06s,Lien
-6,La planète des singes,59,1h 02m 50s,Lien
-7,Le Grand Silence,113,0h 38m 44s,Lien
-8,La nuit des morts-vivants,60,0h 44m 48s,Lien
-9,Yojimbo,60,1h 10m 06s,Lien
-10,Cent mille dollars au soleil,69,1h 19m 09s,Lien
-11,La Grande Évasion,114,0h 34m 24s,Lien
-12,Bullitt,69,1h 35m 02s,Lien
-13,Les 7 mercenaires,94,0h 43m 58s,Lien
-14,Jason & les Argonautes,83,0h 39m 40s,Lien
-15,Easy Rider,69,0h 10m 14s,Lien
-16,Les tontons flingueurs,60,0h 58m 03s,Lien
-17,Bonnie and Clyde,59,0h 26m 22s,Lien
-18,Opération Tonnerre,114,1h 10m 46s,Lien
-19,L'Armée des ombres,113,1h 05m 03s,Lien
-20,Bons baisers de Russie,60,0h 31m 36s,Lien
-21,Docteur Jivago,60,0h 06m 13s,Lien
-22,Quand les aigles attaquent,59,0h 19m 18s,Lien
-23,Le Président,114,0h 46m 06s,Lien
-24,To kill a mockingbird,94,0h 56m 01s,Lien
-25,Le bal des vampires,83,1h 11m 13s,Lien
-26,Au service de Sa Majesté,83,1h 26m 28s,Lien
-27,If,75,0h 08m 23s,Lien
-28,Spartacus,93,0h 37m 59s,Lien
-29,L’étrangleur de Boston,69,0h 46m 04s,Lien
-30,Le livre de la jungle,59,1h 11m 16s,Lien
-31,Le jour le plus long,59,0h 03m 04s,Lien
-32,Cartouche,83,1h 03m 22s,Lien
-33,Les nerfs à vif,94,0h 06m 08s,Lien
-34,Paris brûle-t-il?,113,0h 57m 33s,Lien
-35,Lolita,94,0h 29m 43s,Lien
-36,La vengeance aux deux visages,114,0h 06m 35s,Lien
-37,Les 55 jours de Pékin,111,1h 09m 03s,Lien
-38,Les parapluies de Cherbourg,113,0h 21m 12s,Lien
-39,Fantomas,83,0h 51m 00s,Lien
-40,Mothra contre Godzilla,83,0h 13m 19s,Lien
-41,Pierrot le fou,59,0h 35m 39s,Lien
-42,Batman,60,1h 27m 50s,Lien
-43,La mélodie du bonheur,113,0h 10m 53s,Lien
-44,Casino Royale,94,0h 16m 25s,Lien
-45,L’odysée du cosmos,83,0h 28m 36s,Lien
-46,Docteur Jerry et Mister Love,60,1h 22m 06s,Lien
-47,Jules et Jim,60,1h 35m 09s,Lien
-48,La dolce vita,59,0h 51m 09s,Lien
-49,Cléopatre,59,0h 10m 37s,Lien
-50,Le Gendarme de Saint-Tropez,114,0h 21m 04s,Lien
-51,Don Camillo en Russie,60,0h 18m 11s,Lien
+"Classement","Films","Émission","Timestamp"
+"1","Dr Folamour","114","0h 55m 08s"
+"2","2001, l’odyssée de l’espace","59","1h 22m 34s"
+"3","Il était une fois dans l’Ouest","93","0h 09m 54s"
+"4","Harakiri","69","0h 32m 42s"
+"5","Un taxi pour Tobrouk","69","0h 59m 06s"
+"6","La planète des singes","59","1h 02m 50s"
+"7","Le Grand Silence","113","0h 38m 44s"
+"8","La nuit des morts-vivants","60","0h 44m 48s"
+"9","Yojimbo","60","1h 10m 06s"
+"10","Cent mille dollars au soleil","69","1h 19m 09s"
+"11","La Grande Évasion","114","0h 34m 24s"
+"12","Bullitt","69","1h 35m 02s"
+"13","Les 7 mercenaires","94","0h 43m 58s"
+"14","Jason & les Argonautes","83","0h 39m 40s"
+"15","Easy Rider","69","0h 10m 14s"
+"16","Les tontons flingueurs","60","0h 58m 03s"
+"17","Bonnie and Clyde","59","0h 26m 22s"
+"18","Opération Tonnerre","114","1h 10m 46s"
+"19","L'Armée des ombres","113","1h 05m 03s"
+"20","Bons baisers de Russie","60","0h 31m 36s"
+"21","Docteur Jivago","60","0h 06m 13s"
+"22","Quand les aigles attaquent","59","0h 19m 18s"
+"23","Le Président","114","0h 46m 06s"
+"24","To kill a mockingbird","94","0h 56m 01s"
+"25","Le bal des vampires","83","1h 11m 13s"
+"26","Au service de Sa Majesté","83","1h 26m 28s"
+"27","If","75","0h 08m 23s"
+"28","Spartacus","93","0h 37m 59s"
+"29","L’étrangleur de Boston","69","0h 46m 04s"
+"30","Le livre de la jungle","59","1h 11m 16s"
+"31","Le jour le plus long","59","0h 03m 04s"
+"32","Cartouche","83","1h 03m 22s"
+"33","Les nerfs à vif","94","0h 06m 08s"
+"34","Paris brûle-t-il?","113","0h 57m 33s"
+"35","Lolita","94","0h 29m 43s"
+"36","La vengeance aux deux visages","114","0h 06m 35s"
+"37","Les 55 jours de Pékin","111","1h 09m 03s"
+"38","Les parapluies de Cherbourg","113","0h 21m 12s"
+"39","Fantomas","83","0h 51m 00s"
+"40","Mothra contre Godzilla","83","0h 13m 19s"
+"41","Pierrot le fou","59","0h 35m 39s"
+"42","Batman","60","1h 27m 50s"
+"43","La mélodie du bonheur","113","0h 10m 53s"
+"44","Casino Royale","94","0h 16m 25s"
+"45","L’odysée du cosmos","83","0h 28m 36s"
+"46","Docteur Jerry et Mister Love","60","1h 22m 06s"
+"47","Jules et Jim","60","1h 35m 09s"
+"48","La dolce vita","59","0h 51m 09s"
+"49","Cléopatre","59","0h 10m 37s"
+"50","Le Gendarme de Saint-Tropez","114","0h 21m 04s"
+"51","Don Camillo en Russie","60","0h 18m 11s"

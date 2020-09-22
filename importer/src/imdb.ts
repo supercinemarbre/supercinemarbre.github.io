@@ -24,7 +24,7 @@ export interface ImdbMovie {
 }
 
 export async function synchronizeWithIMDB(sublist?: Movie[]) {
-  console.log("Synchronizing rankings with IMDB");
+  console.log("Filling any missing IMDB data");
   const rankings = sublist ?? await scb.readMovieRankings();
   const patch = await scb.readScbPatch();
 
