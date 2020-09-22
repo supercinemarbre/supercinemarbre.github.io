@@ -10,6 +10,7 @@ Le marbre du [Super Cine Battle](https://www.supercinebattle.fr/), en version in
   * [Mettre à jour l'application web](#mettre-à-jour-lapplication-web)
   * [Corriger un film](#corriger-un-film)
   * [Mettre à jour les listes](#mettre-à-jour-les-listes)
+  * [Mettre à jour les timestamps](#mettre-à-jour-les-timestamps)
 * [Feuille de route](#feuille-de-route)
 * [Licence](#licence)
 
@@ -86,6 +87,15 @@ Avec l'option `SCB_INIT`, l'outil va aller chercher la dernière version des lis
 ```
 cd importer
 SCB_INIT=true npm start
+```
+
+### Mettre à jour les timestamps
+
+Les fichiers CSV sont pour le moment exportés à la main [depuis ce Google Docs](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit#gid=563731651), puis transformés à l'aide de :
+
+```
+cd importer
+ts-node timestamps.ts
 ```
 
 ## Licence

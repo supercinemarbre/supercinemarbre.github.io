@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import download from "download";
 import { readData, writeData, writeDataString } from "./io";
-import { Movie, Episode } from "./types";
+import { Episode, Movie } from "./types";
 
 export type MoviePatch = 'string' | Partial<Movie>;
 

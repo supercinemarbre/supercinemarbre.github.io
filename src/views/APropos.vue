@@ -23,8 +23,8 @@
       <li>Utilise des données de <a href="http://www.omdbapi.com/">OMDB</a> sous licence CC BY-NC 4.0.</li>
       <li>Information courtesy of IMDb (http://www.imdb.com). Used with permission.</li>
       <li>Remerciements à Quentin Haroche pour les timestamps film par film des épisodes 0 à 60.</li>
-      <li>Remerciements aux auteurs du <a href="https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit#gid=1591523541">fichier Google Docs</a> qui maintient une liste complète et à jour des timestamps <i>(En cours d'intégration)</i>.</li>
-      <li>Sans oublier les listes de <a href="http://supercinebattle.fr/">Super Ciné Battle</a>.</li>
+      <li>Remerciements aux contributeurs du <a href="https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit#gid=1591523541">Google Docs du Discord SCB</a>, qui maintient une liste complète et à jour des timestamps <i>(En cours d'intégration)</i>.</li>
+      <li>Sans oublier <a href="http://supercinebattle.fr/">Les Listes</a>.</li>
     </ul>
 
     <h3>Images</h3>
