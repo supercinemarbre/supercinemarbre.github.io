@@ -19,13 +19,21 @@ import { findMatchingMovies } from "./src/scb-utils";
     const filePath = path.resolve(__dirname, `data/timestamps${inputFileSuffix}.csv`);
     const timestampInfos = await parseCSV<TimestampInfo>(filePath);
     timestampInfos.forEach(timestampInfo => {
+      const patch = timestampsPatch[timestampInfo.Films];
       if (timestampsPatch[timestampInfo.Films]) {
-        timestampInfo.Films = timestampsPatch[timestampInfo.Films];
+        if (typeof patch === "string") {
+          timestampInfo.Films = timestampsPatch[timestampInfo.Films];
+        } else {
+          timestampInfo.Films = patch.scbTitle ?? timestampInfo.Films;
+        }
       }
 
       const matches = findMatchingMovies(timestampInfo.Films, movies);
       if (matches.length === 1) {
         output[matches[0].scbTitle] = timestampToSeconds(timestampInfo.Timestamp);
+        if (typeof patch === "object") {
+          output[matches[0].scbTitle] = patch.timestamp ?? output[matches[0].scbTitle];
+        }
       } else {
         console.log(` - Not found : ${timestampInfo.Films} (ep. ${timestampInfo.Émission}) => ${timestampInfo.Timestamp} (${matches.map(m => m.scbTitle).join(', ') || '???????'})`)
       }
@@ -46,7 +54,7 @@ interface TimestampInfo {
   Lien: string;
 }
 
-function readTimestampsPatch(): Promise<Record<string, string>> {
+function readTimestampsPatch(): Promise<Record<string, any>> {
   return readData("timestamps_patch.json");
 } 
 
