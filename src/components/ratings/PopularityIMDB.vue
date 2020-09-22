@@ -3,7 +3,7 @@
     <div>
       <v-progress-linear
         :value="percentage"
-        color="#8DD"
+        color="#BBBBBB"
         height="8"
       ></v-progress-linear>
       <div class="legend">{{ votesLabel }}</div>

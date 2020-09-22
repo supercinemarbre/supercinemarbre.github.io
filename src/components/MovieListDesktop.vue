@@ -48,7 +48,12 @@
     </template>
     <template v-slot:item.searchString="{ item }">
       <div>
-        <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
+        <div class="movie-title">
+          <a :name="item.tconst" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
+          <a class="movie-play" v-if="item.timestamp" :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
+            <v-icon>mdi-headphones</v-icon>
+          </a>
+        </div>
         <div class="movie-alt-title" v-if="item.title !== item.primaryTitle">{{ item.primaryTitle }}</div>
       </div>
       <div class="movie-casting">
@@ -58,11 +63,6 @@
       </div>
     </template>
     <template v-slot:item.episode="{ item }">
-      <div v-if="item.timestamp">
-        <a :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
-          <v-icon>mdi-headphones</v-icon>
-        </a>
-      </div>
       <a v-if="item.episode" :href="episodes[item.episode].url">Ep. {{ item.episode }}</a>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
@@ -124,6 +124,21 @@
   font-size: 120%;
   font-weight: bold;
   margin-bottom: 5px;
+}
+
+.movie-play {
+  margin-left: 5px;
+
+  & i {
+    transition: 0.15s cubic-bezier(0, 1.1, 0.8, 2);
+  }
+
+  &:hover i {
+    backface-visibility: hidden;
+    transform: scale(1.3) translateZ(0);
+    -webkit-font-smoothing: subpixel-antialiased;
+    color: #bce2ff;
+  }
 }
 
 .movie-alt-title {

@@ -2,7 +2,7 @@
   <div>
     <h1>Liste des épisodes</h1>
 
-    <p><b>Appel à contributions</b> : Je tente de rassembler les timestamps film par film des épisodes <u>14</u> et <u>61 à 121</u>, pour que l'on puisse écouter directement le passage consacré à chaque film. Pour contribuer au projet, voir la page <router-link to="/about">A propos</router-link> pour me contacter. Merci !</p>
+    <p><b>Appel à contributions</b> : Je tente de rassembler les timestamps film par film des épisodes <u>14</u>, <u>58</u> et <u>61 à 121</u>, pour que l'on puisse écouter directement le passage consacré à chaque film. Pour contribuer au projet, voir la page <router-link to="/about">A propos</router-link> pour me contacter. Merci !</p>
 
     <v-card style="margin-bottom: 15px">
       <v-card-title>
