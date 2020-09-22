@@ -50,7 +50,7 @@
       <div>
         <div class="movie-title">
           <a :name="item.tconst" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
-          <a class="movie-play" v-if="item.timestamp" :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
+          <a class="movie-play" v-if="item.timestamp && episodes[item.episode]" :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
             <v-icon>mdi-headphones</v-icon>
           </a>
         </div>
