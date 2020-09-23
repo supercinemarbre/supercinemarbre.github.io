@@ -143,4 +143,6 @@ export interface Movie {
   // ===================== TRANSIENT (CLIENT-ONLY) ===================== */
   
   searchString?: string;
+  
+  episode?: number;
 }

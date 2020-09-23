@@ -21,9 +21,7 @@ export function findMatchingMovies(key: { episode?: number, name: string, }, mov
   const keyNameLowercase = key.name.toLowerCase();
   const matches: Array<[Movie, number]> = [];
   for (const movie of episodeFilteredMovies) {
-    const distance = Math.min(
-        levenshtein.get(keyNameLowercase, movie.id.name.toLowerCase()),
-        levenshtein.get(keyNameLowercase, movie.primaryTitle.toLowerCase()));
+    const distance = levenshtein.get(keyNameLowercase, movie.id.name.toLowerCase());
     if (distance < 5 || movie.title.replace(/0-9/g, '').toLowerCase().includes(keyNameLowercase)) {
       matches.push([movie, distance]);
     }

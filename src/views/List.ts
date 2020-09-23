@@ -10,7 +10,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 })
 export default class Home extends Vue {
 
-  currentDecade? = '';
+  currentDecade?= '';
   state: 'loading' | 'loaded' = 'loading';
   allMovies: Movie[] = [];
   episodes: EpisodeMap = [];
@@ -23,26 +23,28 @@ export default class Home extends Vue {
   }
 
   async created() {
-    const [ movies, episodes ] = await Promise.all([
+    const [movies, episodes] = await Promise.all([
       fetchMovies(),
       fetchEpisodes()
     ]);
 
     this.episodes = episodes;
-    this.allMovies = movies;
-    this.allMovies.forEach(movie => {
-      movie.searchString =
-        movie.primaryTitle + '|' +
-        movie.title + '|' +
-        movie.actors?.join('|') + '|' +
-        movie.directors?.join('|') +
-        movie.year + '|' +
-        'Episode ' + movie.id.episode
-    })
+    this.allMovies = movies
+      .map(movie => {
+        movie.episode = movie.id.episode;
+        movie.searchString =
+          movie.primaryTitle + '|' +
+          movie.title + '|' +
+          movie.actors?.join('|') + '|' +
+          movie.directors?.join('|') +
+          movie.year + '|' +
+          'Episode ' + movie.episode
+        return movie;
+      })
     this.state = 'loaded';
     this.onRouteChange();
   }
-  
+
   @Watch('$route')
   public onRouteChange() {
     this.currentDecade = this.$route.meta?.decade;

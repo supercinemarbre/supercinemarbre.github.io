@@ -1,10 +1,11 @@
+import { time } from "console";
 import csvParser from "csv-parser";
 import * as fs from "fs";
 import { isEqual } from "lodash";
 import { dataPath, readData } from "./io";
 import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
 import { findMatchingMovies } from "./scb-utils";
-import { MovieID } from "./types";
+import { Movie, MovieID } from "./types";
 
 export type TimestampPatch = {
   gsheetsKey: MovieID;
@@ -19,16 +20,17 @@ interface TimestampInfo {
   Timestamp: string;
 }
 
-export async function applyTimestamps() {
+export async function importTimestampsRankingsAndMissingMovies() {
   console.log("Collecting timestamps");
 
-  const inputFileSuffixes = Object.keys(await readListUrls());
+  const decades = Object.keys(await readListUrls());
   const movies = await readMovieRankings();
   const timestampsPatch = await readTimestampsPatches();
+  const maxEpisode = getMaxEpisode(movies);
   let count = 0;
 
-  for (const inputFileSuffix of inputFileSuffixes) {
-    const filePath = dataPath(`timestamps${inputFileSuffix}.csv`);
+  for (const decade of decades) {
+    const filePath = dataPath(`timestamps${decade}.csv`);
     const timestampInfos = await parseCSV<TimestampInfo>(filePath);
 
     timestampInfos.forEach(timestampInfo => {
@@ -40,7 +42,17 @@ export async function applyTimestamps() {
 
       if (matches.length === 1) {
         matches[0].timestamp = patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
+        matches[0].ranking = parseInt(timestampInfo.Classement, 10);
         count++;
+      } else if (key.episode > maxEpisode) {
+        console.log(` - Adding Ep. ${key.episode} movie ${key.name} missing from SCB lists`);
+        const movie: Movie = {
+          id: key,
+          decade,
+          title: timestampInfo.Films,
+          ranking: parseInt(timestampInfo.Classement, 10)
+        };
+        movies.push(movie);
       } else {
         console.log(` - Not found : ${timestampInfo.Films}`
           + ` => Ep. ${timestampInfo.Émission}, ${timestampInfo.Timestamp}. Candidates: ${matches.map(m => m.id.name).join(', ') || '(none)'}`)
@@ -80,4 +92,9 @@ function parseCSV<T>(filePath: string): Promise<T[]> {
 function timestampToSeconds(timestamp: string) {
   const elements = timestamp.split(' ').map(t => t.slice(0, t.length - 1));
   return parseInt(elements[0], 10) * 3600 + parseInt(elements[1], 10) * 60 + parseInt(elements[2], 10);
+}
+
+function getMaxEpisode(movies: Movie[]) {
+  return movies.map(m => m.id.episode)
+    .reduceRight((a, b) => Math.max(a, b));
 }

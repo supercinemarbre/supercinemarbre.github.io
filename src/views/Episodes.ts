@@ -21,7 +21,7 @@ export default class Home extends Vue {
   }
 
   async created() {
-    const [ movies, episodeMap ] = await Promise.all([
+    const [movies, episodeMap] = await Promise.all([
       fetchMovies(),
       fetchEpisodes()
     ])
@@ -30,17 +30,21 @@ export default class Home extends Vue {
     this.episodes = Object.values(this.episodeMap)
       .sort((e1, e2) => e2.number - e1.number);
     this.episodes.forEach(episode => {
-      episode.searchString = 
+      episode.searchString =
         episode.title + '|' +
         this.leftPad(episode.number, '0', 3);
     });
 
-    this.allMovies = movies;
+    this.allMovies = movies
+      .map(movie => {
+        movie.episode = movie.id.episode;
+        return movie;
+      });
     this.state = 'loaded';
   }
 
   episodeMovies(episodeNumber: number) {
-    return this.allMovies.filter(m => m.id.episode === episodeNumber);
+    return this.allMovies.filter(m => m.episode === episodeNumber);
   }
 
   leftPad(number: number, char: string, size: number) {
@@ -50,5 +54,5 @@ export default class Home extends Vue {
     }
     return result;
   }
-  
+
 }

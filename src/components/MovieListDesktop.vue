@@ -13,7 +13,8 @@
     :footer-props="{
       showFirstLastPage: true,
       showCurrentPage: true
-    }">
+    }"
+    item-key="tconst">
     <template v-slot:item.ranking="{ item }">
       <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}<Ordinal :value="item.ranking" /></span>
       <span v-if="!currentDecade">
@@ -50,7 +51,7 @@
       <div>
         <div class="movie-title">
           <a :name="item.tconst" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
-          <a class="movie-play" v-if="item.timestamp && episodes[item.id.episode]" :href="episodes[item.id.episode].mp3url + '#t=' + item.timestamp">
+          <a class="movie-play" v-if="item.timestamp && episodes[item.episode]" :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
             <v-icon>mdi-headphones</v-icon>
           </a>
         </div>
@@ -63,7 +64,7 @@
       </div>
     </template>
     <template v-slot:item.episode="{ item }">
-      <a v-if="item.id.episode" :href="episodes[item.id.episode].url">Ep. {{ item.id.episode }}</a>
+      <a v-if="item.episode" :href="episodes[item.episode].url">Ep. {{ item.episode }}</a>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
       <v-data-footer 

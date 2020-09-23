@@ -10,7 +10,8 @@
     :hide-default-footer="!!currentDecade"
     :sort-by="sortBy"
     :sort-desc="sortDesc"
-    :fixed-header="true">
+    :fixed-header="true"
+    item-key="tconst">
     <template v-slot:item="{ item }">
       <v-lazy>
         <div class="mobile-item">
@@ -31,8 +32,8 @@
             </div>
             <div class="mobile-scb-details">
               <span style="margin-right: 15px">{{ item.year }}</span>
-              <span v-if="episodes[item.id.episode]"><a :href="episodes[item.id.episode].url">Episode {{ item.id.episode }}</a></span>
-              <a v-if="item.timestamp" style="margin-left: 10px" :href="episodes[item.id.episode].mp3url + '#t=' + item.timestamp">
+              <span v-if="episodes[item.episode]"><a :href="episodes[item.episode].url">Episode {{ item.episode }}</a></span>
+              <a v-if="item.timestamp" style="margin-left: 10px" :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
                 <v-icon>mdi-headphones</v-icon>
               </a>
             </div>
