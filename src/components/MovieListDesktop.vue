@@ -51,9 +51,7 @@
       <div>
         <div class="movie-title">
           <a :name="item.tconst" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
-          <a class="movie-play" v-if="item.timestamp && episodes[item.episode]" :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
-            <v-icon>mdi-headphones</v-icon>
-          </a>
+          <TimestampLink :movie="item" :episodes="episodes" style="margin-left: 10px"></TimestampLink>
         </div>
         <div class="movie-alt-title" v-if="item.title !== item.primaryTitle">{{ item.primaryTitle }}</div>
       </div>

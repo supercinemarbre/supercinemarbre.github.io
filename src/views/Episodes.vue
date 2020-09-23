@@ -42,11 +42,13 @@
           <td colspan="3">
             <v-lazy>
               <div class="movies">
-                <MoviePoster
-                  v-for="movie in episodeMovies(item.number)"
-                  :key="movie.tconst"
-                  :movie="movie"
-                ></MoviePoster>
+                <div v-for="movie in episodeMovies(item.number)" :key="movie.tconst">
+                  <MoviePoster :movie="movie"></MoviePoster>
+                  <div class="movie-timestamp">
+                    {{ timestamp(movie.timestamp) }}
+                    <TimestampLink :movie="movie" :episodes="episodes" style="margin-left: 10px"></TimestampLink>
+                  </div>
+                </div>
               </div>
             </v-lazy>
           </td>
@@ -109,5 +111,10 @@
   ::v-deep .movies-row {
     display: none;
   }
+}
+
+.movie-timestamp {
+  text-align: center;
+  color: #AAA;
 }
 </style>

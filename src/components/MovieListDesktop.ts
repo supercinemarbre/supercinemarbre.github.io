@@ -1,4 +1,5 @@
 import Ordinal from '@/components/common/Ordinal.vue';
+import TimestampLink from '@/components/common/TimestampLink.vue';
 import PopularityIMDB from '@/components/ratings/PopularityIMDB.vue';
 import RatingIMDB from '@/components/ratings/RatingIMDB.vue';
 import RatingMetacritic from '@/components/ratings/RatingMetacritic.vue';
@@ -13,7 +14,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
     RatingRT,
     RatingMetacritic,
     PopularityIMDB,
-    Ordinal
+    Ordinal,
+    TimestampLink
   }
 })
 export default class MovieListDesktop extends Vue {

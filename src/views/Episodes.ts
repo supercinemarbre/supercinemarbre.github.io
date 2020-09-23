@@ -1,11 +1,13 @@
 import MoviePoster from '@/components/common/MoviePoster.vue';
+import TimestampLink from '@/components/common/TimestampLink.vue';
 import { EpisodeMap, fetchEpisodes, fetchMovies } from '@/services/api.service';
 import { Episode, Movie } from '@/types';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
-    MoviePoster
+    MoviePoster,
+    TimestampLink
   }
 })
 export default class Home extends Vue {
@@ -44,7 +46,14 @@ export default class Home extends Vue {
   }
 
   episodeMovies(episodeNumber: number) {
-    return this.allMovies.filter(m => m.episode === episodeNumber);
+    return this.allMovies
+      .filter(m => m.episode === episodeNumber)
+      .sort((a, b) => {
+        if (a.timestamp && b.timestamp) {
+          return a.timestamp - b.timestamp;
+        }
+        return b.timestamp || -a.timestamp;
+      });
   }
 
   leftPad(number: number, char: string, size: number) {
@@ -55,4 +64,19 @@ export default class Home extends Vue {
     return result;
   }
 
+  timestamp(time: number) {
+    if (time) {
+      const hours = Math.floor(time / 3600);
+      const minutes = Math.floor(time / 60) % 60;
+      const seconds = time % 60;
+
+      const minSec = `${this.leftPad(minutes, '0', 2)}:${this.leftPad(seconds, '0', 2)}`;
+      if (hours > 0) {
+        return `${hours}:${minSec}`;
+      }
+      return minSec;
+    } else {
+      return '';
+    }
+  }
 }
