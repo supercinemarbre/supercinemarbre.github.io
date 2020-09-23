@@ -17,6 +17,7 @@ export default class Home extends Vue {
   search = '';
   sortBy = [];
   sortDesc = [];
+  itemsPerPage = 5;
 
   mounted() {
     window.scrollTo(0, 0);

@@ -2,7 +2,7 @@
   <div>
     <h1>Liste des épisodes</h1>
 
-    <v-card style="margin-bottom: 15px">
+    <v-card style="margin-bottom: 15px; max-width: 500px;">
       <v-card-title>
         <v-text-field
           v-model="search"
@@ -10,7 +10,7 @@
           label="Recherche"
           single-line
           hide-details
-          placeholder="Chercher un épisode"
+          placeholder="Chercher un épisode, une décennie"
         ></v-text-field>
       </v-card-title>
     </v-card>
@@ -18,20 +18,25 @@
     <v-data-table
       :loading="state === 'loading'"
       :search="search"
-      :headers="[
-          { text: 'Ep.' },
-          { text: 'Décennie', class: 'decade' },
-          { text: 'Titre', value: 'searchString' },
-          { text: 'MP3' }
-        ]"
+      :headers="headers()"
       :items="episodes"
-      :mobile-breakpoint="0">
+      :items-per-page="5"
+      :mobile-breakpoint="0"
+      :custom-filter="customFilter"
+      hide-default-footer>
       <template v-slot:item="{ item }">
         <tr>
           <td class="number">{{ item.number }}</td>
-          <td class="decade">{{ item.decade }}</td>
+          <td class="date">{{ date(item.date) }}</td>
           <td class="episode-title">
             <a :href="item.url">{{ item.title }}</a>
+            <div class="inline-details">
+              Années {{ item.decade }}
+            </div>
+          </td>
+          <td class="decade">{{ item.decade }}</td>
+          <td class="article">
+            <a :href="item.url"><v-icon>mdi-bookmark</v-icon></a>
           </td>
           <td class="download">
             <a :href="item.mp3url"><v-icon>mdi-download</v-icon></a>
@@ -39,15 +44,11 @@
         </tr>
         <tr class="movies-row">
           <td></td>
-          <td colspan="3">
+          <td colspan="5">
             <v-lazy>
               <div class="movies">
                 <div v-for="movie in episodeMovies(item.number)" :key="movie.tconst">
-                  <MoviePoster :movie="movie"></MoviePoster>
-                  <div class="movie-timestamp">
-                    {{ timestamp(movie.timestamp) }}
-                    <TimestampLink :movie="movie" :episodes="episodes" style="margin-left: 10px"></TimestampLink>
-                  </div>
+                  <MoviePoster :movie="movie" :episode="item"></MoviePoster>
                 </div>
               </div>
             </v-lazy>
@@ -61,6 +62,7 @@
           @update:options="updateOptions"
           showFirstLastPage
           showCurrentPage
+          :itemsPerPageOptions="[1,5,10,50,-1]"
           items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
       </template>
     </v-data-table>
@@ -82,9 +84,22 @@
   font-size: 150% !important;
 }
 
-@media (max-width: 300px) {
+@media (max-width: 520px) {
+  ::v-deep .date {
+    display: none;
+  }
+}
+
+.inline-details {
+  display: none;
+  color: #888;
+}
+@media (max-width: 520px) {
   ::v-deep .decade {
     display: none;
+  }
+  ::v-deep .inline-details {
+    display: block;
   }
 }
 
@@ -101,7 +116,7 @@
 
 ::v-deep .movies {
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -113,8 +128,8 @@
   }
 }
 
-.movie-timestamp {
-  text-align: center;
-  color: #AAA;
+::v-deep .article .v-icon, ::v-deep .download .v-icon {
+  font-size: 250% !important;
+  color: #7ec6ff !important;
 }
 </style>

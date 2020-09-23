@@ -1,13 +1,11 @@
 import MoviePoster from '@/components/common/MoviePoster.vue';
-import TimestampLink from '@/components/common/TimestampLink.vue';
 import { EpisodeMap, fetchEpisodes, fetchMovies } from '@/services/api.service';
 import { Episode, Movie } from '@/types';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
-    MoviePoster,
-    TimestampLink
+    MoviePoster
   }
 })
 export default class Home extends Vue {
@@ -23,6 +21,8 @@ export default class Home extends Vue {
   }
 
   async created() {
+    this.search = this.$route.query.search?.toString();
+
     const [movies, episodeMap] = await Promise.all([
       fetchMovies(),
       fetchEpisodes()
@@ -30,12 +30,11 @@ export default class Home extends Vue {
 
     this.episodeMap = episodeMap;
     this.episodes = Object.values(this.episodeMap)
+      .map(episode => {
+        episode.searchString = this.toSearchString(episode.title);
+        return episode;
+      })
       .sort((e1, e2) => e2.number - e1.number);
-    this.episodes.forEach(episode => {
-      episode.searchString =
-        episode.title + '|' +
-        this.leftPad(episode.number, '0', 3);
-    });
 
     this.allMovies = movies
       .map(movie => {
@@ -43,6 +42,29 @@ export default class Home extends Vue {
         return movie;
       });
     this.state = 'loaded';
+  }
+
+  toSearchString(value: string) {
+    return value.replace(/[^a-zA-Z]/g, '').toLowerCase();
+  }
+
+  headers() {
+    return [
+      { text: 'Ep.', value: 'number' },
+      { text: 'Date', class: 'date' },
+      { text: 'Titre', value: 'title' },
+      { text: 'Décennie', class: 'decade' },
+      { text: 'Article' },
+      { text: 'MP3' }
+    ]
+  }
+
+  customFilter(value: Episode, search: string | null, item: Episode): boolean {
+    const searchString = this.toSearchString(search);
+    return !search
+      || item.number.toString() === search
+      || item.decade === search
+      || (searchString && item.searchString.includes(searchString));
   }
 
   episodeMovies(episodeNumber: number) {
@@ -56,27 +78,8 @@ export default class Home extends Vue {
       });
   }
 
-  leftPad(number: number, char: string, size: number) {
-    let result = number.toString();
-    while (result.length < size) {
-      result = char + result;
-    }
-    return result;
-  }
-
-  timestamp(time: number) {
-    if (time) {
-      const hours = Math.floor(time / 3600);
-      const minutes = Math.floor(time / 60) % 60;
-      const seconds = time % 60;
-
-      const minSec = `${this.leftPad(minutes, '0', 2)}:${this.leftPad(seconds, '0', 2)}`;
-      if (hours > 0) {
-        return `${hours}:${minSec}`;
-      }
-      return minSec;
-    } else {
-      return '';
-    }
+  date(isoString: string) {
+    const date = new Date(isoString);
+    return date.toLocaleDateString();
   }
 }

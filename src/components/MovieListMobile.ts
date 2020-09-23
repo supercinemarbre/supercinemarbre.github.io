@@ -27,6 +27,7 @@ export default class MovieListMobile extends Vue {
   @Prop() search: string;
   @Prop() sortBy: object[];
   @Prop() sortDesc: object[];
+  @Prop() itemsPerPage: number;
 
   shortDecade(decade: string) {
     return decade.slice(2) + 's';

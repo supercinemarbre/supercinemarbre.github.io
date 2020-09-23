@@ -19,6 +19,7 @@ export default class MovieList extends Vue {
   @Prop() search: string;
   @Prop() sortBy: object[];
   @Prop() sortDesc: object[];
+  @Prop() itemsPerPage: number;
 
   mobileMode = false;
 

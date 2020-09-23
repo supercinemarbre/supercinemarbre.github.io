@@ -9,6 +9,7 @@
       :search="search"
       :sortBy="sortBy"
       :sortDesc="sortDesc"
+      :itemsPerPage="itemsPerPage"
     ></MovieListDesktop>
     <MovieListMobile
       v-if="mobileMode"
@@ -19,6 +20,7 @@
       :search="search"
       :sortBy="sortBy"
       :sortDesc="sortDesc"
+      :itemsPerPage="itemsPerPage"
     ></MovieListMobile>
   </div>
 </template>

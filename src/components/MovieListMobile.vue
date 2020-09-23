@@ -4,10 +4,10 @@
     :search="search"
     :headers="[{ text: 'Film', value: 'searchString' }]"
     :items="movies"
-    :items-per-page="10"
+    :items-per-page="itemsPerPage"
     :mobile-breakpoint="0"
     :disable-pagination="!!currentDecade"
-    :hide-default-footer="!!currentDecade"
+    hide-default-footer
     :sort-by="sortBy"
     :sort-desc="sortDesc"
     :fixed-header="true"
@@ -33,8 +33,8 @@
             <div class="mobile-scb-details">
               <span style="margin-right: 15px">{{ item.year }}</span>
               <span style="margin-right: 15px">{{ item.runtimeMinutes }} min</span>
-              <span v-if="episodes[item.episode]"><a :href="episodes[item.episode].url">Episode {{ item.episode }}</a></span>
-              <TimestampLink :movie="item" :episodes="episodes" style="margin-left: 10px"></TimestampLink>
+              <router-link v-if="item.episode" :to="'/episodes?search=' + item.episode">Episode {{ item.episode }}</router-link>
+              <TimestampLink :movie="item" :episode="episodes[item.episode]" style="margin-left: 10px"></TimestampLink>
             </div>
             <div class="movie-casting">
               <div v-if="item.directors" > de {{ item.directors.join(', ') }}</div>
@@ -58,10 +58,11 @@
       </v-lazy>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
-      <v-data-footer 
+      <v-data-footer v-if="!currentDecade"
         :pagination="pagination" 
         :options="options"
         @update:options="updateOptions"
+        :itemsPerPageOptions="[3,5,10,50,-1]"
         items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
     </template>
   </v-data-table>

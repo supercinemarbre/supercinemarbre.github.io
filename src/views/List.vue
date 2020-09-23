@@ -7,7 +7,7 @@
       </span>
     </h1>
 
-    <v-card style="margin-bottom: 15px">
+    <v-card style="margin-bottom: 15px; max-width: 500px;">
       <v-card-title>
         <v-text-field
           v-model="search"
@@ -28,6 +28,7 @@
       :search="search"
       :sortBy="sortBy"
       :sortDesc="sortDesc"
+      :itemsPerPage="itemsPerPage"
     ></MovieList>
   </div>
 </template>

@@ -4,10 +4,10 @@
     :search="search"
     :headers="headers"
     :items="movies"
-    :items-per-page="10"
+    :items-per-page="itemsPerPage"
     :mobile-breakpoint="991"
     :disable-pagination="!!currentDecade"
-    :hide-default-footer="!!currentDecade"
+    hide-default-footer
     :sort-by="sortBy"
     :sort-desc="sortDesc"
     :footer-props="{
@@ -52,7 +52,7 @@
         <div class="movie-title">
           <a :name="item.tconst" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
           <span class="movie-alt-title" v-if="item.title !== item.primaryTitle">({{ item.primaryTitle }})</span>
-          <TimestampLink :movie="item" :episodes="episodes" style="margin-left: 10px"></TimestampLink>
+          <TimestampLink :movie="item" :episode="episodes[item.episode]" style="margin-left: 10px"></TimestampLink>
         </div>
         
         <div class="movie-details">
@@ -67,15 +67,16 @@
       </div>
     </template>
     <template v-slot:item.episode="{ item }">
-      <a v-if="item.episode" :href="episodes[item.episode].url">Ep. {{ item.episode }}</a>
+      <router-link v-if="item.episode" :to="'/episodes?search=' + item.episode">Ep. {{ item.episode }}</router-link>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
-      <v-data-footer 
+      <v-data-footer v-if="!currentDecade"
         :pagination="pagination" 
         :options="options"
         @update:options="updateOptions"
         showFirstLastPage
         showCurrentPage
+        :itemsPerPageOptions="[5,10,50,-1]"
         items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
     </template>
   </v-data-table>

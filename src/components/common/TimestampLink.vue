@@ -1,5 +1,5 @@
 <template>
-  <a class="movie-play" v-if="movie.timestamp" :href="episodes[movie.episode].mp3url + '#t=' + movie.timestamp">
+  <a class="movie-play" v-if="movie.timestamp && episode" :href="episode.mp3url + '#t=' + movie.timestamp">
     <v-icon>mdi-headphones</v-icon>
   </a>
 </template>
