@@ -18,6 +18,11 @@ import * as timestamps from "./src/timestamps";
       console.log("Skipping Super Cine Battle scraping (use SCB_INIT=true to enable)")
     }
 
+    // IMDB/OMDB data fetching
+
+    await imdb.fetchMissingIMDBData();
+    await omdb.fetchMissingOMDBData();
+
     // Episode timestamps
 
     if (process.env.GSHEETS_INIT) {
@@ -25,12 +30,7 @@ import * as timestamps from "./src/timestamps";
     } else {
       console.log("Skipping fetching timestamps from Google Sheets (use GSHEETS_INIT=true to enable)")
     }
-    await timestamps.collectTimestamps();
-
-    // IMDB/OMDB data fetching
-
-    await imdb.synchronizeWithIMDB();
-    await omdb.synchronizeWithOMDB();
+    await timestamps.applyTimestamps();
 
     // Patching of final results
 

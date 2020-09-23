@@ -1,9 +1,10 @@
 import * as cheerio from "cheerio";
 import download from "download";
+import { isEqual } from "lodash";
 import { readData, writeData, writeDataString } from "./io";
-import { Episode, Movie } from "./types";
+import { Episode, Movie, MovieID } from "./types";
 
-export type MoviePatch = 'string' | Partial<Movie>;
+export type MoviePatch = Partial<Movie> & { scbKey: MovieID };
 
 export function readListUrls(): Promise<Record<string, string>> {
   return readData("scb_urls.json");
@@ -11,7 +12,7 @@ export function readListUrls(): Promise<Record<string, string>> {
 
 export async function readMovieRankings(): Promise<Movie[] | undefined> {
   try {
-    const rankings = await readData(`../../public/scb_rankings.json`);
+    const rankings = await readData(`../../public/scb_movies.json`);
     if (Array.isArray(rankings)) {
       return rankings;
     } else {
@@ -22,8 +23,8 @@ export async function readMovieRankings(): Promise<Movie[] | undefined> {
   }
 }
 
-export function writeMovieRankings(rankings: Movie[]): Promise<void> {
-  return writeData(`../../public/scb_rankings.json`, rankings);
+export function writeMovieRankings(movies: Movie[]): Promise<void> {
+  return writeData(`../../public/scb_movies.json`, movies);
 }
 
 export async function scrapeScbEpisodes(): Promise<void> {
@@ -31,7 +32,7 @@ export async function scrapeScbEpisodes(): Promise<void> {
 
   const allMovies = await readMovieRankings();
   const episodeCount = allMovies
-    .map(movie => movie.episode)
+    .map(movie => movie.id.episode)
     .reduce((e1, e2) => Math.max(e1, e2), 0);
   const episodes = await readScbEpisodes();
 
@@ -57,7 +58,7 @@ function getEpisodeDecade(episodeNumber: number, allMovies: Movie[]): string | u
   }
 
   const decadesOfRankedMovies = allMovies
-    .filter(movie => movie.episode === episodeNumber)
+    .filter(movie => movie.id.episode === episodeNumber)
     .map(movie => movie.decade)
 
   if (decadesOfRankedMovies.length === 1) {
@@ -120,7 +121,7 @@ async function readScbEpisodes(): Promise<Episode[] | undefined> {
     if (Array.isArray(rankings)) {
       return rankings;
     } else {
-      return Object.values(rankings); // FIXME Issue with initial save
+      return Object.values(rankings); // XXX Array is sometimes parsed as object
     }
   } catch (e) {
     return undefined;
@@ -131,11 +132,16 @@ function writeScbEpisodes(episodes: Episode[]): Promise<void> {
   return writeData(`../../public/scb_episodes.json`, episodes);
 }
 
-export function readScbPatch(): Promise<Record<string, MoviePatch>> {
-  return readData("scb_patch.json");
+export async function readScbPatches(): Promise<MoviePatch[]> {
+  const patches = await readData("scb_patch.json");
+  if (Array.isArray(patches)) {
+    return patches;
+  } else {
+    return Object.values(patches); // XXX Array is sometimes parsed as object
+  }
 }
 
-export function writeScbPatch(patch: Record<string, MoviePatch>): void {
+export function writeScbPatch(patch: MoviePatch[]): void {
   writeDataString(`scb_patch.json`, JSON.stringify(patch, null, 2));
 }
 
@@ -144,11 +150,12 @@ export async function scrapeMovieRankings(): Promise<Movie[]> {
 
   const scbPages = await readListUrls();
   const scbRankings = await readMovieRankings() || [];
+  const patches = await readScbPatches();
 
   for (const decade of Object.keys(scbPages)) {
     const scbPage = await download(scbPages[decade]);
     const $ = cheerio.load(scbPage);
-    const rankings = parseRankings($, decade);
+    const rankings = parseMovies($, decade, patches);
     console.log(` - ${rankings.length} movies found for decade ${decade}`);
 
     const sizeBefore = scbRankings.length;
@@ -167,14 +174,14 @@ export async function scrapeMovieRankings(): Promise<Movie[]> {
 
 function mergeRankings(existingRankings: Movie[], newRankings: Movie[]) {
   for (const newRanking of newRankings) {
-    if (!existingRankings.find(r => r.scbTitle === newRanking.scbTitle)) {
+    if (!existingRankings.find(r => isEqual(r.id, newRanking.id))) {
       existingRankings.push(newRanking);
     }
   }
 }
 
-function parseRankings($: CheerioStatic, decade: string): Movie[] {
-  const rankings: Movie[] = [];
+function parseMovies($: CheerioStatic, decade: string, patches: MoviePatch[]): Movie[] {
+  const movies: Movie[] = [];
 
   const rows = $("table tr");
   for (let i = 0; i < rows.length; i++) {
@@ -182,19 +189,29 @@ function parseRankings($: CheerioStatic, decade: string): Movie[] {
     const cells = $("td", row);
     if (cells.length > 0) {
       const episode = parseInt($(cells.get(2)).text().trim(), 10);
-      const scbTitle = $(cells.get(1)).text().trim();
+      const name = $(cells.get(1)).text().trim();
       const ranking = parseInt($(cells.get(0)).text().trim(), 10);
-      if (ranking && scbTitle) {
-        rankings.push({
+      if (ranking && name) {
+        const movie: Movie = {
+          id: { 
+            episode: isNaN(episode) ? null : episode,
+            name
+          },
           decade,
-          episode,
-          scbTitle,
-          title: scbTitle,
+          title: name,
           ranking
-        });
+        };
+
+        const matchingPatch = patches.find(p => isEqual(p.scbKey, movie.id));
+        if (matchingPatch) {
+          delete matchingPatch.scbKey;
+          Object.assign(movie, matchingPatch);
+        }
+
+        movies.push(movie);
       }
     }
   }
 
-  return rankings;
+  return movies;
 }

@@ -43,7 +43,7 @@ Attention :
 ### Commandes
 
 * `SCB_INIT=true npm...` : Mettre à jour les listes SCB depuis supercinebattle.fr
-* `GSHEETS_INIT=true npm...` : Mettre à jour les timestamps depuis [ce document](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit?pli=1#gid=2128260303) Google Sheets
+* `GSHEETS_INIT=true npm...` : Mettre à jour les timestamps depuis [ce document](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit) Google Sheets
 * `IMDB_INIT=true npm...` : Mettre à jour la base IMDB depuis imdb.com
 * `[IMDB_ONLY=true] [OMDB_ONLY=true] [ALL=true] npm run invalidate -- [nom(s) de film(s) SCB]` : Invalider des données de films. `IMDB_ONLY` et `OMDB_ONLY` permettent d'annuler seulement les données issues de IMDB, `ALL` annule sur tous les films.
 
@@ -59,9 +59,9 @@ npm run build
 
 ### Corriger un film
 
-1. Modifier `scb_patch.json`, en ajoutant une clef avec le nom SCB exact du film dans la liste. En valeur, on peut mettre soit directement l'ID IMDB soit un objet avec toutes les valeurs à écraser sur l'objet `scb_rankings.json`.
+1. Modifier `scb_patch.json`, en ajoutant une clef avec le nom SCB exact du film dans la liste. En valeur, on peut mettre soit directement l'ID IMDB soit un objet avec toutes les valeurs à écraser sur l'objet `scb_movies.json`.
 
-2. Invalider les données de `scb_rankings.json`, de préférence avec l'outil dédié :
+2. Invalider les données de `scb_movies.json`, de préférence avec l'outil dédié :
 
 ```bash
 cd importer

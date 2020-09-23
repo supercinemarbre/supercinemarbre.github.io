@@ -30,9 +30,9 @@
               <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
             </div>
             <div class="mobile-scb-details">
-              <span style="margin-right: 15px">{{ item.startYear }}</span>
-              <span v-if="episodes[item.episode]"><a :href="episodes[item.episode].url">Episode {{ item.episode }}</a></span>
-              <a v-if="item.timestamp" style="margin-left: 10px" :href="episodes[item.episode].mp3url + '#t=' + item.timestamp">
+              <span style="margin-right: 15px">{{ item.year }}</span>
+              <span v-if="episodes[item.id.episode]"><a :href="episodes[item.id.episode].url">Episode {{ item.id.episode }}</a></span>
+              <a v-if="item.timestamp" style="margin-left: 10px" :href="episodes[item.id.episode].mp3url + '#t=' + item.timestamp">
                 <v-icon>mdi-headphones</v-icon>
               </a>
             </div>

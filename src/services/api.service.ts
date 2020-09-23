@@ -16,7 +16,7 @@ async function fetchJSON<T>(filename: string): Promise<T> {
 }
 
 export async function fetchMovies(): Promise<Movie[]> {
-  return fetchJSON('scb_rankings.json');
+  return fetchJSON('scb_movies.json');
 }
 
 export async function fetchEpisodes(): Promise<EpisodeMap> {
@@ -24,8 +24,4 @@ export async function fetchEpisodes(): Promise<EpisodeMap> {
   const episodeMap = {};
   episodeList.forEach(e => episodeMap[e.number] = e);
   return episodeMap;
-}
-
-export async function fetchTimestamps(): Promise<TimestampMap> {
-  return fetchJSON('scb_timestamps.json');
 }

@@ -40,7 +40,7 @@ export default class Home extends Vue {
   }
 
   episodeMovies(episodeNumber: number) {
-    return this.allMovies.filter(m => m.episode === episodeNumber);
+    return this.allMovies.filter(m => m.id.episode === episodeNumber);
   }
 
   leftPad(number: number, char: string, size: number) {

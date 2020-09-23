@@ -1,5 +1,5 @@
 import MovieList from '@/components/MovieList.vue';
-import { EpisodeMap, fetchEpisodes, fetchMovies, fetchTimestamps } from '@/services/api.service';
+import { EpisodeMap, fetchEpisodes, fetchMovies } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
@@ -23,23 +23,21 @@ export default class Home extends Vue {
   }
 
   async created() {
-    const [ movies, episodes, timestamps ] = await Promise.all([
+    const [ movies, episodes ] = await Promise.all([
       fetchMovies(),
-      fetchEpisodes(),
-      fetchTimestamps()
-    ])
+      fetchEpisodes()
+    ]);
 
     this.episodes = episodes;
     this.allMovies = movies;
     this.allMovies.forEach(movie => {
-      movie.timestamp = timestamps[movie.scbTitle];
       movie.searchString =
         movie.primaryTitle + '|' +
         movie.title + '|' +
         movie.actors?.join('|') + '|' +
         movie.directors?.join('|') +
-        movie.startYear + '|' +
-        'Episode ' + movie.episode
+        movie.year + '|' +
+        'Episode ' + movie.id.episode
     })
     this.state = 'loaded';
     this.onRouteChange();
@@ -68,7 +66,7 @@ export default class Home extends Vue {
         .filter(movie => movie.decade === this.currentDecade)
         .sort((a, b) => a.ranking - b.ranking)
     } else {
-      return this.allMovies.sort((a, b) => (b.startYear || 0) - (a.startYear || 0));
+      return this.allMovies.sort((a, b) => (b.year || 0) - (a.year || 0));
     }
   }
 

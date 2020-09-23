@@ -23,6 +23,7 @@
     "download": "^8.0.0",
     "fast-levenshtein": "^3.0.0",
     "google-spreadsheet": "^3.0.13",
+    "lodash": "^4.17.20",
     "sqlite3": "^4.2.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"

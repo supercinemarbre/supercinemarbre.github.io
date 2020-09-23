@@ -9,9 +9,20 @@ export interface Episode {
   mp3url: string;
   decade?: string;
 
-  // ===================== TRANSIENT ===================== */
+  // ===================== TRANSIENT (CLIENT-ONLY) ===================== */
   
-  searchString: string;
+  searchString?: string;
+}
+
+export interface MovieID {
+  /**
+   * Episode number
+   */
+  episode: number;
+  /**
+   * Movie name, taken from either SCB or Google Sheets, used for ID purposes only
+   */
+  name: string;
 }
 
 export interface Movie {
@@ -19,17 +30,14 @@ export interface Movie {
   // ===================== SUPER CINE BATTLE ===================== */
 
   /**
+   * Unique movie identifier
+   */
+  id: MovieID;
+
+  /**
    * SCB decade
    */
   decade: string;
-  /**
-   * SCB episode
-   */
-  episode: number;
-  /**
-   * Raw title as listed in the raw SCB rankings, for ID purposes only
-   */
-  scbTitle: string;
   /**
    * Display title (usually title, but can be corrected in case of typos)
    */
@@ -54,24 +62,20 @@ export interface Movie {
    */
   primaryTitle?: string;
   /**
-   * Release title in original language (from IMDB)
+   * Release title in original language (/!\ no longer fetched from IMDB)
    */
   originalTitle?: string;
-  /**
-   * Release year (from IMDB)
-   */
-  startYear?: number;
-  /**
-   * Movie duration in minutes (from IMDB)
-   */
-  runtimeMinutes?: string;
-  /**
-   * Movie genres, comma-separated (from IMDB)
-   */
-  genres?: string;
 
   // ===================== OMDB ===================== */
   
+  /**
+   * Release year (from OMDB)
+   */
+  year?: number;
+  /**
+   * Movie duration in minutes (from OMDB)
+   */
+  runtimeMinutes?: string;
   /**
    * Poster image URL (from OMDB)
    */
@@ -117,16 +121,26 @@ export interface Movie {
    */
   releaseDate?: string;
   /**
-   * Production country (from OMDB)
+   * Production countries (from OMDB)
    */
-  country?: string;
+  countries?: string[];
   /**
-   * Original language (from OMDB)
+   * Original languages (from OMDB)
    */
-  language?: string;
+  languages?: string[];
+  /**
+   * Movie genres, comma-separated (from OMDB)
+   */
+  genres?: string[];
 
-  // ===================== TRANSIENT ===================== */
+  // ===================== GOOGLE SHEETS ===================== */
+
+  /**
+   * Timestamp in seconds within the episode
+   */
+  timestamp?: number;
+
+  // ===================== TRANSIENT (CLIENT-ONLY) ===================== */
   
   searchString?: string;
-  timestamp?: string;
 }

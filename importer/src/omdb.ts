@@ -36,7 +36,7 @@ interface OmdbMovie {
   Response: "True" | any;
 }
 
-export async function synchronizeWithOMDB(sublist?: Movie[]) {
+export async function fetchMissingOMDBData(sublist?: Movie[]) {
   console.log("Filling any missing OMDB data");
 
   if (!OMDB_API_KEY) {
@@ -48,13 +48,13 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
   }
 
   const movies = sublist ?? await scb.readMovieRankings();
-  const patch = await scb.readScbPatch();
+  const patch = await scb.readScbPatches();
   const omdbDump = await readOMDBDump();
 
   try {
     let i = 1, pendingWrites = 0;
     for (const movie of movies) {
-      if (!movie.imdbRating) {
+      if (hasMissingOMDBData(movie)) {
         let omdbMovie = omdbDump.find(m => m.imdbID === movie.tconst);
         if (!omdbMovie) {
           const omdbString = await download(`http://www.omdbapi.com/?i=${movie.tconst}&apikey=${OMDB_API_KEY}`);
@@ -68,13 +68,16 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
             }
           });
 
+          movie.year = parseInt(omdbMovie.Year, 10);
+          movie.runtimeMinutes = omdbMovie.Runtime.split(" ")[0];
           movie.posterUrl = omdbMovie.Poster;
+
           movie.imdbRating = parseFloat(omdbMovie.imdbRating);
           movie.imdbVotes = parseInt(omdbMovie.imdbVotes.replace(/,/g, ''));
           movie.metascore = omdbMovie.Metascore ? parseInt(omdbMovie.Metascore, 10) : undefined;
-
           const rottenTomatoesRating = omdbMovie.Ratings.find(r => r.Source === "Rotten Tomatoes")?.Value;
           movie.rottenTomatoesRating = rottenTomatoesRating ? parseInt(rottenTomatoesRating, 10) : undefined;
+
           movie.usaRating = omdbMovie.Rated !== 'N/A' ? omdbMovie.Rated : undefined;
           movie.directors = omdbMovie.Director.split(', ');
           movie.writers = omdbMovie.Writer.split(', ');
@@ -123,7 +126,14 @@ export async function synchronizeWithOMDB(sublist?: Movie[]) {
   }
 }
 
+export function hasMissingOMDBData(movie: Movie) {
+  return !movie.year ||
+    !movie.posterUrl;
+}
+
 export function invalidateOMDBData(movie: Movie) {
+  delete movie.year;
+  delete movie.runtimeMinutes;
   delete movie.posterUrl;
   delete movie.imdbRating;
   delete movie.imdbVotes;

@@ -11,26 +11,28 @@ const partialInvalidation = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
 
 (async () => {
   const movies = await scb.readMovieRankings();
+  let invalidatedMovies = [];
 
-  const moviesToInvalidate = movies.filter(movie => movieNames.includes(movie.scbTitle) || process.env.ALL);
-
-  for (const movie of moviesToInvalidate) {
-    // IMDB
-    if (!partialInvalidation || process.env.IMDB_ONLY) {
-      imdb.invalidateIMDBData(movie);
+  for (const movieName of movieNames) {
+    const moviesToInvalidate = movies.filter(movie => movie.id.name === movieName || process.env.ALL);
+    if (moviesToInvalidate.length === 0) {
+      console.error(`ERROR: Movie not found: ${movieName}`);
+      process.exit(1);
     }
-    // OMDB
-    if (!partialInvalidation || process.env.OMDB_ONLY) {
-      omdb.invalidateOMDBData(movie);
+
+    for (const movie of moviesToInvalidate) {
+      // IMDB
+      if (!partialInvalidation || process.env.IMDB_ONLY) {
+        imdb.invalidateIMDBData(movie);
+      }
+      // OMDB
+      if (!partialInvalidation || process.env.OMDB_ONLY) {
+        omdb.invalidateOMDBData(movie);
+      }
+      invalidatedMovies.push(movie);
     }
   }
 
-  if (moviesToInvalidate.length === movieNames.length || process.env.ALL) {
-    await scb.writeMovieRankings(movies);
-    console.log(`Done (invalidated ${moviesToInvalidate.length} movies)`);
-  } else {
-    const movieNames = moviesToInvalidate.map(movie => movie.title);
-    const notFound = movieNames.filter(movieName => !movieNames.includes(movieName));
-    console.error(`ERROR: Movie(s) not found: ${notFound.join(', ')}`);
-  }
+  await scb.writeMovieRankings(movies);
+  console.log(`Done (invalidated ${invalidatedMovies.length} movies)`);
 })();

@@ -1,13 +1,30 @@
 import levenshtein from "fast-levenshtein";
+import { isEqual } from "lodash";
 import { Movie } from "./types";
 
-export function findMatchingMovies(title: string, movies: Movie[]): Movie[] {
+export function findMatchingMovies(key: { episode?: number, name: string, }, movies: Movie[]): Movie[] {
+  
+  // Exact match
+  if (key.episode) {
+    const exactMatch = movies.find(m => isEqual(key, m.id));
+    if (exactMatch) {
+      return [exactMatch];
+    }
+  }
+
+  // Filter by episode
+  const episodeFilteredMovies = key.episode
+    ? movies.filter(m => m.id.episode === key.episode)
+    : movies;
+
+  // Search similar name
+  const keyNameLowercase = key.name.toLowerCase();
   const matches: Array<[Movie, number]> = [];
-  for (const movie of movies) {
+  for (const movie of episodeFilteredMovies) {
     const distance = Math.min(
-        levenshtein.get(title.toLowerCase(), movie.scbTitle.toLowerCase()),
-        levenshtein.get(title.toLowerCase(), movie.primaryTitle.toLowerCase()));
-    if (distance < 5 || movie.title.replace(/0-9/g, '').toLowerCase().includes(title.toLowerCase())) {
+        levenshtein.get(keyNameLowercase, movie.id.name.toLowerCase()),
+        levenshtein.get(keyNameLowercase, movie.primaryTitle.toLowerCase()));
+    if (distance < 5 || movie.title.replace(/0-9/g, '').toLowerCase().includes(keyNameLowercase)) {
       matches.push([movie, distance]);
     }
     if (distance === 0) {
@@ -22,7 +39,7 @@ export function findMatchingMovies(title: string, movies: Movie[]): Movie[] {
 
 export function deduceEpisode(movies: Movie[]): number {
   const countByEpisode = {};
-  for (const episode of movies.map(m => m.episode)) {
+  for (const episode of movies.map(m => m.id.episode)) {
     countByEpisode[episode] = countByEpisode[episode] ? countByEpisode[episode] + 1 : 1;
   }
 
