@@ -32,6 +32,7 @@
             </div>
             <div class="mobile-scb-details">
               <span style="margin-right: 15px">{{ item.year }}</span>
+              <span style="margin-right: 15px">{{ item.runtimeMinutes }} min</span>
               <span v-if="episodes[item.episode]"><a :href="episodes[item.episode].url">Episode {{ item.episode }}</a></span>
               <TimestampLink :movie="item" :episodes="episodes" style="margin-left: 10px"></TimestampLink>
             </div>
@@ -165,6 +166,7 @@
   margin-right: 15px;
 }
 .mobile-scb-details {
+  color: #888;
   margin-bottom: 5px;
   font-size: 85%;
 }

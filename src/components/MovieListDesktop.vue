@@ -51,9 +51,14 @@
       <div>
         <div class="movie-title">
           <a :name="item.tconst" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
+          <span class="movie-alt-title" v-if="item.title !== item.primaryTitle">({{ item.primaryTitle }})</span>
           <TimestampLink :movie="item" :episodes="episodes" style="margin-left: 10px"></TimestampLink>
         </div>
-        <div class="movie-alt-title" v-if="item.title !== item.primaryTitle">{{ item.primaryTitle }}</div>
+        
+        <div class="movie-details">
+          {{ item.runtimeMinutes }} min
+          <span v-if="item.genres" style="margin-left: 10px">{{ item.genres.join(', ') }}</span>
+        </div>
       </div>
       <div class="movie-casting">
         <div v-if="item.directors">de {{ item.directors.join(', ') }}</div>
@@ -141,13 +146,22 @@
 }
 
 .movie-alt-title {
-  margin-top: -5px;
-  margin-bottom: 5px;
   color: #888888;
+  font-weight: normal;
+  font-size: 90%;
+  margin-left: 10px;
 }
 ::v-deep .movie-casting {
   color: #BBBBBB;
   font-size: 90%;
+  margin-bottom: 5px;
+}
+
+.movie-details {
+  color: #888888;
+  font-weight: normal;
+  font-size: 90%;
+  margin-top: -5px;
   margin-bottom: 5px;
 }
 </style>
