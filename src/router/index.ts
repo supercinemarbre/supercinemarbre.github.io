@@ -19,9 +19,7 @@ Vue.use(VueRouter)
     { path: '/1990', name: 'Années 1990', component: List, meta: { decade: "1990" } },
     { path: '/2000', name: 'Années 2000', component: List, meta: { decade: "2000" } },
     { path: '/2010', name: 'Années 2010', component: List, meta: { decade: "2010" } },
-    { path: '/about', name: 'A propos', component: APropos },
-    { path: '/directors', name: 'Réalisateurs', component: HallOfFameDirectors },
-    { path: '/actors', name: 'Acteurs', component: HallOfFameActors }
+    { path: '/about', name: 'A propos', component: APropos }
 ]
 
 const router = new VueRouter({

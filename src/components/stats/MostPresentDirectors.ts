@@ -34,6 +34,7 @@ export default class MostPresentDirectors extends Vue {
 
   get items() {
     const moviesByDirector = this.groupMoviesByDirector(); 
+    let previousCount = -1, previousRanking = 1;
     return Object.entries(moviesByDirector)
       .map((entry) => ({ director: entry[0], movies: entry[1] }))
       .filter(entry => entry.movies.length >= this.minimumMovies)
@@ -42,12 +43,22 @@ export default class MostPresentDirectors extends Vue {
         const tieBreaker = entry1.movies[0].ranking - entry2.movies[0].ranking; // best ranking
         return movieCountDiff + tieBreaker * 0.0001;
       })
-      .map(({ director, movies }, index) => ({
-        director,
-        movies: movies.sort(byRanking),
-        movieCount: movies.length,
-        ranking: index + 1,
-      }))
+      .map(({ director, movies }, index) => {
+        let ranking;
+        if (movies.length == previousCount) {
+          ranking = previousRanking;
+        } else {
+          ranking = index + 1;
+          previousCount = movies.length;
+          previousRanking = ranking
+        }
+        return {
+          director,
+          movies: movies.sort(byRanking),
+          movieCount: movies.length,
+          ranking
+        }
+      });
   }
 
   private groupMoviesByDirector() {

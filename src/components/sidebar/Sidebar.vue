@@ -15,10 +15,6 @@
     <SidebarLink to="/2010" icon="mdi-google-circles" label="Années 2010" />
     
     <v-divider></v-divider>
-    <SidebarLink to="/directors" icon="mdi-star" label="Réalisateurs" />
-    <SidebarLink to="/actors" icon="mdi-star" label="Acteurs" />
-
-    <v-divider></v-divider>
     <SidebarLink to="/about" icon="mdi-information-outline" label="A propos" />
   </v-list>
 </template>

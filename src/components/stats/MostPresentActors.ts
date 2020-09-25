@@ -34,6 +34,7 @@ export default class MostPresentActors extends Vue {
 
   get items() {
     const moviesByActor = this.groupMoviesByActor(); 
+    let previousCount = -1, previousRanking = 1;
     return Object.entries(moviesByActor)
       .map((entry) => ({ actor: entry[0], movies: entry[1] }))
       .filter(entry => entry.movies.length >= this.minimumMovies)
@@ -42,12 +43,22 @@ export default class MostPresentActors extends Vue {
         const tieBreaker = entry1.movies[0].ranking - entry2.movies[0].ranking; // best ranking
         return movieCountDiff + tieBreaker * 0.0001;
       })
-      .map(({ actor, movies }, index) => ({
-        actor,
-        movies: movies.sort(byRanking),
-        movieCount: movies.length,
-        ranking: index + 1,
-      }));
+      .map(({ actor, movies }, index) => {
+        let ranking;
+        if (movies.length == previousCount) {
+          ranking = previousRanking;
+        } else {
+          ranking = index + 1;
+          previousCount = movies.length;
+          previousRanking = ranking
+        }
+        return {
+          actor,
+          movies: movies.sort(byRanking),
+          movieCount: movies.length,
+          ranking
+        }
+      });
   }
 
   private groupMoviesByActor() {

@@ -1,11 +1,15 @@
 import MoviesPerEpisodeStats from '@/components/stats/MoviesPerEpisodeStats.vue';
+import MostPresentDirectors from '@/components/stats/MostPresentDirectors.vue';
+import MostPresentActors from '@/components/stats/MostPresentActors.vue';
 import { fetchMovies } from '@/services/api.service';
 import { Movie } from '@/types';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
-    MoviesPerEpisodeStats
+    MoviesPerEpisodeStats,
+    MostPresentDirectors,
+    MostPresentActors
   }
 })
 export default class Stats extends Vue {
