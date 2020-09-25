@@ -17,33 +17,57 @@ export async function fetchUpcomingMovieBroadasts() {
     xmltv = (await download("http://xmltv.ch/xmltv/xmltv-tnt.xml")).toString();
     await writeDataString("xmltv-tnt.xml", xmltv);
   }
-  
+
   const tvDoc = libxmljs.parseXml(xmltv);
 
-  const titles = tvDoc.find("//programme")
-    .filter(programme => programme.get("category")?.text().startsWith("film"))
-    .map(programme => programme.get("title")?.text());
-  console.log(`${titles.length} films in the schedule`);
+  const programmes = tvDoc.find("//programme")
+    .filter(programme => programme.get("category")?.text().startsWith("film"));
+  console.log(`${programmes.length} films in the schedule`);
 
   const movies = await readMovieRankings();
   console.log(`${movies.length} ranked films`);
 
-  const movieTitles = movies.map(m => [
-      {id: m.id, title: m.title},
-      {id: m.id, title: m.primaryTitle},
-      {id: m.id, title: m.originalTitle}])
-      .reduce((a, b) => [...a, ...b]);
-  
-  const foundIds = [];
-  const matches = movieTitles.filter(m => titles.includes(m.title))
-    .filter(m => {
-      if (!foundIds.includes(JSON.stringify(m.id))) {
-        foundIds.push(JSON.stringify(m.id));
-        return true;
-      }
-      return false;
-    })
-    .map(m => m.id);
+  const movieTitles = movies.map(movie => [
+    { movie, title: movie.title },
+    { movie, title: movie.primaryTitle },
+    { movie, title: movie.originalTitle }])
+    .reduce((a, b) => [...a, ...b]);
 
-  console.log(matches);
+  const foundProgrammes: Array<{ programme: libxmljs.Element; matchingMovie: Movie; }> = [];
+
+  for (const programme of programmes) {
+    const title = programme.get("title")?.text();
+    let matchingMovie = movieTitles.find(m => title === m.title)?.movie;
+    if (matchingMovie) {
+      foundProgrammes.push({
+        programme,
+        matchingMovie
+      });
+    }
+  }
+
+  console.log(foundProgrammes.length + " matches found!");
+
+  console.log(foundProgrammes.map(found => {
+    return parseDate(found.programme.attr("start")?.value()) + " sur " + getChannel(tvDoc, found.programme.attr("channel").value()) + " :\n    "
+      + found.programme.get("title")?.text() + "\n"
+      + "    (épisode SCB N°" + found.matchingMovie.id.episode + ")";
+  }).join('\n'))
+}
+
+function parseDate(date: string) {
+  if (!date) {
+    return "Date inconnue";
+  }
+  const y = date.slice(0, 4);
+  const m = date.slice(4, 6);
+  const d = date.slice(6, 8);
+  const h = date.slice(8, 10);
+  const mn = date.slice(10, 12);
+  return `Le ${d}/${m}/${y} à ${h}:${mn}`;
+}
+
+function getChannel(tvDoc: libxmljs.Document, channelId: string) {
+  const channelEl = tvDoc.find(`/tv/channel[@id="${channelId}"]`)[0];
+  return channelEl?.get("display-name").text();
 }
