@@ -1,4 +1,5 @@
 import APropos from '@/views/APropos.vue'
+import Stats from '@/views/Stats.vue'
 import Episodes from '@/views/Episodes.vue'
 import HallOfFameActors from '@/views/HallOfFameActors.vue'
 import HallOfFameDirectors from '@/views/HallOfFameDirectors.vue'
@@ -11,6 +12,7 @@ Vue.use(VueRouter)
   const routes: Array<RouteConfig> = [
     { path: '/', name: 'Tous les films', component: List },
     { path: '/episodes', name: 'Episodes', component: Episodes },
+    { path: '/stats', name: 'Statistiques', component: Stats },
     { path: '/1960', name: 'Années 1960', component: List, meta: { decade: "1960" } },
     { path: '/1970', name: 'Années 1970', component: List, meta: { decade: "1970" } },
     { path: '/1980', name: 'Années 1980', component: List, meta: { decade: "1980" } },

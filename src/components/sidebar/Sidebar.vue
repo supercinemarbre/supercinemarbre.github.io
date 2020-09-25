@@ -4,6 +4,7 @@
 
     <SidebarLink to="/" icon="mdi-movie" label="Tous les films" />
     <SidebarLink to="/episodes" icon="mdi-headphones-box" label="Épisodes" />
+    <SidebarLink to="/stats" icon="mdi-chart-bar" label="Statistiques" />
 
     <v-divider></v-divider>
     <SidebarLink to="/1960" icon="mdi-earth" label="Années 1960" />

@@ -26,11 +26,7 @@ export const GENRE_TRANSLATIONS = {
   Western: 'Western'
 };
 
-@Component({
-  components: {
-    TimestampLink
-  }
-})
+@Component({})
 export default class MoviePoster extends Vue {
 
   @Prop() genres?: string[];

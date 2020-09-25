@@ -1,0 +1,25 @@
+$ct-text-color: #FFF;
+$ct-grid-color: #FFF;
+$ct-series-colors: (
+  #f4c63d,
+  #59922b,
+  #0544d3,
+  #d70206,
+  #f05b4f,
+  #d17905,
+  #453d3f,
+  #6b0392,
+  #f05b4f,
+  #dda458,
+  #eacf7d,
+  #86797d,
+  #b2c326,
+  #6188e2,
+  #a748ca
+);
+
+@import 'node_modules/chartist/dist/scss/chartist';
+
+.chart {
+  padding: 20px 0;
+}

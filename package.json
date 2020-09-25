@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@mdi/font": "^3.6.95",
+    "@types/chartist": "^0.11.0",
     "@types/lodash-es": "^4.17.3",
     "axios": "^0.19.2",
+    "chartist": "^0.11.4",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "csv-parser": "^2.3.3",

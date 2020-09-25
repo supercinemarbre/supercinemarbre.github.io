@@ -1,3 +1,5 @@
+@use 'chart';
+
 #app {
   & a {
     color: #7ec6ff;
@@ -28,11 +30,11 @@
     margin-bottom: 15px;
   }
 
-  & .container > div > h1,
-    & .container > div > h2,
-    & .container > div > h3,
-    & .container > div > p,
-    & .container > div > ul {
+  & .container h1,
+    & .container h2,
+    & .container h3,
+    & .container p,
+    & .container ul {
     margin-left: 15px;
     margin-right: 15px;
   }
