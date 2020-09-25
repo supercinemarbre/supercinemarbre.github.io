@@ -57,7 +57,7 @@
         
         <div class="movie-details">
           {{ item.runtimeMinutes }} min
-          <span v-if="item.genres" style="margin-left: 10px">{{ item.genres.join(', ') }}</span>
+          <Genres v-if="item.genres" :genres="item.genres" style="margin-left: 10px"></Genres>
         </div>
       </div>
       <div class="movie-casting">

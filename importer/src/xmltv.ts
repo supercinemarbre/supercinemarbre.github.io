@@ -49,9 +49,8 @@ export async function fetchUpcomingMovieBroadasts() {
   console.log(foundProgrammes.length + " matches found!");
 
   console.log(foundProgrammes.map(found => {
-    return parseDate(found.programme.attr("start")?.value()) + " sur " + getChannel(tvDoc, found.programme.attr("channel").value()) + " :\n    "
-      + found.programme.get("title")?.text() + "\n"
-      + "    (épisode SCB N°" + found.matchingMovie.id.episode + ")";
+    return "* **" + found.programme.get("title")?.text() + "** *(" + found.matchingMovie.ranking + "e des années " + found.matchingMovie.decade + ")*: "
+      + "le " + parseDate(found.programme.attr("start")?.value()) + " sur " + getChannel(tvDoc, found.programme.attr("channel").value())
   }).join('\n'))
 }
 
@@ -64,7 +63,7 @@ function parseDate(date: string) {
   const d = date.slice(6, 8);
   const h = date.slice(8, 10);
   const mn = date.slice(10, 12);
-  return `Le ${d}/${m}/${y} à ${h}:${mn}`;
+  return `${d}/${m}/${y} à ${h}:${mn}`;
 }
 
 function getChannel(tvDoc: libxmljs.Document, channelId: string) {
