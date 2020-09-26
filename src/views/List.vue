@@ -7,18 +7,28 @@
       </span>
     </h1>
 
-    <v-card style="margin-bottom: 15px; max-width: 500px;">
-      <v-card-title>
-        <v-text-field
-          v-model="search"
-          append-icon="search"
-          label="Recherche"
-          single-line
-          hide-details
-          placeholder="Chercher un film, réalisateur, acteur..."
-        ></v-text-field>
-      </v-card-title>
-    </v-card>
+    <v-container fluid style="margin-bottom: 15px">
+      <v-row>
+        <v-col class="d-flex" cols="12" sm="6">
+          <v-card>
+            <v-card-title>
+              <v-text-field
+                v-model="search"
+                append-icon="search"
+                label="Recherche"
+                single-line
+                hide-details
+                placeholder="Chercher un film, réalisateur, acteur..."
+              ></v-text-field>
+            </v-card-title>
+          </v-card>
+        </v-col>
+        <v-col class="d-flex" cols="12" sm="6">
+          <SpoilerFree ref="spoilerFree" :episodes="episodes" @onChange="refreshMoviesAndEpisodes"></SpoilerFree>
+        </v-col>
+      </v-row>
+    </v-container>
+
 
     <MovieList
       :movies="movies"

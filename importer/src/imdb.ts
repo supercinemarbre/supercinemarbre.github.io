@@ -29,7 +29,7 @@ export async function fetchMissingIMDBData(sublist?: Movie[]) {
       let imdbMovie: ImdbMovie = await getIMDBSuggestion(matchingPatch?.tconst || movie.title);
 
       if (!imdbMovie) {
-        console.log(` - ${i}/${movies.length}: No match found for ${movie.title}`);
+        console.log(` - ${i}/${movies.length}: No match found for ${movie.id.episode} ${movie.id.name}`);
         if (!patches[movie.title]) {
           patches[movie.title] = null;
         }

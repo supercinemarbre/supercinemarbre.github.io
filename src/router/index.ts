@@ -1,9 +1,7 @@
 import APropos from '@/views/APropos.vue'
-import Stats from '@/views/Stats.vue'
 import Episodes from '@/views/Episodes.vue'
-import HallOfFameActors from '@/views/HallOfFameActors.vue'
-import HallOfFameDirectors from '@/views/HallOfFameDirectors.vue'
 import List from '@/views/List.vue'
+import Stats from '@/views/Stats.vue'
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 

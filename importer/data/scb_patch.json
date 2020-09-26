@@ -1,6 +1,13 @@
 [
   {
     "scbKey": {
+      "episode": 121,
+      "name": "Die Hard : Belle journée pour mourir"
+    },
+    "tconst": "tt1606378"
+  },
+  {
+    "scbKey": {
       "episode": 119,
       "name": "L’inspecteur Harry ne renonce jamais"
     },
@@ -480,6 +487,13 @@
   {
     "scbKey": {
       "episode": 75,
+      "name": "The duellist"
+    },
+    "title": "Les Duellistes"
+  },
+  {
+    "scbKey": {
+      "episode": 75,
       "name": "Un secret"
     },
     "tconst": "tt0490234"
@@ -526,6 +540,16 @@
       "name": "Chinatown"
     },
     "tconst": "tt0071315"
+  },
+  {
+    "scbKey": {
+      "episode": 73,
+      "name": "Opération Dragon"
+    },
+    "id": {
+      "episode": 72,
+      "name": "Opération Dragon"
+    }
   },
   {
     "scbKey": {

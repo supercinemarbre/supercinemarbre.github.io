@@ -20,7 +20,7 @@
       </template>
       <template v-slot:item.movies="{ item }">
         <div class="movies">
-          <div class="movie" v-for="movie in item.movies" :key="item.director + movie.tconst">
+          <div class="movie" v-for="movie in item.movies" :key="'director' + item.director + movie.tconst">
             <router-link :to="'/' + movie.decade + '#' + movie.tconst">
               {{ movie.title }}
               <span class="movie-ranking">({{ movie.ranking }}<Ordinal :value="movie.ranking" /> des années {{ movie.decade }})</span>

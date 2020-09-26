@@ -1,11 +1,15 @@
 import MoviePoster from '@/components/common/MoviePoster.vue';
+import { SpoilerFreeSettings } from '@/components/spoiler-free/SpoilerFree';
+import SpoilerFree from '@/components/spoiler-free/SpoilerFree.vue';
 import { EpisodeMap, fetchEpisodes, fetchMovies } from '@/services/api.service';
+import { getMaxEpisode } from '@/services/utils.service';
 import { Episode, Movie } from '@/types';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
-    MoviePoster
+    MoviePoster,
+    SpoilerFree
   }
 })
 export default class Home extends Vue {
@@ -15,6 +19,7 @@ export default class Home extends Vue {
   episodeMap: EpisodeMap = {};
   episodes: Episode[] = [];
   search = '';
+  hideMoviesAboveEpisode = 0;
 
   mounted() {
     window.scrollTo(0, 0);
@@ -42,6 +47,10 @@ export default class Home extends Vue {
         return movie;
       });
     this.state = 'loaded';
+  }
+
+  onSpoilerFreeSettingsChange(settings: SpoilerFreeSettings) {
+    this.hideMoviesAboveEpisode = settings.enabled ? parseInt(settings.lastWatched, 10) : getMaxEpisode(this.episodeMap);
   }
 
   toSearchString(value: string) {

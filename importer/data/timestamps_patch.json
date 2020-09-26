@@ -81,6 +81,16 @@
   },
   {
     "gsheetsKey": {
+      "episode": 75,
+      "name": "Les Duellistes"
+    },
+    "id": {
+      "episode": 75,
+      "name": "The duellist"
+    }
+  },
+  {
+    "gsheetsKey": {
       "episode": 55,
       "name": "Une journée en enfer  (Die Hard 3)"
     },
