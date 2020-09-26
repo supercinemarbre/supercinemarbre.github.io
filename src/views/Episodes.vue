@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Liste des épisodes</h1>
+    <h2>Liste des épisodes</h2>
 
     <v-container fluid style="margin-bottom: 15px">
       <v-row>

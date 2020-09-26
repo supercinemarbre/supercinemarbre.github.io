@@ -33,7 +33,7 @@
             <div class="mobile-scb-details">
               <span style="margin-right: 15px">{{ item.year }}</span>
               <span style="margin-right: 15px">{{ item.runtimeMinutes }} min</span>
-              <router-link v-if="item.episode" :to="'/episodes?search=' + item.episode">Episode {{ item.episode }}</router-link>
+              <router-link v-if="item.episode !== undefined" :to="'/episodes?search=' + item.episode">Episode {{ item.episode }}</router-link>
               <TimestampLink :movie="item" :episode="episodes[item.episode]" style="margin-left: 10px"></TimestampLink>
             </div>
             <div class="movie-casting">

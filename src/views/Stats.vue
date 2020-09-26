@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Sommaire</h1>
+    <h2>Sommaire</h2>
 
     <ul>
       <li><a href="#stats">Nombre de films traités par épisode</a></li>
@@ -8,13 +8,13 @@
       <li><a href="#actors">Hall of Fame des acteurs</a></li>
     </ul>
 
-    <h1><a id="stats" class="anchor"></a>Nombre de films traités par épisode</h1>
+    <h2><a id="stats" class="anchor"></a>Nombre de films traités par épisode</h2>
     <MoviesPerEpisodeStats :movies="movies"></MoviesPerEpisodeStats>
 
-    <h1><a id="directors" class="anchor"></a>Hall of Fame des réalisateurs</h1>
+    <h2><a id="directors" class="anchor"></a>Hall of Fame des réalisateurs</h2>
     <MostPresentDirectors></MostPresentDirectors>
 
-    <h1><a id="actors" class="anchor"></a>Hall of Fame des acteurs</h1>
+    <h2><a id="actors" class="anchor"></a>Hall of Fame des acteurs</h2>
     <MostPresentActors></MostPresentActors>
   </div>
 </template>

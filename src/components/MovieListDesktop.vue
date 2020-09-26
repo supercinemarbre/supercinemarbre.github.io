@@ -67,7 +67,7 @@
       </div>
     </template>
     <template v-slot:item.episode="{ item }">
-      <router-link v-if="item.episode" :to="'/episodes?search=' + item.episode">Ep. {{ item.episode }}</router-link>
+      <router-link v-if="item.episode !== undefined" :to="'/episodes?search=' + item.episode">Ep. {{ item.episode }}</router-link>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
       <v-data-footer v-if="!currentDecade"

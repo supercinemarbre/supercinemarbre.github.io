@@ -47,6 +47,9 @@
 }
 
 #app-logo {
+  color: transparent !important;
+  font-size: 0px;
+
   & img {
     margin-top: 3px;
     max-height: 32px;

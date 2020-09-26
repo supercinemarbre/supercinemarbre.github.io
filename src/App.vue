@@ -1,19 +1,22 @@
 <template>
  <v-app id="app">
-    <v-navigation-drawer v-model="drawer" app clipped>
-      <Sidebar></Sidebar>
-    </v-navigation-drawer>
-
-    <v-app-bar app clipped-left height="100">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar app clipped-left height="100" aria-label="En-tête">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" aria-label="Bascule menu"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        <a id="app-logo" to="/">
-          <img src="../public/img/logo.png" title="Super Ciné Marbre" />
-        </a>
+        <h1>
+          <a id="app-logo" to="/">
+            <img src="../public/img/logo.png" />
+            Super Ciné Marbre
+          </a>
+        </h1>
       </v-toolbar-title>
     </v-app-bar>
 
-    <v-main>
+    <v-navigation-drawer v-model="drawer" app clipped aria-label="Menu">
+      <Sidebar></Sidebar>
+    </v-navigation-drawer>
+
+    <v-main aria-label="Corps">
       <v-container fluid>
         <router-view />
       </v-container>

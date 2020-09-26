@@ -1,23 +1,23 @@
 <template>
   <div>
-    <h1>A propos</h1>
+    <h2>A propos</h2>
 
     <p><a href="https://www.supercinebattle.fr/">Super Ciné Battle</a> est un podcast de Daniel Andreyev et Stéphane Bouley, visant à établir le classement ultime du cinéma.</p>
 
     <p>Super Ciné Marbre n'est pas affilié à Super Ciné Battle, et ne vise qu'à diffuser humblement le savoir du marbre au plus grand nombre.</p>
 
-    <h2>Me contacter</h2>
+    <h3>Me contacter</h3>
     
-    <p>Pour remonter des erreurs, contribuer des timestamps ou des suggestions de fonctionnalités, vous pouvez me contacter sur :
+    <p>Pour remonter des erreurs ou des suggestions de fonctionnalités, vous pouvez me contacter sur :
     <ul>
       <li>Twitter: <a href="https://twitter.com/mkalamalami">@mkalamalami</a></li>
       <li>Discord: <code>Wan#2191</code></li>
     </ul>
     <p>Si vous savez utiliser Github c'est encore mieux : <a href="https://github.com/supercinemarbre/supercinemarbre.github.io">le projet est open source</a> et sous licence libre, vos contributions y sont les bienvenues.</p>
 
-    <h2>Licences</h2>
+    <h3>Licences</h3>
 
-    <h3>Données</h3>
+    <h4>Données</h4>
 
     <ul>
       <li>Utilise des données de <a href="http://www.omdbapi.com/">OMDB</a> sous licence CC BY-NC 4.0.</li>
@@ -27,7 +27,7 @@
       <li>Sans oublier <a href="http://supercinebattle.fr/">Les Listes</a>.</li>
     </ul>
 
-    <h3>Images</h3>
+    <h4>Images</h4>
 
     <ul>
       <li><a href="https://icons8.com/icons/set/imdb">IMDb icon</a> icon by <a href="https://icons8.com">Icons8</a></li>
