@@ -64,6 +64,8 @@ export default class Home extends Vue {
 
   @Watch('$route')
   public onRouteChange() {
+    window.scrollTo(0, 0);
+
     this.currentDecade = this.$route.meta?.decade;
     this.search = '';
     this.sortBy = this.currentDecade ? [] : ['episode'];
