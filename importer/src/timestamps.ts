@@ -30,6 +30,10 @@ export async function importTimestampsRankingsAndMissingMovies() {
     const timestampInfos = await parseCSV<TimestampInfo>(filePath);
 
     timestampInfos.forEach(timestampInfo => {
+      if (timestampInfo.Classement.includes("Déjà classé")) {
+        return;
+      }
+
       const key: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
 
       const patch = timestampsPatch.find(t => isEqual(t.gsheetsKey, key));

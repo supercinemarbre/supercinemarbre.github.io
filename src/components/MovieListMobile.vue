@@ -8,6 +8,7 @@
     :mobile-breakpoint="0"
     :disable-pagination="!!currentDecade"
     hide-default-footer
+    no-data-text=""
     :sort-by="sortBy"
     :sort-desc="sortDesc"
     :fixed-header="true"

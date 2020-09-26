@@ -8,6 +8,7 @@
     :mobile-breakpoint="991"
     :disable-pagination="!!currentDecade"
     hide-default-footer
+    no-data-text=""
     :sort-by="sortBy"
     :sort-desc="sortDesc"
     :footer-props="{

@@ -30,7 +30,7 @@
     </v-container>
 
     <MovieList
-      :movies="movies"
+      :movies="isSearchInProgress ? [] : movies"
       :episodes="episodes"
       :currentDecade="currentDecade"
       :state="state"

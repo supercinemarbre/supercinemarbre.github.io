@@ -71,6 +71,10 @@ export default class Home extends Vue {
     this.debouncedSearchUpdate(searchInput);
   }
 
+  get isSearchInProgress() {
+    return this.search !== this.searchInput;
+  }
+
   applySearch(search: string) {
     this.search = search;
   }
