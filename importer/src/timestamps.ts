@@ -7,7 +7,7 @@ import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
 import { findMatchingMovies } from "./scb-utils";
 import { Movie, MovieID } from "./types";
 
-export type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID };
+export type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
 
 interface TimestampInfo {
   Classement: string;
@@ -36,26 +36,32 @@ export async function importTimestampsRankingsAndMissingMovies() {
       let searchKey: MovieID = patch?.id ? patch.id : key;
       const matches = findMatchingMovies(searchKey, movies);
 
+      let movie: Movie;
       if (matches.length === 1) {
-        if (patch) {
-          delete patch.gsheetsKey;
-          Object.assign(matches[0], patch);
-        }
-        matches[0].timestamp = patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
-        matches[0].ranking = parseInt(timestampInfo.Classement, 10);
-        count++;
-      } else if (key.episode > maxEpisode) {
+        movie = matches[0];
+        movie.timestamp = patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
+        movie.ranking = parseInt(timestampInfo.Classement, 10);
+      } else if (key.episode > maxEpisode || patch?.forceImport) {
         console.log(` - Adding Ep. ${key.episode} movie ${key.name} missing from SCB lists`);
         const movie: Movie = {
           id: key,
           decade,
           title: timestampInfo.Films,
-          ranking: parseInt(timestampInfo.Classement, 10)
+          ranking: parseInt(timestampInfo.Classement, 10),
+          timestamp: timestampToSeconds(timestampInfo.Timestamp)
         };
         movies.push(movie);
+      }
+
+      if (movie) {
+        count++;
+        if (patch) {
+          delete patch.gsheetsKey;
+          delete patch.forceImport;
+          Object.assign(matches[0], patch);
+        }
       } else {
-        console.log(` - Not found : ${timestampInfo.Films}`
-          + ` => Ep. ${timestampInfo.Émission}, ${timestampInfo.Timestamp}. Candidates: ${matches.map(m => m.id.name).join(', ') || '(none)'}`)
+        console.log(` - Not found : ${timestampInfo.Films} (Ep. ${timestampInfo.Émission})`);
       }
     });
   }

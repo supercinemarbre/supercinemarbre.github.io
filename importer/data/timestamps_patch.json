@@ -59,12 +59,48 @@
   {
     "gsheetsKey": {
       "episode": 112,
+      "name": "Mosquito Coast"
+    },
+    "forceImport": true
+  },
+  {
+    "gsheetsKey": {
+      "episode": 112,
+      "name": "Les 8 diagrammes de Wu-Lang"
+    },
+    "forceImport": true
+  },
+  {
+    "gsheetsKey": {
+      "episode": 112,
+      "name": "Les Ailes d'Honnéamise"
+    },
+    "tconst": "tt0093207",
+    "forceImport": true
+  },
+  {
+    "gsheetsKey": {
+      "episode": 112,
       "name": "13 Hours: The Secret Soldiers Of Benghazi"
     },
     "id": {
       "episode": 112,
       "name": "13 hours"
     }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 111,
+      "name": "Antarctica"
+    },
+    "forceImport": true
+  },
+  {
+    "gsheetsKey": {
+      "episode": 111,
+      "name": "Six-Pack"
+    },
+    "forceImport": true
   },
   {
     "gsheetsKey": {
@@ -89,6 +125,24 @@
   },
   {
     "gsheetsKey": {
+      "episode": 91,
+      "name": "Une Nuit en enfer"
+    },
+    "id": {
+      "episode": 11,
+      "name": "From Dusk till Dawn"
+    },
+    "title": "Une nuit en enfer"
+  },
+  {
+    "gsheetsKey": {
+      "episode": 82,
+      "name": "Rusty James"
+    },
+    "forceImport": true
+  },
+  {
+    "gsheetsKey": {
       "episode": 75,
       "name": "Les Duellistes"
     },
@@ -105,16 +159,6 @@
     "id": {
       "episode": 55,
       "name": "Une journée en enfer"
-    }
-  },
-  {
-    "gsheetsKey": {
-      "episode": 11,
-      "name": "Une Nuit en enfer"
-    },
-    "id": {
-      "episode": 11,
-      "name": "From Dusk till Dawn"
     }
   },
   {

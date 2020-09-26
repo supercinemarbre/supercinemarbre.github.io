@@ -543,11 +543,11 @@
   },
   {
     "scbKey": {
-      "episode": 73,
+      "episode": 72,
       "name": "Opération Dragon"
     },
     "id": {
-      "episode": 72,
+      "episode": 73,
       "name": "Opération Dragon"
     }
   },
@@ -564,6 +564,16 @@
       "name": "Zorro"
     },
     "tconst": "tt0072448"
+  },
+  {
+    "scbKey": {
+      "episode": 72,
+      "name": "Sex and Fury"
+    },
+    "id": {
+      "episode": 71,
+      "name": "Sex and Fury"
+    }
   },
   {
     "scbKey": {

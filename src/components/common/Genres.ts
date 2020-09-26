@@ -32,8 +32,7 @@ export default class MoviePoster extends Vue {
 
   get translatedGenres() {
     return (this.genres || [])
-      .map(genre => GENRE_TRANSLATIONS[genre])
-      .filter(genre => Boolean(genre))
+      .map(genre => GENRE_TRANSLATIONS[genre] || genre)
       .join(', ');
   }
 
