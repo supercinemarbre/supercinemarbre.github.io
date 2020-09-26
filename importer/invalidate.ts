@@ -2,8 +2,7 @@ import * as scb from "./src/scb";
 import * as imdb from "./src/imdb";
 import * as omdb from "./src/omdb";
 
-const movieNames = process.argv.slice(2)
-  .map(movieName => movieName.replace(/'/g, '’'));
+const movieNames = process.argv.slice(2);
 
 console.log(`Invalidating ${movieNames.join(', ')}...`);
 
@@ -14,7 +13,10 @@ const partialInvalidation = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
   let invalidatedMovies = [];
 
   for (const movieName of movieNames) {
-    const moviesToInvalidate = movies.filter(movie => movie.id.name === movieName || process.env.ALL);
+    const moviesToInvalidate = movies.filter(movie => 
+        movie.id.name === movieName || 
+        movie.id.name === movieName.replace(/'/g, '’') || 
+        process.env.ALL);
     if (moviesToInvalidate.length === 0) {
       console.error(`ERROR: Movie not found: ${movieName}`);
       process.exit(1);

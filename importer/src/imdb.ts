@@ -1,6 +1,7 @@
 import download from 'download';
 import { isEqual } from 'lodash';
 import * as scb from "./scb";
+import * as timestamps from "./timestamps";
 import { Movie } from './types';
 
 export interface ImdbPerson {
@@ -21,11 +22,14 @@ export async function fetchMissingIMDBData(sublist?: Movie[]) {
   console.log("Filling any missing IMDB data");
   const movies = sublist ?? await scb.readMovieRankings();
   const patches = await scb.readScbPatches();
+  const timestampPatches = await timestamps.readTimestampsPatches();
 
   let i = 1, pendingWrites = 0;
   for (const movie of movies) {
     if (hasMissingIMDBData(movie)) {
-      const matchingPatch = patches.find(p => isEqual(p.scbKey, movie.id) || isEqual(p.id, movie.id));
+      const matchingPatch = patches.find(p => isEqual(p.scbKey, movie.id) || isEqual(p.id, movie.id))
+        || timestampPatches.find(p => isEqual(p.gsheetsKey, movie.id) || isEqual(p.id, movie.id));
+      
       let imdbMovie: ImdbMovie = await getIMDBSuggestion(matchingPatch?.tconst || movie.title);
 
       if (!imdbMovie) {

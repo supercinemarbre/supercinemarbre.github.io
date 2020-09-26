@@ -56,6 +56,9 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
     for (const movie of movies) {
       if (hasMissingOMDBData(movie)) {
         let omdbMovie = omdbDump.find(m => m.imdbID === movie.tconst);
+        if (movie.tconst !== "tt1872181") {
+          continue;
+        }
         if (!omdbMovie) {
           const omdbString = await download(`http://www.omdbapi.com/?i=${movie.tconst}&apikey=${OMDB_API_KEY}`);
           omdbMovie = JSON.parse(omdbString.toString()) as OmdbMovie;

@@ -7,11 +7,7 @@ import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
 import { findMatchingMovies } from "./scb-utils";
 import { Movie, MovieID } from "./types";
 
-export type TimestampPatch = {
-  gsheetsKey: MovieID;
-  id?: MovieID;
-  timestamp?: number;
-};
+export type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID };
 
 interface TimestampInfo {
   Classement: string;
@@ -41,6 +37,10 @@ export async function importTimestampsRankingsAndMissingMovies() {
       const matches = findMatchingMovies(searchKey, movies);
 
       if (matches.length === 1) {
+        if (patch) {
+          delete patch.gsheetsKey;
+          Object.assign(matches[0], patch);
+        }
         matches[0].timestamp = patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
         matches[0].ranking = parseInt(timestampInfo.Classement, 10);
         count++;
@@ -70,7 +70,7 @@ export async function importTimestampsRankingsAndMissingMovies() {
   await writeMovieRankings(movies);
 }
 
-async function readTimestampsPatches(): Promise<TimestampPatch[]> {
+export async function readTimestampsPatches(): Promise<GSheetsPatch[]> {
   const patches = await readData("timestamps_patch.json");
   if (Array.isArray(patches)) {
     return patches;
