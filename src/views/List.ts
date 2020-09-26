@@ -3,6 +3,7 @@ import SpoilerFreeComponent from '@/components/spoiler-free/SpoilerFree';
 import SpoilerFree from '@/components/spoiler-free/SpoilerFree.vue';
 import { EpisodeMap, fetchEpisodes, fetchMovies } from '@/services/api.service';
 import { Movie } from '@/types';
+import { debounce } from 'lodash-es';
 import { Component, Ref, Vue, Watch } from 'vue-property-decorator';
 
 @Component({
@@ -18,11 +19,14 @@ export default class Home extends Vue {
   allMovies: Movie[] = [];
   episodes: EpisodeMap = [];
   search = '';
+  searchInput = '';
   sortBy = [];
   sortDesc = [];
   itemsPerPage = 5;
 
   @Ref() spoilerFree: SpoilerFreeComponent;
+
+  private debouncedSearchUpdate = debounce(this.applySearch.bind(this), 300);
 
   mounted() {
     window.scrollTo(0, 0);
@@ -62,12 +66,21 @@ export default class Home extends Vue {
     this.state = 'loaded';
   }
 
+  @Watch('searchInput')
+  public onSearchInputChange(searchInput: string) {
+    this.debouncedSearchUpdate(searchInput);
+  }
+
+  applySearch(search: string) {
+    this.search = search;
+  }
+    
   @Watch('$route')
   public onRouteChange() {
     window.scrollTo(0, 0);
 
     this.currentDecade = this.$route.meta?.decade;
-    this.search = '';
+    this.searchInput = '';
     this.sortBy = this.currentDecade ? [] : ['episode'];
     this.sortDesc = this.currentDecade ? [] : ['desc'];
 

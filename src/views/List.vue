@@ -16,7 +16,7 @@
           <v-card min-width="100%">
             <v-card-title>
               <v-text-field
-                v-model="search"
+                v-model="searchInput"
                 append-icon="search"
                 label="Recherche"
                 single-line
@@ -28,7 +28,6 @@
         </v-col>
       </v-row>
     </v-container>
-
 
     <MovieList
       :movies="movies"
