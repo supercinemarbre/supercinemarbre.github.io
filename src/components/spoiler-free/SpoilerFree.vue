@@ -11,7 +11,7 @@
       label="Dernier ép. vu"
       :suffix="'sur ' + maxEpisode"
       outlined
-      style="width: 200px"
+      style="width: 190px"
     ></v-text-field>
   </div>
 </template>
@@ -21,7 +21,7 @@
 <style lang="scss" scoped>
 .spoiler-free {
   width: 100%;
-  text-align: right;
+  margin-bottom: -30px;
 
   > div {
     display: inline-block;

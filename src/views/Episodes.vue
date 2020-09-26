@@ -4,8 +4,11 @@
 
     <v-container fluid style="margin-bottom: 15px">
       <v-row>
-        <v-col class="d-flex" cols="12" sm="6">
-          <v-card>
+        <v-col class="d-flex" cols="6" sm="4">
+          <SpoilerFree :episodes="episodes" @onChange="onSpoilerFreeSettingsChange"></SpoilerFree>
+        </v-col>
+        <v-col class="d-flex" cols="6" sm="8">
+          <v-card min-width="100%">
             <v-card-title>
               <v-text-field
                 v-model="search"
@@ -17,9 +20,6 @@
               ></v-text-field>
             </v-card-title>
           </v-card>
-        </v-col>
-        <v-col class="d-flex" cols="12" sm="6">
-          <SpoilerFree :episodes="episodes" @onChange="onSpoilerFreeSettingsChange"></SpoilerFree>
         </v-col>
       </v-row>
     </v-container>
