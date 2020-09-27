@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "sh env.sh && vue-cli-service build --dest docs",
+    "build": "sh env.sh && vue-cli-service build --dest ../docs",
     "lint": "vue-cli-service lint",
     "start": "vue-cli-service serve"
   },

@@ -4,8 +4,8 @@ Le marbre du [Super Cine Battle](https://www.supercinebattle.fr/), en version in
 
 ## Sommaire
 
-* [Application web](#application-web)
-* [Importeur de listes](#importeur-de-listes)
+* [Application web](#application-web) (`webapp/`)
+* [Importeur de listes](#importeur-de-listes) (`importer/`)
 * [Procédures](#procédures)
   * [Mettre à jour l'application web](#mettre-à-jour-lapplication-web)
   * [Corriger un film](#corriger-un-film)
@@ -17,11 +17,12 @@ Le marbre du [Super Cine Battle](https://www.supercinebattle.fr/), en version in
 ## Lancer l'application web
 
 ```
+cd webapp
 npm i
 npm start
 ```
 
-### Commandes
+### Commandes application web
 
 * `npm run build` : Build JS
 * `npm run lint` : Lint des sources
