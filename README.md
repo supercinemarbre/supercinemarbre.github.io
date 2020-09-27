@@ -6,6 +6,7 @@ Le marbre du [Super Cine Battle](https://www.supercinebattle.fr/), en version in
 
 * [Application web](#application-web) (`webapp/`)
 * [Importeur de listes](#importeur-de-listes) (`importer/`)
+* [Serveur de programme TV](#serveur-de-programme-tv) (`importer/tv-schedule-server.ts`)
 * [Procédures](#procédures)
   * [Mettre à jour l'application web](#mettre-à-jour-lapplication-web)
   * [Corriger un film](#corriger-un-film)
@@ -18,7 +19,7 @@ Le marbre du [Super Cine Battle](https://www.supercinebattle.fr/), en version in
 
 ```
 cd webapp
-npm i
+npm install
 npm start
 ```
 
@@ -47,6 +48,17 @@ Attention :
 * `GSHEETS_INIT=true npm...` : Mettre à jour les timestamps depuis [ce document](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit) Google Sheets
 * `IMDB_INIT=true npm...` : Mettre à jour la base IMDB depuis imdb.com
 * `[IMDB_ONLY=true] [OMDB_ONLY=true] [ALL=true] npm run invalidate -- [nom(s) de film(s) SCB]` : Invalider des données de films. `IMDB_ONLY` et `OMDB_ONLY` permettent d'annuler seulement les données issues de IMDB, `ALL` annule sur tous les films.
+
+## Serveur de programme TV
+
+Afin d'être en permanence à jour, le programme TV est géré par un serveur à héberger en dehors de Github.
+Les données se mettront à jour quotidiennement.
+
+```
+cd importer
+npm install
+npm start:tv
+```
 
 ## Procédures
 

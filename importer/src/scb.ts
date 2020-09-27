@@ -12,7 +12,7 @@ export function readListUrls(): Promise<Record<string, string>> {
 
 export async function readMovieRankings(): Promise<Movie[] | undefined> {
   try {
-    const rankings = await readData(`../../web/public/scb_movies.json`);
+    const rankings = await readData(`../../webapp/public/scb_movies.json`);
     if (Array.isArray(rankings)) {
       return rankings;
     } else {
@@ -24,7 +24,7 @@ export async function readMovieRankings(): Promise<Movie[] | undefined> {
 }
 
 export function writeMovieRankings(movies: Movie[]): Promise<void> {
-  return writeData(`../../webpublic/scb_movies.json`, movies);
+  return writeData(`../../webapp/public/scb_movies.json`, movies);
 }
 
 export async function scrapeScbEpisodes(): Promise<void> {
@@ -117,7 +117,7 @@ async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): 
 
 async function readScbEpisodes(): Promise<Episode[] | undefined> {
   try {
-    const rankings = await readData(`../../web/public/scb_episodes.json`);
+    const rankings = await readData(`../../webapp/public/scb_episodes.json`);
     if (Array.isArray(rankings)) {
       return rankings;
     } else {
@@ -129,7 +129,7 @@ async function readScbEpisodes(): Promise<Episode[] | undefined> {
 }
 
 function writeScbEpisodes(episodes: Episode[]): Promise<void> {
-  return writeData(`../../web/public/scb_episodes.json`, episodes);
+  return writeData(`../../webapp/public/scb_episodes.json`, episodes);
 }
 
 export async function readScbPatches(): Promise<MoviePatch[]> {
