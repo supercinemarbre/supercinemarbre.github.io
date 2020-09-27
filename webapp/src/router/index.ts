@@ -1,5 +1,6 @@
 import APropos from '@/views/APropos.vue'
 import Episodes from '@/views/Episodes.vue'
+import Home from '@/views/Home.vue'
 import List from '@/views/List.vue'
 import Stats from '@/views/Stats.vue'
 import Vue from 'vue'
@@ -8,7 +9,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 Vue.use(VueRouter)
 
   const routes: Array<RouteConfig> = [
-    { path: '/', name: 'Tous les films', component: List },
+    { path: '/', name: 'Accueil', component: List /* Home */ },
     { path: '/episodes', name: 'Episodes', component: Episodes },
     { path: '/stats', name: 'Statistiques', component: Stats },
     { path: '/1960', name: 'Années 1960', component: List, meta: { decade: "1960" } },

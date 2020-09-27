@@ -144,3 +144,20 @@ export interface Movie {
   
   searchString?: string;
 }
+
+export interface XmltvSchedule {
+  fromDate: string;
+  toDate: string;
+  matches: XmltvMatch[];
+}
+
+interface XmltvMatch {
+  movie: MovieID;
+  csaRating: string;
+  broadcasts: XmltvBroadcast[];
+}
+
+interface XmltvBroadcast {
+  channel: string;
+  date: string;
+}

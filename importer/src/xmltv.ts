@@ -3,26 +3,9 @@ import libxmljs from "libxmljs";
 import { isEqual } from "lodash";
 import { readDataString, writeDataString } from "./io";
 import { readMovieRankings } from "./scb";
-import { Movie, MovieID } from "./types";
+import { Movie, XmltvSchedule } from "./types";
 
 export const REFRESH_DELAY_IN_MILLIS = 24 * 3600 * 1000 /* 1 day */;
-
-export interface XmltvSchedule {
-  fromDate: string;
-  toDate: string;
-  matches: XmltvMatch[];
-}
-
-export interface XmltvMatch {
-  movie: MovieID;
-  csaRating: string;
-  broadcasts: XmltvBroadcast[];
-}
-
-export interface XmltvBroadcast {
-  channel: string;
-  date: string;
-}
 
 export async function fetchXmltvSchedule(): Promise<XmltvSchedule> {
   const tvDoc = await loadXmltvDocument();
