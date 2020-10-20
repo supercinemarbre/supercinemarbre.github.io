@@ -1,6 +1,5 @@
 import APropos from '@/views/APropos.vue'
 import Episodes from '@/views/Episodes.vue'
-import Home from '@/views/Home.vue'
 import List from '@/views/List.vue'
 import Stats from '@/views/Stats.vue'
 import Vue from 'vue'

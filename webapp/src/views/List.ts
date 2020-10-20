@@ -1,7 +1,7 @@
 import MovieList from '@/components/MovieList.vue';
 import SpoilerFreeComponent from '@/components/spoiler-free/SpoilerFree';
 import SpoilerFree from '@/components/spoiler-free/SpoilerFree.vue';
-import { EpisodeMap, fetchEpisodes, fetchMovies, fetchTvSchedule } from '@/services/api.service';
+import { EpisodeMap, fetchEpisodes, fetchMovies } from '@/services/api.service';
 import { Movie } from '@/types';
 import { debounce } from 'lodash-es';
 import { Component, Ref, Vue, Watch } from 'vue-property-decorator';
