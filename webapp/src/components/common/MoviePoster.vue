@@ -6,7 +6,7 @@
         <v-img :src="movie.posterUrl" width="70" height="100" aspect-ratio="1" />
       </div>
     </router-link>
-    <div class="movie-timestamp">
+    <div v-if="!hideTimestamp" class="movie-timestamp">
       {{ timestamp(movie.timestamp) }}
       <TimestampLink :movie="movie" :episode="episode" style="margin-left: 10px"></TimestampLink>
     </div>

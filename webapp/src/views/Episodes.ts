@@ -87,8 +87,4 @@ export default class Home extends Vue {
       });
   }
 
-  date(isoString: string) {
-    const date = new Date(isoString);
-    return date.toLocaleDateString();
-  }
 }

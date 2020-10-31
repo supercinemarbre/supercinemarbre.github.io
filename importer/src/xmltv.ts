@@ -19,11 +19,15 @@ async function loadXmltvDocument(): Promise<libxmljs.Document> {
   const existingXmltvData = await readDataString("xmltv-tnt.xml");
 
   if (existingXmltvData) {
-    const tvDoc = libxmljs.parseXml(existingXmltvData);
-    const schedule = createEmptySchedule(tvDoc);
-    const isOutdated = new Date(schedule.fromDate).getTime() < Date.now() - REFRESH_DELAY_IN_MILLIS;
-    if (!isOutdated) {
-      return tvDoc;
+    try {
+      const tvDoc = libxmljs.parseXml(existingXmltvData);
+      const schedule = createEmptySchedule(tvDoc);
+      const isOutdated = new Date(schedule.fromDate).getTime() < Date.now() - REFRESH_DELAY_IN_MILLIS;
+      if (!isOutdated) {
+        return tvDoc;
+      }
+    } catch (e) {
+      console.error("Failed to parse cached schedule", e);
     }
   }
 
@@ -72,8 +76,8 @@ function fillSchedule(schedule: XmltvSchedule, tvDoc: libxmljs.Document, movies:
 
 }
 
-function createEmptySchedule(tvDoc: libxmljs.Document): XmltvSchedule {
-  const startTimes = tvDoc.find("//programme")
+const startTimes = tvDoc.find("//programme")
+  function createEmptySchedule(tvDoc: libxmljs.Document): XmltvSchedule {
     .map(programme => parseDate(programme.attr("start")?.value()));
   const fromDate = startTimes.reduce((a, b) => a < b ? a : b).toISOString();
   const toDate = startTimes.reduce((a, b) => a > b ? a : b).toISOString();

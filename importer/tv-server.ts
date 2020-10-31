@@ -22,8 +22,10 @@ router.get("/", (ctx: Koa.Context) => {
   const response = schedule || { error: 'not-initialized' };
   if (ctx.query.callback) {
     ctx.body = `${ctx.query.callback.toString()}(${JSON.stringify(response, null, 2)});`;
+    ctx.type = 'application/javascript';
   } else {
     ctx.body = response;
+    ctx.type = 'application/json';
   }
 });
 

@@ -6,7 +6,7 @@ export type EpisodeMap = Record<number, Episode>;
 export type TimestampMap = Record<ScbTitle, number>;
 export type ScbTitle = 'string';
 
-const cache: Record<string, any> = {};
+const cache: Record<string, unknown> = {};
 
 async function fetchJSON<T>(filename: string): Promise<T> {
   if (!cache[filename]) {
@@ -40,5 +40,5 @@ export async function fetchTvSchedule(): Promise<XmltvSchedule | { error: 'fetch
       cache['tv-schedule'] = { error: 'fetch-failed' };
     }
   }
-  return cache['tv-schedule'];
+  return cache['tv-schedule'] as XmltvSchedule;
 }

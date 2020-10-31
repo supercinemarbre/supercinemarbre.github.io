@@ -11,6 +11,7 @@ export default class MoviePoster extends Vue {
 
   @Prop() episode!: Episode;
   @Prop() movie!: Movie;
+  @Prop() hideTimestamp?: string;
 
   ellipsis(text: string, max: number) {
     if (text.length > max) {

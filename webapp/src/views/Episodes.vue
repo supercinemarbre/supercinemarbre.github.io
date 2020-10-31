@@ -37,7 +37,7 @@
       <template v-slot:item="{ item }">
         <tr>
           <td class="number">{{ item.number }}</td>
-          <td class="date">{{ date(item.date) }}</td>
+          <td class="date">{{ item.date | date }}</td>
           <td class="episode-title">
             <a :href="item.url">{{ item.title }}</a>
             <div class="inline-details">

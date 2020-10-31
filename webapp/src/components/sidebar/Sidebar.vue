@@ -3,6 +3,7 @@
     <!-- Icon list: https://iconify.design/icon-sets/mdi/ -->
 
     <SidebarLink to="/" icon="mdi-movie" label="Accueil" />
+    <SidebarLink to="/tv" icon="mdi-television-box" label="Programme TV" />
     <SidebarLink to="/episodes" icon="mdi-headphones-box" label="Épisodes" />
     <SidebarLink to="/stats" icon="mdi-chart-bar" label="Statistiques" />
 
