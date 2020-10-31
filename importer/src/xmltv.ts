@@ -76,8 +76,8 @@ function fillSchedule(schedule: XmltvSchedule, tvDoc: libxmljs.Document, movies:
 
 }
 
-const startTimes = tvDoc.find("//programme")
-  function createEmptySchedule(tvDoc: libxmljs.Document): XmltvSchedule {
+function createEmptySchedule(tvDoc: libxmljs.Document): XmltvSchedule {
+  const startTimes = tvDoc.find("//programme")
     .map(programme => parseDate(programme.attr("start")?.value()));
   const fromDate = startTimes.reduce((a, b) => a < b ? a : b).toISOString();
   const toDate = startTimes.reduce((a, b) => a > b ? a : b).toISOString();
