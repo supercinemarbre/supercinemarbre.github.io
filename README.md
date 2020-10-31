@@ -1,6 +1,8 @@
 # Super Ciné Marbre
 
-Le marbre du [Super Cine Battle](https://www.supercinebattle.fr/), en version interactive.
+Le marbre du [Super Cine Battle](https://www.supercinebattle.fr), en version interactive.
+
+<a href="https://supercinemarbre.github.io"><img src="https://raw.githubusercontent.com/supercinemarbre/supercinemarbre.github.io/master/docs/img/card.png" width="400" /></a>
 
 ## Sommaire
 
