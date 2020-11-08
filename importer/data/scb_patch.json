@@ -780,6 +780,14 @@
     "tconst": "tt0086197"
   },
   {
+    "id": {
+      "episode": 50,
+      "name": "Mad Max"
+    },
+    "tconst": "tt0079501",
+    "comment": "Déjà classé dans les années 70 (épisode 21)"
+  },
+  {
     "scbKey": {
       "episode": 49,
       "name": "Mr Dynamite"
@@ -1043,6 +1051,13 @@
       "name": "Duel"
     },
     "tconst": "tt0067023"
+  },
+  {
+    "scbKey": {
+      "episode": 21,
+      "name": "Mad Max"
+    },
+    "tconst": "tt0079501"
   },
   {
     "scbKey": {
@@ -1444,5 +1459,5 @@
     },
     "title": "Legend",
     "tconst": "tt0089469"
-  }
+  },
 ]
