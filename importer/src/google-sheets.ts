@@ -21,6 +21,10 @@ export async function refreshTimestampFiles() {
   await doc.loadInfo();
 
   for (const sheetTitle in doc.sheetsByTitle) {
+    if (sheetTitle === 'Episodes Spéciaux') {
+      continue; // Unsupported for now
+    }
+
     const sheet = doc.sheetsByTitle[sheetTitle];
     const decade = getDecade(sheetTitle);
     console.log(`  ${decade}...`);

@@ -35,7 +35,7 @@ npm start
 ```
 cd importer
 npm install
-IMDB_INIT=true npm start
+npm start
 ```
 
 Attention :
@@ -48,7 +48,6 @@ Attention :
 
 * `SCB_INIT=true npm...` : Mettre à jour les listes SCB depuis supercinebattle.fr
 * `GSHEETS_INIT=true npm...` : Mettre à jour les timestamps depuis [ce document](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit) Google Sheets
-* `IMDB_INIT=true npm...` : Mettre à jour la base IMDB depuis imdb.com
 * `[IMDB_ONLY=true] [OMDB_ONLY=true] [ALL=true] npm run invalidate -- [nom(s) de film(s) SCB]` : Invalider des données de films. `IMDB_ONLY` et `OMDB_ONLY` permettent d'annuler seulement les données issues de IMDB, `ALL` annule sur tous les films.
 
 ## Serveur de programme TV

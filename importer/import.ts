@@ -13,7 +13,6 @@ import * as timestamps from "./src/timestamps";
 
     if (process.env.SCB_INIT) {
       await scb.scrapeMovieRankings();
-      await scb.scrapeScbEpisodes();
     } else {
       console.log("Skipping Super Cine Battle scraping (use SCB_INIT=true to enable)")
     }
