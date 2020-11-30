@@ -60,6 +60,9 @@
                 <div v-for="movie in episodeMovies(item.number)" :key="movie.tconst">
                   <MoviePoster :movie="movie" :episode="item"></MoviePoster>
                 </div>
+                <div v-if="episodeMovies(item.number).length === 0">
+                  <br />Classements et timestamps manquants pour cet episode. Voir <router-link to="/about">A propos</router-link> pour les contribuer !
+                </div>
               </div>
             </v-lazy>
           </td>
