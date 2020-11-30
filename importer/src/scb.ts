@@ -23,8 +23,9 @@ export async function readMovieRankings(): Promise<Movie[] | undefined> {
   }
 }
 
-export function writeMovieRankings(movies: Movie[]): Promise<void> {
-  return writeData(`../../webapp/public/scb_movies.json`, movies);
+export async function writeMovieRankings(movies: Movie[]): Promise<void> {
+  await writeData(`../../webapp/public/scb_movies.json`, movies);
+  await writeData(`../../docs/scb_movies.json`, movies);
 }
 
 export async function scrapeScbEpisodes(): Promise<void> {
@@ -126,8 +127,9 @@ async function readScbEpisodes(): Promise<Episode[] | undefined> {
   }
 }
 
-function writeScbEpisodes(episodes: Episode[]): Promise<void> {
-  return writeData(`../../webapp/public/scb_episodes.json`, episodes);
+async function writeScbEpisodes(episodes: Episode[]): Promise<void> {
+  await writeData(`../../webapp/public/scb_episodes.json`, episodes);
+  await writeData(`../../docs/scb_episodes.json`, episodes);
 }
 
 export async function readScbPatches(): Promise<MoviePatch[]> {

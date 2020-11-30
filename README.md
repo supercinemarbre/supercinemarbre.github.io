@@ -47,8 +47,7 @@ Par défaut, l'importeur ne fait que passer en revue les films déjà connus pou
 
 1. Pour que l'import OMDB fonctionne (couvertures de films etc.), il faudra obtenir une clef d'API (gratuite) à http://www.omdbapi.com et la mettre dans un fichier `importer/data/omdbapikey`.
 2. Pour que l'import des timestamps fonctionne, il faudra obtenir une clef d'API (gratuite) à https://console.developers.google.com/apis et la mettre dans un fichier `importer/data/googlesheetsapikey`.
-3. Pour que la version déployée se mette à jour, il faut relancer un build de la webapp après import.
-4. La détection automatique des films n'est pas toujours fiable, voir plus bas la procédure en cas d'erreur.
+3. La détection automatique des films n'est pas toujours fiable, voir plus bas la procédure en cas d'erreur.
 
 **Commandes**
 
