@@ -12,7 +12,6 @@ Le marbre du [Super Cine Battle](https://www.supercinebattle.fr), en version int
 * [Procédures](#procédures)
   * [Mettre à jour les listes](#mettre-à-jour-les-listes)
   * [Corriger un film](#corriger-un-film)
-* [Feuille de route](#feuille-de-route)
 * [Licence](#licence)
 
 ## Application web
