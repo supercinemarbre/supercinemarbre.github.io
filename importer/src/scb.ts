@@ -31,9 +31,7 @@ export async function scrapeScbEpisodes(): Promise<void> {
   console.log("Scraping SCB Episodes");
 
   const allMovies = await readMovieRankings();
-  const episodeCount = allMovies
-    .map(movie => movie.id.episode)
-    .reduce((e1, e2) => Math.max(e1, e2), 0);
+  const episodeCount = await detectEpisodeCount();
   const episodes = await readScbEpisodes();
 
   for (let episodeNumber = 0; episodeNumber <= episodeCount; episodeNumber++) {
@@ -214,4 +212,33 @@ function parseMovies($: CheerioStatic, decade: string, patches: MoviePatch[]): M
   }
 
   return movies;
+}
+
+
+async function detectEpisodeCount(): Promise<number> {
+  try {
+    const homePage = await download('https://www.supercinebattle.fr');
+    let $ = cheerio.load(homePage);
+
+    let episodeCount: undefined | number;
+    $('.entry-title a').each((_, element) => {
+      if (!episodeCount) {
+        const title = $(element).text();
+        if (title.match(/Super Ciné Battle [0-9]+.*/g)) {
+          episodeCount = parseInt(title.replace('Super Ciné Battle', '').split(/^[0-9]/)[0]);
+        }
+      }
+    });
+    
+    if (!episodeCount) {
+      throw new Error('No episode posts found on the front page');
+    }
+    return episodeCount;
+
+  } catch (e) {
+    console.warn("Failed to detect episode count on SCB");
+    return (await readMovieRankings())
+    .map(movie => movie.id.episode)
+    .reduce((e1, e2) => Math.max(e1, e2), 0);
+  }
 }
