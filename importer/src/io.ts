@@ -69,25 +69,6 @@ export async function downloadGzipped(url: string, filename: string) {
   console.log("Ungzipping OK");
 }
 
-export async function runInDb<T>(file: string, callback: (db: sqlite3.Database) => Promise<T>) {
-  let db = new sqlite3.Database(dataPath(file));
-
-  process.on('SIGINT', function() {
-    if (db) {
-      console.log("Closing DB connection to exit.");
-      db.close();
-      db = null;
-      process.exit(0);
-    } 
-  });
-
-  try {
-    return callback(db);
-  } finally {
-    db.close();
-  }
-}
-
 export function readApiKey(filename: string) {
   try {
     return readFileSync(dataPath(filename)).toString().trim();
