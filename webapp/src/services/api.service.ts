@@ -31,7 +31,7 @@ export async function fetchTvSchedule(): Promise<XmltvSchedule | { error: 'fetch
   if (!cache['tv-schedule']) {
     try {
       const response = await axios.request({
-        url: 'https://supercinemarbre.intricati.com/',
+        url: 'https://supercinemarbre.komwan.net/',
         adapter: axiosJsonp
       });
       cache['tv-schedule'] = response.data;

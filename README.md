@@ -56,7 +56,7 @@ Par défaut, l'importeur ne fait que passer en revue les films déjà connus pou
 
 ## Serveur de programme TV
 
-Afin d'être capable de se mettre à jour quotidiennement, le programme TV est géré par un [serveur à part](https://supercinemarbre.intricati.com/).
+Afin d'être capable de se mettre à jour quotidiennement, le programme TV est géré par un [serveur à part](https://supercinemarbre.komwan.net/).
 
 ```
 cd importer
