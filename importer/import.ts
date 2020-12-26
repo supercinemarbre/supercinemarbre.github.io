@@ -9,14 +9,6 @@ import * as timestamps from "./src/timestamps";
 (async () => {
   try {
 
-    // Super Cine Battle lists
-
-    if (process.env.SCB_INIT) {
-      await scb.scrapeMovieRankings();
-    } else {
-      console.log("Skipping Super Cine Battle scraping (use SCB_INIT=true to enable)")
-    }
-
     // Episode timestamps
 
     if (process.env.GSHEETS_INIT) {

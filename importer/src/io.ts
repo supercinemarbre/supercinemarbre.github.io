@@ -1,11 +1,6 @@
 import * as bigJson from "big-json";
-import download from "download";
 import { createReadStream, createWriteStream, existsSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import sqlite3 from 'sqlite3';
-import { pipeline } from "stream";
-import { promisify } from "util";
-import { createGunzip } from "zlib";
 
 export function readDataString(file: string) {
   try {
@@ -51,22 +46,6 @@ export function writeData(file: string, object: any): Promise<void> {
       }, 300); // XXX Prevent crashes with file being deleted
     });
   })
-}
-
-export async function downloadGzipped(url: string, filename: string) {
-  const dataFolder = dataPath('.');
-  const gzFilename = filename + ".gz";
-  if (!existsSync(dataPath(gzFilename))) {
-    console.log(`Downloading ${filename}...`);
-    await download(url, dataFolder, { filename: gzFilename });
-    console.log("Download OK");
-  }
-
-  console.log(`Ungzipping ${filename}...`);
-  const readStream = createReadStream(dataPath(gzFilename));
-  const writeStream = createWriteStream(dataPath(filename));
-  await promisify(pipeline)(readStream, createGunzip(), writeStream);
-  console.log("Ungzipping OK");
 }
 
 export function readApiKey(filename: string) {

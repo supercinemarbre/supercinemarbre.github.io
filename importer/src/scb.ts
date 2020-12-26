@@ -145,6 +145,9 @@ export function writeScbPatch(patch: MoviePatch[]): void {
   writeDataString(`scb_patch.json`, JSON.stringify(patch, null, 2));
 }
 
+/**
+ * @deprecated Use the Google Sheets importer only
+ */
 export async function scrapeMovieRankings(): Promise<Movie[]> {
   console.log(`Downloading Super Cine Battle rankings`);
 

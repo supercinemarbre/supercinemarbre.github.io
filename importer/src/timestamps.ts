@@ -46,7 +46,7 @@ export async function importTimestampsRankingsAndMissingMovies() {
         movie.timestamp = patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
         movie.ranking = parseInt(timestampInfo.Classement, 10);
       } else if (key.episode > maxEpisode || patch?.forceImport) {
-        console.log(` - Adding Ep. ${key.episode} movie ${key.name} missing from SCB lists`);
+        console.log(` - Adding Ep. ${key.episode} movie "${key.name}"`);
         const movie: Movie = {
           id: key,
           decade,
