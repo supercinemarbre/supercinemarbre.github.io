@@ -17,18 +17,24 @@
     }"
     item-key="tconst">
     <template v-slot:item.ranking="{ item }">
-      <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}<Ordinal :value="item.ranking" /></span>
-      <span v-if="!currentDecade">
-        <router-link :to="'/' + item.decade + '#' + item.tconst">
-          <div class="movie-ranking">{{ item.ranking }}<Ordinal :value="item.ranking" /></div>
-          Années {{ item.decade }}
-        </router-link>
-      </span>
+      <v-lazy>
+        <span>
+          <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}<Ordinal :value="item.ranking" /></span>
+          <span v-if="!currentDecade">
+            <router-link :to="'/' + item.decade + '#' + item.tconst">
+              <div class="movie-ranking">{{ item.ranking }}<Ordinal :value="item.ranking" /></div>
+              Années {{ item.decade }}
+            </router-link>
+          </span>
+        </span>
+      </v-lazy>
     </template>
     <template v-slot:item.posterUrl="{ item }">
-      <a v-if="item.posterUrl" class="movie-poster" :href="'https://www.imdb.com/title/' + item.tconst">
-        <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
-      </a>
+      <v-lazy>
+        <a v-if="item.posterUrl" class="movie-poster" :href="'https://www.imdb.com/title/' + item.tconst">
+          <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
+        </a>
+      </v-lazy>
     </template>
     <template v-slot:item.imdbRating="{ item }">
       <v-lazy>
@@ -46,29 +52,44 @@
       </v-lazy>
     </template>
     <template v-slot:item.imdbVotes="{ item }">
-      <PopularityIMDB :votes="item.imdbVotes" />
+      <v-lazy>
+        <PopularityIMDB :votes="item.imdbVotes" />
+      </v-lazy>
     </template>
     <template v-slot:item.searchString="{ item }">
-      <div>
-        <div class="movie-title">
-          <a :name="item.tconst" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
-          <span class="movie-alt-title" v-if="item.title !== item.primaryTitle">({{ item.primaryTitle }})</span>
-          <TimestampLink :movie="item" :episode="episodes[item.episode]" style="margin-left: 10px"></TimestampLink>
+      <div class="movie-info">
+      <v-lazy>
+        <div>
+          <div>
+            <div class="movie-title">
+              <a :name="item.tconst" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
+              <span class="movie-alt-title" v-if="item.title !== item.primaryTitle">({{ item.primaryTitle }})</span>
+              <TimestampLink :movie="item" :episode="episodes[item.episode]" style="margin-left: 10px"></TimestampLink>
+            </div>
+            
+            <div class="movie-details">
+              {{ item.runtimeMinutes }} min
+              <Genres v-if="item.genres" :genres="item.genres" style="margin-left: 10px"></Genres>
+            </div>
+          </div>
+          <div class="movie-casting">
+            <div v-if="item.directors">de {{ item.directors.join(', ') }}</div>
+            <div v-if="item.actors">avec {{ item.actors.join(', ') }}</div>
+            <div v-if="item.comment" style="margin-top: 5px"><b>Note:</b> {{ item.comment }}</div>
+          </div>
         </div>
-        
-        <div class="movie-details">
-          {{ item.runtimeMinutes }} min
-          <Genres v-if="item.genres" :genres="item.genres" style="margin-left: 10px"></Genres>
-        </div>
-      </div>
-      <div class="movie-casting">
-        <div v-if="item.directors">de {{ item.directors.join(', ') }}</div>
-        <div v-if="item.actors">avec {{ item.actors.join(', ') }}</div>
-        <div v-if="item.comment" style="margin-top: 5px"><b>Note:</b> {{ item.comment }}</div>
+      </v-lazy>
       </div>
     </template>
+    <template v-slot:item.year="{ item }">
+      <v-lazy>
+        <span>{{ item.year }}</span>
+      </v-lazy>
+    </template>
     <template v-slot:item.episode="{ item }">
-      <router-link v-if="item.episode !== undefined" :to="'/episodes?search=' + item.episode">Ep. {{ item.episode }}</router-link>
+      <v-lazy>
+        <router-link v-if="item.episode !== undefined" :to="'/episodes?search=' + item.episode">Ep. {{ item.episode }}</router-link>
+      </v-lazy>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
       <v-data-footer v-if="!currentDecade"
@@ -125,6 +146,12 @@
   height: 32px;
 }
 
+.movie-info {
+  display: flex;
+  min-height: 116px;
+  flex-direction: column;
+  justify-content: center;
+}
 .movie-title {
   display: block;
   font-size: 120%;
