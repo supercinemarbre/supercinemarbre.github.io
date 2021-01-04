@@ -21,7 +21,7 @@ export async function importTimestampsRankingsAndMissingMovies() {
 
   const decades = Object.keys(await readListUrls());
   const movies = await readMovieRankings();
-  const timestampsPatch = await readTimestampsPatches();
+  const timestampsPatches = await readTimestampsPatches();
   const maxEpisode = getMaxEpisode(movies);
   let count = 0;
 
@@ -36,7 +36,7 @@ export async function importTimestampsRankingsAndMissingMovies() {
 
       const key: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
 
-      const patch = timestampsPatch.find(t => isEqual(t.gsheetsKey, key));
+      const patch = timestampsPatches.find(p => isEqual(p.gsheetsKey, key));
       let searchKey: MovieID = patch?.id ? patch.id : key;
       const matches = findMatchingMovies(searchKey, movies);
 
