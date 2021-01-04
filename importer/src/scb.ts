@@ -80,7 +80,7 @@ async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): 
   const searchResults = await download(`https://www.supercinebattle.fr/?s=${titlePrefix}+${episodeNumber}+%3A`);
   let $ = cheerio.load(searchResults);
 
-  let $titleLink: CheerioElement | undefined;
+  let $titleLink: cheerio.Element | undefined;
   $('.entry-title').each((_, $element) => {
     const linkTitle = $($element).text();
     if (!$titleLink && (linkTitle.includes(`${titlePrefix} ${episodeNumber} :`)
@@ -183,12 +183,12 @@ function mergeRankings(existingRankings: Movie[], newRankings: Movie[]) {
   }
 }
 
-function parseMovies($: CheerioStatic, decade: string, patches: MoviePatch[]): Movie[] {
+function parseMovies($: cheerio.Root, decade: string, patches: MoviePatch[]): Movie[] {
   const movies: Movie[] = [];
 
   const rows = $("table tr");
   for (let i = 0; i < rows.length; i++) {
-    const row = rows.get(i) as CheerioElement;
+    const row = rows.get(i) as cheerio.Element;
     const cells = $("td", row);
     if (cells.length > 0) {
       const episode = parseInt($(cells.get(2)).text().trim(), 10);
