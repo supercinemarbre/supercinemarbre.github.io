@@ -14,7 +14,7 @@ import { Component, Ref, Vue, Watch } from 'vue-property-decorator';
 })
 export default class List extends Vue {
 
-  currentDecade? = '';
+  currentDecade?= '';
   state: 'loading' | 'loaded' = 'loading';
   allMovies: Movie[] = [];
   episodes: EpisodeMap = [];
@@ -78,24 +78,25 @@ export default class List extends Vue {
   applySearch(search: string) {
     this.search = search;
   }
-    
+
   @Watch('$route')
   public onRouteChange() {
-    window.scrollTo(0, 0);
-
     this.currentDecade = this.$route.meta?.decade;
     this.searchInput = '';
     this.sortBy = this.currentDecade ? [] : ['episode'];
     this.sortDesc = this.currentDecade ? [] : ['desc'];
 
-    setTimeout(() => {
-      if (this.$route.hash && document.querySelector) {
+    if (this.$route.hash && document.querySelector) {
+      const scrollInterval = setInterval(() => {
         const target = document.querySelector(`[name=${this.$route.hash.slice(1)}]`) as HTMLElement;
         if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: "center" });
+          target.scrollIntoView({ block: "center" });
+          clearInterval(scrollInterval);
         }
-      }
-    }, 1);
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }
 
   get movies(): Movie[] {

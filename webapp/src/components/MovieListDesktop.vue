@@ -57,16 +57,17 @@
       </v-lazy>
     </template>
     <template v-slot:item.searchString="{ item }">
+      <a :name="item.tconst"></a>
       <div class="movie-info">
       <v-lazy>
         <div>
           <div>
             <div class="movie-title">
-              <a :name="item.tconst" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
+              <a v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
               <span class="movie-alt-title" v-if="item.title !== item.primaryTitle">({{ item.primaryTitle }})</span>
               <TimestampLink :movie="item" :episode="episodes[item.episode]" style="margin-left: 10px"></TimestampLink>
             </div>
-            
+
             <div class="movie-details">
               {{ item.runtimeMinutes }} min
               <Genres v-if="item.genres" :genres="item.genres" style="margin-left: 10px"></Genres>
@@ -93,7 +94,7 @@
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
       <v-data-footer v-if="!currentDecade"
-        :pagination="pagination" 
+        :pagination="pagination"
         :options="options"
         @update:options="updateOptions"
         showFirstLastPage

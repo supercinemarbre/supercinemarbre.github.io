@@ -1502,9 +1502,16 @@
   {
     "scbKey": {
       "episode": 3,
+      "name": "la soupe aux choux"
+    },
+    "title": "La soupe aux choux"
+  },
+  {
+    "scbKey": {
+      "episode": 3,
       "name": "Master of The Universe"
     },
-    "title": "Misters of the Universe",
+    "title": "Masters of the Universe",
     "tconst": "tt0093507"
   },
   {
