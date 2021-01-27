@@ -18,7 +18,7 @@
     <h4>Données</h4>
 
     <ul>
-      <li>Remerciements à Sébastien B. (aucun rapport) alias 520STB pour le <a href="https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit#gid=1591523541">Google Docs du Discord SCB</a>, qui maintient une liste complète et à jour des timestamps.</li>
+      <li>Remerciements à Stéphane B. (aucun rapport) alias 520STB pour le <a href="https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit#gid=1591523541">Google Docs du Discord SCB</a>, qui maintient une liste complète et à jour des timestamps.</li>
       <li>Remerciements aux contributeurs de cette même liste et autres efforts pour obtenir des timestamps : Quentin Haroche, Cellcious, wallydbecharef, et j'en oublie sûrement.</li>
       <li>Utilise des données de <a href="http://www.omdbapi.com/">OMDB</a> sous licence CC BY-NC 4.0.</li>
       <li>Information courtesy of IMDb (http://www.imdb.com). Used with permission.</li>
