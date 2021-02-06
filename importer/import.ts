@@ -5,6 +5,7 @@ import * as omdb from "./src/omdb";
 import * as patch from "./src/patch";
 import * as scb from "./src/scb";
 import * as timestamps from "./src/timestamps";
+import * as tmdb from "./src/tmdb";
 
 (async () => {
   try {
@@ -28,6 +29,7 @@ import * as timestamps from "./src/timestamps";
 
     await imdb.fetchMissingIMDBData();
     await omdb.fetchMissingOMDBData();
+    await tmdb.fetchMissingTMDBData();
 
     // Patching of final results
 

@@ -1,6 +1,7 @@
 import * as scb from "./src/scb";
 import * as imdb from "./src/imdb";
 import * as omdb from "./src/omdb";
+import * as tmdb from "./src/tmdb";
 
 const movieNames = process.argv.slice(2);
 
@@ -30,6 +31,10 @@ const partialInvalidation = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
       // OMDB
       if (!partialInvalidation || process.env.OMDB_ONLY) {
         omdb.invalidateOMDBData(movie);
+      }
+      // TMDB
+      if (!partialInvalidation || process.env.TMDB_ONLY) {
+        tmdb.invalidateTMDBData(movie);
       }
       invalidatedMovies.push(movie);
     }

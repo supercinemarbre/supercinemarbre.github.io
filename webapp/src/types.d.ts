@@ -133,6 +133,27 @@ export interface Movie {
    */
   genres?: string[];
 
+  // ===================== TMDB ===================== */
+
+  /**
+   * Unique movie identifier. Also referenced by JustWatch.
+   */
+  tmdbId?: number;
+
+  tmdbVoteAverage?: number;
+
+  // ===================== JUST WATCH ===================== */
+
+  /**
+   * Unique movie identifier.
+   */
+  jwEntityId?: string;
+
+  /**
+   * Path to the movie's Just Watch page.
+   */
+  jwFullPath?: string;
+
   // ===================== GOOGLE SHEETS ===================== */
 
   /**

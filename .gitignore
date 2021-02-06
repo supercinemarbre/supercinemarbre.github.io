@@ -26,8 +26,7 @@ pnpm-debug.log*
 importer/data/imdb*
 importer/data/xmltv_tnt.xml
 dist/
-omdbapikey
-googlesheetsapikey
+*apikey
 *.psd
 .env
 qharoche.txt
