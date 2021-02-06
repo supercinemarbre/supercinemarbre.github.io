@@ -32,6 +32,7 @@
       <li><a href="https://icons8.com/icons/set/tomato">Tomato icon</a> icon by <a href="https://icons8.com">Icons8</a></li>
       <li><a href="https://icons8.com/icons/set/rotten-tomatoes">Rotten Tomatoes icon</a> icon by <a href="https://icons8.com">Icons8</a></li>
       <li><a href="https://www.pexels.com/fr-fr/photo/bille-gris-marbre-mur-2824173/">Texture de marbre</a> par <a href="https://www.pexels.com/fr-fr/@scottwebb">Scott Web</a> sous licence CC-0</li>
+      <li><a href="https://www.justwatch.com/fr/presse">Logo JustWatch</a> issu de leur kit de presse</li>
       <li>Logo de chaînes TV issus de <a href="https://fr.wikipedia.org">Wikipédia</a>, reproduits en vertu des droits accordés par les articles L711-1 et suivants du Code de la propriété intellectuelle.</li>
     </ul>
   </div>
