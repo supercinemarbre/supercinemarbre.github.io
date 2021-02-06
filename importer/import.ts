@@ -13,25 +13,25 @@ import * as tmdb from "./src/tmdb";
 
     // Episode timestamps
 
-    // if (process.env.GSHEETS_INIT) {
-    //   await googleSheets.refreshTimestampFiles();
-    // } else {
-    //   console.log("Skipping fetching timestamps from Google Sheets (use GSHEETS_INIT=true to enable)")
-    // }
-    // await timestamps.importTimestampsRankingsAndMissingMovies();
+    if (process.env.GSHEETS_INIT) {
+      await googleSheets.refreshTimestampFiles();
+    } else {
+      console.log("Skipping fetching timestamps from Google Sheets (use GSHEETS_INIT=true to enable)")
+    }
+    await timestamps.importTimestampsRankingsAndMissingMovies();
 
-    // // Super Cine Battle episodes
+    // Super Cine Battle episodes
 
-    // if (process.env.SCB_INIT) {
-    //   await scb.scrapeScbEpisodes();
-    // }
+    if (process.env.SCB_INIT) {
+      await scb.scrapeScbEpisodes();
+    }
 
-    // // IMDB/OMDB data fetching
+    // IMDB/OMDB data fetching
 
-    // await imdb.fetchMissingIMDBData();
-    // await omdb.fetchMissingOMDBData();
-    // await tmdb.fetchMissingTMDBData();
-    await justWatch.fetchMissingJWData();
+    await imdb.fetchMissingIMDBData();
+    await omdb.fetchMissingOMDBData();
+    await tmdb.fetchMissingTMDBData();
+    // await justWatch.fetchMissingJWData();
 
     // Patching of final results
 
