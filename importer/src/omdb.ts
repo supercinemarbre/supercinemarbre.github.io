@@ -63,6 +63,7 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
           } catch (e) {
             console.error(`  - Error while searching ${JSON.stringify(movie.id)} with IMDB ID ${movie.tconst}`);
             console.error(`    ${omdbString.toString()}`);
+            i++;
             continue;
           }
         }

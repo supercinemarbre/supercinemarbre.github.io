@@ -147,7 +147,7 @@ export interface Movie {
   /**
    * Unique movie identifier.
    */
-  jwEntityId?: string;
+  jwId?: string;
 
   /**
    * Path to the movie's Just Watch page.

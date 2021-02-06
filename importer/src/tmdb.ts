@@ -55,6 +55,7 @@ export async function fetchMissingTMDBData() {
           } catch (e) {
             console.error(`  - Error while searching ${JSON.stringify(movie.id)} with IMDB ID ${movie.tconst}`);
             console.error(`    ${tmdbString.toString()}`);
+            i++;
             continue;
           }
         }

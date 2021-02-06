@@ -1,6 +1,7 @@
-import * as scb from "./src/scb";
 import * as imdb from "./src/imdb";
+import * as justWatch from "./src/jw";
 import * as omdb from "./src/omdb";
+import * as scb from "./src/scb";
 import * as tmdb from "./src/tmdb";
 
 const movieNames = process.argv.slice(2);
@@ -35,6 +36,10 @@ const partialInvalidation = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
       // TMDB
       if (!partialInvalidation || process.env.TMDB_ONLY) {
         tmdb.invalidateTMDBData(movie);
+      }
+      // JustWatch
+      if (!partialInvalidation || process.env.JW_ONLY) {
+        justWatch.invalidateJWData(movie);
       }
       invalidatedMovies.push(movie);
     }
