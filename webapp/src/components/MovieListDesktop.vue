@@ -31,9 +31,9 @@
     </template>
     <template v-slot:item.posterUrl="{ item }">
       <v-lazy>
-        <a v-if="item.posterUrl" class="movie-poster" :href="'https://www.imdb.com/title/' + item.tconst">
+        <div class="movie-poster">
           <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
-        </a>
+        </div>
       </v-lazy>
     </template>
     <template v-slot:item.imdbRating="{ item }">
@@ -63,7 +63,7 @@
         <div>
           <div>
             <div class="movie-title">
-              <a v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
+              {{ item.title }}
               <span class="movie-alt-title" v-if="item.title !== item.primaryTitle">({{ item.primaryTitle }})</span>
               <TimestampLink :movie="item" :episode="episodes[item.episode]" style="margin-left: 10px"></TimestampLink>
             </div>

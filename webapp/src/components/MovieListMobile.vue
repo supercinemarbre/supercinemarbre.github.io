@@ -23,13 +23,11 @@
                 <span class="mobile-decade">({{ shortDecade(item.decade) }})</span>
               </router-link>
             </div>
-            <a :href="'https://www.imdb.com/title/' + item.tconst">
-              <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
-            </a>
+            <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
           </div>
           <div class="mobile-details">
             <div>
-              <a :name="item.tconst" class="movie-title" v-if="item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">{{ item.title }}</a>
+              <span class="movie-title">{{ item.title }}</span>
             </div>
             <div class="mobile-scb-details">
               <span style="margin-right: 15px">{{ item.year }}</span>

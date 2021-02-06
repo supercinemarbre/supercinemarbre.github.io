@@ -41,7 +41,7 @@ export default class MovieListDesktop extends Vue {
       { text: "Poster", value: "posterUrl", align: "center", sortable: false, filterable: false },
       { text: "Titre", value: "searchString" },
       { text: "Année", value: "year", align: "center", filterable: false },
-      { text: "Notes", value: "imdbRating", sort: (a, b) => (b||0) - (a||0), filterable: false, class: "column-imdb-ranking" },
+      { text: "Notes & liens", value: "imdbRating", sort: (a, b) => (b||0) - (a||0), filterable: false, class: "column-imdb-ranking" },
       { text: "Popularité IMDB", value: "imdbVotes", sort: (a, b) => (b||0) - (a||0), filterable: false },
       { text: "Episode", value: "episode", align: "center", filterable: false }
     ];
