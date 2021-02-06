@@ -38,15 +38,16 @@
     </template>
     <template v-slot:item.imdbRating="{ item }">
       <v-lazy>
-        <div>
-          <a class="movie-rating" v-if="!!item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">
-            <RatingIMDB :rating="item.imdbRating" />
-          </a>
+        <div class="movie-ratings-and-links">
+              <RatingIMDB class="movie-rating" v-if="!!item.tconst" :movie="item" />
           <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
             <RatingRT :rating="item.rottenTomatoesRating" />
           </div>
           <div class="movie-rating" v-if="!!item.metascore">
             <RatingMetacritic :rating="item.metascore" />
+          </div>
+          <div class="movie-links">
+            <JustWatchLink :movie="item" />
           </div>
         </div>
       </v-lazy>
@@ -126,6 +127,11 @@
   overflow: hidden;
 }
 
+@media (min-width: 1600px) {
+  .movie-ratings-and-links {
+    min-width: 170px;
+  }
+}
 .movie-rating {
   white-space: nowrap;
   display: inline-block;
@@ -136,6 +142,10 @@
     display: block;
     margin-bottom: 4px;
   }
+}
+
+.movie-links {
+  margin-top: 5px;
 }
 
 .icon {

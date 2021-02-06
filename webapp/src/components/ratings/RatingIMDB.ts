@@ -1,17 +1,18 @@
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Movie } from '@/types';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class RatingIMDB extends Vue {
 
-  @Prop() rating?: number;
+  @Prop() movie?: Movie;
 
   get isValid() {
-    return typeof this.rating === 'number';
+    return typeof this.movie?.imdbRating === 'number';
   }
   
   get ratingLabel() {
     if (this.isValid) {
-      return this.rating.toFixed(1);
+      return this.movie.imdbRating.toFixed(1);
     }
     return '';
   }

@@ -1,6 +1,7 @@
 import Genres from '@/components/common/Genres.vue';
 import Ordinal from '@/components/common/Ordinal.vue';
 import TimestampLink from '@/components/common/TimestampLink.vue';
+import JustWatchLink from '@/components/common/JustWatchLink.vue';
 import PopularityIMDB from '@/components/ratings/PopularityIMDB.vue';
 import RatingIMDB from '@/components/ratings/RatingIMDB.vue';
 import RatingMetacritic from '@/components/ratings/RatingMetacritic.vue';
@@ -14,6 +15,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
     RatingIMDB,
     RatingRT,
     RatingMetacritic,
+    JustWatchLink,
     PopularityIMDB,
     Ordinal,
     TimestampLink,

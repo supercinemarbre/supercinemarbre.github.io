@@ -30,10 +30,14 @@
               <span class="movie-title">{{ item.title }}</span>
             </div>
             <div class="mobile-scb-details">
-              <span style="margin-right: 15px">{{ item.year }}</span>
-              <span style="margin-right: 15px">{{ item.runtimeMinutes }} min</span>
-              <router-link v-if="item.episode !== undefined" :to="'/episodes?search=' + item.episode">Episode {{ item.episode }}</router-link>
-              <TimestampLink :movie="item" :episode="episodes[item.episode]" style="margin-left: 10px"></TimestampLink>
+              <div>
+                <span style="margin-right: 15px">{{ item.year }}</span>
+                <span style="margin-right: 15px">{{ item.runtimeMinutes }} min</span>
+              </div>
+              <div>
+                <TimestampLink :movie="item" :episode="episodes[item.episode]" :textOnly="true" style="margin-right: 10px"></TimestampLink>
+                <router-link v-if="item.episode !== undefined" :to="'/episodes?search=' + item.episode">Episode {{ item.episode }}</router-link>
+              </div>
             </div>
             <div class="movie-casting">
               <div v-if="item.directors" > de {{ item.directors.join(', ') }}</div>
@@ -42,14 +46,15 @@
             </div>
     
             <div class="mobile-ratings">
-              <a class="movie-rating" v-if="!!item.tconst" :href="'https://www.imdb.com/title/' + item.tconst">
-                <RatingIMDB :rating="item.imdbRating" />
-              </a>
+              <RatingIMDB class="movie-rating" v-if="!!item.tconst" :movie="item" />
               <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
                 <RatingRT :rating="item.rottenTomatoesRating" />
               </div>
               <div class="movie-rating" v-if="!!item.metascore">
                 <RatingMetacritic :rating="item.metascore" />
+              </div>
+              <div class="movie-rating">
+                <JustWatchLink :movie="item" />
               </div>
             </div>
           </div>

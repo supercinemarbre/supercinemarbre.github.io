@@ -6,5 +6,6 @@ export default class TimestampLink extends Vue {
 
   @Prop() episode!: Episode;
   @Prop() movie!: Movie;
+  @Prop() textOnly: boolean;
   
 }

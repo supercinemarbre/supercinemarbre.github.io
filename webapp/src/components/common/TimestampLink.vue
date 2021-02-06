@@ -1,5 +1,5 @@
 <template>
-  <a class="movie-play" v-if="movie.timestamp && episode" :href="episode.mp3url + '#t=' + movie.timestamp">
+  <a :class="{ 'styled': !textOnly }" v-if="movie.timestamp && episode" :href="episode.mp3url + '#t=' + movie.timestamp">
     <v-icon>mdi-headphones</v-icon>
     Ecouter
   </a>
@@ -8,25 +8,27 @@
 <script src="./TimestampLink.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
-#app a.movie-play {
-  font-size: .75rem;
-  margin-left: 5px;
-  border: 1px solid #7ec6ff;
-  border-radius: 4px;
-  padding: 3px;
-  line-height: 8px;
-  transition: 0.15s cubic-bezier(0, 1.1, 0.8, 2);
+#app a {
+
+  .styled {
+    font-size: .75rem;
+    border: 1px solid rgba(0,0,0,0);
+    border-radius: 4px;
+    padding: 3px 4px;
+    line-height: 0px;
+    transition: 0.15s cubic-bezier(0, 1.1, 0.8, 2);
+  }
 
   &:hover {
     color: #fff;
-    border: 1px solid #ccc;
+    border-color: #ccc;
   }
 
   & i {
     transition: 0.15s cubic-bezier(0, 1.1, 0.8, 2);
     font-size: 1.0rem;
     color: #7ec6ff;
-    line-height: 8px;
+    line-height: 0px;
   }
 
   &:hover i {
