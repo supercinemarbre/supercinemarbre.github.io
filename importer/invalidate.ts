@@ -1,5 +1,5 @@
 import * as imdb from "./src/imdb";
-import * as justWatch from "./src/jw";
+import * as justWatch from "./src/justwatch";
 import * as omdb from "./src/omdb";
 import * as scb from "./src/scb";
 import * as tmdb from "./src/tmdb";
@@ -15,9 +15,9 @@ const partialInvalidation = process.env.IMDB_ONLY || process.env.OMDB_ONLY;
   let invalidatedMovies = [];
 
   for (const movieName of movieNames) {
-    const moviesToInvalidate = movies.filter(movie => 
-        movie.id.name === movieName || 
-        movie.id.name === movieName.replace(/'/g, '’') || 
+    const moviesToInvalidate = movies.filter(movie =>
+        movie.id.name === movieName ||
+        movie.id.name === movieName.replace(/'/g, '’') ||
         process.env.ALL);
     if (moviesToInvalidate.length === 0) {
       console.error(`ERROR: Movie not found: ${movieName}`);
