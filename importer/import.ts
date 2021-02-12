@@ -31,7 +31,7 @@ import * as tmdb from "./src/tmdb";
     await imdb.fetchMissingIMDBData();
     await omdb.fetchMissingOMDBData();
     await tmdb.fetchMissingTMDBData();
-    // await justWatch.fetchMissingJWData();
+    await justWatch.fetchMissingJWData();
 
     // Patching of final results
 

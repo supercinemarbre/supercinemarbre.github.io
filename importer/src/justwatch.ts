@@ -92,6 +92,12 @@ async function findMatchingMovie(movie: Movie): Promise<JWMovie | 'not-found'> {
 }
 
 export function hasMissingJWData(movie: Movie) {
+  if (!movie.tmdbId) {
+    return false;
+  }
+  if (movie.jwMissing) {
+    return false;
+  }
   return !movie.jwId
     || !movie.jwFullPath;
 }
@@ -99,4 +105,5 @@ export function hasMissingJWData(movie: Movie) {
 export function invalidateJWData(movie: Movie) {
   delete movie.jwId;
   delete movie.jwFullPath;
+  delete movie.jwMissing;
 }

@@ -1,7 +1,7 @@
 export interface Episode {
 
   // ===================== SUPER CINE BATTLE ===================== */
-  
+
   number: number;
   date: string; // ISO
   title: string;
@@ -10,7 +10,7 @@ export interface Episode {
   decade?: string;
 
   // ===================== TRANSIENT (CLIENT-ONLY) ===================== */
-  
+
   searchString?: string;
 }
 
@@ -67,7 +67,7 @@ export interface Movie {
   originalTitle?: string;
 
   // ===================== OMDB ===================== */
-  
+
   /**
    * Release year (from OMDB)
    */
@@ -150,6 +150,11 @@ export interface Movie {
   jwId?: number;
 
   /**
+   * True if the movie is not in JustWatch.
+   */
+  jwMissing?: boolean;
+
+  /**
    * Path to the movie's Just Watch page.
    */
   jwFullPath?: string;
@@ -162,7 +167,7 @@ export interface Movie {
   timestamp?: number;
 
   // ===================== TRANSIENT (CLIENT-ONLY) ===================== */
-  
+
   searchString?: string;
 }
 
