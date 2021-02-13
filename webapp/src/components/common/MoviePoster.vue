@@ -7,8 +7,7 @@
       </div>
     </router-link>
     <div v-if="!hideTimestamp" class="movie-timestamp">
-      {{ timestamp(movie.timestamp) }}
-      <TimestampLink :movie="movie" :episode="episode" style="margin-left: 10px"></TimestampLink>
+      <TimestampLink :movie="movie" :episode="episode" :showTimestamp="true"></TimestampLink>
     </div>
   </div>
 </template>

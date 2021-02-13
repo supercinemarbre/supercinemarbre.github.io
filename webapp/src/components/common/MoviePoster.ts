@@ -27,27 +27,4 @@ export default class MoviePoster extends Vue {
     return text;
   }
 
-  timestamp(time: number) {
-    if (time) {
-      const hours = Math.floor(time / 3600);
-      const minutes = Math.floor(time / 60) % 60;
-      const seconds = time % 60;
-
-      const minSec = `${this.leftPad(minutes)}:${this.leftPad(seconds)}`;
-      if (hours > 0) {
-        return `${hours}:${minSec}`;
-      }
-      return minSec;
-    } else {
-      return '';
-    }
-  }
-    
-  private leftPad(number: number) {
-    let result = number.toString();
-    while (result.length < 2) {
-      result = '0' + result;
-    }
-    return result;
-  }
 }

@@ -36,6 +36,8 @@ export async function scrapeScbEpisodes(): Promise<void> {
   const episodes = await readScbEpisodes();
 
   for (let episodeNumber = 0; episodeNumber <= episodeCount; episodeNumber++) {
+    if (episodeNumber === 29) {}
+
     if (!episodes.find(e => e.number === episodeNumber)) {
       const episodeDecade = getEpisodeDecade(episodeNumber, allMovies)
       const episode = await scrapeScbEpisode(episodeNumber, episodeDecade);
