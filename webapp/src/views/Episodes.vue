@@ -61,7 +61,13 @@
                   <MoviePoster :movie="movie" :episode="item"></MoviePoster>
                 </div>
                 <div v-if="episodeMovies(item.number).length === 0">
-                  <br />Classements et timestamps manquants pour cet episode. Voir <router-link to="/about">A propos</router-link> pour les contribuer !
+                  <br />
+                  <span v-if="item.title.includes('Super') && item.title.includes('Battle')">
+                    Les listes spéciales ne sont pas encore supportées sur Super Ciné Marbre.
+                  </span>
+                  <span v-else>
+                    Classements et timestamps manquants pour cet episode. Voir <router-link to="/about">A propos</router-link> pour les contribuer !
+                  </span>
                 </div>
               </div>
             </v-lazy>
