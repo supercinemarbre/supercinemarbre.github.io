@@ -10,21 +10,14 @@ import * as tmdb from "./src/tmdb";
 
 (async () => {
   try {
-
     // Episode timestamps
 
-    if (process.env.GSHEETS_INIT) {
-      await googleSheets.refreshTimestampFiles();
-    } else {
-      console.log("Skipping fetching timestamps from Google Sheets (use GSHEETS_INIT=true to enable)")
-    }
+    await googleSheets.refreshTimestampFiles();
     await timestamps.importTimestampsRankingsAndMissingMovies();
 
     // Super Cine Battle episodes
 
-    if (process.env.SCB_INIT) {
-      await scb.scrapeScbEpisodes();
-    }
+    await scb.scrapeScbEpisodes();
 
     // IMDB/OMDB data fetching
 

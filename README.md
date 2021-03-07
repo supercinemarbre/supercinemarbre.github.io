@@ -40,7 +40,10 @@ npm install
 npm start
 ```
 
-Par défaut, l'importeur ne fait que passer en revue les films déjà connus pour télécharger les éventuelles données manquantes. Vu qu'il sont sûrement tous déjà synchronisés, ça ne devrait pas faire grand-chose.
+**Commandes**
+
+* `[SCB_FORCE=true] [GSHEETS_FORCE=true] npm start` : Mettre à jour les épisodes et les films. Utilise Super Ciné Battle, [ce document](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit) Google Sheets et diverses sources de métadonnées de cinéma. `SCB_FORCE` et `GSHEETS_FORCE` permettent de forcer la synchronisation des sources correspondantes, même si elles ont été vérifiées dans les dernières 24 heures.
+* `[IMDB_ONLY=true] [OMDB_ONLY=true] [ALL=true] npm run invalidate -- [nom(s) de film(s) SCB]` : Invalider des données de films. `IMDB_ONLY` et `OMDB_ONLY` permettent d'annuler seulement les données issues de IMDB et OMDB respectivement. `ALL` annule les données sur TOUS les films (à éviter).
 
 **A savoir**
 
@@ -48,12 +51,6 @@ Par défaut, l'importeur ne fait que passer en revue les films déjà connus pou
 2. Pour que l'import TMDB fonctionne, il faudra obtenir une clef d'API (gratuite pour un usage non commercial) à https://www.themoviedb.org/ et la mettre dans un fichier `importer/data/tmdbapikey`.
 3. Pour que l'import des timestamps fonctionne, il faudra obtenir une clef d'API (gratuite) à https://console.developers.google.com/apis et la mettre dans un fichier `importer/data/googlesheetsapikey`.
 4. La détection automatique des films n'est pas toujours fiable, voir plus bas la procédure en cas d'erreur.
-
-**Commandes**
-
-* `SCB_INIT=true npm start` : Mettre à jour les épisodes disponibles sur supercinebattle.fr
-* `GSHEETS_INIT=true npm start` : Mettre à jour les classements et timestamps depuis [ce document](https://docs.google.com/spreadsheets/d/1_h4Yh9xU72iqH3gZI6OquYG-jfBYPP4d1k-T9jwxEq8/edit) Google Sheets
-* `[IMDB_ONLY=true] [OMDB_ONLY=true] [ALL=true] npm run invalidate -- [nom(s) de film(s) SCB]` : Invalider des données de films. `IMDB_ONLY` et `OMDB_ONLY` permettent d'annuler seulement les données issues de IMDB et OMDB respectivement. `ALL` annule les données sur TOUS les films (à éviter).
 
 ## Serveur de programme TV
 
@@ -69,11 +66,11 @@ npm start:tv
 
 ### Mettre à jour les listes
 
-Lorsqu'un épisode est publié sur supercinebattle.fr, on les importe avec l'option `SCB_INIT`. Lorsque des nouveaux classements/timestamps sont disponibles sur Google Sheets, on les importe avec `GSHEETS_INIT`. A la sortie d'un épisode et une fois les timestamps en ligne, il faut donc faire :
+Lancer l'importeur va vérifier à la fois les épisodes publiés sur supercinebattle.fr, et les nouveaux classements/timestamps sont disponibles sur Google Sheets. Pour chaque film ayant des métadonnées manquantes, elles sont rassemblées.
 
 ```bash
 cd importer
-GSHEETS_INIT=true SCB_INIT=true npm start
+npm start
 ```
 
 Pour vérifier le résultat de l'import (en particulier la bonne correspondance des films), lancer la webapp en local :
@@ -89,7 +86,7 @@ npm start
 
 2. Modifier `scb_patch.json`, en ajoutant un objet avec l'ID du film. Compléter alors l'objet avec les valeurs à écraser. Généralement on souhaite juste réparer une correspondance de film : pour ça aller sur le bon film dans IMDB, retrouver son "tconst" en regardant l'URL (qui est au format `https://www.imdb.com/title/[TCONST]/`), puis ajouter au patch une clef `"tconst"`.
 
-3. Si les données du film (jaquette, note IMDB etc.) avaient déjà été importées dans `scb_movies.json`, il faut les invalider, de préférence avec l'outil dédié :
+3. Si les données du film (jaquette, note IMDB etc.) avaient déjà été importées dans `scb_movies.json`, il faut les invalider, de préférence avec l'outil en ligne de commande dédié :
 
 ```bash
 cd importer

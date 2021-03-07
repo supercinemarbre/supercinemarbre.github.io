@@ -2,6 +2,7 @@ import * as cheerio from "cheerio";
 import download from "download";
 import { isEqual } from "lodash";
 import { readData, writeData, writeDataString } from "./io";
+import { markAsUpdated, needsUpdate } from "./last-updated";
 import { Episode, Movie, MovieID } from "./types";
 
 export type MoviePatch = Partial<Movie> & { scbKey: MovieID };
@@ -29,7 +30,12 @@ export async function writeMovieRankings(movies: Movie[]): Promise<void> {
 }
 
 export async function scrapeScbEpisodes(): Promise<void> {
-  console.log("Scraping SCB Episodes");
+  if (!process.env.SCB_FORCE && !await needsUpdate('scb-episodes')) {
+    console.log('Skipping Super Cine Battle episodes as recently updated (use SCB_FORCE=true to override)')
+    return;
+  }
+
+  console.log("Scraping Super Cine Battle episodes");
 
   const allMovies = await readMovieRankings();
   const episodeCount = await detectEpisodeCount();
@@ -51,6 +57,8 @@ export async function scrapeScbEpisodes(): Promise<void> {
       await writeScbEpisodes(episodes);
     }
   }
+
+  await markAsUpdated('scb-episodes');
 }
 
 function getEpisodeDecade(episodeNumber: number, allMovies: Movie[]): string | undefined {
@@ -151,6 +159,11 @@ export function writeScbPatch(patch: MoviePatch[]): void {
  * @deprecated Use the Google Sheets importer only
  */
 export async function scrapeMovieRankings(): Promise<Movie[]> {
+  if (!process.env.SCB_FORCE && !await needsUpdate('scb-movies')) {
+    console.log('Skipping Super Cine Battle rankings as recently updated (use SCB_FORCE=true to override)')
+    return;
+  }
+
   console.log(`Downloading Super Cine Battle rankings`);
 
   const scbPages = await readListUrls();
@@ -173,6 +186,7 @@ export async function scrapeMovieRankings(): Promise<Movie[]> {
   }
 
   await writeMovieRankings(scbRankings);
+  await markAsUpdated('scb-movies');
 
   return scbRankings;
 }

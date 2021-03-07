@@ -14,10 +14,10 @@ export function writeDataString(file: string, data: string | Buffer): void {
   writeFileSync(dataPath(file), data);
 }
 
-export function readData<T>(file: string): Promise<T> {
+export function readData<T>(file: string, defaultValue?: T): Promise<T> {
   return new Promise((resolve) => {
     if (!existsSync(dataPath(file))) {
-      resolve(undefined);
+      resolve(defaultValue);
       return;
     }
     
