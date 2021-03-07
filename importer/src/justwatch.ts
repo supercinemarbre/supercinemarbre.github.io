@@ -1,6 +1,7 @@
 import download from "download";
 import * as scb from "./scb";
 import { Movie } from "./types";
+import { isEqual } from "lodash";
 
 interface JWResults {
   page: number;
@@ -32,11 +33,13 @@ export async function fetchMissingJWData() {
   console.log("Filling any missing JustWatch data");
 
   const movies = await scb.readMovieRankings();
+  const patches = await scb.readScbPatches();
 
   try {
     let i = 1, pendingWrites = 0;
     for (const movie of movies) {
-      if (hasMissingJWData(movie)) {
+      const matchingPatch = patches.find(p => isEqual(p.id, movie.id) || isEqual(p.scbKey, movie.id));
+      if (hasMissingJWData(movie, matchingPatch)) {
         let jwMovie: JWMovie | 'not-found';
         try {
           jwMovie = await findMatchingMovie(movie);
@@ -58,6 +61,8 @@ export async function fetchMissingJWData() {
           console.log(` - ${i}/${movies.length}: OK for ${movie.title}`);
         } else {
           console.log(` - ${i}/${movies.length}: ${movie.title} not found in JustWatch`);
+          console.log('   ' + JSON.stringify(movie.id));
+          console.log('   (Add scb_patch.json entry with "jwMissing" set to true to ignore)');
         }
       }
       i++;
@@ -91,11 +96,11 @@ async function findMatchingMovie(movie: Movie): Promise<JWMovie | 'not-found'> {
   return matchingMovie || 'not-found';
 }
 
-export function hasMissingJWData(movie: Movie) {
+export function hasMissingJWData(movie: Movie, patch?: scb.MoviePatch) {
   if (!movie.tmdbId) {
     return false;
   }
-  if (movie.jwMissing) {
+  if (patch?.jwMissing) {
     return false;
   }
   return !movie.jwId
