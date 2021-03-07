@@ -89,18 +89,24 @@ async function findMatchingMovie(movie: Movie): Promise<JWMovie | 'not-found'> {
     throw new Error('TMDB ID is required');
   }
 
-  const jwString = await download(`https://apis.justwatch.com/content/titles/fr_FR/popular?language=fr&body={%22page_size%22:5,%22page%22:1,%22query%22:%22${encodeURIComponent(movie.title)}%22,%22content_types%22:[%22movie%22]}`);
-  const jwResults = JSON.parse(jwString.toString()) as JWResults;
-  const matchingMovie = jwResults?.items?.find(item =>
+  const foundMovies = await searchMovies(movie.title);
+  const matchingMovie = foundMovies?.find(item =>
     item.scoring.find(scoring => scoring.provider_type === "tmdb:id" && scoring.value === movie.tmdbId));
   return matchingMovie || 'not-found';
 }
+
+export async function searchMovies(title: string): Promise<JWMovie[] | undefined> {
+  const jwString = await download(`https://apis.justwatch.com/content/titles/fr_FR/popular?language=fr&body={%22page_size%22:5,%22page%22:1,%22query%22:%22${encodeURIComponent(title)}%22,%22content_types%22:[%22movie%22]}`);
+  const jwResults = JSON.parse(jwString.toString()) as JWResults;
+  return jwResults?.items;
+}
+
 
 export function hasMissingJWData(movie: Movie, patch?: scb.MoviePatch) {
   if (!movie.tmdbId) {
     return false;
   }
-  if (patch?.jwMissing) {
+  if (patch?.jwId || patch?.jwMissing) {
     return false;
   }
   return !movie.jwId
