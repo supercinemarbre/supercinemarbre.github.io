@@ -22,6 +22,7 @@
       <li>Remerciements aux contributeurs de cette même liste et autres efforts pour obtenir des timestamps : Quentin Haroche, Cellcious, wallydbecharef, et j'en oublie sûrement.</li>
       <li>Utilise des données de <a href="http://www.omdbapi.com/">OMDB</a> sous licence CC BY-NC 4.0.</li>
       <li>Information courtesy of IMDb (http://www.imdb.com). Used with permission.</li>
+      <li>This product uses the <a href="https://www.themoviedb.org"><img id="tmdblogo" alt="TMDB Logo" src="../../public/img/tmdb_blue_short.svg"></a> API but is not endorsed or certified by TMDb.</li>
       <li>Sans oublier <a href="http://supercinebattle.fr/">Les Listes</a>.</li>
     </ul>
 
@@ -33,6 +34,7 @@
       <li><a href="https://icons8.com/icons/set/rotten-tomatoes">Rotten Tomatoes icon</a> icon by <a href="https://icons8.com">Icons8</a></li>
       <li><a href="https://www.pexels.com/fr-fr/photo/bille-gris-marbre-mur-2824173/">Texture de marbre</a> par <a href="https://www.pexels.com/fr-fr/@scottwebb">Scott Web</a> sous licence CC-0</li>
       <li><a href="https://www.justwatch.com/fr/presse">Logo JustWatch</a> issu de leur kit de presse</li>
+      <li><a href="https://www.themoviedb.org/about/logos-attribution">Logo TMDB</a> issu de leur FAQ conformément aux "terms of use" de <a href="https://www.themoviedb.org/">themoviedb.org</a></li>
       <li>Logo de chaînes TV issus de <a href="https://fr.wikipedia.org">Wikipédia</a>, reproduits en vertu des droits accordés par les articles L711-1 et suivants du Code de la propriété intellectuelle.</li>
     </ul>
   </div>
@@ -44,5 +46,10 @@
 <style lang="scss">
 #apropos {
   max-width: 1024px;
+}
+
+#tmdblogo {
+  width: 100px;
+  height: 12px;
 }
 </style>
