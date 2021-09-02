@@ -13,6 +13,7 @@ const routes: Array<RouteConfig> = [
   { path: '/tv', name: 'Programme TV', component: Tv },
   { path: '/episodes', name: 'Episodes', component: Episodes },
   { path: '/stats', name: 'Statistiques', component: Stats },
+  { path: '/1950', name: 'Années 1950', component: List, meta: { decade: "1950" } },
   { path: '/1960', name: 'Années 1960', component: List, meta: { decade: "1960" } },
   { path: '/1970', name: 'Années 1970', component: List, meta: { decade: "1970" } },
   { path: '/1980', name: 'Années 1980', component: List, meta: { decade: "1980" } },

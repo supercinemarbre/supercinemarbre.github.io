@@ -8,6 +8,7 @@
     <SidebarLink to="/stats" icon="mdi-chart-bar" label="Statistiques" />
 
     <v-divider></v-divider>
+    <SidebarLink to="/1950" icon="mdi-movie-roll" label="Années 1950" />
     <SidebarLink to="/1960" icon="mdi-earth" label="Années 1960" />
     <SidebarLink to="/1970" icon="mdi-helicopter" label="Années 1970" />
     <SidebarLink to="/1980" icon="mdi-car-hatchback" label="Années 1980" />
