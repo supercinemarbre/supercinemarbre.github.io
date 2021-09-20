@@ -1,6 +1,20 @@
 [
   {
     "id": {
+      "episode": 152,
+      "name": "Sabrina"
+    },
+    "tconst": "tt0047437"
+  },
+  {
+    "id": {
+      "episode": 152,
+      "name": "Ali Baba et les 40 voleurs"
+    },
+    "tconst": "tt0046695"
+  },
+  {
+    "id": {
       "episode": 150,
       "name": "Le Retour de la mouche"
     },
