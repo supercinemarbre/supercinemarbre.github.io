@@ -26,13 +26,13 @@ export async function refreshTimestampFiles() {
   doc.useApiKey(GOOGLE_SHEETS_API_KEY);
   await doc.loadInfo();
 
-  for (const sheetTitle in doc.sheetsByTitle) {
-    if (sheetTitle === 'Episodes Spéciaux') {
+  for (const sheetIndex in doc.sheetsByIndex) {
+    const sheet = doc.sheetsByIndex[sheetIndex];
+    if (sheet.title === 'Episodes Spéciaux') {
       continue; // Unsupported for now
     }
 
-    const sheet = doc.sheetsByTitle[sheetTitle];
-    const decade = getDecade(sheetTitle);
+    const decade = getDecade(sheet.title);
     console.log(`  ${decade}...`);
 
     const timestampCsvRows = [];

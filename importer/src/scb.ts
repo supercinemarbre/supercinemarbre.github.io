@@ -1,11 +1,13 @@
 import * as cheerio from "cheerio";
 import download from "download";
 import { isEqual } from "lodash";
-import { readData, writeData, writeDataString } from "./io";
+import path from "path";
+import { readData, writeData } from "./io";
 import { markAsUpdated, needsUpdate } from "./last-updated";
 import { Episode, Movie, MovieID } from "./types";
 
 export type MoviePatch = Partial<Movie> & { scbKey: MovieID };
+export type EpisodePatch = Partial<Episode> & { number: number };
 
 export function readListUrls(): Promise<Record<string, string>> {
   return readData("scb_urls.json");
@@ -57,6 +59,16 @@ export async function scrapeScbEpisodes(): Promise<void> {
       await writeScbEpisodes(episodes);
     }
   }
+
+  console.log("Patching episodes");
+  const patches = await readScbEpisodePatches();
+  console.log(patches)
+  for (let patch of patches) {
+    console.log(patch)
+    const episodeToPatch = episodes.find(episode => patch.number === episode.number);
+    Object.assign(episodeToPatch, patch);
+  }
+  await writeScbEpisodes(episodes);
 
   await markAsUpdated('scb-episodes');
 }
@@ -124,16 +136,16 @@ async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): 
   };
 }
 
-async function readScbEpisodes(): Promise<Episode[] | undefined> {
+async function readScbEpisodes(): Promise<Episode[]> {
   try {
     const rankings = await readData(`../../webapp/public/scb_episodes.json`);
     if (Array.isArray(rankings)) {
       return rankings;
     } else {
-      return Object.values(rankings); // XXX Array is sometimes parsed as object
+      return Object.values(rankings) || []; // XXX Array is sometimes parsed as object
     }
   } catch (e) {
-    return undefined;
+    return [];
   }
 }
 
@@ -151,8 +163,13 @@ export async function readScbPatches(): Promise<MoviePatch[]> {
   }
 }
 
-export function writeScbPatch(patch: MoviePatch[]): void {
-  writeDataString(`scb_patch.json`, JSON.stringify(patch, null, 2));
+export async function readScbEpisodePatches(): Promise<EpisodePatch[]> {
+  const patches = await readData("episode_patch.json");
+  if (Array.isArray(patches)) {
+    return patches;
+  } else {
+    return Object.values(patches); // XXX Array is sometimes parsed as object
+  }
 }
 
 /**
@@ -212,7 +229,7 @@ function parseMovies($: cheerio.Root, decade: string, patches: MoviePatch[]): Mo
       const ranking = parseInt($(cells.get(0)).text().trim(), 10);
       if (ranking && name) {
         const movie: Movie = {
-          id: { 
+          id: {
             episode: isNaN(episode) ? null : episode,
             name
           },
@@ -250,7 +267,7 @@ async function detectEpisodeCount(): Promise<number> {
         }
       }
     });
-    
+
     if (!episodeCount) {
       throw new Error('No episode posts found on the front page');
     }
