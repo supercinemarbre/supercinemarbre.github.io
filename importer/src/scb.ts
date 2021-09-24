@@ -62,9 +62,7 @@ export async function scrapeScbEpisodes(): Promise<void> {
 
   console.log("Patching episodes");
   const patches = await readScbEpisodePatches();
-  console.log(patches)
   for (let patch of patches) {
-    console.log(patch)
     const episodeToPatch = episodes.find(episode => patch.number === episode.number);
     Object.assign(episodeToPatch, patch);
   }
