@@ -44,8 +44,6 @@ export async function scrapeScbEpisodes(): Promise<void> {
   const episodes = await readScbEpisodes();
 
   for (let episodeNumber = 0; episodeNumber <= episodeCount; episodeNumber++) {
-    if (episodeNumber === 29) {}
-
     if (!episodes.find(e => e.number === episodeNumber)) {
       const episodeDecade = getEpisodeDecade(episodeNumber, allMovies)
       const episode = await scrapeScbEpisode(episodeNumber, episodeDecade);
@@ -103,7 +101,7 @@ async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): 
   let $titleLink: cheerio.Element | undefined;
   $('.entry-title').each((_, $element) => {
     const linkTitle = $($element).text();
-    if (!$titleLink && (linkTitle.includes(`${titlePrefix} ${episodeNumber} :`)
+    if (!$titleLink && (linkTitle.match(new RegExp(`${titlePrefix}\\s+${episodeNumber}\\s+:`, 'gi'))
       || linkTitle.includes(`${titlePrefix} ${episodeNumber}:`))) {
       $titleLink = $element;
     }
