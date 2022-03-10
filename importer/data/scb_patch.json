@@ -1,6 +1,28 @@
 [
   {
     "id": {
+      "episode": 164,
+      "name": "Le flic de Beverly Hills 2"
+    },
+    "tconst": "tt0092644"
+  },
+  {
+    "id": {
+      "episode": 163,
+      "name": "Le Chasseur"
+    },
+    "tconst": "tt0080907"
+  },
+  {
+    "id": {
+      "episode": 163,
+      "name": "L'Equipée du Cannonball"
+    },
+    "tconst": "tt0082136",
+    "tmdbId":11286
+  },
+  {
+    "id": {
       "episode": 162,
       "name": "Koyaanisqatsi, la prophétie"
     },
