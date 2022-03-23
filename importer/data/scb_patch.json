@@ -1,6 +1,13 @@
 [
   {
     "id": {
+      "episode": 165,
+      "name": "Wall Street"
+    },
+    "tconst": "tt0094291"
+  },
+  {
+    "id": {
       "episode": 164,
       "name": "Le flic de Beverly Hills 2"
     },
@@ -858,6 +865,14 @@
       "name": "A bout de course"
     },
     "tconst": "tt0096018"
+  },
+  {
+    "id": {
+      "episode": 82,
+      "name": "Rusty James"
+    },
+    "tconst": "tt0086216",
+    "tmdbId":232
   },
   {
     "id": {
