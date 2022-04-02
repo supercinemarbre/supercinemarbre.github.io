@@ -34,22 +34,3 @@ export function findMatchingMovies(key: { episode?: number, name: string, }, mov
     .slice(0, 10)
     .map(match => match[0]);
 }
-
-export function deduceEpisode(movies: Movie[]): number {
-  const countByEpisode = {};
-  for (const episode of movies.map(m => m.id.episode)) {
-    countByEpisode[episode] = countByEpisode[episode] ? countByEpisode[episode] + 1 : 1;
-  }
-
-  let bestEpisode = Object.keys(countByEpisode)[0];
-  for (const episode of Object.keys(countByEpisode)) {
-    if (countByEpisode[episode] > countByEpisode[bestEpisode]) {
-      bestEpisode = episode;
-    }
-  }
-  return parseInt(bestEpisode, 10);
-}
-
-export function flatten<T>(arr: T[][]): T[] {
-  return [].concat(...arr);
-}

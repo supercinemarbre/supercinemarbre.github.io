@@ -7,7 +7,7 @@ import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
 import { findMatchingMovies } from "./scb-utils";
 import { Movie, MovieID } from "./types";
 
-export type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
+type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
 
 interface TimestampInfo {
   Classement: string;
@@ -23,7 +23,6 @@ export async function importTimestampsRankingsAndMissingMovies() {
   const movies = await readMovieRankings();
   const timestampsPatches = await readTimestampsPatches();
   const maxEpisode = getMaxEpisode(movies);
-  let count = 0;
 
   for (const decade of decades) {
     const filePath = dataPath(`timestamps${decade}.csv`);
@@ -58,14 +57,13 @@ export async function importTimestampsRankingsAndMissingMovies() {
       }
 
       if (movie) {
-        count++;
         if (patch) {
           delete patch.gsheetsKey;
           delete patch.forceImport;
           Object.assign(matches[0], patch);
         }
       } else {
-        console.log(` - Not found : ${timestampInfo.Films} (Ep. ${timestampInfo.Émission})`);
+        console.log(` - Unknown movie : ${timestampInfo.Films} (Ep. ${timestampInfo.Émission})`);
       }
     });
   }
