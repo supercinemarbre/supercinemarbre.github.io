@@ -2193,6 +2193,14 @@
     "tconst": "tt0096895"
   },
   {
+    "id":{
+      "episode": 4,
+      "name": "Beverly Hills Cop"
+    },
+    "title": "Le Flic de Beverly Hills",
+    "primaryTitle": "Beverly Hills Cop"
+  },
+  {
     "scbKey": {
       "episode": 3,
       "name": "Terminus"

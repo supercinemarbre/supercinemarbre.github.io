@@ -33,21 +33,21 @@ export async function importTimestampsRankingsAndMissingMovies() {
         return;
       }
 
-      const key: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
+      const gsheetsKey: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
+      const patch = timestampsPatches.find(p => isEqual(p.gsheetsKey, gsheetsKey));
+      const id: MovieID = patch?.id ?? gsheetsKey;
 
-      const patch = timestampsPatches.find(p => isEqual(p.gsheetsKey, key));
-      let searchKey: MovieID = patch?.id ? patch.id : key;
-      const matches = findMatchingMovies(searchKey, movies);
+      const matches = findMatchingMovies(id, movies);
 
       let movie: Movie;
       if (matches.length === 1) {
         movie = matches[0];
         movie.timestamp = patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
         movie.ranking = parseInt(timestampInfo.Classement, 10);
-      } else if (key.episode > maxEpisode || patch?.forceImport) {
-        console.log(` - Adding Ep. ${key.episode} movie "${key.name}"`);
+      } else if (id.episode > maxEpisode || patch?.forceImport) {
+        console.log(` - Adding Ep. ${id.episode} movie "${id.name}"`);
         const movie: Movie = {
-          id: key,
+          id,
           decade,
           title: timestampInfo.Films,
           ranking: parseInt(timestampInfo.Classement, 10),
