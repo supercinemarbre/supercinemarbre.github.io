@@ -28,11 +28,13 @@ export async function refreshTimestampFiles() {
 
   for (const sheetIndex in doc.sheetsByIndex) {
     const sheet = doc.sheetsByIndex[sheetIndex];
+    let decade = "";
     if (sheet.title === 'Episodes Spéciaux') {
-      continue; // Unsupported for now
+      decade = "Special";
     }
-
-    const decade = getDecade(sheet.title);
+    else {
+      decade = getDecade(sheet.title);
+    }
     console.log(`  ${decade}...`);
 
     const timestampCsvRows = [];
