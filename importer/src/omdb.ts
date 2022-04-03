@@ -133,11 +133,6 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
   }
 }
 
-export function hasMissingOMDBData(movie: Movie) {
-  return !movie.year ||
-    !movie.posterUrl;
-}
-
 export function invalidateOMDBData(movie: Movie) {
   delete movie.year;
   delete movie.runtimeMinutes;
@@ -154,6 +149,11 @@ export function invalidateOMDBData(movie: Movie) {
   delete movie.countries;
   delete movie.languages;
   delete movie.genres;
+}
+
+function hasMissingOMDBData(movie: Movie) {
+  return !movie.year ||
+    !movie.posterUrl;
 }
 
 async function readOMDBDump(): Promise<OmdbMovie[]> {

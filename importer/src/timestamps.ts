@@ -7,7 +7,7 @@ import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
 import { findMatchingMovies } from "./scb-utils";
 import { Movie, MovieID } from "./types";
 
-export type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
+type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
 
 interface TimestampInfo {
   Classement: string;
@@ -23,7 +23,6 @@ export async function importTimestampsRankingsAndMissingMovies() {
   const movies = await readMovieRankings();
   const timestampsPatches = await readTimestampsPatches();
   const maxEpisode = getMaxEpisode(movies);
-  let count = 0;
 
   for (const decade of decades) {
     const filePath = dataPath(`timestamps${decade}.csv`);
@@ -34,21 +33,21 @@ export async function importTimestampsRankingsAndMissingMovies() {
         return;
       }
 
-      const key: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
+      const gsheetsKey: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
+      const patch = timestampsPatches.find(p => isEqual(p.gsheetsKey, gsheetsKey));
+      const id: MovieID = patch?.id ?? gsheetsKey;
 
-      const patch = timestampsPatches.find(p => isEqual(p.gsheetsKey, key));
-      let searchKey: MovieID = patch?.id ? patch.id : key;
-      const matches = findMatchingMovies(searchKey, movies);
+      const matches = findMatchingMovies(id, movies);
 
       let movie: Movie;
       if (matches.length === 1) {
         movie = matches[0];
         movie.timestamp = patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
         movie.ranking = parseInt(timestampInfo.Classement, 10);
-      } else if (key.episode > maxEpisode || patch?.forceImport) {
-        console.log(` - Adding Ep. ${key.episode} movie "${key.name}"`);
+      } else if (id.episode > maxEpisode || patch?.forceImport) {
+        console.log(` - Adding Ep. ${id.episode} movie "${id.name}"`);
         const movie: Movie = {
-          id: key,
+          id,
           decade,
           title: timestampInfo.Films,
           ranking: parseInt(timestampInfo.Classement, 10),
@@ -58,14 +57,13 @@ export async function importTimestampsRankingsAndMissingMovies() {
       }
 
       if (movie) {
-        count++;
         if (patch) {
           delete patch.gsheetsKey;
           delete patch.forceImport;
           Object.assign(matches[0], patch);
         }
       } else {
-        console.log(` - Not found : ${timestampInfo.Films} (Ep. ${timestampInfo.Émission})`);
+        console.log(` - Unknown movie : ${timestampInfo.Films} (Ep. ${timestampInfo.Émission})`);
       }
     });
   }

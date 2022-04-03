@@ -4,15 +4,6 @@ import * as scb from "./scb";
 import * as timestamps from "./timestamps";
 import { Movie } from './types';
 
-export interface ImdbPerson {
-  nconst: string;
-  primaryName: string;
-  birthYear: string;
-  deathYear: string;
-  primaryProfession: string;
-  knownForTitles: string;
-}
-
 export interface ImdbMovie {
   tconst: string;
   primaryTitle: string;
@@ -93,12 +84,12 @@ async function getIMDBSuggestion(titleOrTconst: string): Promise<ImdbMovie | und
   }
 }
 
-export function hasMissingIMDBData(movie: Movie) {
-  return (!movie.tconst
-      || !movie.primaryTitle);
-}
-
 export function invalidateIMDBData(movie: Movie) {
   delete movie.tconst;
   delete movie.primaryTitle;
+}
+
+function hasMissingIMDBData(movie: Movie) {
+  return (!movie.tconst
+      || !movie.primaryTitle);
 }

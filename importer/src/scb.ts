@@ -1,7 +1,6 @@
 import * as cheerio from "cheerio";
 import download from "download";
 import { isEqual } from "lodash";
-import path from "path";
 import { readData, writeData } from "./io";
 import { markAsUpdated, needsUpdate } from "./last-updated";
 import { Episode, Movie, MovieID } from "./types";
@@ -78,12 +77,13 @@ function getEpisodeDecade(episodeNumber: number, allMovies: Movie[]): string | u
     .filter(movie => movie.id.episode === episodeNumber)
     .map(movie => movie.decade)
 
-  if (decadesOfRankedMovies.length === 1) {
-    return decadesOfRankedMovies[0];
-  }
-  if (decadesOfRankedMovies.length > 0) {
-    return decadesOfRankedMovies.reduce((e1, e2) => e1 === e2 ? e1 : undefined);
-  }
+  const occurrences = {};
+  decadesOfRankedMovies.forEach(decade => {
+    occurrences[decade] = occurrences[decade] ? (occurrences[decade] + 1) : 1
+  });
+
+  return Object.keys(occurrences)
+    .reduce((decade1, decade2) => occurrences[decade2] > occurrences[decade1] ? decade2 : decade1);
 }
 
 async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): Promise<Episode | undefined> {
@@ -159,7 +159,7 @@ export async function readScbPatches(): Promise<MoviePatch[]> {
   }
 }
 
-export async function readScbEpisodePatches(): Promise<EpisodePatch[]> {
+async function readScbEpisodePatches(): Promise<EpisodePatch[]> {
   const patches = await readData("episode_patch.json");
   if (Array.isArray(patches)) {
     return patches;
@@ -167,87 +167,6 @@ export async function readScbEpisodePatches(): Promise<EpisodePatch[]> {
     return Object.values(patches); // XXX Array is sometimes parsed as object
   }
 }
-
-/**
- * @deprecated Use the Google Sheets importer only
- */
-export async function scrapeMovieRankings(): Promise<Movie[]> {
-  if (!process.env.SCB_FORCE && !await needsUpdate('scb-movies')) {
-    console.log('Skipping Super Cine Battle rankings as recently updated (use SCB_FORCE=true to override)')
-    return;
-  }
-
-  console.log(`Downloading Super Cine Battle rankings`);
-
-  const scbPages = await readListUrls();
-  const scbRankings = await readMovieRankings() || [];
-  const patches = await readScbPatches();
-
-  for (const decade of Object.keys(scbPages)) {
-    const scbPage = await download(scbPages[decade]);
-    const $ = cheerio.load(scbPage);
-    const rankings = parseMovies($, decade, patches);
-    console.log(` - ${rankings.length} movies found for decade ${decade}`);
-
-    const sizeBefore = scbRankings.length;
-    mergeRankings(scbRankings, rankings);
-    if (scbRankings.length > sizeBefore) {
-      console.log(`   ${scbRankings.length - sizeBefore} movies added to the list`);
-    } else {
-      console.log('   (OK, nothing new)')
-    }
-  }
-
-  await writeMovieRankings(scbRankings);
-  await markAsUpdated('scb-movies');
-
-  return scbRankings;
-}
-
-function mergeRankings(existingRankings: Movie[], newRankings: Movie[]) {
-  for (const newRanking of newRankings) {
-    if (!existingRankings.find(r => isEqual(r.id, newRanking.id))) {
-      existingRankings.push(newRanking);
-    }
-  }
-}
-
-function parseMovies($: cheerio.Root, decade: string, patches: MoviePatch[]): Movie[] {
-  const movies: Movie[] = [];
-
-  const rows = $("table tr");
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows.get(i) as cheerio.Element;
-    const cells = $("td", row);
-    if (cells.length > 0) {
-      const episode = parseInt($(cells.get(2)).text().trim(), 10);
-      const name = $(cells.get(1)).text().trim();
-      const ranking = parseInt($(cells.get(0)).text().trim(), 10);
-      if (ranking && name) {
-        const movie: Movie = {
-          id: {
-            episode: isNaN(episode) ? null : episode,
-            name
-          },
-          decade,
-          title: name,
-          ranking
-        };
-
-        const matchingPatch = patches.find(p => isEqual(p.scbKey, movie.id));
-        if (matchingPatch) {
-          delete matchingPatch.scbKey;
-          Object.assign(movie, matchingPatch);
-        }
-
-        movies.push(movie);
-      }
-    }
-  }
-
-  return movies;
-}
-
 
 async function detectEpisodeCount(): Promise<number> {
   try {
@@ -272,7 +191,7 @@ async function detectEpisodeCount(): Promise<number> {
   } catch (e) {
     console.warn("Failed to detect episode count on SCB");
     return (await readMovieRankings())
-    .map(movie => movie.id.episode)
-    .reduce((e1, e2) => Math.max(e1, e2), 0);
+      .map(movie => movie.id.episode)
+      .reduce((e1, e2) => Math.max(e1, e2), 0);
   }
 }

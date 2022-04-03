@@ -101,8 +101,13 @@ export async function searchMovies(title: string): Promise<JWMovie[] | undefined
   return jwResults?.items;
 }
 
+export function invalidateJWData(movie: Movie) {
+  delete movie.jwId;
+  delete movie.jwFullPath;
+  delete movie.jwMissing;
+}
 
-export function hasMissingJWData(movie: Movie, patch?: scb.MoviePatch) {
+function hasMissingJWData(movie: Movie, patch?: scb.MoviePatch) {
   if (!movie.tmdbId) {
     return false;
   }
@@ -111,10 +116,4 @@ export function hasMissingJWData(movie: Movie, patch?: scb.MoviePatch) {
   }
   return !movie.jwId
     || !movie.jwFullPath;
-}
-
-export function invalidateJWData(movie: Movie) {
-  delete movie.jwId;
-  delete movie.jwFullPath;
-  delete movie.jwMissing;
 }
