@@ -41,6 +41,7 @@ export async function scrapeScbEpisodes(): Promise<void> {
   const allMovies = await readMovieRankings();
   const episodeCount = await detectEpisodeCount();
   const episodes = await readScbEpisodes();
+  const specialEpisodes = await readScbEpisodes(true);
 
   for (let episodeNumber = 0; episodeNumber <= episodeCount; episodeNumber++) {
     if (!episodes.find(e => e.number === episodeNumber)) {
@@ -132,9 +133,15 @@ async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): 
   };
 }
 
-async function readScbEpisodes(): Promise<Episode[]> {
+async function readScbEpisodes(isSpecial: boolean = false): Promise<Episode[]> {
+  let filename: string;
+  if (isSpecial) {
+    filename = `../../webapp/public/scb_special_episodes.json`;  
+  } else {
+    filename = `../../webapp/public/scb_episodes.json`;
+  }
   try {
-    const rankings = await readData(`../../webapp/public/scb_episodes.json`);
+    const rankings = await readData(filename);
     if (Array.isArray(rankings)) {
       return rankings;
     } else {
