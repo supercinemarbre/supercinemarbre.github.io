@@ -1,6 +1,20 @@
 [
   {
     "id": {
+      "episode": 171,
+      "name": "Bas les masques"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 171,
+      "name": "Scandale"
+    },
+    "tconst": "tt0042958"
+  },
+  {
+    "id": {
       "episode": 170,
       "name": "L'Étrange Créature du lac noir"
     },
