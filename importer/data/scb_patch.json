@@ -1,6 +1,13 @@
 [
   {
     "id": {
+      "episode": 172,
+      "name": "Dragon : L'Histoire de Bruce Lee"
+    },
+    "tconst": "tt0106770"
+  },
+  {
+    "id": {
       "episode": 171,
       "name": "Bas les masques"
     },
