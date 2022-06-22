@@ -70,7 +70,7 @@ async function getIMDBSuggestion(titleOrTconst: string): Promise<ImdbMovie | und
       }>
     };
     if (result.d) {
-      const movies = result.d.filter(r => r.q === 'feature');
+      const movies = result.d.filter(r => (r.q === 'feature' || r.q === 'TV movie'));
       if (movies.length > 0) {
         const suggestion = movies[0];
         return {

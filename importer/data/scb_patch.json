@@ -1,6 +1,20 @@
 [
   {
     "id": {
+      "episode": 173,
+      "name": "Chasse à l'homme"
+    },
+  "tconst": "tt0107076"
+  },
+  {
+    "id": {
+      "episode": 173,
+      "name": "Les yeux dans les Bleus"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
       "episode": 172,
       "name": "Dragon : L'Histoire de Bruce Lee"
     },
