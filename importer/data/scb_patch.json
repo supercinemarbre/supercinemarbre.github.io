@@ -1,6 +1,20 @@
 [
   {
     "id": {
+      "episode": 176,
+      "name": "Absolom 2022"
+    },
+  "tconst": "tt0110678"
+  },
+  {
+    "id": {
+      "episode": 176,
+      "name": "Shootfighter: Fight to the Death"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
       "episode": 174,
       "name": "L'enfer du dimanche"
     },
