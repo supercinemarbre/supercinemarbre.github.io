@@ -26,6 +26,7 @@ pnpm-debug.log*
 # Custom
 importer/data/imdb*
 importer/data/xmltv_tnt.xml
+importer/data/*:Zone.Identifier*
 dist/
 *apikey
 *.psd
