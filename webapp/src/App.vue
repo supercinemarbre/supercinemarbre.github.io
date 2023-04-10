@@ -5,7 +5,7 @@
       <v-toolbar-title>
         <h1>
           <a id="app-logo" to="/">
-            <img src="../public/img/logo.png" />
+            <img src="/src/img/logo.png" />
             Super Ciné Marbre
           </a>
         </h1>

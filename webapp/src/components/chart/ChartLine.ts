@@ -1,4 +1,3 @@
-
 import { generateId } from '@/services/utils.service';
 import Chartist, { IChartistLineChart } from 'chartist';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
