@@ -1,6 +1,21 @@
 [
   {
     "id": {
+      "episode": 192,
+      "name": "L'animal"
+    },
+    "tconst": "tt0075683"
+  },
+  {
+    "id": {
+      "episode": 192,
+      "name": "Avec les compliments de Charlie"
+    },
+    "tconst": "tt0079488",
+    "jwMissing": true
+  },
+  {
+    "id": {
       "episode": 191,
       "name": "Les évadés de l'espace"
     },
