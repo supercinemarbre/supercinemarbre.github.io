@@ -1,6 +1,29 @@
 [
   {
     "id": {
+      "episode": 193,
+      "name": "La petite fille au bout du chemin"
+    },
+    "tconst": "tt0074806"
+  },
+  {
+    "id": {
+      "episode": 193,
+      "name": "La légende de Zatoïchi: Zatoïchi contre yojimbo"
+    },
+    "tconst": "tt0066603",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 193,
+      "name": "Godzilla contre Hedora"
+    },
+    "tconst": "tt0067148",
+    "jwMissing": true
+  },
+  {
+    "id": {
       "episode": 192,
       "name": "L'animal"
     },
@@ -747,6 +770,13 @@
     },
     "title": "Real Steel",
     "tconst": "tt0433035"
+  },
+  {
+    "id": {
+      "episode": 107,
+      "name": "The square"
+    },
+    "tconst": "tt4995790"
   },
   {
     "scbKey": {
