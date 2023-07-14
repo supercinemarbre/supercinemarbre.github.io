@@ -1,6 +1,28 @@
 [
   {
     "id": {
+      "episode": 196,
+      "name": "Frankenstein conquiert le monde"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 196,
+      "name": "Barberousse"
+    },
+    "tconst": "tt0058888"
+  },
+  {
+    "id": {
+      "episode": 196,
+      "name": "Mothra"
+    },
+    "tconst": "tt0055198",
+    "jwMissing": true
+  },
+  {
+    "id": {
       "episode": 193,
       "name": "La petite fille au bout du chemin"
     },
