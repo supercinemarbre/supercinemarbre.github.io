@@ -4,13 +4,16 @@ import * as scb from "./scb";
 import { Movie } from "./types";
 
 interface JWMovie {
-  id: number;
+  id: string;
   objectType: "MOVIE";
   objectId: number;
   content: {
     fullPath: string;
     title: string;
     originalReleaseYear: number;
+    externalIds: {
+      imdbId: string;
+    }
   }
 }
 
@@ -29,14 +32,14 @@ export async function fetchMissingJWData() {
         try {
           jwMovie = await findMatchingMovie(movie);
         } catch (e) {
-          console.error(`  - Error while searching ${JSON.stringify(movie.id)} with IMDB ID ${movie.tconst}`);
+          console.error(`  - Error while searching ${JSON.stringify(movie.id)} ${movie.tmdbId} with IMDB ID ${movie.tconst}`);
           console.error(`    ${e.message}`);
           i++;
           continue;
         }
 
         if (jwMovie !== 'not-found') {
-          movie.jwId = jwMovie.id;
+          movie.jwId = jwMovie.objectId;
           movie.jwFullPath = jwMovie.content.fullPath;
 
           if (++pendingWrites % 50 === 0) {
@@ -70,12 +73,12 @@ export async function fetchMissingJWData() {
 }
 
 async function findMatchingMovie(movie: Movie): Promise<JWMovie | 'not-found'> {
-  if (!movie.tmdbId) {
-    throw new Error('TMDB ID is required');
+  if (!movie.tconst) {
+    throw new Error('IMDB ID is required');
   }
 
   const foundMovies = await searchMovies(movie.title);
-  const matchingMovie = foundMovies?.find(item => item.id === movie.tmdbId);
+  const matchingMovie = foundMovies?.find(item => item.content.externalIds.imdbId === movie.tconst);
   return matchingMovie || 'not-found';
 }
 
@@ -85,13 +88,13 @@ export async function searchMovies(title: string): Promise<JWMovie[] | undefined
     "variables": {
       "country": "FR",
       "language": "fr",
-      "first": 2,
+      "first": 5,
       "filter": {
         "searchQuery": title,
-        "includeTitlesWithoutUrl": false
+        "includeTitlesWithoutUrl": true
       }
     },
-    "query": "query GetSuggestedTitles($country: Country!, $language: Language!, $first: Int!, $filter: TitleFilter) { popularTitles(country: $country, first: $first, filter: $filter) { edges { node {...SuggestedTitle}}}} fragment SuggestedTitle on MovieOrShow {id objectType objectId content(country: $country, language: $language) {fullPath title originalReleaseYear}}"
+    "query": "query GetSuggestedTitles($country: Country!, $language: Language!, $first: Int!, $filter: TitleFilter) { popularTitles(country: $country, first: $first, filter: $filter) { edges { node {...SuggestedTitle}}}} fragment SuggestedTitle on MovieOrShow {id objectType objectId content(country: $country, language: $language) {fullPath title originalReleaseYear externalIds {imdbId}}}"
   });
 
   return response.data.data.popularTitles.edges.map(edge => edge.node);
