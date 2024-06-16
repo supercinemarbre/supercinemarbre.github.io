@@ -1,32 +1,17 @@
-import download from "download";
+import axios from "axios";
+import { isEqual } from "lodash";
 import * as scb from "./scb";
 import { Movie } from "./types";
-import { isEqual } from "lodash";
-
-interface JWResults {
-  page: number;
-  page_size: number;
-  total_pages: number;
-  total_results: number;
-  items: JWMovie[];
-}
 
 interface JWMovie {
-  jw_entity_id: string,
   id: number;
-  title: string;
-  full_path: string;
-  poster: string;
-  poster_blur_hash: string;
-  original_release_year: number;
-  tmdb_popularity: number;
-  object_type: "movie";
-  localized_release_date: number; // YYYY-MM-DD
-  offers: any[]
-  scoring: Array<{
-    provider_type: "tmdb:id";
-    value: number;
-  }>;
+  objectType: "MOVIE";
+  objectId: number;
+  content: {
+    fullPath: string;
+    title: string;
+    originalReleaseYear: number;
+  }
 }
 
 export async function fetchMissingJWData() {
@@ -52,7 +37,7 @@ export async function fetchMissingJWData() {
 
         if (jwMovie !== 'not-found') {
           movie.jwId = jwMovie.id;
-          movie.jwFullPath = jwMovie.full_path;
+          movie.jwFullPath = jwMovie.content.fullPath;
 
           if (++pendingWrites % 50 === 0) {
             await scb.writeMovieRankings(movies);
@@ -90,15 +75,26 @@ async function findMatchingMovie(movie: Movie): Promise<JWMovie | 'not-found'> {
   }
 
   const foundMovies = await searchMovies(movie.title);
-  const matchingMovie = foundMovies?.find(item =>
-    item.scoring.find(scoring => scoring.provider_type === "tmdb:id" && scoring.value === movie.tmdbId));
+  const matchingMovie = foundMovies?.find(item => item.id === movie.tmdbId);
   return matchingMovie || 'not-found';
 }
 
 export async function searchMovies(title: string): Promise<JWMovie[] | undefined> {
-  const jwString = await download(`https://apis.justwatch.com/content/titles/fr_FR/popular?language=fr&body={%22page_size%22:5,%22page%22:1,%22query%22:%22${encodeURIComponent(title)}%22,%22content_types%22:[%22movie%22]}`);
-  const jwResults = JSON.parse(jwString.toString()) as JWResults;
-  return jwResults?.items;
+  const response = await axios.post('https://apis.justwatch.com/graphql', {
+    "operationName": "GetSuggestedTitles",
+    "variables": {
+      "country": "FR",
+      "language": "fr",
+      "first": 2,
+      "filter": {
+        "searchQuery": title,
+        "includeTitlesWithoutUrl": false
+      }
+    },
+    "query": "query GetSuggestedTitles($country: Country!, $language: Language!, $first: Int!, $filter: TitleFilter) { popularTitles(country: $country, first: $first, filter: $filter) { edges { node {...SuggestedTitle}}}} fragment SuggestedTitle on MovieOrShow {id objectType objectId content(country: $country, language: $language) {fullPath title originalReleaseYear}}"
+  });
+
+  return response.data.data.popularTitles.edges.map(edge => edge.node);
 }
 
 export function invalidateJWData(movie: Movie) {

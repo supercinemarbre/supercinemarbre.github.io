@@ -5,21 +5,18 @@ import * as justWatch from './src/justwatch';
   if (!input) {
     console.log('Usage: npm run jwsearch "movie name"');
     process.exit(0);
-    return;
   }
 
   const movies = await justWatch.searchMovies(input)
 
   movies
     .map(m => ({
-      title: `${m.title} (${m.original_release_year})`,
+      title: `${m.content.title} (${m.content.originalReleaseYear})`,
       metadata: {
         jwId: m.id,
-        jwFullPath: m.full_path
+        jwFullPath: m.content.fullPath
       }
     }))
     .forEach(m => console.log(JSON.stringify(m, null, 2)));
-
-  ;
 
 })();
