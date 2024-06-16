@@ -18,7 +18,6 @@
               <v-text-field
                 v-model="searchInput"
                 append-icon="search"
-                label="Recherche"
                 single-line
                 hide-details
                 placeholder="Chercher un film, réalisateur, acteur..."

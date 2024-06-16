@@ -1,14 +1,6 @@
 @use 'chart';
 
 #app {
-  & a {
-    color: #7ec6ff;
-    text-decoration: none;
-
-    &:hover {
-      color: white;
-    }
-  }
 
   & .v-toolbar__content {
     background: url('../public/img/bgmarbre.jpg');
@@ -16,6 +8,15 @@
 
   & .v-main {
     background-color: #222222;
+    
+    & a {
+      color: #7ec6ff;
+      text-decoration: none;
+  
+      &:hover {
+        color: white;
+      }
+    }
   }
 
   & .theme--dark.v-data-table > .v-data-table__wrapper > table > tbody > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {

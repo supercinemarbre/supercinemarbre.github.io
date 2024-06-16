@@ -38,7 +38,6 @@ h2 {
 
 h3 {
   font-size: 30px;
-  margin-bottom: -20px;
 }
 
 .movie-details {

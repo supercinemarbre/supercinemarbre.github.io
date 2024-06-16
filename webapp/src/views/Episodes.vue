@@ -13,7 +13,6 @@
               <v-text-field
                 v-model="search"
                 append-icon="search"
-                label="Recherche"
                 single-line
                 hide-details
                 placeholder="Chercher un épisode, une décennie"
