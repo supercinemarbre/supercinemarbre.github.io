@@ -1,6 +1,13 @@
 [
   {
     "id": {
+      "episode": 214,
+      "name": "Les mines du roi Salomon"
+    },
+    "tconst": "tt0042646"
+  },
+  {
+    "id": {
       "episode": 212,
       "name": "Godzilla"
     },
@@ -335,6 +342,13 @@
       "name": "Alice au pays des merveilles"
     },
     "tconst": "tt0043274"
+  },
+  {
+    "id": {
+      "episode": 153,
+      "name": "La nuit du chasseur"
+    },
+    "tconst": "tt0048424"
   },
   {
     "id": {
@@ -2344,6 +2358,13 @@
       "name": "Dark City"
     },
     "tconst": "tt0118929"
+  },
+  {
+    "scbKey": {
+      "episode": 8,
+      "name": "Godzilla"
+    },
+    "tconst": "tt0120685"
   },
   {
     "scbKey": {
