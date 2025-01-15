@@ -1,6 +1,13 @@
 [
   {
     "id": {
+      "episode": 220,
+      "name": "Les Aventures de Buckaroo Banzaï à travers la 8e dimension"
+    },
+    "tconst": "tt0086856"
+  },
+  {
+    "id": {
       "episode": 216,
       "name": "Le loup-garou de Paris"
     },
