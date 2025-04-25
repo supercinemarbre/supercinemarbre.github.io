@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { fetchEpisodes, fetchMovies, type EpisodeMap } from '@/services/api-client';
-import { watchDebounced } from '@/services/utils';
+import { fetchEpisodes, fetchMovies, type EpisodeMap } from '../services/api-client';
+import { watchDebounced } from '../services/utils';
 import type { Movie } from '@/types';
 import type { Ref } from 'vue';
 import { computed, ref } from 'vue';
-import MovieListDesktop from '@/components/movie-list/MovieListDesktop.vue';
-import MovieListMobile from '@/components/movie-list/MovieListMobile.vue';
+import MovieListDesktop from './movie-list/MovieListDesktop.vue';
+import MovieListMobile from './movie-list/MovieListMobile.vue';
+import SpoilerFree from './spoiler-free/SpoilerFree.vue';
 
 const props = defineProps({
   decade: String
@@ -15,10 +16,10 @@ const window = globalThis.window;
 const state = ref('loading' as 'loading' | 'loaded')
 const searchInput = ref('')
 const searchInputUndebounced = ref('')
-const itemsPerPage = ref(5)
+const itemsPerPage = computed(() => props.decade ? -1 : 5)
 const allMovies: Ref<Movie[]> = ref([])
 const episodes: Ref<EpisodeMap> = ref({})
-const spoilerFreeFromEpisode = ref(false as false | number); // TODO
+const spoilerFreeFromEpisode = ref(false as false | number);
 const mobileMode = ref(false);
 
 const decadeTitle = computed(() => props.decade ? `La liste ultime des années ${props.decade}` : '')
@@ -33,7 +34,6 @@ const movies = computed(() => {
   }
 })
 const filteredMovies = computed(() => {
-  console.log(movies.value.map(m => m.searchString).filter(m => m.includes(searchInput.value.toLowerCase()), searchInput.value), searchInput.value);
   return movies.value.filter(m => m.searchString.includes(searchInput.value.toLowerCase()))
 })
 
@@ -81,7 +81,7 @@ state.value = 'loaded';
           placeholder="Chercher un film, réalisateur, acteur..."></v-text-field>
       </v-col>
       <v-col class="d-flex" cols="6" sm="4">
-        <!-- <SpoilerFree ref="spoilerFree" :episodes="episodes" @onChange="refreshMoviesAndEpisodes"></SpoilerFree> -->
+        <SpoilerFree ref="spoilerFree" :episodes="episodes" @onChange="settings => spoilerFreeFromEpisode = settings.enabled ? settings.lastWatched : false"></SpoilerFree>
       </v-col>
     </v-row>
   </v-container>

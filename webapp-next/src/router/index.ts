@@ -1,5 +1,4 @@
 import List from '@/components/List.vue'
-import Tv from '@/components/Tv.vue'
 import Episodes from '@/components/Episodes.vue'
 import Stats from '@/components/Stats.vue'
 import APropos from '@/components/APropos.vue'
@@ -9,7 +8,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'Accueil', component: List },
-    { path: '/tv', name: 'Programme TV', component: Tv },
     { path: '/episodes', name: 'Episodes', component: Episodes },
     { path: '/stats', name: 'Statistiques', component: Stats },
     { path: '/1950', name: 'Années 1950', component: List, props: { decade: "1950" } },

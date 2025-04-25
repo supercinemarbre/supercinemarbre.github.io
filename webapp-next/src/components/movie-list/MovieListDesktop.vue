@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import type { EpisodeMap } from '@/services/api-client';
-import type { Movie, VuetifySortItem } from '@/types';
 import { defineProps } from 'vue';
+import type { EpisodeMap } from '../../services/api-client';
+import type { Movie, VuetifySortItem } from '../../types';
+import Genres from '../common/Genres.vue';
+import JustWatchLink from '../common/JustWatchLink.vue';
+import Ordinal from '../common/Ordinal.vue';
+import TimestampLink from '../common/TimestampLink.vue';
+import PopularityIMDB from '../ratings/PopularityIMDB.vue';
+import RatingIMDB from '../ratings/RatingIMDB.vue';
+import RatingMetacritic from '../ratings/RatingMetacritic.vue';
+import RatingRT from '../ratings/RatingRT.vue';
 
 defineProps<{
   currentDecade?: string,
@@ -14,17 +22,18 @@ defineProps<{
 }>();
 
 const headers = [
-  { text: "Classement", value: "ranking", align: "center", filterable: false },
-  { text: "Poster", value: "posterUrl", align: "center", sortable: false, filterable: false },
-  { text: "Titre", value: "searchString" },
-  { text: "Année", value: "year", align: "center", filterable: false },
-  { text: "Notes & liens", value: "imdbRating", sort: (a, b) => (b || 0) - (a || 0), filterable: false, class: "column-imdb-ranking" },
-  { text: "Popularité IMDB", value: "imdbVotes", sort: (a, b) => (b || 0) - (a || 0), filterable: false },
-  { text: "Episode", value: "episode", align: "center", filterable: false }
+  { title: "Classement", key: "ranking", align: "center", filterable: false },
+  { title: "Poster", key: "posterUrl", align: "center", sortable: false, filterable: false },
+  { title: "Titre", key: "searchString" },
+  { title: "Année", key: "year", align: "center", filterable: false },
+  { title: "Notes & liens", key: "imdbRating", sort: (a, b) => (b || 0) - (a || 0), filterable: false, class: "column-imdb-ranking" },
+  { title: "Popularité IMDB", key: "imdbVotes", sort: (a, b) => (b || 0) - (a || 0), filterable: false },
+  { title: "Episode", key: "episode", align: "center", filterable: false }
 ];
 </script>
 
 <template>
+  <!-- eslint-disable vue/valid-v-slot -->
   <v-data-table :loading="state === 'loading'" :search="search" :headers="headers" :items="movies"
     :items-per-page="itemsPerPage" :mobile-breakpoint="991" :disable-pagination="!!currentDecade" hide-default-footer
     no-data-text="" :sort-by="sortBy" :footer-props="{
@@ -34,13 +43,11 @@ const headers = [
     <template v-slot:item.ranking="{ item }">
       <v-lazy>
         <span>
-          <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}
-            <Ordinal :value="item.ranking" />
+          <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}<Ordinal :value="item.ranking" />
           </span>
           <span v-if="!currentDecade">
             <router-link :to="'/' + item.decade + '#' + item.tconst">
-              <div class="movie-ranking">{{ item.ranking }}
-                <Ordinal :value="item.ranking" />
+              <div class="movie-ranking">{{ item.ranking }}<Ordinal :value="item.ranking" />
               </div>
               Années {{ item.decade }}
             </router-link>

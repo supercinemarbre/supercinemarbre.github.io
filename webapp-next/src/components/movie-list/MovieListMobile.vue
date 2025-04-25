@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import type { EpisodeMap } from '@/services/api-client';
+import type { EpisodeMap } from '../../services/api-client';
 import type { Movie, VuetifySortItem } from '@/types';
 import { defineProps } from 'vue';
+import JustWatchLink from '../common/JustWatchLink.vue';
+import Ordinal from '../common/Ordinal.vue';
+import TimestampLink from '../common/TimestampLink.vue';
+import RatingIMDB from '../ratings/RatingIMDB.vue';
+import RatingMetacritic from '../ratings/RatingMetacritic.vue';
+import RatingRT from '../ratings/RatingRT.vue';
 
 defineProps<{
   currentDecade?: string,
