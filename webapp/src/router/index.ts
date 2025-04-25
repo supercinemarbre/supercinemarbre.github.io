@@ -10,7 +10,6 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   { path: '/', name: 'Accueil', component: List },
-  { path: '/tv', name: 'Programme TV', component: Tv },
   { path: '/episodes', name: 'Episodes', component: Episodes },
   { path: '/stats', name: 'Statistiques', component: Stats },
   { path: '/1950', name: 'Années 1950', component: List, meta: { decade: "1950" } },

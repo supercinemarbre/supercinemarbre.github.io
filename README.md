@@ -8,7 +8,6 @@ Le marbre du [Super Cine Battle](https://www.supercinebattle.fr), en version int
 
 * [Application web](#application-web) (`webapp/`)
 * [Importeur de listes](#importeur-de-listes) (`importer/`)
-* [Serveur de programme TV](#serveur-de-programme-tv) (`importer/tv-schedule-server.ts`)
 * [Procédures](#procédures)
   * [Mettre à jour les listes](#mettre-à-jour-les-listes)
   * [Corriger un film](#corriger-un-film)
@@ -55,16 +54,6 @@ npm start
 2. Pour que l'import TMDB fonctionne, il faudra obtenir une clef d'API (gratuite pour un usage non commercial) à https://www.themoviedb.org/ et la mettre dans un fichier `importer/data/tmdbapikey`.
 3. Pour que l'import des timestamps fonctionne, il faudra obtenir une clef d'API (gratuite) à https://console.developers.google.com/apis et la mettre dans un fichier `importer/data/googlesheetsapikey`.
 4. La détection automatique des films n'est pas toujours fiable, voir plus bas la procédure en cas d'erreur.
-
-## Serveur de programme TV
-
-Afin d'être capable de se mettre à jour quotidiennement, le programme TV est géré par un [serveur à part](https://supercinemarbre.komwan.net/).
-
-```
-cd importer
-npm install
-npm start:tv
-```
 
 ## Procédures
 
