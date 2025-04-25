@@ -18,6 +18,8 @@ Le marbre du [Super Cine Battle](https://www.supercinebattle.fr), en version int
 
 **Premier lancement**
 
+Compatible Node 14. L'utilisation de versions plus récentes est à vos risques et périls, malheureusement ce projet Vue 2 traîne pas mal de vieilles dépendances.
+
 ```
 cd webapp
 npm install
@@ -33,6 +35,8 @@ npm start
 ## Importeur de listes
 
 **Premier lancement**
+
+Compatible Node 20.
 
 ```
 cd importer
