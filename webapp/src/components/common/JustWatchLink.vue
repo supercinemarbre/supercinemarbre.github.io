@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Movie } from 'src/types.d';
+import type { Movie } from 'src/types';
 import { defineProps } from 'vue';
 
 defineProps<{
