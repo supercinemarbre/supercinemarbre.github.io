@@ -1,9 +1,80 @@
+<script setup lang="ts">
+import Ordinal from 'src/components/common/Ordinal.vue';
+import { fetchMovies } from 'src/services/api-client';
+import type { Movie } from 'src/types.d';
+import { ref, computed } from 'vue';
+
+function byRanking(a: Movie, b: Movie) {
+  return a.ranking - b.ranking;
+}
+
+const minimumMovies = 3;
+const allMovies = ref<Movie[]>([]);
+const state = ref<'loading' | 'loaded'>('loading');
+
+allMovies.value = await fetchMovies();
+state.value = 'loaded';
+  
+const headers = computed(() => {
+  return [
+    { text: "Classement", value: "ranking", align: "center" },
+    { text: "Réalisateur", value: "director" },
+    { text: "Nb. classés", value: "movieCount" },
+    { text: "Classé", value: "movies" },
+  ];
+});
+
+const items = computed(() => {
+  const moviesByDirector = groupMoviesByDirector(); 
+  let previousCount = -1, previousRanking = 1;
+  return Object.entries(moviesByDirector)
+    .map((entry) => ({ director: entry[0], movies: entry[1] }))
+    .filter(entry => entry.movies.length >= minimumMovies)
+    .sort((entry1, entry2) => {
+      const movieCountDiff = entry2.movies.length - entry1.movies.length;
+      const tieBreaker = entry1.movies[0].ranking - entry2.movies[0].ranking; // best ranking
+      return movieCountDiff + tieBreaker * 0.0001;
+    })
+    .map(({ director, movies }, index) => {
+      let ranking;
+      if (movies.length == previousCount) {
+        ranking = previousRanking;
+      } else {
+        ranking = index + 1;
+        previousCount = movies.length;
+        previousRanking = ranking
+      }
+      return {
+        director,
+        movies: movies.sort(byRanking),
+        movieCount: movies.length,
+        ranking
+      }
+    });
+});
+
+function groupMoviesByDirector() {
+  const result: Record<string, Movie[]> = {};
+  allMovies.value.forEach(movie => {
+    movie.directors.forEach(director => {
+      if (!result[director]) {
+        result[director] = [];
+      }
+      result[director].push(movie)
+    })
+  })
+  return result;
+}
+</script>
+
 <template>
   <div>
     <p>
       Cette liste rassemble les réalisateurs dont au moins <b>{{ minimumMovies }}</b> films ont été classés, toutes décennies confondues.<br />
       Ses films sont triés du meilleur au moins bien classé (à prendre avec des pincettes hein, on compare des pommes à des oranges !).
     </p>
+
+    <!-- eslint-disable vue/valid-v-slot -->
     <v-data-table
       :items="items"
       :headers="headers"
@@ -31,8 +102,6 @@
     </v-data-table>
   </div>
 </template>
-
-<script src="./MostPresentDirectors.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
 p {

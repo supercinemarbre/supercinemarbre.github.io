@@ -1,8 +1,30 @@
+<script setup lang="ts">
+import { computed, defineProps } from 'vue';
+
+const { votes = 0 } = defineProps<{
+  votes?: number;
+}>();
+
+const percentage = computed(() => {
+  return Math.pow(votes, 0.2) * 10 - 35;
+});
+
+
+const votesLabel = computed(() => {
+  if (votes > 1000) {
+    const kVotes = votes / 1000;
+    return `${kVotes.toFixed(0)}k votes`;
+  } else {
+    return `${votes} votes`;
+  }
+});
+</script>
+
 <template>
   <v-lazy>
     <div>
       <v-progress-linear
-        :value="percentage"
+        :model-value="percentage"
         color="#BBBBBB"
         height="8"
       ></v-progress-linear>
@@ -10,8 +32,6 @@
     </div>
   </v-lazy>
 </template>
-
-<script src="./PopularityIMDB.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
 .legend {

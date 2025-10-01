@@ -1,19 +1,57 @@
+<script setup lang="ts">
+import { defineProps } from 'vue';
+
+defineProps<{
+  movie: {
+    timestamp?: number
+  };
+  episode: {
+    mp3url: string
+  };
+  textOnly?: boolean;
+  showTimestamp?: boolean;
+}>();
+
+const timestamp = (time: number) => {
+  if (time) {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor(time / 60) % 60;
+    const seconds = time % 60;
+
+    const minSec = `${leftPad(minutes)}:${leftPad(seconds)}`;
+    if (hours > 0) {
+      return `${hours}:${minSec}`;
+    }
+    return minSec;
+  } else {
+    return '';
+  }
+}
+
+const leftPad = (number: number) => {
+  let result = number.toString();
+  while (result.length < 2) {
+    result = '0' + result;
+  }
+  return result;
+}
+</script>
+
 <template>
-  <a :class="{ 'styled': !textOnly }" v-if="movie.timestamp && episode" :href="episode.mp3url + '#t=' + movie.timestamp">
+  <a :class="{ 'styled': !textOnly }" v-if="movie.timestamp && episode"
+    :href="episode.mp3url + '#t=' + movie.timestamp">
     <v-icon>mdi-headphones</v-icon>
     <span v-if="showTimestamp">&nbsp;{{ timestamp(movie.timestamp) }}</span>
     <span v-else>&nbsp;Ecouter</span>
   </a>
 </template>
 
-<script src="./TimestampLink.ts" lang="ts"></script>
-
 <style lang="scss" scoped>
 #app a {
 
   .styled {
     font-size: .75rem;
-    border: 1px solid rgba(0,0,0,0);
+    border: 1px solid rgba(0, 0, 0, 0);
     border-radius: 4px;
     padding: 3px 4px;
     line-height: 0px;

@@ -1,6 +1,10 @@
+<script setup lang="ts">
+import SidebarLink from './SidebarLink.vue';
+</script>
+
 <template>
   <v-list>
-    <!-- Icon list: https://iconify.design/icon-sets/mdi/ -->
+    <!-- Icon list: https://materialdesignicons.com/ -->
 
     <SidebarLink to="/" icon="mdi-movie" label="Accueil" />
     <SidebarLink to="/episodes" icon="mdi-headphones-box" label="Épisodes" />
@@ -19,5 +23,3 @@
     <SidebarLink to="/about" icon="mdi-information-outline" label="A propos" />
   </v-list>
 </template>
-
-<script src="./Sidebar.ts" lang="ts"></script>

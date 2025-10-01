@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import { defineProps } from 'vue';
+import TimestampLink from './TimestampLink.vue';
+import type { Episode, Movie } from 'src/types.d';
+
+defineProps<{
+  episode: Episode;
+  movie: Movie;
+  hideTimestamp?: string;
+}>();
+
+function ellipsis(text: string, max: number): string {
+  if (text.length > max) {
+    let result = '';
+    for (const word of text.split(' ')) {
+      if (result.length + word.length < max - 5) {
+        result += ' ' + word;
+      } else {
+        return result + '[...]';
+      }
+    }
+  }
+  return text;
+}
+</script>
+
 <template>
   <div>
     <router-link :to="'/' + movie.decade + '#' + movie.tconst" class="movie-container">
@@ -11,8 +37,6 @@
     </div>
   </div>
 </template>
-
-<script src="./MoviePoster.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
 .movie-container {

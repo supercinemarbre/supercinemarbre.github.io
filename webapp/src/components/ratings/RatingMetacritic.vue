@@ -1,11 +1,29 @@
+<script lang="ts" setup>
+import { computed, defineProps } from 'vue';
+
+const { rating } = defineProps<{
+  rating?: number;
+}>();
+
+const isValid = computed(() => typeof rating === 'number');
+
+const color = computed(() => {
+  if (rating && rating > 60) {
+    return 'green';
+  } else if (rating && rating > 40) {
+    return 'orange';
+  } else {
+    return 'red';
+  }
+});
+</script>
+
 <template>
   <span v-if="isValid">
     <span :class="'badge ' + color">{{ rating }}</span>
     <!--img src="../../../public/img/mt-logo.svg" />-->
   </span>
 </template>
-
-<script src="./RatingMetacritic.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
 img {

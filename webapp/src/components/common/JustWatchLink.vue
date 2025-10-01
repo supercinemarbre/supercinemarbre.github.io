@@ -1,10 +1,17 @@
+<script setup lang="ts">
+import { Movie } from 'src/types.d';
+import { defineProps } from 'vue';
+
+defineProps<{
+  movie?: Movie;
+}>();
+</script>
+
 <template>
   <a v-if="movie && movie.jwFullPath" :href="'https://www.justwatch.com' + movie.jwFullPath">
     <img src="../../../public/img/justwatch.png" />
   </a>
 </template>
-
-<script src="./JustWatchLink.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
 img {

@@ -1,6 +1,6 @@
 import Koa from "koa";
 import KoaRouter from "koa-router";
-import { XmltvSchedule } from "./src/types";
+import { XmltvSchedule } from "./src/types.d";
 import { fetchXmltvSchedule, REFRESH_DELAY_IN_MILLIS } from "./src/xmltv";
 
 // Schedule refresh cron

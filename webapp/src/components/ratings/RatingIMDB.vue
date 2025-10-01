@@ -1,11 +1,28 @@
+<script setup lang="ts">
+import { defineProps, computed } from 'vue';
+import type { Movie } from 'src/types.d';
+
+const { movie }: { movie: Movie} = defineProps<{
+  movie?: Movie;
+}>();
+
+const isValid = computed(() => typeof movie?.imdbRating === 'number');
+
+const ratingLabel = computed(() => {
+  const rating = movie?.imdbRating;
+  if (rating) {
+    return rating.toFixed(1);
+  }
+  return '';
+});
+</script>
+
 <template>
   <a v-if="!!movie.tconst && isValid" :href="'https://www.imdb.com/title/' + movie.tconst">
     <img src="../../../public/img/imdb.png" />
     {{ ratingLabel }}
   </a>
 </template>
-
-<script src="./RatingIMDB.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
 a:hover img {

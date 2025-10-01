@@ -1,58 +1,95 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import { RouterLink, RouterView } from 'vue-router';
+import Sidebar from './components/sidebar/Sidebar.vue';
+
+const drawer = ref(true)
+</script>
+
 <template>
- <v-app id="app">
-    <v-app-bar app clipped-left height="100" aria-label="En-tête">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" aria-label="Bascule menu"></v-app-bar-nav-icon>
+  <v-layout>
+    <v-app-bar id="app-bar">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <h1>
-          <a id="app-logo" to="/">
-            <img src="../public/img/logo.png" />
+          <RouterLink id="logo" to="/">
+            <img src="/img/logo.png" />
             Super Ciné Marbre
-          </a>
+          </RouterLink>
         </h1>
       </v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app clipped aria-label="Menu">
+    <v-navigation-drawer id="nav" v-model="drawer">
       <Sidebar></Sidebar>
+
+      <template v-slot:append>
+        <div id="nav-contribute-call" class="pa-2">
+          Contribuez à ce projet
+          <a href="https://github.com/supercinemarbre/supercinemarbre.github.io"> sur
+            Github </a>
+        </div>
+      </template>
     </v-navigation-drawer>
 
-    <v-main aria-label="Corps">
+    <v-main id="main">
       <v-container fluid>
-        <router-view />
+        <RouterView />
       </v-container>
     </v-main>
-
-    <v-footer app>
-      Contribuez à ce projet 
-      <a style="margin: 0 5px" href="https://github.com/supercinemarbre/supercinemarbre.github.io"><v-icon>mdi-github-circle</v-icon>{{' '}}sur Github </a> 
-    </v-footer>
-  </v-app>
+  </v-layout>
 </template>
 
-<style lang="scss">
-@import '@/styles/app.scss';
+<style scoped lang="scss">
+#app-bar {
+  height: var(--app-bar-height);
+  background-image: url('/img/bgmarbre.jpg');
+  padding: 20px;
+}
 
-@media (max-height: 700px) {
-  .v-footer {
-    visibility: hidden !important;
+#logo {
+  color: transparent !important;
+  font-size: 0px;
+
+  & img {
+    margin-top: 3px;
+    max-height: 32px;
+    transition: 0.2s;
+
+    @media (max-width: 600px) {
+      max-width: 200px;
+    }
+
+    @media (max-width: 300px) {
+      max-width: 150px;
+    }
+  }
+
+  &:hover,
+  &:hover img {
+    filter: brightness(1.2);
   }
 }
+
+#main {
+  --v-layout-top: var(--app-bar-height) !important;
+}
+
+#nav {
+  top: var(--app-bar-height) !important;
+  height: calc(100% - var(--app-bar-height)) !important;
+
+  #nav-contribute-call {
+    text-align: center;
+    opacity: .7;
+    font-size: .9rem;
+  }
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
 </style>
-
-<script lang="ts">
-import Vue from 'vue';
-import Sidebar from './components/sidebar/Sidebar.vue';
-
-export default Vue.extend({
-  components: {
-    Sidebar
-  },
-  data: () => ({
-    drawer: null,
-  }),
-  created () {
-    this.$vuetify.theme.dark = true;
-    this.$vuetify.lang.current = 'fr';
-  },
-});
-</script>

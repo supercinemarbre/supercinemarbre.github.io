@@ -1,8 +1,14 @@
+<script setup lang="ts">
+import { defineProps } from 'vue';
+
+defineProps<{
+  value: number
+}>()
+</script>
+
 <template>
   <span>{{ value === 1 ? 'er' : 'e' }}</span>
 </template>
-
-<script src="./Ordinal.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
 span {

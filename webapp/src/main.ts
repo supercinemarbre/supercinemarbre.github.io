@@ -1,41 +1,28 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import vuetify from './plugins/vuetify';
-import 'roboto-fontface/css/roboto/roboto-fontface.css'
+
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
-Vue.config.productionTip = false
+import './assets/main.css'
 
-Vue.filter('date', (isoString: string) => {
-  if (isoString) {
-    const date = new Date(isoString);
-    return date.toLocaleDateString();
-  } else {
-    return '???';
+const app = createApp(App)
+app.config.globalProperties.window = window
+
+app.use(router)
+
+const vuetify = createVuetify({
+  components,
+  directives,
+  theme: {
+    defaultTheme: 'dark'
   }
-});
+})
+app.use(vuetify)
 
-Vue.filter('time', (isoString: string) => {
-  if (isoString) {
-    const date = new Date(isoString);
-    return date.toLocaleTimeString();
-  } else {
-    return '???';
-  }
-});
-
-Vue.filter('ordinal', (n: number) => {
-  if (n === 1) {
-    return n.toString() + 'er';
-  } else {
-    return n.toString() + 'e';
-  }
-});
-
-new Vue({
-  router,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app');
+app.mount('#app')

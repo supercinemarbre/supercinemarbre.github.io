@@ -1,3 +1,21 @@
+<script setup lang="ts">
+import { computed, defineProps } from 'vue';
+
+const { rating } = defineProps<{
+  rating?: number;
+}>();
+
+const isValid = computed(() => typeof rating === 'number');
+
+const ratingLabel = computed(() => {
+  return isValid.value ? `${rating}%` : '';
+});
+
+const tomatometer = computed(() => {
+  return rating && rating >= 60 ? 'fresh' : 'rotten';
+});
+</script>
+
 <template>
   <span v-if="isValid">
     <img v-if="tomatometer === 'fresh'" src="../../../public/img/rt-fresh.png" />
@@ -5,8 +23,6 @@
     {{ ratingLabel }}
   </span>
 </template>
-
-<script src="./RatingRT.ts" lang="ts"></script>
 
 <style lang="scss" scoped>
 img {
