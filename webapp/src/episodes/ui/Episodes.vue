@@ -4,7 +4,7 @@ import { computed, onMounted, ref } from 'vue';
 import type { Episode, Movie } from '../../types';
 import { fetchEpisodes, type EpisodeMap } from 'src/episodes/infra/episodes.client';
 import { fetchMovies } from '../../movies/infra/movies.client';
-import MovieFilters from 'src/movies/ui/movie-list/ui/MovieFilters.vue';
+import MovieFilters from 'src/movies/ui/organisms/MovieFilters.vue';
 import MoviePoster from 'src/movies/ui/molecules/MoviePoster.vue';
 
 const state = ref<'loading' | 'loaded'>('loading');
