@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Movie } from 'src/types.d';
 import { ref, computed, watch } from 'vue';
-import ChartLine from './ChartLine.vue';
+import ChartLine from '../molecules/ChartLine.vue';
 
 const props = defineProps<{
   movies: Movie[]

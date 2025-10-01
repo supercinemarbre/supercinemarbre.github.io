@@ -9,7 +9,7 @@
 * UI
     * UI: Components
         * `ui/[Page.vue]`
-        * `ui/organisms/` Stateful components
+        * `ui/organisms/` Stateful or feature-level components
         * `ui/molecules/` Dumb components
         * `ui/atoms/` Low-level design elements
     * UI: Logic (formatting etc.)
