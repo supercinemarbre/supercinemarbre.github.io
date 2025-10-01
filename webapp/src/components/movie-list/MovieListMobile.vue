@@ -42,7 +42,7 @@ function shortDecade(decade: string) {
             </div>
             <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
           </div>
-          <div class="mobile-details">
+          <div>
             <div>
               <span class="movie-title">{{ item.title }}</span>
             </div>
@@ -64,7 +64,7 @@ function shortDecade(decade: string) {
               <div v-if="item.comment" style="margin-top: 5px"><b>Note:</b> {{ item.comment }}</div>
             </div>
 
-            <div class="mobile-ratings">
+            <div>
               <RatingIMDB class="movie-rating" v-if="!!item.tconst" :movie="item" />
               <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
                 <RatingRT :rating="item.rottenTomatoesRating" />
@@ -80,10 +80,10 @@ function shortDecade(decade: string) {
         </div>
       </v-lazy>
     </template>
-    <!-- TODO <template v-slot:top="{ pagination, options, updateOptions }">
-      <v-data-footer v-if="!currentDecade" :pagination="pagination" :options="options" @update:options="updateOptions"
+    <template v-slot:top="{ pagination, options, updateOptions }">
+      <v-data-table-footer v-if="!currentDecade" :pagination="pagination" :options="options" @update:options="updateOptions"
         :itemsPerPageOptions="[3, 5, 10, 50, -1]" items-per-page-text="$vuetify.dataTable.itemsPerPageText" />
-    </template> -->
+    </template>
   </v-data-table>
 </template>
 
@@ -91,14 +91,6 @@ function shortDecade(decade: string) {
 .movie-ranking {
   font-size: 120%;
   font-weight: bold;
-}
-
-.movie-poster {
-  display: inline-block;
-  height: 110px;
-  padding: 5px;
-  box-sizing: border-box;
-  overflow: hidden;
 }
 
 .movie-rating {
@@ -128,12 +120,6 @@ function shortDecade(decade: string) {
   .movie-title {
     font-size: 100%;
   }
-}
-
-.movie-alt-title {
-  margin-top: -5px;
-  margin-bottom: 5px;
-  color: #888888;
 }
 
 :deep(.movie-casting) {
@@ -209,7 +195,4 @@ function shortDecade(decade: string) {
   margin-left: 5px;
 }
 
-.mobile-popularity {
-  width: 150px;
-}
 </style>
