@@ -56,7 +56,7 @@ const items = computed(() => {
 function groupMoviesByDirector() {
   const result: Record<string, Movie[]> = {};
   allMovies.value.forEach(movie => {
-    movie.directors.forEach(director => {
+    movie.directors?.forEach(director => {
       if (!result[director]) {
         result[director] = [];
       }
