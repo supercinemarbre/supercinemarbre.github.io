@@ -1,7 +1,7 @@
-import List from '@/components/List.vue'
-import Episodes from '@/components/Episodes.vue'
-import Stats from '@/components/Stats.vue'
-import APropos from '@/components/APropos.vue'
+import List from 'src/components/List.vue'
+import Episodes from 'src/components/Episodes.vue'
+import Stats from 'src/components/Stats.vue'
+import APropos from 'src/components/APropos.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({

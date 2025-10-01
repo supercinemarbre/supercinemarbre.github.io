@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps, computed } from 'vue';
-import type { Movie } from '@/types';
+import type { Movie } from 'src/types';
 
 const { movie }: { movie: Movie} = defineProps<{
   movie?: Movie;

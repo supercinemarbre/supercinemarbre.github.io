@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { formatDate } from '@/formatting';
-import { isMobileMode } from '@/services/responsive';
+import { formatDate } from 'src/formatting';
+import { isMobileMode } from 'src/services/responsive';
 import { computed, onMounted, ref } from 'vue';
 import router from '../router';
 import { fetchEpisodes, fetchMovies, type EpisodeMap } from '../services/api-client';
@@ -178,7 +178,7 @@ watchDebounced(searchInputUndebounced, (value) => searchInput.value = value, 300
   font-weight: 700;
 }
 @media (max-width: 991px) {
-  ::v-deep .episode-title {
+  :deep .episode-title {
     font-size: 90% !important;
     font-weight: normal;
   }

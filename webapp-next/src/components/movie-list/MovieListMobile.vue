@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { EpisodeMap } from '../../services/api-client';
-import type { Movie, VuetifySortItem } from '@/types';
+import type { Movie, VuetifySortItem } from 'src/types';
 import { defineProps } from 'vue';
 import JustWatchLink from '../common/JustWatchLink.vue';
 import Ordinal from '../common/Ordinal.vue';
@@ -135,7 +135,7 @@ function shortDecade(decade: string) {
   color: #888888;
 }
 
-::v-deep .movie-casting {
+:deep .movie-casting {
   color: #BBBBBB;
   font-size: 90%;
   margin-bottom: 5px;
@@ -143,13 +143,13 @@ function shortDecade(decade: string) {
 }
 
 @media (max-width: 600px) {
-  ::v-deep .movie-casting {
+  :deep .movie-casting {
     font-size: 80%;
   }
 }
 
 @media (max-width: 300px) {
-  ::v-deep .movie-casting {
+  :deep .movie-casting {
     display: none;
   }
 
@@ -162,21 +162,21 @@ function shortDecade(decade: string) {
   }
 }
 
-::v-deep thead {
+:deep thead {
   display: none;
 }
 
 @media (max-width: 500px) {
-  ::v-deep .v-data-footer {
+  :deep .v-data-footer {
     flex-wrap: nowrap;
     justify-content: center;
   }
 
-  ::v-deep .v-data-footer__pagination {
+  :deep .v-data-footer__pagination {
     margin: 0 !important;
   }
 
-  ::v-deep .v-data-footer__select {
+  :deep .v-data-footer__select {
     font-size: 0;
   }
 }

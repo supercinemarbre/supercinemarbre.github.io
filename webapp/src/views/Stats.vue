@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h2>Sommaire</h2>
+    <h1>Statistiques</h1>
 
+    <h2>Sommaire</h2>
     <ul>
       <li><a href="#stats">Nombre de films traités par épisode</a></li>
       <li><a href="#directors">Hall of Fame des réalisateurs</a></li>

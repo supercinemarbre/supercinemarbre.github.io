@@ -1,7 +1,9 @@
 {
   "files": [],
-  "paths": {
-    "@/*": ["./src/*"]
+  "compilerOptions": {
+    "paths": {
+      "src/*": ["./src/*"]
+    }
   },
   "references": [
     {

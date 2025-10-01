@@ -1,4 +1,4 @@
-import type { Episode, Movie, XmltvSchedule } from '@/types';
+import type { Episode, Movie, XmltvSchedule } from 'src/types';
 import axios from "axios";
 import axiosJsonp from "axios-jsonp";
 

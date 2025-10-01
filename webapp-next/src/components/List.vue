@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Movie } from '@/types';
+import type { Movie } from 'src/types';
 import type { Ref } from 'vue';
 import { computed, ref } from 'vue';
 import { fetchEpisodes, fetchMovies, type EpisodeMap } from '../services/api-client';
