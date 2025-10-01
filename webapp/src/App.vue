@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
-import Sidebar from './components/sidebar/Sidebar.vue';
+import Sidebar from './shared/ui/components/organisms/sidebar/Sidebar.vue';
 
 const drawer = ref(true)
 </script>
