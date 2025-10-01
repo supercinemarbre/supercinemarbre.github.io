@@ -2,15 +2,16 @@
 import { defineProps, computed } from 'vue';
 import type { Movie } from '@/types';
 
-const { movie } = defineProps<{
+const { movie }: { movie: Movie} = defineProps<{
   movie?: Movie;
 }>();
 
 const isValid = computed(() => typeof movie?.imdbRating === 'number');
 
 const ratingLabel = computed(() => {
-  if (isValid.value) {
-    return movie!.imdbRating.toFixed(1);
+  const rating = movie?.imdbRating;
+  if (rating) {
+    return rating.toFixed(1);
   }
   return '';
 });

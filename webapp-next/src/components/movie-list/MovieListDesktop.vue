@@ -64,7 +64,7 @@ const headers = [
     </template>
     <template v-slot:item.imdbRating="{ item }">
       <v-lazy>
-        <div class="movie-ratings-and-links">
+        <div class="movie-ratings-and-links" :key="item.tconst"><!-- TODO fix me why is key required?-->
           <RatingIMDB class="movie-rating" v-if="!!item.tconst" :movie="item" />
           <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
             <RatingRT :rating="item.rottenTomatoesRating" />

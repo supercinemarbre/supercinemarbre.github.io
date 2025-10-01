@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { fetchEpisodes, fetchMovies, type EpisodeMap } from '../services/api-client';
-import { watchDebounced } from '../services/utils';
 import type { Movie } from '@/types';
 import type { Ref } from 'vue';
 import { computed, ref } from 'vue';
+import { fetchEpisodes, fetchMovies, type EpisodeMap } from '../services/api-client';
+import { watchDebounced } from '../services/utils';
 import MovieListDesktop from './movie-list/MovieListDesktop.vue';
 import MovieListMobile from './movie-list/MovieListMobile.vue';
+import type { SpoilerFreeSettings } from './spoiler-free/SpoilerFree.settings';
 import SpoilerFree from './spoiler-free/SpoilerFree.vue';
+import { isMobileMode } from '../services/responsive';
 
 const props = defineProps({
   decade: String
-})
+});
 
-const window = globalThis.window;
 const state = ref('loading' as 'loading' | 'loaded')
 const searchInput = ref('')
 const searchInputUndebounced = ref('')
@@ -20,30 +21,29 @@ const itemsPerPage = computed(() => props.decade ? -1 : 5)
 const allMovies: Ref<Movie[]> = ref([])
 const episodes: Ref<EpisodeMap> = ref({})
 const spoilerFreeFromEpisode = ref(false as false | number);
-const mobileMode = ref(false);
 
 const decadeTitle = computed(() => props.decade ? `La liste ultime des années ${props.decade}` : '')
 const movies = computed(() => {
+  const visibleMovies = allMovies.value
+      .filter(movie => !spoilerFreeFromEpisode.value || movie.id.episode <= spoilerFreeFromEpisode.value);
   if (props.decade) {
-    return allMovies.value
-      .filter(movie => !spoilerFreeFromEpisode.value || movie.id.episode <= spoilerFreeFromEpisode.value)
-      .filter(movie => movie.decade === props.decade)
+    return visibleMovies.filter(movie => movie.decade === props.decade)
       .sort((a, b) => a.ranking - b.ranking)
   } else {
-    return [...allMovies.value].sort((a, b) => (b.year || 0) - (a.year || 0));
+    return visibleMovies.sort((a, b) => (b.year || 0) - (a.year || 0));
   }
 })
 const filteredMovies = computed(() => {
   return movies.value.filter(m => m.searchString.includes(searchInput.value.toLowerCase()))
 })
 
-const refreshMobileMode = () => mobileMode.value = window.innerWidth < 991;
-
 watchDebounced(searchInputUndebounced, (value) => searchInput.value = value, 300);
 
-// Initialization
+function onSpoilerFreeSettingsChange(settings: SpoilerFreeSettings) {
+  spoilerFreeFromEpisode.value = settings.enabled ? settings.lastWatched : false;
+}
 
-refreshMobileMode();
+// Initialization
 
 ;[allMovies.value, episodes.value] = await Promise.all([
   fetchMovies(),
@@ -75,37 +75,33 @@ state.value = 'loaded';
 
   <v-container fluid style="margin-bottom: 15px">
     <v-row>
-      <v-col class="d-flex" cols="6" sm="8">
-        <!--TODO fix icon, review attributes -->
-        <v-text-field v-model="searchInputUndebounced" append-icon="search" single-line hide-details
-          placeholder="Chercher un film, réalisateur, acteur..."></v-text-field>
+      <v-col cols="5" lg="4">
+        <SpoilerFree ref="spoilerFree" :episodes="episodes" @onChange="onSpoilerFreeSettingsChange"></SpoilerFree>
       </v-col>
-      <v-col class="d-flex" cols="6" sm="4">
-        <SpoilerFree ref="spoilerFree" :episodes="episodes" @onChange="settings => spoilerFreeFromEpisode = settings.enabled ? settings.lastWatched : false"></SpoilerFree>
+      <v-spacer />
+      <v-col cols="6" lg="7" class="align-bottom">
+        <v-text-field v-model="searchInputUndebounced"
+          :placeholder="isMobileMode ? 'Rechercher...' : 'Rechercher un film, réalisateur, acteur...'"
+          hide-details>
+          <template #prepend-inner>
+            <v-icon>mdi-movie-search</v-icon>
+          </template>
+        </v-text-field>
       </v-col>
     </v-row>
   </v-container>
 
-  <div v-resize="refreshMobileMode">
-    <MovieListDesktop
-      v-if="!mobileMode"
-      :movies="filteredMovies"
-      :episodes="episodes"
-      :currentDecade="props.decade"
-      :state="state"
-      :search="searchInput"
-      :sortBy="decade ? [] : [{key: 'episode', order: 'desc'}]"
-      :itemsPerPage="itemsPerPage"
-    ></MovieListDesktop>
-    <MovieListMobile
-      v-if="mobileMode"
-      :movies="filteredMovies"
-      :episodes="episodes"
-      :currentDecade="props.decade"
-      :state="state"
-      :search="searchInput"
-      :sortBy="decade ? [] : [{key: 'episode', order: 'desc'}]"
-      :itemsPerPage="itemsPerPage"
-    ></MovieListMobile>
-  </div>
+  <MovieListDesktop v-if="!isMobileMode" :movies="filteredMovies" :episodes="episodes" :currentDecade="props.decade"
+    :state="state" :search="searchInput" :sortBy="decade ? [] : [{ key: 'episode', order: 'desc' }]"
+    :itemsPerPage="itemsPerPage"></MovieListDesktop>
+  <MovieListMobile v-if="isMobileMode" :movies="filteredMovies" :episodes="episodes" :currentDecade="props.decade"
+    :state="state" :search="searchInput" :sortBy="decade ? [] : [{ key: 'episode', order: 'desc' }]"
+    :itemsPerPage="itemsPerPage"></MovieListMobile>
 </template>
+
+<style lang="scss" scoped>
+.align-bottom {
+  display: flex;
+  align-items: flex-end;
+}
+</style>
