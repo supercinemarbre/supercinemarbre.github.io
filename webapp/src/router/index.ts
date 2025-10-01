@@ -2,10 +2,10 @@ import APropos from 'src/components/APropos.vue'
 import Episodes from 'src/components/Episodes.vue'
 import List from 'src/components/List.vue'
 import Stats from 'src/components/Stats.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'Accueil', component: List },
     { path: '/episodes', name: 'Episodes', component: Episodes },
