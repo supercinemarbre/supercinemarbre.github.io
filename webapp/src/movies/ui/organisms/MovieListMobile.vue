@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Movie, VuetifySortItem } from 'src/types.d';
 import { defineProps } from 'vue';
-import { rowPropsHighlightingCurrentMovie } from '../formatting/highlight-current-movie';
-import { shortDecade } from '../formatting/short-decade';
+import { rowPropsHighlightingCurrentMovie } from '../logic/formatting/highlight-current-movie';
+import { shortDecade } from '../logic/formatting/short-decade';
 import type { EpisodeMap } from 'src/episodes/infra/episodes.client';
 import TimestampLink from '../molecules/TimestampLink.vue';
 import Ordinal from 'src/movies/shared/ui/molecules/Ordinal.vue';

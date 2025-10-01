@@ -9,7 +9,7 @@ import RatingIMDB from '../molecules/ratings/RatingIMDB.vue';
 import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue';
 import RatingRT from '../molecules/ratings/RatingRT.vue';
 import TimestampLink from '../molecules/TimestampLink.vue';
-import { rowPropsHighlightingCurrentMovie } from '../formatting/highlight-current-movie';
+import { rowPropsHighlightingCurrentMovie } from '../logic/formatting/highlight-current-movie';
 
 defineProps<{
   currentDecade?: string,

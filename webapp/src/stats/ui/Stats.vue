@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fetchMovies } from 'src/movies/infra/movies.client';
+import { fetchMovies } from 'src/movies/api/movies.api';
 import type { Movie } from 'src/types.d';
 import { onMounted, ref } from 'vue';
 import MoviesPerEpisodeStats from './organisms/MoviesPerEpisodeStats.vue';
