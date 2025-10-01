@@ -1,5 +1,5 @@
-import type { EpisodeMap } from "src/episodes/infra/episodes.client";
-import { getMaxEpisode } from "src/episodes/model/episode.model";
+import type { EpisodeMap } from "src/movies/infra/episodes.client";
+import { getMaxEpisode } from "src/movies/model/episode.model";
 
 export type SpoilerFreeSettings = {
   enabled: boolean;

@@ -3,8 +3,8 @@ import { debounce } from 'lodash-es';
 import { onMounted, ref, watch } from 'vue';
 import type { SpoilerFreeSettings } from '../infra/spoiler-free.store';
 import { loadSettingsFromStorage, saveSettingsToStorage, isValidSettings } from '../infra/spoiler-free.store';
-import { getMaxEpisode } from 'src/episodes/model/episode.model';
-import type { EpisodeMap } from 'src/episodes/infra/episodes.client';
+import { getMaxEpisode } from 'src/movies/model/episode.model';
+import type { EpisodeMap } from 'src/movies/infra/episodes.client';
 
 const props = defineProps<{
   episodes: EpisodeMap;

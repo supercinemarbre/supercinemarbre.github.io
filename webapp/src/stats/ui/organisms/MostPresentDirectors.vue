@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { fetchMovies } from 'src/movies/api/movies.api';
-import Ordinal from 'src/movies/shared/ui/molecules/Ordinal.vue';
+import Ordinal from 'src/shared/ui/molecules/Ordinal.vue';
 import type { Movie } from 'src/types.d';
 import { ref, computed } from 'vue';
 

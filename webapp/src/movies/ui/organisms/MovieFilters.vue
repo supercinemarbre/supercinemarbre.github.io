@@ -5,9 +5,9 @@ import { watchDebounced } from 'src/shared/ui/logic/reactivity/watch-debounced';
 import type { Episode } from 'src/types.d';
 import { computed, ref } from 'vue';
 import type { SpoilerFreeSettings } from '../../spoiler-free/infra/spoiler-free.store';
-import type { EpisodeMap } from 'src/episodes/infra/episodes.client';
-import { getMaxEpisode } from 'src/episodes/model/episode.model';
+import type { EpisodeMap } from 'src/movies/infra/episodes.client';
 import SpoilerFree from '../../spoiler-free/ui/SpoilerFree.vue';
+import { getMaxEpisode } from 'src/movies/model/episode.model';
 
 const props = defineProps<{
     episodeMap: EpisodeMap

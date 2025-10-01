@@ -7,7 +7,7 @@ import MovieFilters from './organisms/MovieFilters.vue';
 import MovieListDesktop from './organisms/MovieListDesktop.vue';
 import MovieListMobile from './organisms/MovieListMobile.vue';
 import router from 'src/config/router';
-import { fetchEpisodes, type EpisodeMap } from 'src/episodes/infra/episodes.client';
+import { fetchEpisodes, type EpisodeMap } from 'src/movies/infra/episodes.client';
 import { fetchMovies } from 'src/movies/infra/movies.client';
 
 const props = defineProps({

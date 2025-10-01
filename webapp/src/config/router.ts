@@ -1,5 +1,5 @@
 import APropos from 'src/apropos/ui/APropos.vue'
-import Episodes from 'src/episodes/ui/Episodes.vue'
+import Episodes from 'src/movies/ui/Episodes.vue'
 import List from 'src/movies/ui/List.vue'
 import Stats from 'src/stats/ui/Stats.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'

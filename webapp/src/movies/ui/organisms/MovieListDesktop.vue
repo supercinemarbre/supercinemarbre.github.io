@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { EpisodeMap } from 'src/episodes/infra/episodes.client';
+import type { EpisodeMap } from 'src/movies/infra/episodes.client';
 import { defineProps } from 'vue';
 import type { Movie, VuetifySortItem } from '../../../types';
 import JustWatchLink from '../molecules/JustWatchLink.vue';
-import Ordinal from 'src/movies/shared/ui/molecules/Ordinal.vue';
+import Ordinal from 'src/shared/ui/molecules/Ordinal.vue';
 import PopularityIMDB from '../molecules/ratings/PopularityIMDB.vue';
 import RatingIMDB from '../molecules/ratings/RatingIMDB.vue';
 import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue';
