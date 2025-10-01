@@ -121,16 +121,11 @@ const headers = [
     item.id.episode }}</router-link>
       </v-lazy>
     </template>
-    <!-- TODO <template v-slot:top="{ pagination, options, updateOptions }">
-      <v-data-footer v-if="!currentDecade"
-        :pagination="pagination"
-        :options="options"
-        @update:options="updateOptions"
-        showFirstLastPage
-        showCurrentPage
-        :itemsPerPageOptions="[5,10,50,-1]"
-        items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
-    </template> -->
+    <template v-slot:top="{ pagination, options, updateOptions }">
+      <v-data-table-footer v-if="!currentDecade" :pagination="pagination" :options="options" @update:options="updateOptions" showFirstLastPage
+        showCurrentPage :itemsPerPageOptions="[5, 10, 50, -1]"
+        items-per-page-text="$vuetify.dataTable.itemsPerPageText" />
+    </template>
   </v-data-table>
 </template>
 
