@@ -25,7 +25,7 @@ export function loadSettingsFromStorage(episodes: EpisodeMap, currentSettings: S
       if (!isValidSettings(currentSettings)) {
         return {
           enabled: true,
-          lastWatched: getMaxEpisode(episodes).value,
+          lastWatched: getMaxEpisode(episodes),
         };
       }
     }

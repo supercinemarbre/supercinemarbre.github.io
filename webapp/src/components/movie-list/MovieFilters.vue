@@ -41,12 +41,12 @@ watchDebounced(searchInput, value => emit('search', value), 300);
 <template>
     <v-container fluid style="margin-bottom: 15px">
         <v-row>
-            <v-col cols="12" lg="4" class="align-bottom">
+            <v-col cols="12" md="4" class="align-bottom">
                 <SpoilerFree v-if="episodes.length" :episodes="episodes" @onChange="onSpoilerFreeSettingsChange">
                 </SpoilerFree>
             </v-col>
             <v-spacer />
-            <v-col cols="12" lg="7" class="align-bottom">
+            <v-col cols="12" md="7" class="align-bottom">
                 <v-text-field v-model="searchInput"
                     :placeholder="isMobileMode ? 'Rechercher...' : 'Rechercher un film, réalisateur, acteur...'"
                     prepend-inner-icon="mdi-movie-search" :append-inner-icon="searchInput ? 'mdi-close' : ''"

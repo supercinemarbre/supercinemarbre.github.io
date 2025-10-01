@@ -1,10 +1,9 @@
 <script setup lang="ts">
+import type { Movie } from 'src/types';
 import { defineProps } from 'vue';
 
 defineProps<{
-  movie: {
-    timestamp?: number
-  };
+  movie: Movie;
   episode: {
     mp3url: string
   };
