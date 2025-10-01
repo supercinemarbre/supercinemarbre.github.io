@@ -3,12 +3,11 @@ import type { Movie } from 'src/types';
 import type { Ref } from 'vue';
 import { computed, ref } from 'vue';
 import { fetchEpisodes, fetchMovies, type EpisodeMap } from '../services/api-client';
-import { watchDebounced } from '../services/utils';
+import { isMobileMode } from '../services/responsive';
+import MovieFilters from './movie-list/MovieFilters.vue';
 import MovieListDesktop from './movie-list/MovieListDesktop.vue';
 import MovieListMobile from './movie-list/MovieListMobile.vue';
-import type { SpoilerFreeSettings } from './spoiler-free/SpoilerFree.settings';
-import SpoilerFree from './spoiler-free/SpoilerFree.vue';
-import { isMobileMode } from '../services/responsive';
+import router from 'src/router';
 
 const props = defineProps({
   decade: String
@@ -16,7 +15,6 @@ const props = defineProps({
 
 const state = ref('loading' as 'loading' | 'loaded')
 const searchInput = ref('')
-const searchInputUndebounced = ref('')
 const itemsPerPage = computed(() => props.decade ? -1 : 5)
 const allMovies: Ref<Movie[]> = ref([])
 const episodes: Ref<EpisodeMap> = ref({})
@@ -25,7 +23,7 @@ const spoilerFreeFromEpisode = ref(false as false | number);
 const decadeTitle = computed(() => props.decade ? `La liste ultime des années ${props.decade}` : '')
 const movies = computed(() => {
   const visibleMovies = allMovies.value
-      .filter(movie => !spoilerFreeFromEpisode.value || movie.id.episode <= spoilerFreeFromEpisode.value);
+    .filter(movie => !spoilerFreeFromEpisode.value || movie.id.episode <= spoilerFreeFromEpisode.value);
   if (props.decade) {
     return visibleMovies.filter(movie => movie.decade === props.decade)
       .sort((a, b) => a.ranking - b.ranking)
@@ -36,12 +34,6 @@ const movies = computed(() => {
 const filteredMovies = computed(() => {
   return movies.value.filter(m => m.searchString.includes(searchInput.value.toLowerCase()))
 })
-
-watchDebounced(searchInputUndebounced, (value) => searchInput.value = value, 300);
-
-function onSpoilerFreeSettingsChange(settings: SpoilerFreeSettings) {
-  spoilerFreeFromEpisode.value = settings.enabled ? settings.lastWatched : false;
-}
 
 // Initialization
 
@@ -61,7 +53,18 @@ allMovies.value.forEach(movie => {
 })
 state.value = 'loaded';
 
-
+if (router.currentRoute.value.hash && document.querySelector) {
+  const scrollInterval = setInterval(() => {
+    const target = document.querySelector(`[name=${router.currentRoute.value.hash.slice(1)}]`) as HTMLElement;
+    if (target) {
+      target.scrollIntoView({ block: "center" });
+      console.log("centered!")
+      clearInterval(scrollInterval);
+    }
+  }, 100);
+} else {
+  window.scrollTo(0, 0);
+}
 </script>
 
 <template>
@@ -73,23 +76,8 @@ state.value = 'loaded';
     </span>
   </h1>
 
-  <v-container fluid style="margin-bottom: 15px">
-    <v-row>
-      <v-col cols="5" lg="4">
-        <SpoilerFree ref="spoilerFree" :episodes="episodes" @onChange="onSpoilerFreeSettingsChange"></SpoilerFree>
-      </v-col>
-      <v-spacer />
-      <v-col cols="6" lg="7" class="align-bottom">
-        <v-text-field v-model="searchInputUndebounced"
-          :placeholder="isMobileMode ? 'Rechercher...' : 'Rechercher un film, réalisateur, acteur...'"
-          hide-details>
-          <template #prepend-inner>
-            <v-icon>mdi-movie-search</v-icon>
-          </template>
-        </v-text-field>
-      </v-col>
-    </v-row>
-  </v-container>
+  <MovieFilters :episode-map="episodes" @search="searchInput = $event"
+    @hide-movies-above-episode="spoilerFreeFromEpisode = $event"></MovieFilters>
 
   <MovieListDesktop v-if="!isMobileMode" :movies="filteredMovies" :episodes="episodes" :currentDecade="props.decade"
     :state="state" :search="searchInput" :sortBy="decade ? [] : [{ key: 'episode', order: 'desc' }]"
@@ -98,10 +86,3 @@ state.value = 'loaded';
     :state="state" :search="searchInput" :sortBy="decade ? [] : [{ key: 'episode', order: 'desc' }]"
     :itemsPerPage="itemsPerPage"></MovieListMobile>
 </template>
-
-<style lang="scss" scoped>
-.align-bottom {
-  display: flex;
-  align-items: flex-end;
-}
-</style>

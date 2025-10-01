@@ -8,6 +8,7 @@ import TimestampLink from '../common/TimestampLink.vue';
 import RatingIMDB from '../ratings/RatingIMDB.vue';
 import RatingMetacritic from '../ratings/RatingMetacritic.vue';
 import RatingRT from '../ratings/RatingRT.vue';
+import { rowPropsHighlightingCurrentMovie } from './highlight-current-movie';
 
 defineProps<{
   currentDecade?: string,
@@ -27,7 +28,7 @@ function shortDecade(decade: string) {
 <template>
   <v-data-table :loading="state === 'loading'" :search="search" :headers="[{ title: 'Film', value: 'searchString' }]"
     :items="movies" :items-per-page="itemsPerPage" :mobile-breakpoint="0" :disable-pagination="!!currentDecade"
-    hide-default-footer no-data-text="" :sort-by="sortBy" :fixed-header="true" item-key="tconst">
+    hide-default-footer no-data-text="" :sort-by="sortBy" :fixed-header="true" :row-props="rowPropsHighlightingCurrentMovie" item-key="tconst">
     <template v-slot:item="{ item }">
       <v-lazy>
         <div class="mobile-item">
@@ -135,7 +136,7 @@ function shortDecade(decade: string) {
   color: #888888;
 }
 
-:deep .movie-casting {
+:deep(.movie-casting) {
   color: #BBBBBB;
   font-size: 90%;
   margin-bottom: 5px;
@@ -143,13 +144,13 @@ function shortDecade(decade: string) {
 }
 
 @media (max-width: 600px) {
-  :deep .movie-casting {
+  :deep(.movie-casting) {
     font-size: 80%;
   }
 }
 
 @media (max-width: 300px) {
-  :deep .movie-casting {
+  :deep(.movie-casting) {
     display: none;
   }
 
@@ -162,21 +163,21 @@ function shortDecade(decade: string) {
   }
 }
 
-:deep thead {
+:deep(thead) {
   display: none;
 }
 
 @media (max-width: 500px) {
-  :deep .v-data-footer {
+  :deep(.v-data-footer) {
     flex-wrap: nowrap;
     justify-content: center;
   }
 
-  :deep .v-data-footer__pagination {
+  :deep(.v-data-footer__pagination) {
     margin: 0 !important;
   }
 
-  :deep .v-data-footer__select {
+  :deep(.v-data-footer__select) {
     font-size: 0;
   }
 }

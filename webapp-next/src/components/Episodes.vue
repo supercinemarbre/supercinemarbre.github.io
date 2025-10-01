@@ -1,45 +1,30 @@
 <script setup lang="ts">
 import { formatDate } from 'src/formatting';
-import { isMobileMode } from 'src/services/responsive';
 import { computed, onMounted, ref } from 'vue';
-import router from '../router';
 import { fetchEpisodes, fetchMovies, type EpisodeMap } from '../services/api-client';
-import { getMaxEpisode, watchDebounced } from '../services/utils';
 import type { Episode, Movie } from '../types';
-import type { SpoilerFreeSettings } from './spoiler-free/SpoilerFree.settings';
-import SpoilerFree from './spoiler-free/SpoilerFree.vue';
 import MoviePoster from './common/MoviePoster.vue';
+import MovieFilters from './movie-list/MovieFilters.vue';
 
 const state = ref<'loading' | 'loaded'>('loading');
-const searchInput = ref(router.currentRoute.value.query.search?.toString());
-const searchInputUndebounced = ref('')
-
+const searchInput = ref('');
 const episodeMap = ref<EpisodeMap>({});
 const episodes = computed<Episode[]>(() => {
   return Object.values(episodeMap.value)
     .map(episode => {
       episode.searchString = toSearchString(episode.title);
       return episode;
-    })
-    .sort((e1, e2) => e2.number - e1.number);
+    });
 });
 const headers = [
-  { title: 'Ep.', value: 'number' },
+  { title: 'Ep.', value: 'number', key: 'episode' },
   { title: 'Date', headerProps: { class: 'date' }, sortable: false },
   { title: 'Titre', value: 'title', sortable: false },
   { title: 'Décennie', headerProps: { class: 'decade' }, sortable: false },
   { title: 'Article', sortable: false },
   { title: 'MP3', sortable: false }
 ];
-// const headers = [
-//   { title: "Classement", key: "ranking", align: "center", filterable: false },
-//   { title: "Poster", key: "posterUrl", align: "center", sortable: false, filterable: false },
-//   { title: "Titre", key: "searchString" },
-//   { title: "Année", key: "year", align: "center", filterable: false },
-//   { title: "Notes & liens", key: "imdbRating", sort: (a, b) => (b || 0) - (a || 0), filterable: false, class: "column-imdb-ranking" },
-//   { title: "Popularité IMDB", key: "imdbVotes", sort: (a, b) => (b || 0) - (a || 0), filterable: false },
-//   { title: "Episode", key: "episode", align: "center", filterable: false }
-// ];
+
 const hideMoviesAboveEpisode = ref(false as false | number);
 const allMovies = ref<Movie[]>([]);
 
@@ -66,17 +51,13 @@ function toSearchString(value: string) {
   return value ? value.replace(/[^a-zA-Z]/g, '').toLowerCase() : ''; // fixme ternary
 }
 
-function onSpoilerFreeSettingsChange(settings: SpoilerFreeSettings) {
-  hideMoviesAboveEpisode.value = settings.enabled ? settings.lastWatched : getMaxEpisode(episodeMap.value);
-}
-
-
-function customFilter(_value: Episode, search: string | null, item: Episode): boolean {
+function customFilter(_episodeIndex: Episode, search: string | null, data: { raw: Episode }): boolean {
   const searchString = toSearchString(search);
-  return !search
-    || item.number.toString() === search
-    || item.decade === search
-    || (searchString && item.searchString.includes(searchString));
+  const episode = data.raw;
+  return Boolean(!search
+    || episode.number?.toString() === search
+    || episode.decade === search
+    || (searchString && episode.searchString?.includes(searchString)));
 }
 
 function episodeMovies(episodeNumber: number) {
@@ -89,35 +70,17 @@ function episodeMovies(episodeNumber: number) {
       return b.timestamp || -a.timestamp;
     });
 }
-
-
-// XXX code duplication in List.vue
-watchDebounced(searchInputUndebounced, (value) => searchInput.value = value, 300);
-
 </script>
 
 <template>
   <h1>Liste des épisodes</h1>
 
-  <v-container fluid style="margin-bottom: 15px">
-    <v-row>
-      <v-col cols="5" lg="4">
-        <SpoilerFree v-if="episodes.length" :episodes="episodes" @onChange="onSpoilerFreeSettingsChange"></SpoilerFree>
-      </v-col>
-      <v-spacer />
-      <v-col cols="6" lg="7" class="align-bottom">
-        <v-text-field v-model="searchInputUndebounced"
-          :placeholder="isMobileMode ? 'Rechercher...' : 'Rechercher un film, réalisateur, acteur...'" hide-details>
-          <template #prepend-inner>
-            <v-icon>mdi-movie-search</v-icon>
-          </template>
-        </v-text-field>
-      </v-col>
-    </v-row>
-  </v-container>
+  <MovieFilters :episode-map="episodeMap" @search="searchInput = $event" @hide-movies-above-episode="hideMoviesAboveEpisode = $event">
+  </MovieFilters>
 
   <v-data-table :loading="state === 'loading'" :search="searchInput" :headers="headers" :items="episodes"
-    :items-per-page="5" :mobile-breakpoint="0" :custom-filter="customFilter" hide-default-footer>
+    :items-per-page="5" :mobile-breakpoint="0" :custom-filter="customFilter" hide-default-footer
+    :sort-by="[{ key: 'episode', order: 'desc' }]">
     <template v-slot:item="{ item }">
       <tr>
         <td class="number">{{ item.number }}</td>
@@ -177,6 +140,7 @@ watchDebounced(searchInputUndebounced, (value) => searchInput.value = value, 300
   font-size: 120% !important;
   font-weight: 700;
 }
+
 @media (max-width: 991px) {
   :deep .episode-title {
     font-size: 90% !important;
@@ -185,6 +149,7 @@ watchDebounced(searchInputUndebounced, (value) => searchInput.value = value, 300
 }
 
 @media screen and (max-width: 600px) {
+
   :deep .date,
   :deep .decade,
   :deep .movies-row {
@@ -201,7 +166,8 @@ watchDebounced(searchInputUndebounced, (value) => searchInput.value = value, 300
   justify-content: flex-start;
 }
 
-:deep .article .v-icon, :deep .download .v-icon {
+:deep .article .v-icon,
+:deep .download .v-icon {
   font-size: 250% !important;
   color: #7ec6ff !important;
 }

@@ -10,6 +10,7 @@ import PopularityIMDB from '../ratings/PopularityIMDB.vue';
 import RatingIMDB from '../ratings/RatingIMDB.vue';
 import RatingMetacritic from '../ratings/RatingMetacritic.vue';
 import RatingRT from '../ratings/RatingRT.vue';
+import { rowPropsHighlightingCurrentMovie } from './highlight-current-movie';
 
 defineProps<{
   currentDecade?: string,
@@ -35,19 +36,21 @@ const headers = [
 <template>
   <!-- eslint-disable vue/valid-v-slot -->
   <v-data-table :loading="state === 'loading'" :search="search" :headers="headers" :items="movies"
-    :items-per-page="itemsPerPage" :mobile-breakpoint="991" :disable-pagination="!!currentDecade" hide-default-footer
+    :items-per-page="itemsPerPage" :disable-pagination="!!currentDecade" hide-default-footer
     no-data-text="" :sort-by="sortBy" :footer-props="{
-    showFirstLastPage: true,
-    showCurrentPage: true
-  }" item-key="tconst">
+      showFirstLastPage: true,
+      showCurrentPage: true
+    }" :row-props="rowPropsHighlightingCurrentMovie" item-key="tconst">
     <template v-slot:item.ranking="{ item }">
       <v-lazy>
         <span>
-          <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}<Ordinal :value="item.ranking" />
+          <span class="movie-ranking" v-if="!!currentDecade">{{ item.ranking }}
+            <Ordinal :value="item.ranking" />
           </span>
           <span v-if="!currentDecade">
             <router-link :to="'/' + item.decade + '#' + item.tconst">
-              <div class="movie-ranking">{{ item.ranking }}<Ordinal :value="item.ranking" />
+              <div class="movie-ranking">{{ item.ranking }}
+                <Ordinal :value="item.ranking" />
               </div>
               Années {{ item.decade }}
             </router-link>
@@ -118,12 +121,12 @@ const headers = [
     <template v-slot:item.episode="{ item }">
       <v-lazy>
         <router-link v-if="item.id.episode !== undefined" :to="'/episodes?search=' + item.id.episode">Ep. {{
-    item.id.episode }}</router-link>
+          item.id.episode }}</router-link>
       </v-lazy>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">
-      <v-data-table-footer v-if="!currentDecade" :pagination="pagination" :options="options" @update:options="updateOptions" showFirstLastPage
-        showCurrentPage :itemsPerPageOptions="[5, 10, 50, -1]"
+      <v-data-table-footer v-if="!currentDecade" :pagination="pagination" :options="options"
+        @update:options="updateOptions" showFirstLastPage showCurrentPage :itemsPerPageOptions="[5, 10, 50, -1]"
         items-per-page-text="$vuetify.dataTable.itemsPerPageText" />
     </template>
   </v-data-table>
@@ -218,7 +221,7 @@ const headers = [
   margin-left: 10px;
 }
 
-:deep .movie-casting {
+:deep(.movie-casting) {
   color: #BBBBBB;
   font-size: 90%;
   margin-bottom: 5px;

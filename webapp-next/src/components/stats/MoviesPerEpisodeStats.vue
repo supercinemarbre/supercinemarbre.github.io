@@ -50,7 +50,7 @@ const min = computed(() => {
   if (moviesPerEpisode.value.length === 0) return { episode: 0, count: 0 };
   const minVal = { episode: 0, count: moviesPerEpisode.value[0] };
   moviesPerEpisode.value.forEach((count, episode) => {
-    if (count < minVal.count) {
+    if (count < minVal.count && count > 0) {
       minVal.episode = episode;
       minVal.count = count;
     }
