@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Movie, VuetifySortItem } from 'src/types.d';
-import { defineProps } from 'vue';
 import { rowPropsHighlightingCurrentMovie } from '../logic/formatting/highlight-current-movie';
 import { shortDecade } from '../logic/formatting/short-decade';
 import type { EpisodeMap } from 'src/movies/infra/episodes.client';

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
 
 const { rating } = defineProps<{
   rating?: number;
@@ -18,8 +18,8 @@ const tomatometer = computed(() => {
 
 <template>
   <span v-if="isValid">
-    <img v-if="tomatometer === 'fresh'" src="/public/img/rt-fresh.png" />
-    <img v-if="tomatometer === 'rotten'" src="/public/img/rt-rotten.png" />
+    <img v-if="tomatometer === 'fresh'" src="/img/rt-fresh.png" />
+    <img v-if="tomatometer === 'rotten'" src="/img/rt-rotten.png" />
     {{ ratingLabel }}
   </span>
 </template>

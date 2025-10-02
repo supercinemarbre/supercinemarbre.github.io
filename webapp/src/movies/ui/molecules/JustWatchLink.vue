@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Movie } from 'src/types';
-import { defineProps } from 'vue';
 
 defineProps<{
   movie?: Movie;
@@ -9,7 +8,7 @@ defineProps<{
 
 <template>
   <a v-if="movie && movie.jwFullPath" :href="'https://www.justwatch.com' + movie.jwFullPath">
-    <img src="/public/img/justwatch.png" />
+    <img src="/img/justwatch.png" />
   </a>
 </template>
 

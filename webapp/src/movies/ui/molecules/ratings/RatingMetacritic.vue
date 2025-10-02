@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
 
 const { rating } = defineProps<{
   rating?: number;
@@ -21,7 +21,7 @@ const color = computed(() => {
 <template>
   <span v-if="isValid">
     <span :class="'badge ' + color">{{ rating }}</span>
-    <!--img src="../../../public/img/mt-logo.svg" />-->
+    <!--img src="../../../img/mt-logo.svg" />-->
   </span>
 </template>
 

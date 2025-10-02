@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import TimestampLink from './TimestampLink.vue';
 import type { Episode, Movie } from 'src/types.d';
 

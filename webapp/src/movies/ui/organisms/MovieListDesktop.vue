@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { EpisodeMap } from 'src/movies/infra/episodes.client';
-import { defineProps } from 'vue';
 import type { Movie, VuetifySortItem } from '../../../types';
 import JustWatchLink from '../molecules/JustWatchLink.vue';
 import Ordinal from 'src/shared/ui/molecules/Ordinal.vue';
@@ -10,6 +9,7 @@ import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue';
 import RatingRT from '../molecules/ratings/RatingRT.vue';
 import TimestampLink from '../molecules/TimestampLink.vue';
 import { rowPropsHighlightingCurrentMovie } from '../logic/formatting/highlight-current-movie';
+import Genres from '../molecules/Genres.vue';
 
 defineProps<{
   currentDecade?: string,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 import type { Movie } from 'src/types.d';
 
 const { movie }: { movie: Movie} = defineProps<{
@@ -19,7 +19,7 @@ const ratingLabel = computed(() => {
 
 <template>
   <a v-if="!!movie.tconst && isValid" :href="'https://www.imdb.com/title/' + movie.tconst">
-    <img src="/public/img/imdb.png" />
+    <img src="/img/imdb.png" />
     {{ ratingLabel }}
   </a>
 </template>
