@@ -1,7 +1,7 @@
-import APropos from 'src/apropos/_ui/APropos.vue'
-import Episodes from 'src/movies/_ui/Episodes.vue'
-import List from 'src/movies/_ui/List.vue'
-import Stats from 'src/stats/_ui/Stats.vue'
+import APropos from 'src/APropos/ui/APropos.vue'
+import Episodes from 'src/Movies/ui/Episodes.vue'
+import List from 'src/Movies/ui/List.vue'
+import Stats from 'src/Stats/ui/Stats.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
