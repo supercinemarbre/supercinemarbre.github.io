@@ -1,20 +1,43 @@
-export interface Episode {
+import type { Movie } from "./movie.model"
+import { toSearchString } from "./search-string"
 
-  // ===================== SUPER CINE BATTLE ===================== */
+export class Episode {
+  number: number
+  date: string // ISO-string
+  title: string
+  url: string
+  mp3url: string
+  decade?: string
+  searchString: string
 
-  number: number;
-  date: string; // ISO
-  title: string;
-  url: string;
-  mp3url: string;
-  decade?: string;
+  constructor(episode: Omit<Episode, 'searchString'>) {
+    Object.assign(this, episode)
+    this.searchString = toSearchString(this.title)
+  }
 
-  // ===================== TRANSIENT (CLIENT-ONLY) ===================== */
+  matches(text: string) {
+    const searchString = toSearchString(text)
+    if (!searchString) return false
 
-  searchString?: string;
+    if (this.number?.toString() === searchString) return true
+    if (this.decade === searchString) return true
+    if (this.searchString?.includes(searchString)) return true
+    return false
+  }
+
+  matchingMovies(movies: Movie[]): Movie[] {
+      return movies.filter(m => m.episode === this.number)
+      .sort((a, b) => {
+        if (a.timestamp && b.timestamp) {
+          return a.timestamp - b.timestamp
+        }
+        return b.timestamp || -a.timestamp
+      })
+  }
 }
 
 export type EpisodeByNumber = Record<number, Episode>
+
 
 export function getMaxEpisode(episodes: EpisodeByNumber) {
   return Object.values(episodes)

@@ -1,158 +1,166 @@
-export interface MovieID {
-  /**
-   * Episode number
-   */
-  episode: number;
-  /**
-   * Movie name, taken from either SCB or Google Sheets, used for ID purposes only
-   */
-  name: string;
-}
+import type { MovieID } from "./movie-id.model"
+import { toSearchString } from "./search-string"
 
-export interface Movie {
+export class Movie {
 
   // ===================== SUPER CINE BATTLE ===================== */
 
   /**
    * Unique movie identifier
    */
-  id: MovieID;
+  id: MovieID
 
   /**
    * SCB decade
    */
-  decade: string;
+  decade: string
   /**
    * Display title (usually title, but can be corrected in case of typos)
    */
-  title: string;
+  title: string
   /**
    * SCB ranking in its decade
    */
-  ranking: number;
+  ranking: number
   /**
    * Special handwritten comment to display
    */
-  comment?: string;
+  comment?: string
 
   // ===================== IMDB ===================== */
 
   /**
    * IMDB movie ID
    */
-  tconst?: string;
+  tconst?: string
   /**
    * English title (from IMDB)
    */
-  primaryTitle?: string;
+  primaryTitle?: string
   /**
    * Release title in original language (/!\ no longer fetched from IMDB)
    */
-  originalTitle?: string;
+  originalTitle?: string
 
   // ===================== OMDB ===================== */
 
   /**
    * Release year (from OMDB)
    */
-  year?: number;
+  year?: number
   /**
    * Movie duration in minutes (from OMDB)
    */
-  runtimeMinutes?: string;
+  runtimeMinutes?: string
   /**
    * Poster image URL (from OMDB)
    */
-  posterUrl?: string;
+  posterUrl?: string
   /**
    * IMDB rating, out of 10 (from OMDB)
    */
-  imdbRating?: number;
+  imdbRating?: number
   /**
    * IMDB vote count (from OMDB)
    */
-  imdbVotes?: number;
+  imdbVotes?: number
   /**
    * Metascore, out of 100 (from OMDB)
    */
-  metascore?: number;
+  metascore?: number
   /**
    * Rotten Tomatoes rating, in percents (from OMDB)
    */
-  rottenTomatoesRating?: number;
+  rottenTomatoesRating?: number
   /**
    * USA age rating (from OMDB)
    */
-  usaRating?: string;
+  usaRating?: string
   /**
    * Director(s) (from OMDB)
    */
-  directors?: string[];
+  directors?: string[]
   /**
    * Writer(s), often suffixed by their writing role in parentheses (from OMDB)
    */
-  writers?: string[];
+  writers?: string[]
   /**
    * Main actor(s) (from OMDB)
    */
-  actors?: string[];
+  actors?: string[]
   /**
    * Production company (from OMDB)
    */
-  production?: string;
+  production?: string
   /**
    * Release date in ISO format (from OMDB)
    */
-  releaseDate?: string;
+  releaseDate?: string
   /**
    * Production countries (from OMDB)
    */
-  countries?: string[];
+  countries?: string[]
   /**
    * Original languages (from OMDB)
    */
-  languages?: string[];
+  languages?: string[]
   /**
    * Movie genres, comma-separated (from OMDB)
    */
-  genres?: string[];
+  genres?: string[]
 
   // ===================== TMDB ===================== */
 
   /**
    * Unique movie identifier. Also referenced by JustWatch.
    */
-  tmdbId?: number;
+  tmdbId?: number
 
-  tmdbVoteAverage?: number;
+  tmdbVoteAverage?: number
 
   // ===================== JUST WATCH ===================== */
 
   /**
    * Unique movie identifier.
    */
-  jwId?: number;
+  jwId?: number
 
   /**
    * True if the movie is not in JustWatch.
    */
-  jwMissing?: boolean;
+  jwMissing?: boolean
 
   /**
    * Path to the movie's Just Watch page.
    */
-  jwFullPath?: string;
+  jwFullPath?: string
 
   // ===================== GOOGLE SHEETS ===================== */
 
   /**
    * Timestamp in seconds within the episode
    */
-  timestamp?: number;
+  timestamp?: number
 
   // ===================== TRANSIENT (CLIENT-ONLY) ===================== */
 
-  searchString?: string;
+  searchString: string
 
-  episode?: number;
+  constructor(movie: Omit<Movie, 'searchString'>) {
+    Object.assign(this, movie)
+    this.searchString = toSearchString(this.primaryTitle + '|' +
+        this.title + '|' +
+        this.actors?.join('|') + '|' +
+        this.directors?.join('|') +
+        this.year + '|' +
+        'episode ' + this.id.episode)
+  }
+
+  get episode() {
+    return this.id.episode
+  }
+
+  matches(text: string) {
+    return this.searchString.includes(toSearchString(text))
+  }
 }

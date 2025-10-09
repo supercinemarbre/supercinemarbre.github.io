@@ -11,6 +11,7 @@ import { fetchMovies } from 'src/movies/_infra/movies.client'
 import { whenPresent } from '../../shared/_ui/logic/when-present'
 import type { EpisodeByNumber } from '../_model/episode.model'
 import type { Movie } from '../_model/movie.model'
+import { matchDecade, sortByRanking, sortByYear } from '../_model/movie-list'
 
 const props = defineProps({
   decade: String
@@ -28,31 +29,20 @@ const movies = computed(() => {
   const visibleMovies = allMovies.value
     .filter(movie => !spoilerFreeFromEpisode.value || movie.id.episode <= spoilerFreeFromEpisode.value)
   if (props.decade) {
-    return visibleMovies.filter(movie => movie.decade === props.decade)
-      .sort((a, b) => a.ranking - b.ranking)
+    return visibleMovies.filter(matchDecade(props.decade)).sort(sortByRanking)
   } else {
-    return visibleMovies.sort((a, b) => (b.year || 0) - (a.year || 0))
+    return visibleMovies.sort(sortByYear)
   }
 })
-const filteredMovies = computed(() => {
-  return movies.value.filter(m => m.searchString.includes(searchInput.value.toLowerCase()))
-})
+
+const filteredMovies = computed(() => movies.value.filter(
+  m => m.matches(searchInput.value)))
 
 onMounted(async () => {
   ;[allMovies.value, episodes.value] = await Promise.all([
     fetchMovies(),
     fetchEpisodes()
   ])
-  allMovies.value.forEach(movie => {
-    movie.searchString =
-      (movie.primaryTitle + '|' +
-        movie.title + '|' +
-        movie.actors?.join('|') + '|' +
-        movie.directors?.join('|') +
-        movie.year + '|' +
-        'episode ' + movie.id.episode).toLowerCase()
-    movie.episode = movie.id.episode
-  })
   state.value = 'loaded'
 
   if (router.currentRoute.value.hash && document.querySelector) {

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import router from 'src/config/router'
+import { type Episode, type EpisodeByNumber } from 'src/movies/_model/episode.model'
+import type { SpoilerFreeSettings } from 'src/movies/spoiler-free/_model/spoiler-free.model'
+import SpoilerFree from 'src/movies/spoiler-free/_ui/SpoilerFree.vue'
 import { isMobileMode } from 'src/shared/_ui/logic/responsive'
 import { watchDebounced } from 'src/shared/_ui/logic/watch-debounced'
 import { computed, ref } from 'vue'
-import type { SpoilerFreeSettings } from '../../spoiler-free/_infra/spoiler-free.store'
-import { getMaxEpisode, type Episode, type EpisodeByNumber } from 'src/movies/_model/episode.model'
-import SpoilerFree from 'src/movies/spoiler-free/_ui/SpoilerFree.vue'
 
 const props = defineProps<{
     episodes: EpisodeByNumber
@@ -16,21 +16,15 @@ const emit = defineEmits<{
     (event: 'search', value: string): void;
 }>()
 
-const searchInput = ref(router.currentRoute.value.query.search?.toString() || '')
-const episodes = computed<Episode[]>(() => {
-    return Object.values(props.episodes)
-        .map(episode => {
-            episode.searchString = toSearchString(episode.title)
-            return episode
-        })
-})
-
-function toSearchString(value: string) {
-    return value ? value.replace(/[^a-zA-Z]/g, '').toLowerCase() : '' // fixme ternary
+export type Searchable<T> = T & {
+    searchString?: string;
 }
 
+const searchInput = ref(router.currentRoute.value.query.search?.toString() || '')
+const episodes = computed<Episode[]>(() => Object.values(props.episodes))
+
 function onSpoilerFreeSettingsChange(settings: SpoilerFreeSettings) {
-    emit('hideMoviesAboveEpisode', settings.enabled ? settings.lastWatched : getMaxEpisode(props.episodes))
+    emit('hideMoviesAboveEpisode', settings.lastWatched)
 }
 
 emit('search', searchInput.value)

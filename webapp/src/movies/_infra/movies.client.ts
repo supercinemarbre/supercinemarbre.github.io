@@ -1,9 +1,10 @@
 import { fetchJSON } from 'src/shared/_infra/fetch-json'
-import type { Movie } from '../_model/movie.model'
+import { Movie } from '../_model/movie.model'
 
 export type TimestampMap = Record<ScbTitle, number>
 export type ScbTitle = 'string'
 
-export function fetchMovies(): Promise<Movie[]> {
-  return fetchJSON('scb_movies.json')
+export async function fetchMovies(): Promise<Movie[]> {
+  const raw = await fetchJSON<Movie[]>('scb_movies.json')
+  return raw.map(movie => new Movie(movie))
 }

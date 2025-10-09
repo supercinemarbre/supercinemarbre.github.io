@@ -37,10 +37,6 @@ onMounted(async () => {
       fetchEpisodes()
     ])
     allMovies.value = results[0]
-      .map(movie => {
-        movie.episode = movie.id.episode
-        return movie
-      })
     episodeByNumber.value = results[1]
   } catch (error) {
     console.error('Error loading episodes:', error)
@@ -53,24 +49,8 @@ function toSearchString(value: string) {
   return value ? value.replace(/[^a-zA-Z]/g, '').toLowerCase() : '' // fixme ternary
 }
 
-function customFilter(_episodeIndex: Episode, search: string | null, data: { raw: Episode }): boolean {
-  const searchString = toSearchString(search)
-  const episode = data.raw
-  return Boolean(!search
-    || episode.number?.toString() === search
-    || episode.decade === search
-    || (searchString && episode.searchString?.includes(searchString)))
-}
-
-function episodeMovies(episodeNumber: number) {
-  return allMovies.value
-    .filter(m => m.episode === episodeNumber)
-    .sort((a, b) => {
-      if (a.timestamp && b.timestamp) {
-        return a.timestamp - b.timestamp
-      }
-      return b.timestamp || -a.timestamp
-    })
+function episodeFilter(_index: number, search: string | null, data: { raw: Episode }): boolean {
+  return data.raw.matches(search || '')
 }
 </script>
 
@@ -81,9 +61,9 @@ function episodeMovies(episodeNumber: number) {
   </MovieFilters>
 
   <v-data-table :loading="state === 'loading'" :search="searchInput" :headers="headers" :items="episodes"
-    :items-per-page="5" :mobile-breakpoint="0" :custom-filter="customFilter" hide-default-footer
+    :items-per-page="5" :mobile-breakpoint="0" :custom-filter="episodeFilter" hide-default-footer
     :sort-by="[{ key: 'episode', order: 'desc' }]">
-    <template v-slot:item="{ item }">
+    <template v-slot:item="{ item }: { item: Episode }">
       <tr>
         <td class="number">{{ item.number }}</td>
         <td class="date hidden-xs">{{ formatDate(item.date) }}</td>
@@ -101,15 +81,15 @@ function episodeMovies(episodeNumber: number) {
           <a :href="item.mp3url"><v-icon>mdi-download</v-icon></a>
         </td>
       </tr>
-      <tr v-if="hideMoviesAboveEpisode >= item.number" class="movies-row">
+      <tr v-if="hideMoviesAboveEpisode && hideMoviesAboveEpisode >= item.number" class="movies-row">
         <td></td>
         <td colspan="5">
           <v-lazy>
             <div class="movies">
-              <div v-for="movie in episodeMovies(item.number)" :key="movie.tconst" class="movie">
+              <div v-for="movie in item.matchingMovies(allMovies)" :key="movie.tconst" class="movie">
                 <MoviePoster :movie="movie" :episode="item"></MoviePoster>
               </div>
-              <div v-if="episodeMovies(item.number).length === 0">
+              <div v-if="item.matchingMovies(allMovies).length === 0">
                 <br />
                 <span v-if="item.title.includes('Super') && item.title.includes('Battle')">
                   Les listes spéciales ne sont pas encore supportées sur Super Ciné Marbre.
