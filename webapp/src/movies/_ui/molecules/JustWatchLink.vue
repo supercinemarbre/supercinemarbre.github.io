@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Movie } from 'src/types';
+import type { Movie } from 'src/movies/_model/movie.model'
 
 defineProps<{
   movie?: Movie;
-}>();
+}>()
 </script>
 
 <template>

@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import { formatDate } from 'src/shared/_ui/logic/format-date';
-import { computed, onMounted, ref } from 'vue';
-import type { Episode, Movie } from '../../types';
-import { fetchEpisodes, type EpisodeMap } from 'src/movies/_infra/episodes.client';
-import { fetchMovies } from '../movies.api';
-import MovieFilters from 'src/movies/_ui/organisms/MovieFilters.vue';
-import MoviePoster from 'src/movies/_ui/molecules/MoviePoster.vue';
+import { fetchEpisodes } from 'src/movies/_infra/episodes.client'
+import MoviePoster from 'src/movies/_ui/molecules/MoviePoster.vue'
+import MovieFilters from 'src/movies/_ui/organisms/MovieFilters.vue'
+import { formatDate } from 'src/shared/_ui/logic/format-date'
+import { computed, onMounted, ref } from 'vue'
+import type { Episode, EpisodeByNumber } from '../_model/episode.model'
+import type { Movie } from '../_model/movie.model'
+import { fetchMovies } from '../movies.api'
 
-const state = ref<'loading' | 'loaded'>('loading');
-const searchInput = ref('');
-const episodeMap = ref<EpisodeMap>({});
+const state = ref<'loading' | 'loaded'>('loading')
+const searchInput = ref('')
+const episodeByNumber = ref<EpisodeByNumber>({})
 const episodes = computed<Episode[]>(() => {
-  return Object.values(episodeMap.value)
+  return Object.values(episodeByNumber.value)
     .map(episode => {
-      episode.searchString = toSearchString(episode.title);
-      return episode;
-    });
-});
+      episode.searchString = toSearchString(episode.title)
+      return episode
+    })
+})
 const headers = [
   { title: 'Ep.', value: 'number', key: 'episode' },
   { title: 'Date', headerProps: { class: 'date' }, sortable: false },
@@ -24,10 +25,10 @@ const headers = [
   { title: 'Décennie', headerProps: { class: 'decade' }, sortable: false },
   { title: 'Article', sortable: false },
   { title: 'MP3', sortable: false }
-];
+]
 
-const hideMoviesAboveEpisode = ref(false as false | number);
-const allMovies = ref<Movie[]>([]);
+const hideMoviesAboveEpisode = ref(false as false | number)
+const allMovies = ref<Movie[]>([])
 
 onMounted(async () => {
   try {
@@ -37,28 +38,28 @@ onMounted(async () => {
     ])
     allMovies.value = results[0]
       .map(movie => {
-        movie.episode = movie.id.episode;
-        return movie;
-      });
-    episodeMap.value = results[1];
+        movie.episode = movie.id.episode
+        return movie
+      })
+    episodeByNumber.value = results[1]
   } catch (error) {
-    console.error('Error loading episodes:', error);
+    console.error('Error loading episodes:', error)
   } finally {
-    state.value = 'loaded';
+    state.value = 'loaded'
   }
-});
+})
 
 function toSearchString(value: string) {
-  return value ? value.replace(/[^a-zA-Z]/g, '').toLowerCase() : ''; // fixme ternary
+  return value ? value.replace(/[^a-zA-Z]/g, '').toLowerCase() : '' // fixme ternary
 }
 
 function customFilter(_episodeIndex: Episode, search: string | null, data: { raw: Episode }): boolean {
-  const searchString = toSearchString(search);
-  const episode = data.raw;
+  const searchString = toSearchString(search)
+  const episode = data.raw
   return Boolean(!search
     || episode.number?.toString() === search
     || episode.decade === search
-    || (searchString && episode.searchString?.includes(searchString)));
+    || (searchString && episode.searchString?.includes(searchString)))
 }
 
 function episodeMovies(episodeNumber: number) {
@@ -66,17 +67,17 @@ function episodeMovies(episodeNumber: number) {
     .filter(m => m.episode === episodeNumber)
     .sort((a, b) => {
       if (a.timestamp && b.timestamp) {
-        return a.timestamp - b.timestamp;
+        return a.timestamp - b.timestamp
       }
-      return b.timestamp || -a.timestamp;
-    });
+      return b.timestamp || -a.timestamp
+    })
 }
 </script>
 
 <template>
   <h1>Liste des épisodes</h1>
 
-  <MovieFilters :episode-map="episodeMap" @search="searchInput = $event" @hide-movies-above-episode="hideMoviesAboveEpisode = $event">
+  <MovieFilters :episodes="episodeByNumber" @search="searchInput = $event" @hide-movies-above-episode="hideMoviesAboveEpisode = $event">
   </MovieFilters>
 
   <v-data-table :loading="state === 'loading'" :search="searchInput" :headers="headers" :items="episodes"

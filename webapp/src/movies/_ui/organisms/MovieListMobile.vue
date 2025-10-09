@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import type { Movie, VuetifySortItem } from 'src/types.d';
-import { rowPropsHighlightingCurrentMovie } from '../logic/highlight-current-movie';
-import { shortDecade } from '../logic/short-decade';
-import type { EpisodeMap } from 'src/movies/_infra/episodes.client';
-import TimestampLink from '../molecules/TimestampLink.vue';
-import Ordinal from 'src/shared/_ui/molecules/Ordinal.vue';
-import RatingIMDB from '../molecules/ratings/RatingIMDB.vue';
-import RatingRT from '../molecules/ratings/RatingRT.vue';
-import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue';
-import JustWatchLink from '../molecules/JustWatchLink.vue';
+import type { VuetifySortItem } from 'src/types.d'
+import { rowPropsHighlightingCurrentMovie } from '../logic/highlight-current-movie'
+import { shortDecade } from '../logic/short-decade'
+import TimestampLink from '../molecules/TimestampLink.vue'
+import Ordinal from 'src/shared/_ui/molecules/Ordinal.vue'
+import RatingIMDB from '../molecules/ratings/RatingIMDB.vue'
+import RatingRT from '../molecules/ratings/RatingRT.vue'
+import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue'
+import JustWatchLink from '../molecules/JustWatchLink.vue'
+import type { EpisodeByNumber } from 'src/movies/_model/episode.model'
+import type { Movie } from 'src/movies/_model/movie.model'
 
 defineProps<{
   currentDecade?: string,
   state?: 'loading' | 'loaded',
   movies: Movie[],
-  episodes: EpisodeMap,
+  episodes: EpisodeByNumber,
   search: string,
   sortBy: VuetifySortItem[],
   itemsPerPage: number,
-}>();
+}>()
 
 </script>
 

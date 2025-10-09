@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { fetchMovies } from 'src/movies/movies.api';
-import Ordinal from 'src/shared/_ui/molecules/Ordinal.vue';
-import type { Movie } from 'src/types.d';
-import { ref, computed } from 'vue';
+import type { Movie } from 'src/movies/_model/movie.model'
+import { fetchMovies } from 'src/movies/movies.api'
+import Ordinal from 'src/shared/_ui/molecules/Ordinal.vue'
+import { ref, computed } from 'vue'
 
 function byRanking(a: Movie, b: Movie) {
-  return a.ranking - b.ranking;
+  return a.ranking - b.ranking
 }
 
-const minimumMovies = 3;
-const allMovies = ref<Movie[]>([]);
-const state = ref<'loading' | 'loaded'>('loading');
+const minimumMovies = 3
+const allMovies = ref<Movie[]>([])
+const state = ref<'loading' | 'loaded'>('loading')
 
-allMovies.value = await fetchMovies();
-state.value = 'loaded';
+allMovies.value = await fetchMovies()
+state.value = 'loaded'
   
 const headers = computed(() => {
   return [
@@ -21,27 +21,27 @@ const headers = computed(() => {
     { text: "Réalisateur", value: "director" },
     { text: "Nb. classés", value: "movieCount" },
     { text: "Classé", value: "movies" },
-  ];
-});
+  ]
+})
 
 const items = computed(() => {
-  const moviesByDirector = groupMoviesByDirector(); 
-  let previousCount = -1, previousRanking = 1;
+  const moviesByDirector = groupMoviesByDirector() 
+  let previousCount = -1, previousRanking = 1
   return Object.entries(moviesByDirector)
     .map((entry) => ({ director: entry[0], movies: entry[1] }))
     .filter(entry => entry.movies.length >= minimumMovies)
     .sort((entry1, entry2) => {
-      const movieCountDiff = entry2.movies.length - entry1.movies.length;
-      const tieBreaker = entry1.movies[0].ranking - entry2.movies[0].ranking; // best ranking
-      return movieCountDiff + tieBreaker * 0.0001;
+      const movieCountDiff = entry2.movies.length - entry1.movies.length
+      const tieBreaker = entry1.movies[0].ranking - entry2.movies[0].ranking // best ranking
+      return movieCountDiff + tieBreaker * 0.0001
     })
     .map(({ director, movies }, index) => {
-      let ranking;
+      let ranking
       if (movies.length == previousCount) {
-        ranking = previousRanking;
+        ranking = previousRanking
       } else {
-        ranking = index + 1;
-        previousCount = movies.length;
+        ranking = index + 1
+        previousCount = movies.length
         previousRanking = ranking
       }
       return {
@@ -50,20 +50,20 @@ const items = computed(() => {
         movieCount: movies.length,
         ranking
       }
-    });
-});
+    })
+})
 
 function groupMoviesByDirector() {
-  const result: Record<string, Movie[]> = {};
+  const result: Record<string, Movie[]> = {}
   allMovies.value.forEach(movie => {
     movie.directors?.forEach(director => {
       if (!result[director]) {
-        result[director] = [];
+        result[director] = []
       }
       result[director].push(movie)
     })
   })
-  return result;
+  return result
 }
 </script>
 

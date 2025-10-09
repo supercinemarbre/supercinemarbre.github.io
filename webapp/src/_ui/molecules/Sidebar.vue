@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SidebarLink from './molecules/SidebarLink.vue';
+import SidebarLink from './SidebarLink.vue'
 </script>
 
 <template>

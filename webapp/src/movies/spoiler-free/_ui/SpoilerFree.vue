@@ -1,67 +1,66 @@
 <script setup lang="ts">
-import { debounce } from 'lodash-es';
-import { onMounted, ref, watch } from 'vue';
-import type { SpoilerFreeSettings } from './spoiler-free.store';
-import { loadSettingsFromStorage, saveSettingsToStorage, isValidSettings } from './spoiler-free.store';
-import { getMaxEpisode } from 'src/movies/_model/episode.model';
-import type { EpisodeMap } from 'src/movies/_infra/episodes.client';
+import { debounce } from 'lodash-es'
+import { getMaxEpisode, type EpisodeByNumber } from 'src/movies/_model/episode.model'
+import { onMounted, ref, watch } from 'vue'
+import type { SpoilerFreeSettings } from '../_infra/spoiler-free.store'
+import { isValidSettings, loadSettingsFromStorage, saveSettingsToStorage } from '../_infra/spoiler-free.store'
 
 const props = defineProps<{
-  episodes: EpisodeMap;
-}>();
+  episodes: EpisodeByNumber;
+}>()
 
 const emit = defineEmits<{
   (event: 'onChange', settings: SpoilerFreeSettings): void;
-}>();
+}>()
 
-const maxEpisode = getMaxEpisode(props.episodes);
+const maxEpisode = getMaxEpisode(props.episodes)
 const settings = ref<SpoilerFreeSettings>({
   enabled: true,
   lastWatched: maxEpisode,
-});
+})
 
 const debouncedNotifySettingsChange = debounce(() => {
-  saveSettingsToStorage(settings.value);
-  emit('onChange', settings.value);
-}, 300);
+  saveSettingsToStorage(settings.value)
+  emit('onChange', settings.value)
+}, 300)
 
 watch(
   () => props.episodes,
   () => {
     if (!isValidSettings(settings.value)) {
-      settings.value = loadSettingsFromStorage(props.episodes, settings.value);
+      settings.value = loadSettingsFromStorage(props.episodes, settings.value)
     }
   },
   { immediate: true }
-);
+)
 
 watch(() => settings.value,
   () => {
-    debouncedNotifySettingsChange();
+    debouncedNotifySettingsChange()
   },
   { deep: true }
-);
+)
 
 defineExpose({
   isEnabled,
   getLastWatchedEpisode,
-});
+})
 
 function isEnabled() {
-  return settings.value.enabled;
+  return settings.value.enabled
 }
 
 function getLastWatchedEpisode() {
   if (settings.value.enabled) {
-    return settings.value.lastWatched;
+    return settings.value.lastWatched
   } else {
-    return maxEpisode;
+    return maxEpisode
   }
 }
 
 onMounted(() => {
-  settings.value = loadSettingsFromStorage(props.episodes, settings.value);
-});
+  settings.value = loadSettingsFromStorage(props.episodes, settings.value)
+})
 </script>
 
 <template>

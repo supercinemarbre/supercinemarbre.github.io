@@ -1,4 +1,4 @@
-import APropos from 'src/apropos/APropos.vue'
+import APropos from 'src/apropos/_ui/APropos.vue'
 import Episodes from 'src/movies/_ui/Episodes.vue'
 import List from 'src/movies/_ui/List.vue'
 import Stats from 'src/stats/_ui/Stats.vue'

@@ -1,5 +1,5 @@
+import App from 'src/_ui/App.vue'
 import { createApp } from 'vue'
-import App from './App.vue'
 import router from './config/router'
 import { vuetify } from './config/vuetify'
 

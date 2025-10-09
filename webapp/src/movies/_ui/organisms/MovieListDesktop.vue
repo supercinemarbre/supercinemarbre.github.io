@@ -1,25 +1,26 @@
 <script setup lang="ts">
-import type { EpisodeMap } from 'src/movies/_infra/episodes.client';
-import type { Movie, VuetifySortItem } from '../../../types';
-import JustWatchLink from '../molecules/JustWatchLink.vue';
-import Ordinal from 'src/shared/_ui/molecules/Ordinal.vue';
-import PopularityIMDB from '../molecules/ratings/PopularityIMDB.vue';
-import RatingIMDB from '../molecules/ratings/RatingIMDB.vue';
-import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue';
-import RatingRT from '../molecules/ratings/RatingRT.vue';
-import TimestampLink from '../molecules/TimestampLink.vue';
-import { rowPropsHighlightingCurrentMovie } from '../logic/highlight-current-movie';
-import Genres from '../molecules/Genres.vue';
+import type { EpisodeByNumber } from 'src/movies/_model/episode.model'
+import type { Movie } from 'src/movies/_model/movie.model'
+import Ordinal from 'src/shared/_ui/molecules/Ordinal.vue'
+import type { VuetifySortItem } from '../../../types'
+import { rowPropsHighlightingCurrentMovie } from '../logic/highlight-current-movie'
+import Genres from '../molecules/Genres.vue'
+import JustWatchLink from '../molecules/JustWatchLink.vue'
+import PopularityIMDB from '../molecules/ratings/PopularityIMDB.vue'
+import RatingIMDB from '../molecules/ratings/RatingIMDB.vue'
+import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue'
+import RatingRT from '../molecules/ratings/RatingRT.vue'
+import TimestampLink from '../molecules/TimestampLink.vue'
 
 defineProps<{
   currentDecade?: string,
   state?: 'loading' | 'loaded',
   movies: Movie[],
-  episodes: EpisodeMap,
+  episodes: EpisodeByNumber,
   search: string,
   sortBy: VuetifySortItem[],
   itemsPerPage: number,
-}>();
+}>()
 
 const headers = [
   { title: "Classement", key: "ranking", align: "center", filterable: false },
@@ -29,7 +30,7 @@ const headers = [
   { title: "Notes & liens", key: "imdbRating", sort: (a, b) => (b || 0) - (a || 0), filterable: false, class: "column-imdb-ranking" },
   { title: "Popularité IMDB", key: "imdbVotes", sort: (a, b) => (b || 0) - (a || 0), filterable: false },
   { title: "Episode", key: "episode", align: "center", filterable: false }
-];
+]
 </script>
 
 <template>

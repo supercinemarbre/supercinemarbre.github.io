@@ -1,25 +1,26 @@
 <script setup lang="ts">
-import TimestampLink from './TimestampLink.vue';
-import type { Episode, Movie } from 'src/types.d';
+import type { Episode } from 'src/movies/_model/episode.model'
+import TimestampLink from './TimestampLink.vue'
+import type { Movie } from 'src/movies/_model/movie.model'
 
 defineProps<{
   episode: Episode;
   movie: Movie;
   hideTimestamp?: string;
-}>();
+}>()
 
 function ellipsis(text: string, max: number): string {
   if (text.length > max) {
-    let result = '';
+    let result = ''
     for (const word of text.split(' ')) {
       if (result.length + word.length < max - 5) {
-        result += ' ' + word;
+        result += ' ' + word
       } else {
-        return result + '[...]';
+        return result + '[...]'
       }
     }
   }
-  return text;
+  return text
 }
 </script>
 

@@ -7,7 +7,7 @@ const { votes = 0 } = defineProps<{
 
 const percentage = computed(() => {
   return Math.pow(votes, 0.2) * 10 - 35
-});
+})
 
 
 const votesLabel = computed(() => {

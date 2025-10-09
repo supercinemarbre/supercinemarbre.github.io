@@ -1,1 +1,1 @@
-export { fetchMovies } from "./_infra/movies.client";
+export { fetchMovies } from "./_infra/movies.client"

@@ -1,42 +1,40 @@
 <script setup lang="ts">
-import router from 'src/config/router';
-import { isMobileMode } from 'src/shared/_ui/logic/responsive';
-import { watchDebounced } from 'src/shared/_ui/logic/watch-debounced';
-import type { Episode } from 'src/types.d';
-import { computed, ref } from 'vue';
-import type { SpoilerFreeSettings } from '../../spoiler-free/spoiler-free.store';
-import type { EpisodeMap } from 'src/movies/_infra/episodes.client';
-import SpoilerFree from '../../spoiler-free/SpoilerFree.vue';
-import { getMaxEpisode } from 'src/movies/_model/episode.model';
+import router from 'src/config/router'
+import { isMobileMode } from 'src/shared/_ui/logic/responsive'
+import { watchDebounced } from 'src/shared/_ui/logic/watch-debounced'
+import { computed, ref } from 'vue'
+import type { SpoilerFreeSettings } from '../../spoiler-free/_infra/spoiler-free.store'
+import { getMaxEpisode, type Episode, type EpisodeByNumber } from 'src/movies/_model/episode.model'
+import SpoilerFree from 'src/movies/spoiler-free/_ui/SpoilerFree.vue'
 
 const props = defineProps<{
-    episodeMap: EpisodeMap
-}>();
+    episodes: EpisodeByNumber
+}>()
 
 const emit = defineEmits<{
     (event: 'hideMoviesAboveEpisode', value: false | number): void;
     (event: 'search', value: string): void;
-}>();
+}>()
 
 const searchInput = ref(router.currentRoute.value.query.search?.toString() || '')
 const episodes = computed<Episode[]>(() => {
-    return Object.values(props.episodeMap)
+    return Object.values(props.episodes)
         .map(episode => {
-            episode.searchString = toSearchString(episode.title);
-            return episode;
-        });
-});
+            episode.searchString = toSearchString(episode.title)
+            return episode
+        })
+})
 
 function toSearchString(value: string) {
-    return value ? value.replace(/[^a-zA-Z]/g, '').toLowerCase() : ''; // fixme ternary
+    return value ? value.replace(/[^a-zA-Z]/g, '').toLowerCase() : '' // fixme ternary
 }
 
 function onSpoilerFreeSettingsChange(settings: SpoilerFreeSettings) {
-    emit('hideMoviesAboveEpisode', settings.enabled ? settings.lastWatched : getMaxEpisode(props.episodeMap));
+    emit('hideMoviesAboveEpisode', settings.enabled ? settings.lastWatched : getMaxEpisode(props.episodes))
 }
 
-emit('search', searchInput.value);
-watchDebounced(searchInput, value => emit('search', value), 300);
+emit('search', searchInput.value)
+watchDebounced(searchInput, value => emit('search', value), 300)
 </script>
 
 <template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Footer from 'src/_ui/Footer.vue'
-import Sidebar from 'src/_ui/Sidebar.vue'
+import Footer from 'src/_ui/molecules/Footer.vue'
+import Header from 'src/_ui/molecules/Header.vue'
+import Sidebar from 'src/_ui/molecules/Sidebar.vue'
 import { ref } from 'vue'
 import { RouterView } from 'vue-router'
-import Header from './_ui/Header.vue'
 
 const showDrawer = ref(true)
 </script>

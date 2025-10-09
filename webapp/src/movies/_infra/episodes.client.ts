@@ -1,11 +1,9 @@
 import { fetchJSON } from 'src/shared/_infra/fetch-json'
-import type { Episode } from 'src/types.d'
+import type { Episode, EpisodeByNumber } from '../_model/episode.model'
 
-export type EpisodeMap = Record<number, Episode>
-
-export async function fetchEpisodes(): Promise<EpisodeMap> {
+export async function fetchEpisodes(): Promise<EpisodeByNumber> {
   const episodeList = await fetchJSON<Episode[]>('scb_episodes.json')
-  const episodeMap: EpisodeMap = {};
-  episodeList.forEach((e) => (episodeMap[e.number] = e))
-  return episodeMap
+  const episodeByNumber: EpisodeByNumber = {}
+  episodeList.forEach((e) => (episodeByNumber[e.number] = e))
+  return episodeByNumber
 }

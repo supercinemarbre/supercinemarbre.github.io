@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const { rating } = defineProps<{
   rating?: number;
-}>();
+}>()
 
-const isValid = computed(() => typeof rating === 'number');
+const isValid = computed(() => typeof rating === 'number')
 
 const ratingLabel = computed(() => {
-  return isValid.value ? `${rating}%` : '';
-});
+  return isValid.value ? `${rating}%` : ''
+})
 
 const tomatometer = computed(() => {
-  return rating && rating >= 60 ? 'fresh' : 'rotten';
-});
+  return rating && rating >= 60 ? 'fresh' : 'rotten'
+})
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const cache: Record<string, unknown> = {};
+const cache: Record<string, unknown> = {}
 
 export async function fetchJSON<T>(filename: string): Promise<T> {
   if (!cache[filename]) {

@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { Movie } from 'src/types.d';
+import type { Movie } from 'src/movies/_model/movie.model'
+import { computed } from 'vue'
 
 const { movie }: { movie: Movie} = defineProps<{
   movie?: Movie;
-}>();
+}>()
 
-const isValid = computed(() => typeof movie?.imdbRating === 'number');
+const isValid = computed(() => typeof movie?.imdbRating === 'number')
 
 const ratingLabel = computed(() => {
-  const rating = movie?.imdbRating;
+  const rating = movie?.imdbRating
   if (rating) {
-    return rating.toFixed(1);
+    return rating.toFixed(1)
   }
-  return '';
-});
+  return ''
+})
 </script>
 
 <template>

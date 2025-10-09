@@ -1,21 +1,21 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const { rating } = defineProps<{
   rating?: number;
-}>();
+}>()
 
-const isValid = computed(() => typeof rating === 'number');
+const isValid = computed(() => typeof rating === 'number')
 
 const color = computed(() => {
   if (rating && rating > 60) {
-    return 'green';
+    return 'green'
   } else if (rating && rating > 40) {
-    return 'orange';
+    return 'orange'
   } else {
-    return 'red';
+    return 'red'
   }
-});
+})
 </script>
 
 <template>

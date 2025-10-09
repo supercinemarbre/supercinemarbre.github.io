@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { fetchMovies } from 'src/movies/movies.api'
-import type { Movie } from 'src/types.d'
 import { onMounted, ref } from 'vue'
 import MostPresentActors from './organisms/MostPresentActors.vue'
 import MostPresentDirectors from './organisms/MostPresentDirectors.vue'
 import MoviesPerEpisodeStats from './organisms/MoviesPerEpisodeStats.vue'
+import type { Movie } from 'src/movies/_model/movie.model'
 
 const movies = ref<Movie[]>([])
 

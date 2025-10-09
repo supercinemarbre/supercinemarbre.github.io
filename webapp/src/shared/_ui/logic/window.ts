@@ -1,6 +1,6 @@
 import { computed, reactive, readonly } from 'vue'
 
-const window = globalThis.window;
+const window = globalThis.window
 
 const reactiveWindow = reactive({
   width: window.innerWidth,

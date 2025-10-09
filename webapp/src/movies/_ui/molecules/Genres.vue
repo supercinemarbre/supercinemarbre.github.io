@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const GENRE_TRANSLATIONS = {
   Action: 'Action',
@@ -23,15 +23,15 @@ const GENRE_TRANSLATIONS = {
   Thriller: 'Thriller',
   War: 'Guerre',
   Western: 'Western'
-};
+}
 
-const { genres } = defineProps<{ genres?: string[] }>();
+const { genres } = defineProps<{ genres?: string[] }>()
 
 const translatedGenres = computed(() => {
   return (genres || [])
     .map(genre => GENRE_TRANSLATIONS[genre] || genre)
-    .join(', ');
-});
+    .join(', ')
+})
 </script>
 
 <template>
