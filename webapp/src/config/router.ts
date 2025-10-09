@@ -18,7 +18,14 @@ const router = createRouter({
     { path: '/2000', name: 'Années 2000', component: List, props: { decade: '2000' } },
     { path: '/2010', name: 'Années 2010', component: List, props: { decade: '2010' } },
     { path: '/about', name: 'A propos', component: APropos }
-  ]
+  ],
+  scrollBehavior(to) {
+    if (to.hash) {
+      return { el: to.hash } as any // support anchor links
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 export default router

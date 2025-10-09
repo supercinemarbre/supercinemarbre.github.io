@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import type { Movie } from 'src/Movies/model/movie.model'
 import { fetchMovies } from 'src/Movies/movies.api'
 import Ordinal from 'src/shared/ui/molecules/Ordinal.vue'
-import { ref, computed } from 'vue'
+import { computeActorStats, type ActorStats } from 'src/Stats/model/actor-stats'
+import { computed, onMounted, ref } from 'vue'
 
-function byRanking(a: Movie, b: Movie) {
-  return a.ranking - b.ranking
-}
-
-const minimumMovies = 5
-const allMovies = ref<Movie[]>([])
 const state = ref<'loading' | 'loaded'>('loading')
+const stats = ref<ActorStats>({ actors: [], minimumMovies: 0 })
 
-allMovies.value = await fetchMovies()
-state.value = 'loaded'
+onMounted(async () => {
+  stats.value = computeActorStats(await fetchMovies())
+  state.value = 'loaded'
+})
   
 const headers = computed(() => {
   return [
@@ -23,61 +20,19 @@ const headers = computed(() => {
     { text: "Classé", value: "movies" },
   ]
 })
-
-const items = computed(() => {
-  const moviesByActor = groupMoviesByActor() 
-  let previousCount = -1, previousRanking = 1
-  return Object.entries(moviesByActor)
-    .map((entry) => ({ actor: entry[0], movies: entry[1] }))
-    .filter(entry => entry.movies.length >= minimumMovies)
-    .sort((entry1, entry2) => {
-      const movieCountDiff = entry2.movies.length - entry1.movies.length
-      const tieBreaker = entry1.movies[0].ranking - entry2.movies[0].ranking // best ranking
-      return movieCountDiff + tieBreaker * 0.0001
-    })
-    .map(({ actor, movies }, index) => {
-      let ranking
-      if (movies.length == previousCount) {
-        ranking = previousRanking
-      } else {
-        ranking = index + 1
-        previousCount = movies.length
-        previousRanking = ranking
-      }
-      return {
-        actor,
-        movies: movies.sort(byRanking),
-        movieCount: movies.length,
-        ranking
-      }
-    })
-})
-
-function groupMoviesByActor() {
-  const result: Record<string, Movie[]> = {}
-  allMovies.value.forEach(movie => {
-    movie.actors?.forEach(actor => {
-      if (!result[actor]) {
-        result[actor] = []
-      }
-      result[actor].push(movie)
-    })
-  })
-  return result
-}
 </script>
 
 <template>
   <div>
     <p>
-      Cette liste rassemble les acteurs dont au moins <b>{{ minimumMovies }}</b> films ont été classés, toutes décennies confondues.<br />
+      Cette liste rassemble les acteurs dont au moins <b>{{ stats.minimumMovies }}</b> films ont été classés, toutes décennies confondues.<br />
       Ne sont considérés que les films où l'acteur est parmi les têtes d'affiches.<br />
       Ses films sont triés du meilleur au moins bien classé (à prendre avec des pincettes hein, on compare des pommes à des oranges !).
     </p>
 
     <!-- eslint-disable vue/valid-v-slot -->
     <v-data-table
-      :items="items"
+      :items="stats.actors"
       :headers="headers"
       disable-pagination
       hide-default-footer>

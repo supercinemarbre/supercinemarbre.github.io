@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import type { Movie } from 'src/Movies/model/movie.model'
 import { fetchMovies } from 'src/Movies/movies.api'
 import Ordinal from 'src/shared/ui/molecules/Ordinal.vue'
-import { ref, computed } from 'vue'
+import { computeDirectorStats, type DirectorStats } from 'src/Stats/model/director-stats'
+import { computed, onMounted, ref } from 'vue'
 
-function byRanking(a: Movie, b: Movie) {
-  return a.ranking - b.ranking
-}
-
-const minimumMovies = 3
-const allMovies = ref<Movie[]>([])
 const state = ref<'loading' | 'loaded'>('loading')
+const stats = ref<DirectorStats>({ directors: [], minimumMovies: 0 })
 
-allMovies.value = await fetchMovies()
-state.value = 'loaded'
-  
+onMounted(async () => {
+  stats.value = computeDirectorStats(await fetchMovies())
+  state.value = 'loaded'
+})
+
 const headers = computed(() => {
   return [
     { text: "Classement", value: "ranking", align: "center" },
@@ -23,63 +20,19 @@ const headers = computed(() => {
     { text: "Classé", value: "movies" },
   ]
 })
-
-const items = computed(() => {
-  const moviesByDirector = groupMoviesByDirector() 
-  let previousCount = -1, previousRanking = 1
-  return Object.entries(moviesByDirector)
-    .map((entry) => ({ director: entry[0], movies: entry[1] }))
-    .filter(entry => entry.movies.length >= minimumMovies)
-    .sort((entry1, entry2) => {
-      const movieCountDiff = entry2.movies.length - entry1.movies.length
-      const tieBreaker = entry1.movies[0].ranking - entry2.movies[0].ranking // best ranking
-      return movieCountDiff + tieBreaker * 0.0001
-    })
-    .map(({ director, movies }, index) => {
-      let ranking
-      if (movies.length == previousCount) {
-        ranking = previousRanking
-      } else {
-        ranking = index + 1
-        previousCount = movies.length
-        previousRanking = ranking
-      }
-      return {
-        director,
-        movies: movies.sort(byRanking),
-        movieCount: movies.length,
-        ranking
-      }
-    })
-})
-
-function groupMoviesByDirector() {
-  const result: Record<string, Movie[]> = {}
-  allMovies.value.forEach(movie => {
-    movie.directors?.forEach(director => {
-      if (!result[director]) {
-        result[director] = []
-      }
-      result[director].push(movie)
-    })
-  })
-  return result
-}
 </script>
 
 <template>
   <div>
     <p>
-      Cette liste rassemble les réalisateurs dont au moins <b>{{ minimumMovies }}</b> films ont été classés, toutes décennies confondues.<br />
-      Ses films sont triés du meilleur au moins bien classé (à prendre avec des pincettes hein, on compare des pommes à des oranges !).
+      Cette liste rassemble les réalisateurs dont au moins <b>{{ stats.minimumMovies }}</b> films ont été classés,
+      toutes décennies confondues.<br />
+      Ses films sont triés du meilleur au moins bien classé (à prendre avec des pincettes hein, on compare des pommes à
+      des oranges !).
     </p>
 
     <!-- eslint-disable vue/valid-v-slot -->
-    <v-data-table
-      :items="items"
-      :headers="headers"
-      disable-pagination
-      hide-default-footer>
+    <v-data-table :items="stats.directors" :headers="headers" disable-pagination hide-default-footer>
       <template v-slot:item.ranking="{ item }">
         <span class="ranking">{{ item.ranking }}</span>
       </template>
@@ -94,7 +47,9 @@ function groupMoviesByDirector() {
           <div class="movie" v-for="movie in item.movies" :key="'director' + item.director + movie.tconst">
             <router-link :to="'/' + movie.decade + '#' + movie.tconst">
               {{ movie.title }}
-              <span class="movie-ranking">({{ movie.ranking }}<Ordinal :value="movie.ranking" /> des années {{ movie.decade }})</span>
+              <span class="movie-ranking">({{ movie.ranking }}
+                <Ordinal :value="movie.ranking" /> des années {{ movie.decade }})
+              </span>
             </router-link>
           </div>
         </div>
@@ -112,6 +67,7 @@ p {
   font-size: 200%;
   font-weight: bold;
 }
+
 @media (max-width: 600px) {
   .ranking {
     font-size: 150%;
@@ -121,6 +77,7 @@ p {
 .director {
   font-size: 150%;
 }
+
 @media (max-width: 600px) {
   .director {
     font-size: 120%;
@@ -130,6 +87,7 @@ p {
 .movie-count {
   font-size: 150%;
 }
+
 @media (max-width: 600px) {
   .movie-count {
     font-size: 120%;
@@ -142,10 +100,12 @@ p {
   padding: 5px 0;
   overflow: hidden;
 }
+
 @media (max-width: 800px) {
   .movie {
     display: none;
   }
+
   .movie:first-child {
     display: block;
   }
@@ -158,17 +118,20 @@ p {
   font-size: 85%;
   padding: 1px 5px;
 }
+
 .movie-ranking {
   color: #BBBBBB;
   margin-left: 5px;
 }
+
 @media (max-width: 800px) {
   .movie-ranking {
     display: block;
   }
 }
+
 @media (max-width: 300px) {
-.movie {
+  .movie {
     max-width: 150px;
     overflow: hidden;
   }

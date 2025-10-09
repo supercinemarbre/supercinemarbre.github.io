@@ -5,6 +5,7 @@ import MostPresentActors from './organisms/MostPresentActors.vue'
 import MostPresentDirectors from './organisms/MostPresentDirectors.vue'
 import MoviesPerEpisodeStats from './organisms/MoviesPerEpisodeStats.vue'
 import type { Movie } from 'src/Movies/model/movie.model'
+import { RouterLink } from 'vue-router'
 
 const movies = ref<Movie[]>([])
 
@@ -19,9 +20,9 @@ onMounted(async () => {
   <div>
     <h1>Statistiques</h1>
     <ul>
-      <li><a href="#stats">Nombre de films traités par épisode</a></li>
-      <li><a href="#directors">Hall of Fame des réalisateurs</a></li>
-      <li><a href="#actors">Hall of Fame des acteurs</a></li>
+      <li><RouterLink to="stats#stats">Nombre de films traités par épisode</RouterLink></li>
+      <li><RouterLink to="stats#directors">Hall of Fame des réalisateurs</RouterLink></li>
+      <li><RouterLink to="stats#actors">Hall of Fame des acteurs</RouterLink></li>
     </ul>
 
     <h2><a id="stats" class="anchor"></a>Nombre de films traités par épisode</h2>
