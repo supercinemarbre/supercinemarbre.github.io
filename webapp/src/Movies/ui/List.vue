@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import type { Ref } from 'vue'
-import { computed, onMounted, ref } from 'vue'
-import { isMobileMode } from '../../shared/ui/logic/responsive'
-import MovieFilters from './organisms/MovieFilters.vue'
-import MovieListDesktop from './organisms/MovieListDesktop.vue'
-import MovieListMobile from './organisms/MovieListMobile.vue'
 import router from 'src/config/router'
 import { fetchEpisodes } from 'src/Movies/infra/episodes.client'
 import { fetchMovies } from 'src/Movies/infra/movies.client'
+import type { Ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { isMobileMode } from '../../shared/ui/logic/responsive'
 import { whenPresent } from '../../shared/ui/logic/when-present'
-import type { EpisodeByNumber } from '../model/episode.model'
-import type { Movie } from '../model/movie.model'
+import { type Episode } from '../model/episode.model'
 import { matchDecade, sortByRanking, sortByYear } from '../model/movie-list'
+import type { Movie } from '../model/movie.model'
+import MovieFilters from './organisms/MovieFilters.vue'
+import MovieListDesktop from './organisms/MovieListDesktop.vue'
+import MovieListMobile from './organisms/MovieListMobile.vue'
 
 const props = defineProps({
   decade: String
@@ -21,7 +21,7 @@ const state = ref('loading' as 'loading' | 'loaded')
 const searchInput = ref('')
 const itemsPerPage = computed(() => props.decade ? -1 : 5)
 const allMovies: Ref<Movie[]> = ref([])
-const episodes: Ref<EpisodeByNumber> = ref({})
+const episodes = ref<Episode[]>([])
 const spoilerFreeFromEpisode = ref(false as false | number)
 
 const decadeTitle = computed(() => props.decade ? `La liste ultime des années ${props.decade}` : '')

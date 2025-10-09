@@ -3,21 +3,14 @@ import { fetchEpisodes } from 'src/Movies/infra/episodes.client'
 import MoviePoster from 'src/Movies/ui/molecules/MoviePoster.vue'
 import MovieFilters from 'src/Movies/ui/organisms/MovieFilters.vue'
 import { formatDate } from 'src/shared/ui/logic/format-date'
-import { computed, onMounted, ref } from 'vue'
-import type { Episode, EpisodeByNumber } from '../model/episode.model'
+import { onMounted, ref } from 'vue'
+import { type Episode } from '../model/episode.model'
 import type { Movie } from '../model/movie.model'
 import { fetchMovies } from '../movies.api'
 
 const state = ref<'loading' | 'loaded'>('loading')
 const searchInput = ref('')
-const episodeByNumber = ref<EpisodeByNumber>({})
-const episodes = computed<Episode[]>(() => {
-  return Object.values(episodeByNumber.value)
-    .map(episode => {
-      episode.searchString = toSearchString(episode.title)
-      return episode
-    })
-})
+const episodes = ref<Episode[]>([])
 const headers = [
   { title: 'Ep.', value: 'number', key: 'episode' },
   { title: 'Date', headerProps: { class: 'date' }, sortable: false },
@@ -37,17 +30,13 @@ onMounted(async () => {
       fetchEpisodes()
     ])
     allMovies.value = results[0]
-    episodeByNumber.value = results[1]
+    episodes.value = results[1]
   } catch (error) {
     console.error('Error loading episodes:', error)
   } finally {
     state.value = 'loaded'
   }
 })
-
-function toSearchString(value: string) {
-  return value ? value.replace(/[^a-zA-Z]/g, '').toLowerCase() : '' // fixme ternary
-}
 
 function episodeFilter(_index: number, search: string | null, data: { raw: Episode }): boolean {
   return data.raw.matches(search || '')
@@ -57,7 +46,8 @@ function episodeFilter(_index: number, search: string | null, data: { raw: Episo
 <template>
   <h1>Liste des épisodes</h1>
 
-  <MovieFilters :episodes="episodeByNumber" @search="searchInput = $event" @hide-movies-above-episode="hideMoviesAboveEpisode = $event">
+  <MovieFilters :episodes="episodes" @search="searchInput = $event"
+    @hide-movies-above-episode="hideMoviesAboveEpisode = $event">
   </MovieFilters>
 
   <v-data-table :loading="state === 'loading'" :search="searchInput" :headers="headers" :items="episodes"

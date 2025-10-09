@@ -44,3 +44,10 @@ export function getMaxEpisode(episodes: EpisodeByNumber) {
     .map(e => e.number)
     .reduce((a, b) => Math.max(a, b), 0)
 }
+
+export function toEpisodeByNumber(episodes: Episode[]): EpisodeByNumber {
+  return episodes.reduce((acc, episode) => {
+    acc[episode.number] = episode
+    return acc
+  }, {} as EpisodeByNumber)
+}

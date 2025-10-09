@@ -3,9 +3,7 @@ import type { Movie } from 'src/Movies/model/movie.model'
 
 defineProps<{
   movie: Movie;
-  episode: {
-    mp3url: string
-  };
+  audioUrl?: string;
   textOnly?: boolean;
   showTimestamp?: boolean;
 }>()
@@ -36,8 +34,8 @@ const leftPad = (number: number) => {
 </script>
 
 <template>
-  <a :class="{ 'styled': !textOnly }" v-if="movie.timestamp && episode"
-    :href="episode.mp3url + '#t=' + movie.timestamp">
+  <a :class="{ 'styled': !textOnly }" v-if="movie.timestamp && audioUrl"
+    :href="audioUrl + '#t=' + movie.timestamp">
     <v-icon>mdi-headphones</v-icon>
     <span v-if="showTimestamp">&nbsp;{{ timestamp(movie.timestamp) }}</span>
     <span v-else>&nbsp;Ecouter</span>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EpisodeByNumber } from 'src/Movies/model/episode.model'
+import { toEpisodeByNumber, type Episode, type EpisodeByNumber } from 'src/Movies/model/episode.model'
 import type { Movie } from 'src/Movies/model/movie.model'
 import Ordinal from 'src/shared/ui/molecules/Ordinal.vue'
 import type { VuetifySortItem } from '../../../types'
@@ -11,16 +11,19 @@ import RatingIMDB from '../molecules/ratings/RatingIMDB.vue'
 import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue'
 import RatingRT from '../molecules/ratings/RatingRT.vue'
 import TimestampLink from '../molecules/TimestampLink.vue'
+import { computed } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   currentDecade?: string,
   state?: 'loading' | 'loaded',
   movies: Movie[],
-  episodes: EpisodeByNumber,
+  episodes: Episode[],
   search: string,
   sortBy: VuetifySortItem[],
   itemsPerPage: number,
 }>()
+
+const episodeByNumber = computed<EpisodeByNumber>(() => toEpisodeByNumber(props.episodes))
 
 const headers = [
   { title: "Classement", key: "ranking", align: "center", filterable: false },
@@ -95,7 +98,7 @@ const headers = [
               <div class="movie-title">
                 {{ item.title }}
                 <span class="movie-alt-title" v-if="item.title !== item.primaryTitle">({{ item.primaryTitle }})</span>
-                <TimestampLink :movie="item" :episode="episodes[item.id.episode]" style="margin-left: 10px">
+                <TimestampLink :movie="item" :audio-url="episodeByNumber[item.id.episode]?.mp3url" style="margin-left: 10px">
                 </TimestampLink>
               </div>
 

@@ -1,26 +1,28 @@
 <script setup lang="ts">
+import { toEpisodeByNumber, type Episode, type EpisodeByNumber } from 'src/Movies/model/episode.model'
+import type { Movie } from 'src/Movies/model/movie.model'
+import Ordinal from 'src/shared/ui/molecules/Ordinal.vue'
 import type { VuetifySortItem } from 'src/types.d'
+import { computed } from 'vue'
 import { rowPropsHighlightingCurrentMovie } from '../logic/highlight-current-movie'
 import { shortDecade } from '../logic/short-decade'
-import TimestampLink from '../molecules/TimestampLink.vue'
-import Ordinal from 'src/shared/ui/molecules/Ordinal.vue'
-import RatingIMDB from '../molecules/ratings/RatingIMDB.vue'
-import RatingRT from '../molecules/ratings/RatingRT.vue'
-import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue'
 import JustWatchLink from '../molecules/JustWatchLink.vue'
-import type { EpisodeByNumber } from 'src/Movies/model/episode.model'
-import type { Movie } from 'src/Movies/model/movie.model'
+import RatingIMDB from '../molecules/ratings/RatingIMDB.vue'
+import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue'
+import RatingRT from '../molecules/ratings/RatingRT.vue'
+import TimestampLink from '../molecules/TimestampLink.vue'
 
-defineProps<{
+const props = defineProps<{
   currentDecade?: string,
   state?: 'loading' | 'loaded',
   movies: Movie[],
-  episodes: EpisodeByNumber,
+  episodes: Episode[],
   search: string,
   sortBy: VuetifySortItem[],
   itemsPerPage: number,
 }>()
 
+const episodeByNumber = computed<EpisodeByNumber>(() => toEpisodeByNumber(props.episodes))
 </script>
 
 <template>
@@ -51,7 +53,7 @@ defineProps<{
                 <span style="margin-right: 15px">{{ item.runtimeMinutes }} min</span>
               </div>
               <div>
-                <TimestampLink :movie="item" :episode="episodes[item.id.episode]" :textOnly="true"
+                <TimestampLink :movie="item" :audio-url="episodeByNumber[item.id.episode]?.mp3url" :textOnly="true"
                   style="margin-right: 10px"></TimestampLink>
                 <router-link v-if="item.id.episode !== undefined" :to="'/episodes?search=' + item.id.episode">Episode {{
                   item.id.episode }}</router-link>

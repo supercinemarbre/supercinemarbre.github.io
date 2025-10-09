@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import router from 'src/config/router'
-import { type Episode, type EpisodeByNumber } from 'src/Movies/model/episode.model'
+import { type Episode } from 'src/Movies/model/episode.model'
 import type { SpoilerFreeSettings } from 'src/Movies/SpoilerFree/model/spoiler-free.model'
 import SpoilerFree from 'src/Movies/SpoilerFree/ui/SpoilerFree.vue'
 import { isMobileMode } from 'src/shared/ui/logic/responsive'
 import { watchDebounced } from 'src/shared/ui/logic/watch-debounced'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
-const props = defineProps<{
-    episodes: EpisodeByNumber
+defineProps<{
+    episodes: Episode[]
 }>()
 
 const emit = defineEmits<{
@@ -21,7 +21,6 @@ export type Searchable<T> = T & {
 }
 
 const searchInput = ref(router.currentRoute.value.query.search?.toString() || '')
-const episodes = computed<Episode[]>(() => Object.values(props.episodes))
 
 function onSpoilerFreeSettingsChange(settings: SpoilerFreeSettings) {
     emit('hideMoviesAboveEpisode', settings.lastWatched)
