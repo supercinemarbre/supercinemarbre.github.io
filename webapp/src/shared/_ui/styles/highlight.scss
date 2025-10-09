@@ -1,0 +1,17 @@
+:deep .highlight {
+  animation: flash 0.5s ease-in-out;
+}
+
+@keyframes flash {
+  30% {
+    background-color: transparent;
+  }
+
+  60% {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}

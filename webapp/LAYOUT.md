@@ -8,22 +8,22 @@
 
 * UI
     * UI: Components
-        * `ui/[Page.vue]`
-        * `ui/organisms/` Stateful or feature-level components
-        * `ui/molecules/` Dumb components
-        * `ui/atoms/` Low-level design elements
+        * `_ui/[Page.vue]`
+        * `_ui/organisms/` Stateful or feature-level components
+        * `_ui/molecules/` Dumb components
+        * `_ui/atoms/` Low-level design elements
     * UI: Logic (formatting etc.)
-        * `ui/logic/`
+        * `_ui/logic/`
     * UI: CSS/SASS styles
-        * `ui/styles/`
+        * `_ui/styles/`
 * Models / business logic
-    * `model/`
+    * `_model/`
 * Services (higher order logic)
-    * `services/`
+    * `_services/`
 * Infrastructure (clients & stores)
-    * `infra/`
+    * `_infra/`
 * Public API for other features
-    * `api/`
+    * `[feature].api.ts`
 * `[sub-feature]/`
 * `shared/`
 

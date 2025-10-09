@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './config/router'
 import { vuetify } from './config/vuetify'
 
-import './shared/ui/styles/main.css'
+import './_ui/styles/main.css'
 
 const app = createApp(App)
 app.config.globalProperties.window = window

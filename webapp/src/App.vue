@@ -1,34 +1,27 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
-import Sidebar from './shared/ui/organisms/sidebar/Sidebar.vue';
+import Footer from 'src/_ui/Footer.vue'
+import Sidebar from 'src/_ui/Sidebar.vue'
+import { ref } from 'vue'
+import { RouterView } from 'vue-router'
+import Header from './_ui/Header.vue'
 
-const drawer = ref(true)
+const showDrawer = ref(true)
 </script>
 
 <template>
   <v-layout>
     <v-app-bar id="app-bar">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="showDrawer = !showDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        <h1>
-          <RouterLink id="logo" to="/">
-            <img src="/img/logo.png" />
-            Super Ciné Marbre
-          </RouterLink>
-        </h1>
+        <Header></Header>
       </v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer id="nav" v-model="drawer">
+    <v-navigation-drawer id="nav" v-model="showDrawer">
       <Sidebar></Sidebar>
 
       <template v-slot:append>
-        <div id="nav-contribute-call" class="pa-2">
-          Contribuez à ce projet
-          <a href="https://github.com/supercinemarbre/supercinemarbre.github.io"> sur
-            Github </a>
-        </div>
+        <Footer></Footer>
       </template>
     </v-navigation-drawer>
 
@@ -40,35 +33,11 @@ const drawer = ref(true)
   </v-layout>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 #app-bar {
   height: var(--app-bar-height);
   background-image: url('/img/bgmarbre.jpg');
   padding: 20px;
-}
-
-#logo {
-  color: transparent !important;
-  font-size: 0px;
-
-  & img {
-    margin-top: 3px;
-    max-height: 32px;
-    transition: 0.2s;
-
-    @media (max-width: 600px) {
-      max-width: 200px;
-    }
-
-    @media (max-width: 300px) {
-      max-width: 150px;
-    }
-  }
-
-  &:hover,
-  &:hover img {
-    filter: brightness(1.2);
-  }
 }
 
 #main {
@@ -78,18 +47,5 @@ const drawer = ref(true)
 #nav {
   top: var(--app-bar-height) !important;
   height: calc(100% - var(--app-bar-height)) !important;
-
-  #nav-contribute-call {
-    text-align: center;
-    opacity: .7;
-    font-size: .9rem;
-  }
-}
-
-#footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
 }
 </style>
