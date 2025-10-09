@@ -20,7 +20,7 @@ const router = createRouter({
     { path: '/about', name: 'A propos', component: APropos }
   ],
   scrollBehavior(to) {
-    if (to.hash) {
+    if (to.hash && document.querySelector(to.hash)) {
       return { el: to.hash } as any // support anchor links
     } else {
       return { x: 0, y: 0 }

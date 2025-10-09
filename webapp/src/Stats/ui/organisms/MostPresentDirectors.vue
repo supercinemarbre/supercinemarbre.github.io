@@ -3,6 +3,7 @@ import { fetchMovies } from 'src/Movies/movies.api'
 import Ordinal from 'src/shared/ui/molecules/Ordinal.vue'
 import { computeDirectorStats, type DirectorStats } from 'src/Stats/model/director-stats'
 import { computed, onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const state = ref<'loading' | 'loaded'>('loading')
 const stats = ref<DirectorStats>({ directors: [], minimumMovies: 0 })
@@ -45,12 +46,12 @@ const headers = computed(() => {
       <template v-slot:item.movies="{ item }">
         <div class="movies">
           <div class="movie" v-for="movie in item.movies" :key="'director' + item.director + movie.tconst">
-            <router-link :to="'/' + movie.decade + '#' + movie.tconst">
+            <RouterLink :to="'/' + movie.decade + '#' + movie.tconst">
               {{ movie.title }}
               <span class="movie-ranking">({{ movie.ranking }}
                 <Ordinal :value="movie.ranking" /> des années {{ movie.decade }})
               </span>
-            </router-link>
+            </RouterLink>
           </div>
         </div>
       </template>

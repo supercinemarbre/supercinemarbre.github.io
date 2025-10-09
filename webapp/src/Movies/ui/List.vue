@@ -44,7 +44,9 @@ onMounted(async () => {
     fetchEpisodes()
   ])
   state.value = 'loaded'
+})
 
+router.afterEach(async () => {
   if (router.currentRoute.value.hash && document.querySelector) {
     const target = await whenPresent(`[name=${router.currentRoute.value.hash.slice(1)}]`)
     target.scrollIntoView({ block: 'center' })

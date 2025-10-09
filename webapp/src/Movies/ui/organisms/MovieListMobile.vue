@@ -11,6 +11,7 @@ import RatingIMDB from '../molecules/ratings/RatingIMDB.vue'
 import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue'
 import RatingRT from '../molecules/ratings/RatingRT.vue'
 import TimestampLink from '../molecules/TimestampLink.vue'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps<{
   currentDecade?: string,
@@ -37,9 +38,9 @@ const episodeByNumber = computed<EpisodeByNumber>(() => toEpisodeByNumber(props.
             <div class="mobile-ranking">
               {{ item.ranking }}
               <Ordinal :value="item.ranking" />
-              <router-link v-if="!currentDecade" :to="'/' + item.decade + '#' + item.tconst">
+              <RouterLink v-if="!currentDecade" :to="'/' + item.decade + '#' + item.tconst">
                 <span class="mobile-decade">({{ shortDecade(item.decade) }})</span>
-              </router-link>
+              </RouterLink>
             </div>
             <v-img :src="item.posterUrl" width="70" height="100" aspect-ratio="1" />
           </div>
@@ -55,8 +56,8 @@ const episodeByNumber = computed<EpisodeByNumber>(() => toEpisodeByNumber(props.
               <div>
                 <TimestampLink :movie="item" :audio-url="episodeByNumber[item.id.episode]?.mp3url" :textOnly="true"
                   style="margin-right: 10px"></TimestampLink>
-                <router-link v-if="item.id.episode !== undefined" :to="'/episodes?search=' + item.id.episode">Episode {{
-                  item.id.episode }}</router-link>
+                <RouterLink v-if="item.id.episode !== undefined" :to="'/episodes?search=' + item.id.episode">Episode {{
+                  item.id.episode }}</RouterLink>
               </div>
             </div>
             <div class="movie-casting">

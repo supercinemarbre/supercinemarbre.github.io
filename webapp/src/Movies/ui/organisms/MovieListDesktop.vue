@@ -12,6 +12,7 @@ import RatingMetacritic from '../molecules/ratings/RatingMetacritic.vue'
 import RatingRT from '../molecules/ratings/RatingRT.vue'
 import TimestampLink from '../molecules/TimestampLink.vue'
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps<{
   currentDecade?: string,
@@ -51,12 +52,12 @@ const headers = [
             <Ordinal :value="item.ranking" />
           </span>
           <span v-if="!currentDecade">
-            <router-link :to="'/' + item.decade + '#' + item.tconst">
+            <RouterLink :to="item.decade + '#' + item.tconst">
               <div class="movie-ranking">{{ item.ranking }}
                 <Ordinal :value="item.ranking" />
               </div>
               Années {{ item.decade }}
-            </router-link>
+            </RouterLink>
           </span>
         </span>
       </v-lazy>
@@ -123,8 +124,8 @@ const headers = [
     </template>
     <template v-slot:item.episode="{ item }">
       <v-lazy>
-        <router-link v-if="item.id.episode !== undefined" :to="'/episodes?search=' + item.id.episode">Ep. {{
-          item.id.episode }}</router-link>
+        <RouterLink v-if="item.id.episode !== undefined" :to="'/episodes?search=' + item.id.episode">Ep. {{
+          item.id.episode }}</RouterLink>
       </v-lazy>
     </template>
     <template v-slot:top="{ pagination, options, updateOptions }">

@@ -7,6 +7,7 @@ import { onMounted, ref } from 'vue'
 import { type Episode } from '../model/episode.model'
 import type { Movie } from '../model/movie.model'
 import { fetchMovies } from '../movies.api'
+import { RouterLink } from 'vue-router'
 
 const state = ref<'loading' | 'loaded'>('loading')
 const searchInput = ref('')
@@ -85,8 +86,8 @@ function episodeFilter(_index: number, search: string | null, data: { raw: Episo
                   Les listes spéciales ne sont pas encore supportées sur Super Ciné Marbre.
                 </span>
                 <span v-else>
-                  Classements et timestamps manquants pour cet episode. Voir <router-link to="/about">A
-                    propos</router-link> pour les contribuer !
+                  Classements et timestamps manquants pour cet episode. Voir <RouterLink to="/about">A
+                    propos</RouterLink> pour les contribuer !
                 </span>
               </div>
             </div>

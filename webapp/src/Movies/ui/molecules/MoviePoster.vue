@@ -2,6 +2,7 @@
 import type { Episode } from 'src/Movies/model/episode.model'
 import TimestampLink from './TimestampLink.vue'
 import type { Movie } from 'src/Movies/model/movie.model'
+import { RouterLink } from 'vue-router'
 
 defineProps<{
   episode: Episode;
@@ -26,12 +27,12 @@ function ellipsis(text: string, max: number): string {
 
 <template>
   <div>
-    <router-link :to="'/' + movie.decade + '#' + movie.tconst" class="movie-container">
+    <RouterLink :to="'/' + movie.decade + '#' + movie.tconst" class="movie-container">
       <div class="movie-title"><span>{{ ellipsis(movie.title, 40) }}</span></div>
       <div v-if="movie.posterUrl" class="poster">
         <v-img :src="movie.posterUrl" width="70" height="100" aspect-ratio="1" />
       </div>
-    </router-link>
+    </RouterLink>
     <div v-if="!hideTimestamp" class="movie-timestamp">
       <TimestampLink :movie="movie" :episode="episode" :showTimestamp="true"></TimestampLink>
     </div>
