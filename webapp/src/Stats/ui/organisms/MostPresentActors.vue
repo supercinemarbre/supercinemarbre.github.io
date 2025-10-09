@@ -15,7 +15,7 @@ onMounted(async () => {
   
 const headers = computed(() => {
   return [
-    { text: "Classement", value: "ranking", align: "center" },
+    { text: "Classement", value: "ranking", align: "center" as "center" },
     { text: "Acteur", value: "actor" },
     { text: "Nb. classés", value: "movieCount" },
     { text: "Classé", value: "movies" },

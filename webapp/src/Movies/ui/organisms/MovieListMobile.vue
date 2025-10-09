@@ -82,9 +82,8 @@ const episodeByNumber = computed<EpisodeByNumber>(() => toEpisodeByNumber(props.
         </div>
       </v-lazy>
     </template>
-    <template v-slot:top="{ pagination, options, updateOptions }">
-      <v-data-table-footer v-if="!currentDecade" :pagination="pagination" :options="options"
-        @update:options="updateOptions" :itemsPerPageOptions="[3, 5, 10, 50, -1]"
+    <template v-slot:top>
+      <v-data-table-footer v-if="!currentDecade" :itemsPerPageOptions="[3, 5, 10, 50, -1]"
         items-per-page-text="$vuetify.dataTable.itemsPerPageText" />
     </template>
   </v-data-table>

@@ -4,10 +4,10 @@ import MoviePoster from 'src/Movies/ui/molecules/MoviePoster.vue'
 import MovieFilters from 'src/Movies/ui/organisms/MovieFilters.vue'
 import { formatDate } from 'src/shared/ui/logic/format-date'
 import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { type Episode } from '../model/episode.model'
 import type { Movie } from '../model/movie.model'
 import { fetchMovies } from '../movies.api'
-import { RouterLink } from 'vue-router'
 
 const state = ref<'loading' | 'loaded'>('loading')
 const searchInput = ref('')
@@ -39,9 +39,10 @@ onMounted(async () => {
   }
 })
 
-function episodeFilter(_index: number, search: string | null, data: { raw: Episode }): boolean {
+const episodeFilter = (_index: string, search: string | null, data: { raw: Episode }): boolean => {
   return data.raw.matches(search || '')
-}
+};
+
 </script>
 
 <template>
@@ -95,9 +96,8 @@ function episodeFilter(_index: number, search: string | null, data: { raw: Episo
         </td>
       </tr>
     </template>
-    <template v-slot:top="{ pagination, options, updateOptions }">
-      <v-data-table-footer :pagination="pagination" :options="options" @update:options="updateOptions" showFirstLastPage
-        showCurrentPage :itemsPerPageOptions="[5, 10, 50, -1]"
+    <template v-slot:top>
+      <v-data-table-footer showFirstLastPage showCurrentPage :itemsPerPageOptions="[5, 10, 50, -1]"
         items-per-page-text="$vuetify.dataTable.itemsPerPageText" />
     </template>
   </v-data-table>

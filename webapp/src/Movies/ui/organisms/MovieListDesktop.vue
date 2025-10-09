@@ -27,13 +27,13 @@ const props = defineProps<{
 const episodeByNumber = computed<EpisodeByNumber>(() => toEpisodeByNumber(props.episodes))
 
 const headers = [
-  { title: "Classement", key: "ranking", align: "center", filterable: false },
-  { title: "Poster", key: "posterUrl", align: "center", sortable: false, filterable: false },
+  { title: "Classement", key: "ranking", align: "center" as "center", filterable: false },
+  { title: "Poster", key: "posterUrl", align: "center" as "center", sortable: false, filterable: false },
   { title: "Titre", key: "searchString" },
-  { title: "Année", key: "year", align: "center", filterable: false },
+  { title: "Année", key: "year", align: "center" as "center", filterable: false },
   { title: "Notes & liens", key: "imdbRating", sort: (a, b) => (b || 0) - (a || 0), filterable: false, class: "column-imdb-ranking" },
   { title: "Popularité IMDB", key: "imdbVotes", sort: (a, b) => (b || 0) - (a || 0), filterable: false },
-  { title: "Episode", key: "episode", align: "center", filterable: false }
+  { title: "Episode", key: "episode", align: "center" as "center", filterable: false }
 ]
 </script>
 
@@ -71,7 +71,7 @@ const headers = [
     </template>
     <template v-slot:item.imdbRating="{ item }">
       <v-lazy>
-        <div class="movie-ratings-and-links" :key="item.tconst"><!-- TODO fix me why is key required?-->
+        <div class="movie-ratings-and-links">
           <RatingIMDB class="movie-rating" v-if="!!item.tconst" :movie="item" />
           <div class="movie-rating" v-if="!!item.rottenTomatoesRating">
             <RatingRT :rating="item.rottenTomatoesRating" />
@@ -128,9 +128,9 @@ const headers = [
           item.id.episode }}</RouterLink>
       </v-lazy>
     </template>
-    <template v-slot:top="{ pagination, options, updateOptions }">
-      <v-data-table-footer v-if="!currentDecade" :pagination="pagination" :options="options"
-        @update:options="updateOptions" showFirstLastPage showCurrentPage :itemsPerPageOptions="[5, 10, 50, -1]"
+    <template v-slot:top>
+      <v-data-table-footer v-if="!currentDecade"
+        showFirstLastPage showCurrentPage :itemsPerPageOptions="[5, 10, 50, -1]"
         items-per-page-text="$vuetify.dataTable.itemsPerPageText" />
     </template>
   </v-data-table>

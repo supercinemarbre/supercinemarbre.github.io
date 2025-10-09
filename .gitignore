@@ -2,8 +2,7 @@
 node_modules*/
 /dist
 Dockerfile
-*package-lock.json
-
+/package-lock.json
 
 # local env files
 .env.local
