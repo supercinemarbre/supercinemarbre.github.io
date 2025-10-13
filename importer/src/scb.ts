@@ -1,9 +1,9 @@
 import * as cheerio from "cheerio";
 import download from "download";
-import { isEqual } from "lodash";
 import { readData, writeData } from "./io";
 import { markAsUpdated, needsUpdate } from "./last-updated";
 import { Episode, Movie, MovieID } from "./types";
+import { Element } from "domhandler";
 
 export type MoviePatch = Partial<Movie> & { scbKey: MovieID };
 export type EpisodePatch = Partial<Episode> & { number: number };
@@ -98,7 +98,7 @@ async function scrapeScbEpisode(episodeNumber: number, episodeDecade?: string): 
   const searchResults = await download(`https://www.supercinebattle.fr/?s=${titlePrefix}+${episodeNumber}+%3A`);
   let $ = cheerio.load(searchResults);
 
-  let $titleLink: cheerio.Element | undefined;
+  let $titleLink: Element | undefined;
   $('.entry-title').each((_, $element) => {
     const linkTitle = $($element).text();
     if (!$titleLink && (linkTitle.match(new RegExp(`${titlePrefix}\\s+${episodeNumber}\\s+:`, 'gi'))

@@ -22,8 +22,9 @@ export async function refreshTimestampFiles() {
     console.log("Refreshing timestamps from Google Sheets");
   }
 
-  const doc = new GoogleSpreadsheet(TIMESTAMPS_SHEET_ID);
-  doc.useApiKey(GOOGLE_SHEETS_API_KEY);
+  const doc = new GoogleSpreadsheet(TIMESTAMPS_SHEET_ID, {
+    apiKey: GOOGLE_SHEETS_API_KEY
+  });
   await doc.loadInfo();
 
   for (const sheetIndex in doc.sheetsByIndex) {

@@ -1,10 +1,9 @@
-import { time } from "console";
 import csvParser from "csv-parser";
 import * as fs from "fs";
 import { isEqual } from "lodash";
 import { dataPath, readData } from "./io";
 import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
-import { findMatchingMovies } from "./scb-utils";
+import { findMatchingMovies } from "./scb-matcher";
 import { Movie, MovieID } from "./types";
 
 type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
