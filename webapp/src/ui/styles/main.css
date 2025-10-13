@@ -2,12 +2,12 @@
   --app-bar-height: 100px;
 }
 
-#main a {
+a {
   color: #7ec6ff;
   text-decoration: none;
 }
 
-#main a:hover {
+a:hover {
   color: white;
 }
 

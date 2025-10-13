@@ -13,6 +13,7 @@ import RatingRT from '../molecules/ratings/RatingRT.vue'
 import TimestampLink from '../molecules/TimestampLink.vue'
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
+import Persons from '../molecules/Persons.vue'
 
 const props = defineProps<{
   currentDecade?: string,
@@ -108,8 +109,8 @@ const headers = [
               </div>
             </div>
             <div class="movie-casting">
-              <div v-if="item.directors">de {{ item.directors.join(', ') }}</div>
-              <div v-if="item.actors">avec {{ item.actors.join(', ') }}</div>
+              <div v-if="item.directors">de <Persons :value="item.directors" /></div>
+              <div v-if="item.actors">avec <Persons :value="item.actors" /></div>
               <div v-if="item.comment" style="margin-top: 5px"><b>Note:</b> {{ item.comment }}</div>
             </div>
           </div>

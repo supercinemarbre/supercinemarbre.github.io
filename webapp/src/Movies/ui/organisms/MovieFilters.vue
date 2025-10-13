@@ -20,7 +20,7 @@ export type Searchable<T> = T & {
     searchString?: string;
 }
 
-const searchInput = ref(router.currentRoute.value.query.search?.toString() || '')
+const searchInput = ref('')
 
 function onSpoilerFreeSettingsChange(settings: SpoilerFreeSettings) {
     emit('hideMoviesAboveEpisode', settings.lastWatched)
@@ -28,6 +28,13 @@ function onSpoilerFreeSettingsChange(settings: SpoilerFreeSettings) {
 
 emit('search', searchInput.value)
 watchDebounced(searchInput, value => emit('search', value), 300)
+
+router.afterEach(refreshSearchFromQuery)
+refreshSearchFromQuery();
+
+function refreshSearchFromQuery() {
+    searchInput.value = router.currentRoute.value.query.search?.toString() ?? ''
+}
 </script>
 
 <template>

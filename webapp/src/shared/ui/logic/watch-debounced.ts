@@ -1,9 +1,9 @@
 import { debounce } from 'lodash-es'
-import { watch, type WatchSource } from 'vue'
+import { watch, type WatchHandle, type WatchSource } from 'vue'
 
-export function watchDebounced<T>(source: WatchSource<T>, callback: (value: T) => void, delay: number) {
+export function watchDebounced<T>(source: WatchSource<T>, callback: (value: T) => void, delay: number): WatchHandle {
   const debounced = debounce((debounceCallback) => debounceCallback(), delay)
-  watch(source, (value) => {
+  return watch(source, (value) => {
     debounced(() => callback(value))
   })
 }
