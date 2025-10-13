@@ -25,7 +25,7 @@ interface TmdbMovie {
   popularity: number;
 }
 
-export async function fetchMissingTMDBData() {
+export async function fetchMissingTMDBData(movies: Movie[]): Promise<Movie[]> {
   console.log("Filling any missing TMDB data");
 
   if (!TMDB_API_KEY) {
@@ -36,10 +36,8 @@ export async function fetchMissingTMDBData() {
     return;
   }
 
-  const movies = await scb.readMovieRankings();
-
   try {
-    let i = 1, pendingWrites = 0;
+    let movieIndex = 1;
     for (const movie of movies) {
       if (hasMissingTMDBData(movie)) {
         let tmdbResults: TmdbResults;
@@ -55,7 +53,7 @@ export async function fetchMissingTMDBData() {
           } catch (e) {
             console.error(`  - Error while searching ${JSON.stringify(movie.id)} with IMDB ID ${movie.tconst}`);
             console.error(`    ${tmdbString.toString()}`);
-            i++;
+            movieIndex++;
             continue;
           }
         }
@@ -66,19 +64,15 @@ export async function fetchMissingTMDBData() {
           movie.tmdbId = tmdbMovie.id;
           movie.tmdbVoteAverage = tmdbMovie.vote_average;
 
-          if (++pendingWrites % 50 === 0) {
-            await scb.writeMovieRankings(movies);
-            pendingWrites = 0;
-          }
-          console.log(` - ${i}/${movies.length}: OK for ${movie.title}`);
+          console.log(` - ${movieIndex}/${movies.length}: OK for ${movie.title}`);
         } else {
-          console.log(` - ${i}/${movies.length}: ${movie.title} not found in TMDB`);
+          console.log(` - ${movieIndex}/${movies.length}: ${movie.title} not found in TMDB`);
         }
       }
-      i++;
+      movieIndex++;
     }
 
-    await scb.writeMovieRankings(movies);
+    return movies;
   } catch (e) {
     if (e.statusCode === 401) {
       // Untested
@@ -87,7 +81,8 @@ export async function fetchMissingTMDBData() {
       if (missingMovies.length < 100) {
         console.warn(`  Missing movies: ${missingMovies.map(m => m.tconst).join(' ')}`);
       }
-      await scb.writeMovieRankings(movies);
+
+    return movies;
     } else {
       throw e;
     }

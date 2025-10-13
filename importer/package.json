@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env ts-node import.ts",
+    "check": "cross-env ts-node check.ts",
     "jwsearch": "cross-env ts-node jwsearch.ts",
-    "invalidate": "ts-node invalidate.ts"
+    "invalidate": "cross-env ts-node invalidate.ts"
   },
   "author": "",
   "license": "ISC",

@@ -13,15 +13,11 @@ export function readListUrls(): Promise<Record<string, string>> {
 }
 
 export async function readMovieRankings(): Promise<Movie[] | undefined> {
-  try {
-    const rankings = await readData(`../../webapp/public/scb_movies.json`);
-    if (Array.isArray(rankings)) {
-      return rankings;
-    } else {
-      return Object.values(rankings); // FIXME Issue with initial save
-    }
-  } catch (e) {
-    return undefined;
+  const rankings = await readData(`../../webapp/public/scb_movies.json`, []);
+  if (Array.isArray(rankings)) {
+    return rankings;
+  } else {
+    return Object.values(rankings); // FIXME Issue with initial save
   }
 }
 

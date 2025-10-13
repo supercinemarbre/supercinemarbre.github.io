@@ -48,11 +48,10 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
   }
 
   const movies = sublist ?? await scb.readMovieRankings();
-  const patch = await scb.readScbPatches();
   const omdbDump = await readOMDBDump();
 
   try {
-    let i = 1, pendingWrites = 0;
+    let movieIndex = 1;
     for (const movie of movies) {
       if (hasMissingOMDBData(movie)) {
         let omdbMovie = omdbDump.find(m => m.imdbID === movie.tconst);
@@ -63,7 +62,7 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
           } catch (e) {
             console.error(`  - Error while searching ${JSON.stringify(movie.id)} with IMDB ID ${movie.tconst}`);
             console.error(`    ${omdbString.toString()}`);
-            i++;
+            movieIndex++;
             continue;
           }
         }
@@ -99,25 +98,16 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
           movie.countries = omdbMovie.Country.split(', ');
           movie.languages = omdbMovie.Language.split(', ');
           movie.genres = omdbMovie.Genre.split(', ');
-          if (patch[movie.title] && typeof patch[movie.title] === 'object') {
-            Object.assign(movie, patch[movie.title]);
-          }
 
-          if (!sublist && ++pendingWrites % 50 === 0) {
-            await scb.writeMovieRankings(movies);
-            pendingWrites = 0;
-          }
-          console.log(` - ${i}/${movies.length}: OK for ${movie.title}`);
+          console.log(` - ${movieIndex}/${movies.length}: OK for ${movie.title}`);
         } else {
-          console.log(` - ${i}/${movies.length}: ${movie.title} not found in OMDB`);
+          console.log(` - ${movieIndex}/${movies.length}: ${movie.title} not found in OMDB`);
         }
       }
-      i++;
+      movieIndex++;
     }
 
-    if (!sublist) {
-      await scb.writeMovieRankings(movies);
-    }
+    return movies;
   } catch (e) {
     if (e.statusCode === 401) {
       console.warn("  SKIPPED: Daily OMDB limit reached :(");
@@ -126,7 +116,8 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
         console.warn(`  Missing movies: ${missingMovies.map(m => m.tconst).join(' ')}`);
         console.warn("  If you're in a hurry you can get them manually at http://www.omdbapi.com/ and put them in omdb_dump.json");
       }
-      await scb.writeMovieRankings(movies);
+
+      return movies;
     } else {
       throw e;
     }

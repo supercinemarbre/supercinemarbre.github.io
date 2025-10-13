@@ -1,4 +1,3 @@
-
 import * as googleSheets from "./src/google-sheets";
 import * as imdb from "./src/imdb";
 import * as justWatch from "./src/justwatch";
@@ -21,10 +20,12 @@ import * as tmdb from "./src/tmdb";
 
     // IMDB/OMDB data fetching
 
-    await imdb.fetchMissingIMDBData();
-    await omdb.fetchMissingOMDBData();
-    await tmdb.fetchMissingTMDBData();
-    await justWatch.fetchMissingJWData();
+    let movies = await scb.readMovieRankings();
+    movies = await imdb.fetchMissingIMDBData(movies);
+    movies = await omdb.fetchMissingOMDBData(movies);
+    movies = await tmdb.fetchMissingTMDBData(movies);
+    movies = await justWatch.fetchMissingJWData(movies);
+    await scb.writeMovieRankings(movies);
 
     // Patching of final results
 

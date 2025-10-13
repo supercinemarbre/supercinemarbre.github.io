@@ -1,7 +1,7 @@
 import axios from "axios";
 import { isEqual } from "lodash";
 import * as scb from "./scb";
-import { Movie } from "./types";
+import { Movie, MovieID } from "./types";
 
 interface JWMovie {
   id: string;
@@ -17,14 +17,13 @@ interface JWMovie {
   }
 }
 
-export async function fetchMissingJWData() {
+export async function fetchMissingJWData(movies: Movie[]): Promise<Movie[]> {
   console.log("Filling any missing JustWatch data");
 
-  const movies = await scb.readMovieRankings();
   const patches = await scb.readScbPatches();
 
   try {
-    let i = 1, pendingWrites = 0;
+    let movieIndex = 1;
     for (const movie of movies) {
       const matchingPatch = patches.find(p => isEqual(p.id, movie.id) || isEqual(p.scbKey, movie.id));
       if (hasMissingJWData(movie, matchingPatch)) {
@@ -34,7 +33,7 @@ export async function fetchMissingJWData() {
         } catch (e) {
           console.error(`  - Error while searching ${JSON.stringify(movie.id)} ${movie.tmdbId} with IMDB ID ${movie.tconst}`);
           console.error(`    ${e.message}`);
-          i++;
+          movieIndex++;
           continue;
         }
 
@@ -42,21 +41,17 @@ export async function fetchMissingJWData() {
           movie.jwId = jwMovie.objectId;
           movie.jwFullPath = jwMovie.content.fullPath;
 
-          if (++pendingWrites % 50 === 0) {
-            await scb.writeMovieRankings(movies);
-            pendingWrites = 0;
-          }
-          console.log(` - ${i}/${movies.length}: OK for ${movie.title}`);
+          console.log(` - ${movieIndex}/${movies.length}: OK for ${movie.title}`);
         } else {
-          console.log(` - ${i}/${movies.length}: ${movie.title} not found in JustWatch`);
+          console.log(` - ${movieIndex}/${movies.length}: ${movie.title} not found in JustWatch`);
           console.log('   ' + JSON.stringify(movie.id));
           console.log('   (Add scb_patch.json entry with "jwMissing" set to true to ignore)');
         }
       }
-      i++;
+      movieIndex++;
     }
 
-    await scb.writeMovieRankings(movies);
+    return movies;
   } catch (e) {
     if (e.statusCode === 401) {
       // Untested
@@ -65,7 +60,7 @@ export async function fetchMissingJWData() {
       if (missingMovies.length < 100) {
         console.warn(`  Missing movies: ${missingMovies.map(m => m.tconst).join(' ')}`);
       }
-      await scb.writeMovieRankings(movies);
+    return movies;
     } else {
       throw e;
     }
