@@ -2,7 +2,7 @@ import levenshtein from "fast-levenshtein";
 import { isEqual } from "lodash";
 import { Movie } from "./types";
 
-export function findMatchingMovies(key: { episode?: number, name: string }, movies: Movie[]): Movie[] {
+export function findMatchingScbMovies(key: { episode?: number, name: string }, movies: Movie[]): Movie[] {
   
   // Exact match
   if (key.episode) {

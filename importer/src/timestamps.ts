@@ -2,8 +2,8 @@ import csvParser from "csv-parser";
 import * as fs from "fs";
 import { dataPath } from "./io";
 import * as patch from "./movie-patch";
-import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
-import { findMatchingMovies } from "./scb-matcher";
+import { readListDecades, readMovieRankings, writeMovieRankings } from "./scb";
+import { findMatchingScbMovies } from "./scb-matcher";
 import { Movie, MovieID } from "./types";
 
 interface TimestampInfo {
@@ -16,7 +16,7 @@ interface TimestampInfo {
 export async function importTimestampsRankingsAndMissingMovies() {
   console.log("Collecting timestamps");
 
-  const decades = Object.keys(await readListUrls());
+  const decades = await readListDecades();
   const movies = await readMovieRankings();
   const maxEpisode = getMaxEpisode(movies);
 
@@ -31,7 +31,7 @@ export async function importTimestampsRankingsAndMissingMovies() {
 
       const gsheetsKey: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
       const id = await patch.gsheetsKeyToId(gsheetsKey);
-      const matches = findMatchingMovies(id, movies);
+      const matches = findMatchingScbMovies(id, movies);
 
       let movie: Movie;
       if (matches.length === 1) {

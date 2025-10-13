@@ -7,8 +7,8 @@ import { Episode, Movie } from "./types";
 
 export type EpisodePatch = Partial<Episode> & { number: number };
 
-export function readListUrls(): Promise<Record<string, string>> {
-  return readData("scb_urls.json");
+export function readListDecades(): Promise<string[]> {
+  return readData("scb_decades.json");
 }
 
 export async function readMovieRankings(): Promise<Movie[] | undefined> {
