@@ -1,8 +1,6 @@
 import download from "download";
-import { isEqual } from "lodash";
-import * as scb from "./scb";
-import * as timestamps from "./timestamps";
 import { Movie } from "./types";
+import { assignMissing } from "./utils/assign-missing";
 
 export interface ImdbMovie {
   tconst: string;
@@ -11,30 +9,15 @@ export interface ImdbMovie {
 
 export async function fetchMissingIMDBData(movies?: Movie[]) {
   console.log("Filling any missing IMDB data");
-  const patches = await scb.readScbPatches();
-  const timestampPatches = await timestamps.readTimestampsPatches();
 
   let movieIndex = 1;
   for (const movie of movies) {
-    const matchingPatch =
-      patches.find(
-        (p) => isEqual(p.scbKey, movie.id) || isEqual(p.id, movie.id)
-      ) ||
-      timestampPatches.find(
-        (p) => isEqual(p.gsheetsKey, movie.id) || isEqual(p.id, movie.id)
-      );
-
-    if (matchingPatch?.tconst) {
-      movie.tconst = matchingPatch.tconst; // XXX provides movie ID to all importers, to refactor
-    }
-
     if (hasMissingIMDBData(movie)) {
-      const imdbSuggestionOptions =
-        (matchingPatch && "imdbType" in matchingPatch)
-          ? { acceptTypes: [matchingPatch?.imdbType] }
-          : undefined;
+      const imdbSuggestionOptions = movie.imdbType
+        ? { acceptTypes: [movie?.imdbType] }
+        : undefined;
       let imdbMovie: ImdbMovie = await getIMDBSuggestion(
-        matchingPatch?.tconst || movie.title,
+        movie.tconst ?? movie.primaryTitle ?? movie.gsheetsKey.name ?? movie.id.name,
         imdbSuggestionOptions
       );
 
@@ -42,16 +25,9 @@ export async function fetchMissingIMDBData(movies?: Movie[]) {
         console.log(
           ` - ${movieIndex}/${movies.length}: No match found for ${movie.id.episode} ${movie.id.name}`
         );
-        if (!patches[movie.title]) {
-          patches[movie.title] = null;
-        }
       } else {
         console.log(` - ${movieIndex}/${movies.length}: OK for ${movie.title}`);
-        Object.assign(movie, imdbMovie);
-        const patchValue = patches[movie.title];
-        if (typeof patchValue !== "string") {
-          Object.assign(movie, patchValue);
-        }
+        assignMissing(movie, imdbMovie);
       }
     }
     movieIndex++;
@@ -110,5 +86,5 @@ export function invalidateIMDBData(movie: Movie) {
 }
 
 function hasMissingIMDBData(movie: Movie) {
-  return !movie.tconst || !movie.primaryTitle
+  return !movie.tconst || !movie.primaryTitle;
 }

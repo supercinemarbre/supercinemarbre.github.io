@@ -1,0 +1,2794 @@
+[
+  {
+    "id": {
+      "episode": 221,
+      "name": "Parking"
+    },
+    "tconst": "tt0089775"
+  },
+  {
+    "id": {
+      "episode": 221,
+      "name": "Surf Nazis Must Die"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 220,
+      "name": "Les Aventures de Buckaroo Banzaï à travers la 8e dimension"
+    },
+    "tconst": "tt0086856"
+  },
+  {
+    "id": {
+      "episode": 219,
+      "name": "Patlabor 2: The Movie"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 216,
+      "name": "Le loup-garou de Paris"
+    },
+    "tconst": "tt0118604"
+  },
+  {
+    "id": {
+      "episode": 214,
+      "name": "Les mines du roi Salomon"
+    },
+    "tconst": "tt0042646"
+  },
+  {
+    "id": {
+      "episode": 212,
+      "name": "Godzilla"
+    },
+    "tconst": "tt0047034"
+  },
+  {
+    "id": {
+      "episode": 212,
+      "name": "Les gladiateurs"
+    },
+    "tconst": "tt0046899",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 210,
+      "name": "L'ile au trésor"
+    },
+    "tconst": "tt0043067"
+  },
+  {
+    "id": {
+      "episode": 210,
+      "name": "À l'abordage"
+    },
+    "tconst": "tt0044333",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 210,
+      "name": "Les Aventures de Peter Pan"
+    },
+    "tconst": "tt0046183"
+  },
+  {
+    "id": {
+      "episode": 198,
+      "name": "Le Corps et le Fouet"
+    },
+    "tconst": "tt0057078"
+  },
+  {
+    "id": {
+      "episode": 196,
+      "name": "Frankenstein conquiert le monde"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 196,
+      "name": "Barberousse"
+    },
+    "tconst": "tt0058888"
+  },
+  {
+    "id": {
+      "episode": 196,
+      "name": "Mothra"
+    },
+    "tconst": "tt0055198",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 193,
+      "name": "La petite fille au bout du chemin"
+    },
+    "tconst": "tt0074806"
+  },
+  {
+    "id": {
+      "episode": 193,
+      "name": "La légende de Zatoïchi: Zatoïchi contre yojimbo"
+    },
+    "tconst": "tt0066603",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 193,
+      "name": "Godzilla contre Hedora"
+    },
+    "tconst": "tt0067148",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 192,
+      "name": "L'animal"
+    },
+    "tconst": "tt0075683"
+  },
+  {
+    "id": {
+      "episode": 192,
+      "name": "Avec les compliments de Charlie"
+    },
+    "tconst": "tt0079488",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 191,
+      "name": "Les évadés de l'espace"
+    },
+    "tconst": "tt0078435"
+  },
+  {
+    "id": {
+      "episode": 188,
+      "name": "À la dérive"
+    },
+    "tconst": "tt0291502"
+  },
+  {
+    "id": {
+      "episode": 181,
+      "name": "American Girls"
+    },
+    "tconst": "tt0204946"
+  },
+  {
+    "id": {
+      "episode": 180,
+      "name": "Girl 6"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 179,
+      "name": "La proie"
+    },
+    "tconst": "tt0113360"
+  },
+  {
+    "id": {
+      "episode": 179,
+      "name": "Deux doigts sur la gachette"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 178,
+      "name": "Last Seduction"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 177,
+      "name": "Ed"
+    },
+    "tconst": "tt0116165",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 176,
+      "name": "Absolom 2022"
+    },
+    "tconst": "tt0110678"
+  },
+  {
+    "id": {
+      "episode": 176,
+      "name": "Shootfighter: Fight to the Death"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 174,
+      "name": "L'enfer du dimanche"
+    },
+    "tconst": "tt0146838"
+  },
+  {
+    "id": {
+      "episode": 173,
+      "name": "Chasse à l'homme"
+    },
+    "tconst": "tt0107076"
+  },
+  {
+    "id": {
+      "episode": 173,
+      "name": "Les yeux dans les Bleus"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 172,
+      "name": "Dragon : L'Histoire de Bruce Lee"
+    },
+    "tconst": "tt0106770"
+  },
+  {
+    "id": {
+      "episode": 171,
+      "name": "Bas les masques"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 171,
+      "name": "Scandale"
+    },
+    "tconst": "tt0042958"
+  },
+  {
+    "id": {
+      "episode": 170,
+      "name": "L'Étrange Créature du lac noir"
+    },
+    "tconst": "tt0046876"
+  },
+  {
+    "id": {
+      "episode": 169,
+      "name": "Cendrillon"
+    },
+    "tconst": "tt0042332"
+  },
+  {
+    "id": {
+      "episode": 168,
+      "name": "L'ultime razzia"
+    },
+    "tconst": "tt0049406"
+  },
+  {
+    "id": {
+      "episode": 167,
+      "name": "1984"
+    },
+    "tconst": "tt0087803"
+  },
+  {
+    "id": {
+      "episode": 165,
+      "name": "Wall Street"
+    },
+    "tconst": "tt0094291"
+  },
+  {
+    "id": {
+      "episode": 164,
+      "name": "Le flic de Beverly Hills 2"
+    },
+    "tconst": "tt0092644"
+  },
+  {
+    "id": {
+      "episode": 163,
+      "name": "Le Chasseur"
+    },
+    "tconst": "tt0080907"
+  },
+  {
+    "id": {
+      "episode": 163,
+      "name": "L'Equipée du Cannonball"
+    },
+    "tconst": "tt0082136",
+    "tmdbId": 11286
+  },
+  {
+    "id": {
+      "episode": 162,
+      "name": "Koyaanisqatsi, la prophétie"
+    },
+    "tconst": "tt0085809",
+    "tmdbId": 11314
+  },
+  {
+    "id": {
+      "episode": 162,
+      "name": "P.R.O.F.S."
+    },
+    "tconst": "tt0089762",
+    "tmdbId": 57308
+  },
+  {
+    "id": {
+      "episode": 158,
+      "name": "Suicide Squad"
+    },
+    "tconst": "tt1386697"
+  },
+  {
+    "id": {
+      "episode": 157,
+      "name": "Doctor Strange"
+    },
+    "tconst": "tt1211837"
+  },
+  {
+    "id": {
+      "episode": 157,
+      "name": "Robin des Bois"
+    },
+    "tconst": "tt0955308"
+  },
+  {
+    "id": {
+      "episode": 156,
+      "name": "The Thing"
+    },
+    "tconst": "tt0905372"
+  },
+  {
+    "id": {
+      "episode": 154,
+      "name": "The Strangers"
+    },
+    "tconst": "tt5215952"
+  },
+  {
+    "id": {
+      "episode": 154,
+      "name": "Noé"
+    },
+    "tconst": "tt1959490"
+  },
+  {
+    "id": {
+      "episode": 153,
+      "name": "Alice au pays des merveilles"
+    },
+    "tconst": "tt0043274"
+  },
+  {
+    "id": {
+      "episode": 153,
+      "name": "La nuit du chasseur"
+    },
+    "tconst": "tt0048424"
+  },
+  {
+    "id": {
+      "episode": 152,
+      "name": "Sabrina"
+    },
+    "tconst": "tt0047437"
+  },
+  {
+    "id": {
+      "episode": 152,
+      "name": "Ali Baba et les 40 voleurs"
+    },
+    "tconst": "tt0046695"
+  },
+  {
+    "id": {
+      "episode": 150,
+      "name": "Le Retour de la mouche"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 149,
+      "name": "Charlie et ses drôles de dames"
+    },
+    "tconst": "tt0160127"
+  },
+  {
+    "id": {
+      "episode": 149,
+      "name": "Fast & Furious 4"
+    },
+    "tconst": "tt1013752"
+  },
+  {
+    "id": {
+      "episode": 149,
+      "name": "Arrivederci amore, ciao"
+    },
+    "tconst": "tt0325011"
+  },
+  {
+    "id": {
+      "episode": 148,
+      "name": "Le vent se lève"
+    },
+    "tconst": "tt0460989"
+  },
+  {
+    "id": {
+      "episode": 148,
+      "name": "Elephant"
+    },
+    "tconst": "tt0363589"
+  },
+  {
+    "id": {
+      "episode": 147,
+      "name": "Disco"
+    },
+    "tconst": "tt0953369"
+  },
+  {
+    "id": {
+      "episode": 147,
+      "name": "Camping"
+    },
+    "tconst": "tt0473829"
+  },
+  {
+    "id": {
+      "episode": 146,
+      "name": "Bliss"
+    },
+    "tconst": "tt1172233"
+  },
+  {
+    "id": {
+      "episode": 145,
+      "name": "L'extraterrestre"
+    },
+    "tconst": "tt0215757"
+  },
+  {
+    "id": {
+      "episode": 145,
+      "name": "Incontrôlable"
+    },
+    "tconst": "tt0456070"
+  },
+  {
+    "id": {
+      "episode": 145,
+      "name": "De l'autre côté du lit"
+    },
+    "tconst": "tt1275590"
+  },
+  {
+    "id": {
+      "episode": 144,
+      "name": "Shaft"
+    },
+    "tconst": "tt0162650"
+  },
+  {
+    "id": {
+      "episode": 144,
+      "name": "Je vais bien, ne t'en fais pas"
+    },
+    "tconst": "tt0485241"
+  },
+  {
+    "id": {
+      "episode": 144,
+      "name": "Des serpents dans l'avion"
+    },
+    "tconst": "tt0417148",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 144,
+      "name": "Ensemble, c'est tout"
+    },
+    "tconst": "tt0792965"
+  },
+  {
+    "id": {
+      "episode": 143,
+      "name": "Spider-Man"
+    },
+    "tconst": "tt0145487"
+  },
+  {
+    "id": {
+      "episode": 143,
+      "name": "Les 4 Fantastiques"
+    },
+    "tconst": "tt0120667"
+  },
+  {
+    "id": {
+      "episode": 140,
+      "name": "La prisonnière"
+    },
+    "tconst": "tt0063458"
+  },
+  {
+    "id": {
+      "episode": 139,
+      "name": "West Side Story"
+    },
+    "tconst": "tt0055614"
+  },
+  {
+    "id": {
+      "episode": 139,
+      "name": "L'Affaire Thomas Crown"
+    },
+    "tconst": "tt0063688"
+  },
+  {
+    "id": {
+      "episode": 139,
+      "name": "Le Bossu"
+    },
+    "tconst": "tt0052644"
+  },
+  {
+    "id": {
+      "episode": 138,
+      "name": "Un cri dans l'océan"
+    },
+    "tconst": "tt0118956"
+  },
+  {
+    "id": {
+      "episode": 137,
+      "name": "Bound"
+    },
+    "tconst": "tt0115736"
+  },
+  {
+    "id": {
+      "episode": 135,
+      "name": "Beowulf"
+    },
+    "tconst": "tt0120604"
+  },
+  {
+    "id": {
+      "episode": 135,
+      "name": "Hudson Hawk, Gentleman t cambrioleur"
+    },
+    "tconst": "tt0102070"
+  },
+  {
+    "id": {
+      "episode": 135,
+      "name": "Microcosmos : Le peuple de l'herbe"
+    },
+    "tconst": "tt0117040"
+  },
+  {
+    "id": {
+      "episode": 134,
+      "name": "Les Tortues Ninja 2 : Les héros sont de retour"
+    },
+    "tconst": "tt0103060"
+  },
+  {
+    "id": {
+      "episode": 133,
+      "name": "Jumanji"
+    },
+    "tconst": "tt0113497"
+  },
+  {
+    "id": {
+      "episode": 132,
+      "name": "Ghost in the Shell"
+    },
+    "tconst": "tt0113568"
+  },
+  {
+    "id": {
+      "episode": 132,
+      "name": "Le Prince d'Égypte"
+    },
+    "tconst": "tt0120794"
+  },
+  {
+    "id": {
+      "episode": 132,
+      "name": "Kickboxer 2 : Le Successeur"
+    },
+    "tconst": "tt0102202"
+  },
+  {
+    "id": {
+      "episode": 131,
+      "name": "Braquage à l'italienne"
+    },
+    "tconst": "tt0317740"
+  },
+  {
+    "id": {
+      "episode": 131,
+      "name": "Super"
+    },
+    "tconst": "tt1512235"
+  },
+  {
+    "id": {
+      "episode": 131,
+      "name": "The Fast and the Furious: Tokyo Drift"
+    },
+    "tconst": "tt0463985"
+  },
+  {
+    "id": {
+      "episode": 131,
+      "name": "C'est la fin"
+    },
+    "tconst": "tt1245492"
+  },
+  {
+    "id": {
+      "episode": 130,
+      "name": "Red"
+    },
+    "tconst": "tt1245526"
+  },
+  {
+    "id": {
+      "episode": 130,
+      "name": "L'homme qui voulait vivre sa vie"
+    },
+    "tconst": "tt1533818"
+  },
+  {
+    "id": {
+      "episode": 127,
+      "name": "Firefox, l'arme absolue"
+    },
+    "tconst": "tt0083943"
+  },
+  {
+    "id": {
+      "episode": 124,
+      "name": "TRON"
+    },
+    "tconst": "tt0084827"
+  },
+  {
+    "id": {
+      "episode": 124,
+      "name": "Jean de Florette"
+    },
+    "tconst": "tt0091288"
+  },
+  {
+    "tconst": "tt1606378",
+    "id": {
+      "episode": 121,
+      "name": "Die Hard : Belle journée pour mourir"
+    }
+  },
+  {
+    "tconst": "tt1872181",
+    "id": {
+      "episode": 121,
+      "name": "The Amazing Spider-Man : Le Destin d'un héros"
+    }
+  },
+  {
+    "id": {
+      "episode": 120,
+      "name": "Le Privé"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0074483",
+    "id": {
+      "episode": 119,
+      "name": "L’inspecteur Harry ne renonce jamais"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 119,
+      "name": "L'Inspecteur ne renonce jamais"
+    },
+    "id": {
+      "episode": 119,
+      "name": "L’inspecteur Harry ne renonce jamais"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 119,
+      "name": "Network : Main basse sur la TV"
+    },
+    "id": {
+      "episode": 119,
+      "name": "Network"
+    }
+  },
+  {
+    "tconst": "tt0069251",
+    "jwMissing": true,
+    "id": {
+      "episode": 118,
+      "name": "Le serpent"
+    }
+  },
+  {
+    "title": "Le Cimetière de la Morale",
+    "tconst": "tt0073207",
+    "id": {
+      "episode": 118,
+      "name": "Le cimetierre de la morale"
+    }
+  },
+  {
+    "tconst": "tt0076759",
+    "id": {
+      "episode": 117,
+      "name": "Star Wars"
+    }
+  },
+  {
+    "tconst": "tt0073582",
+    "id": {
+      "episode": 117,
+      "name": "Les frissons de l’angoisse"
+    }
+  },
+  {
+    "title": "Elle boit pas, elle fume pas, elle drague pas, mais... elle cause !",
+    "tconst": "tt0065686",
+    "id": {
+      "episode": 117,
+      "name": "Elle boit pas, elle fume pas, elle drague mais… elle cause"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 117,
+      "name": "La Guerre des étoiles"
+    },
+    "id": {
+      "episode": 117,
+      "name": "Star Wars"
+    }
+  },
+  {
+    "tconst": "tt0074991",
+    "id": {
+      "episode": 116,
+      "name": "Obsession"
+    }
+  },
+  {
+    "tconst": "tt0066819",
+    "id": {
+      "episode": 116,
+      "name": "Les proies"
+    }
+  },
+  {
+    "id": {
+      "episode": 116,
+      "name": "Les bidasses en folie"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0070356",
+    "title": "Mais où est donc passée la septième compagnie ?",
+    "originalTitle": "Mais où est donc passée la septième compagnie ?",
+    "jwMissing": true,
+    "id": {
+      "episode": 116,
+      "name": "Mais où est donc passé la 7e compagnie"
+    }
+  },
+  {
+    "tconst": "tt0066207",
+    "id": {
+      "episode": 116,
+      "name": "Peau d’âne"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 116,
+      "name": "Mais où est donc passée la 7ème compagnie ?"
+    },
+    "id": {
+      "episode": 116,
+      "name": "Mais où est donc passé la 7e compagnie"
+    }
+  },
+  {
+    "tconst": "tt0065938",
+    "id": {
+      "episode": 115,
+      "name": "De l’or pour les braves"
+    }
+  },
+  {
+    "tconst": "tt0074720",
+    "id": {
+      "episode": 115,
+      "name": "Le Jouet"
+    }
+  },
+  {
+    "tconst": "tt0059800",
+    "id": {
+      "episode": 114,
+      "name": "Opération Tonnerre"
+    }
+  },
+  {
+    "tconst": "tt0055336",
+    "id": {
+      "episode": 114,
+      "name": "Le Président"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 114,
+      "name": "Le Gendarme de Saint-Tropez"
+    },
+    "id": {
+      "episode": 114,
+      "name": "Les gendarmes de St Tropez"
+    }
+  },
+  {
+    "scbKey": {
+      "episode": null,
+      "name": "Contagion"
+    },
+    "id": {
+      "episode": 112,
+      "name": "Contagion"
+    },
+    "tconst": "tt1598778"
+  },
+  {
+    "scbKey": {
+      "episode": null,
+      "name": "Taxi 5"
+    },
+    "id": {
+      "episode": 112,
+      "name": "Taxi 5"
+    }
+  },
+  {
+    "id": {
+      "episode": 112,
+      "name": "Les Ailes d'Honnéamise"
+    },
+    "jwMissing": true,
+    "gsheetsKey": {
+      "episode": 112,
+      "name": "Les Ailes d'Honnéamise"
+    },
+    "tconst": "tt0093207",
+    "forceImport": true
+  },
+  {
+    "forceImport": true,
+    "id": {
+      "episode": 112,
+      "name": "Mosquito Coast"
+    }
+  },
+  {
+    "forceImport": true,
+    "id": {
+      "episode": 112,
+      "name": "Les 8 diagrammes de Wu-Lang"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 112,
+      "name": "13 Hours: The Secret Soldiers Of Benghazi"
+    },
+    "id": {
+      "episode": 112,
+      "name": "13 hours"
+    }
+  },
+  {
+    "id": {
+      "episode": 111,
+      "name": "Six-Pack"
+    },
+    "tconst": "tt0221554",
+    "tmdbId": "5643",
+    "gsheetsKey": {
+      "episode": 111,
+      "name": "Six-Pack"
+    },
+    "forceImport": true
+  },
+  {
+    "id": {
+      "episode": 111,
+      "name": "55 jours de Pékin"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 111,
+      "name": "New Kids Turbo"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0107692",
+    "forceImport": true,
+    "id": {
+      "episode": 111,
+      "name": "Ninja Scroll"
+    }
+  },
+  {
+    "forceImport": true,
+    "id": {
+      "episode": 111,
+      "name": "Antarctica"
+    }
+  },
+  {
+    "tconst": "tt1588170",
+    "id": {
+      "episode": 110,
+      "name": "J’ai rencontré le diable"
+    }
+  },
+  {
+    "tconst": "tt3202120",
+    "id": {
+      "episode": 109,
+      "name": "Barbecue"
+    }
+  },
+  {
+    "title": "Real Steel",
+    "tconst": "tt0433035",
+    "id": {
+      "episode": 109,
+      "name": "Reel Steal"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 108,
+      "name": "Les 4 Fantastiques"
+    },
+    "id": {
+      "episode": 108,
+      "name": "Fantastic Four"
+    },
+    "tconst": "tt1502712"
+  },
+  {
+    "id": {
+      "episode": 107,
+      "name": "The square"
+    },
+    "tconst": "tt4995790"
+  },
+  {
+    "tconst": "tt1655442",
+    "id": {
+      "episode": 106,
+      "name": "The Artist"
+    }
+  },
+  {
+    "tconst": "tt1473357",
+    "id": {
+      "episode": 106,
+      "name": "Fatal"
+    }
+  },
+  {
+    "tconst": "tt1037705",
+    "id": {
+      "episode": 105,
+      "name": "Le livre d’Eli"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 105,
+      "name": "Gainsbourg: Une Vie Héroïque"
+    },
+    "id": {
+      "episode": 105,
+      "name": "Gainsbourg (vie héroïque)"
+    }
+  },
+  {
+    "tconst": "tt0780504",
+    "id": {
+      "episode": 104,
+      "name": "Drive"
+    }
+  },
+  {
+    "tconst": "tt1596343",
+    "id": {
+      "episode": 104,
+      "name": "Fast & Furious 5"
+    }
+  },
+  {
+    "title": "Happiness Therapy",
+    "tconst": "tt1045658",
+    "id": {
+      "episode": 104,
+      "name": "Happyness Therapy"
+    }
+  },
+  {
+    "tconst": "tt1663202",
+    "id": {
+      "episode": 103,
+      "name": "The Revenant"
+    }
+  },
+  {
+    "tconst": "tt5598172",
+    "id": {
+      "episode": 103,
+      "name": "Si j’étais un homme"
+    }
+  },
+  {
+    "tconst": "tt3079380",
+    "id": {
+      "episode": 102,
+      "name": "Spy"
+    }
+  },
+  {
+    "tconst": "tt1194173",
+    "id": {
+      "episode": 102,
+      "name": "Jason Bourne: l’héritage"
+    }
+  },
+  {
+    "tconst": "tt0477080",
+    "id": {
+      "episode": 102,
+      "name": "Unstoppable"
+    }
+  },
+  {
+    "tconst": "tt1104001",
+    "id": {
+      "episode": 100,
+      "name": "Tron: l’héritage"
+    }
+  },
+  {
+    "tconst": "tt2120120",
+    "id": {
+      "episode": 100,
+      "name": "Pixels"
+    }
+  },
+  {
+    "tconst": "tt1155076",
+    "id": {
+      "episode": 100,
+      "name": "Karate Kid"
+    }
+  },
+  {
+    "tconst": "tt0251433",
+    "id": {
+      "episode": 99,
+      "name": "Time & Tide"
+    }
+  },
+  {
+    "tconst": "tt0206634",
+    "id": {
+      "episode": 99,
+      "name": "Les fils de l’homme"
+    }
+  },
+  {
+    "tconst": "tt0949731",
+    "id": {
+      "episode": 99,
+      "name": "Phénomènes"
+    }
+  },
+  {
+    "tconst": "tt0224209",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMDFlMDE0MTYtZDBlOC00NzY0LThmYTktYzY5YjU0ZmIxNTIwXkEyXkFqcGdeQXVyMzIzNTIwNjU@._V1_UY268_CR3,0,182,268_AL_.jpg",
+    "jwMissing": true,
+    "id": {
+      "episode": 96,
+      "name": "T’aime"
+    }
+  },
+  {
+    "tconst": "tt0056193",
+    "id": {
+      "episode": 94,
+      "name": "Lolita"
+    }
+  },
+  {
+    "tconst": "tt0064116",
+    "id": {
+      "episode": 93,
+      "name": "Il était une fois dans l’Ouest"
+    }
+  },
+  {
+    "tconst": "tt0115963",
+    "id": {
+      "episode": 92,
+      "name": "Dangeureuse Alliance"
+    }
+  },
+  {
+    "tconst": "tt0099088",
+    "id": {
+      "episode": 92,
+      "name": "Retour vers le futur 3"
+    }
+  },
+  {
+    "title": "Pleasantville",
+    "tconst": "tt0120789",
+    "jwMissing": true,
+    "id": {
+      "episode": 91,
+      "name": "Retour sur Pleasantville"
+    }
+  },
+  {
+    "tconst": "tt0107688",
+    "id": {
+      "episode": 90,
+      "name": "L’étrange Noël de Monsieur Jack"
+    }
+  },
+  {
+    "tconst": "tt0104431",
+    "id": {
+      "episode": 90,
+      "name": "Maman j’ai encore râté l’avion"
+    }
+  },
+  {
+    "tconst": "tt0163651",
+    "id": {
+      "episode": 90,
+      "name": "American Pie"
+    }
+  },
+  {
+    "tconst": "tt0114069",
+    "id": {
+      "episode": 88,
+      "name": "Alerte !"
+    }
+  },
+  {
+    "tconst": "tt0120780",
+    "id": {
+      "episode": 88,
+      "name": "Hors d’atteinte"
+    }
+  },
+  {
+    "tconst": "tt0114478",
+    "id": {
+      "episode": 87,
+      "name": "Smoke"
+    }
+  },
+  {
+    "tconst": "tt0105414",
+    "id": {
+      "episode": 87,
+      "name": "JF partegerait appartement"
+    }
+  },
+  {
+    "tconst": "tt0112431",
+    "id": {
+      "episode": 87,
+      "name": "Babe"
+    }
+  },
+  {
+    "tconst": "tt0153737",
+    "jwMissing": true,
+    "id": {
+      "episode": 86,
+      "name": "Folle d’elle"
+    }
+  },
+  {
+    "tconst": "tt0118757",
+    "id": {
+      "episode": 86,
+      "name": "Bouge !"
+    }
+  },
+  {
+    "id": {
+      "episode": 85,
+      "name": "Hackers"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0061094",
+    "jwMissing": true,
+    "id": {
+      "episode": 83,
+      "name": "L’odysée du cosmos"
+    }
+  },
+  {
+    "title": "Au service secret de Sa Majesté",
+    "tconst": "tt0064757",
+    "id": {
+      "episode": 83,
+      "name": "Au service de Sa Majesté"
+    }
+  },
+  {
+    "id": {
+      "episode": 83,
+      "name": "Mothra contre Godzilla"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0055832",
+    "id": {
+      "episode": 83,
+      "name": "Cartouche"
+    }
+  },
+  {
+    "tconst": "tt0096018",
+    "id": {
+      "episode": 82,
+      "name": "A bout de course"
+    }
+  },
+  {
+    "id": {
+      "episode": 82,
+      "name": "Rusty James"
+    },
+    "tconst": "tt0086216",
+    "tmdbId": 232
+  },
+  {
+    "id": {
+      "episode": 82,
+      "name": "Portés disparus 3"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0095491",
+    "jwMissing": true,
+    "id": {
+      "episode": 82,
+      "name": "Tiger on the Beat"
+    }
+  },
+  {
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BM2YxOGQ0N2UtOTRjYy00NjJiLWFhZWEtMjU5ZjgwMjkwZjZlXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_UY268_CR10,0,182,268_AL_.jpg",
+    "id": {
+      "episode": 81,
+      "name": "Blue Velvet"
+    }
+  },
+  {
+    "tconst": "tt0081693",
+    "jwMissing": true,
+    "id": {
+      "episode": 80,
+      "name": "L’homme puma"
+    }
+  },
+  {
+    "id": {
+      "episode": 80,
+      "name": "The Wall"
+    },
+    "jwMissing": true
+  },
+  {
+    "title": "Spinal Tap",
+    "tconst": "tt0088258",
+    "imdbVotes": 126504,
+    "id": {
+      "episode": 79,
+      "name": "Spinal Tap"
+    }
+  },
+  {
+    "tconst": "tt0094332",
+    "id": {
+      "episode": 78,
+      "name": "Les sorcières d’Eastwick"
+    }
+  },
+  {
+    "tconst": "tt0083199",
+    "jwMissing": true,
+    "id": {
+      "episode": 78,
+      "name": "L’enfer des armes"
+    }
+  },
+  {
+    "tconst": "tt0096320",
+    "id": {
+      "episode": 78,
+      "name": "Jumeaux"
+    }
+  },
+  {
+    "tconst": "tt0093435",
+    "id": {
+      "episode": 78,
+      "name": "City on Fire"
+    }
+  },
+  {
+    "tconst": "tt0094898",
+    "id": {
+      "episode": 77,
+      "name": "Un prince à New-york"
+    }
+  },
+  {
+    "tconst": "tt0090329",
+    "id": {
+      "episode": 77,
+      "name": "Witness"
+    }
+  },
+  {
+    "id": {
+      "episode": 77,
+      "name": "Turkish Star Wars"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 77,
+      "name": "Devil Story"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0080339",
+    "id": {
+      "episode": 76,
+      "name": "Y’a-t-il un pilote dans l’avion"
+    }
+  },
+  {
+    "title": "Les Duellistes",
+    "id": {
+      "episode": 75,
+      "name": "The duellist"
+    }
+  },
+  {
+    "tconst": "tt0490234",
+    "id": {
+      "episode": 75,
+      "name": "Un secret"
+    }
+  },
+  {
+    "title": "If....",
+    "tconst": "tt0063850",
+    "id": {
+      "episode": 75,
+      "name": "If"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 75,
+      "name": "Les Duellistes"
+    },
+    "id": {
+      "episode": 75,
+      "name": "The duellist"
+    }
+  },
+  {
+    "id": {
+      "episode": 74,
+      "name": "Lâchez les bolides"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0073918",
+    "id": {
+      "episode": 74,
+      "name": "Yakuza"
+    }
+  },
+  {
+    "tconst": "tt0079944",
+    "id": {
+      "episode": 74,
+      "name": "Stalker"
+    }
+  },
+  {
+    "tconst": "tt0071807",
+    "id": {
+      "episode": 74,
+      "name": "L’homme au pistolet d’or"
+    }
+  },
+  {
+    "tconst": "tt0076897",
+    "id": {
+      "episode": 74,
+      "name": "Vous n’aurez pas l’Alsace et la Lorraine"
+    }
+  },
+  {
+    "id": {
+      "episode": 73,
+      "name": "Zorro"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0071315",
+    "id": {
+      "episode": 73,
+      "name": "Chinatown"
+    }
+  },
+  {
+    "scbKey": {
+      "episode": 72,
+      "name": "Opération Dragon"
+    },
+    "id": {
+      "episode": 73,
+      "name": "Opération Dragon"
+    }
+  },
+  {
+    "tconst": "tt0079116",
+    "id": {
+      "episode": 73,
+      "name": "L’évadé d’Alcatraz"
+    }
+  },
+  {
+    "tconst": "tt0072448",
+    "id": {
+      "episode": 73,
+      "name": "Zorro"
+    }
+  },
+  {
+    "id": {
+      "episode": 72,
+      "name": "Soldier of Orange"
+    },
+    "jwMissing": true
+  },
+  {
+    "scbKey": {
+      "episode": 71,
+      "name": "Sex and Fury"
+    },
+    "id": {
+      "episode": 72,
+      "name": "Sex and Fury"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0070608",
+    "id": {
+      "episode": 71,
+      "name": "Robin des bois"
+    }
+  },
+  {
+    "tconst": "tt0066026",
+    "id": {
+      "episode": 71,
+      "name": "M.A.S.H"
+    }
+  },
+  {
+    "tconst": "tt0069113",
+    "id": {
+      "episode": 71,
+      "name": "L’aventure du Poséidon"
+    }
+  },
+  {
+    "id": {
+      "episode": 70,
+      "name": "Le couvent de la bête sacrée"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0068816",
+    "id": {
+      "episode": 70,
+      "name": "Baby Cart 2 : l’enfant massacre"
+    }
+  },
+  {
+    "tconst": "tt0078767",
+    "id": {
+      "episode": 70,
+      "name": "Amityville"
+    }
+  },
+  {
+    "tconst": "tt0062755",
+    "id": {
+      "episode": 69,
+      "name": "L’étrangleur de Boston"
+    }
+  },
+  {
+    "tconst": "tt0368226",
+    "jwMissing": true,
+    "id": {
+      "episode": 67,
+      "name": "The Room"
+    }
+  },
+  {
+    "tconst": "tt1216496",
+    "id": {
+      "episode": 67,
+      "name": "Mother"
+    }
+  },
+  {
+    "tconst": "tt0470705",
+    "id": {
+      "episode": 67,
+      "name": "Bug"
+    }
+  },
+  {
+    "id": {
+      "episode": 66,
+      "name": "Kamikaze Girls"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0444182",
+    "id": {
+      "episode": 66,
+      "name": "Indigènes"
+    }
+  },
+  {
+    "tconst": "tt0268978",
+    "id": {
+      "episode": 66,
+      "name": "Un homme d’exception"
+    }
+  },
+  {
+    "tconst": "tt0284837",
+    "id": {
+      "episode": 66,
+      "name": "Ali G"
+    }
+  },
+  {
+    "tconst": "tt0450188",
+    "id": {
+      "episode": 65,
+      "name": "La môme"
+    }
+  },
+  {
+    "tconst": "tt0407304",
+    "id": {
+      "episode": 65,
+      "name": "La guerre des mondes"
+    }
+  },
+  {
+    "tconst": "tt0796212",
+    "id": {
+      "episode": 64,
+      "name": "Exilé"
+    }
+  },
+  {
+    "id": {
+      "episode": 64,
+      "name": "Les clefs de bagnole"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt1046173",
+    "id": {
+      "episode": 63,
+      "name": "G.I.Joe: Le réveil du Cobra"
+    }
+  },
+  {
+    "tconst": "tt0464141",
+    "id": {
+      "episode": 62,
+      "name": "L’orphelinat"
+    }
+  },
+  {
+    "tconst": "tt0060153",
+    "id": {
+      "episode": 60,
+      "name": "Batman"
+    }
+  },
+  {
+    "tconst": "tt0062622",
+    "id": {
+      "episode": 59,
+      "name": "2001, l’odyssée de l’espace"
+    }
+  },
+  {
+    "tconst": "tt0114746",
+    "id": {
+      "episode": 58,
+      "name": "L’armée des 12 singes"
+    }
+  },
+  {
+    "id": {
+      "episode": 58,
+      "name": "Une balle dans la tête"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 58,
+      "name": "Baraka"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 57,
+      "name": "Dancing Machine"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 56,
+      "name": "Street Fighter II The Movie"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0110216",
+    "id": {
+      "episode": 56,
+      "name": "Junior"
+    }
+  },
+  {
+    "tconst": "tt0105695",
+    "id": {
+      "episode": 56,
+      "name": "Impitoyable"
+    }
+  },
+  {
+    "tconst": "tt0104558",
+    "id": {
+      "episode": 56,
+      "name": "Police Story 3"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 55,
+      "name": "Une journée en enfer  (Die Hard 3)"
+    },
+    "id": {
+      "episode": 55,
+      "name": "Une journée en enfer"
+    }
+  },
+  {
+    "tconst": "tt0108179",
+    "id": {
+      "episode": 54,
+      "name": "La soif de l’or"
+    }
+  },
+  {
+    "title": "The Mission",
+    "tconst": "tt0220644",
+    "jwMissing": true,
+    "id": {
+      "episode": 53,
+      "name": "The mission"
+    }
+  },
+  {
+    "tconst": "tt0103855",
+    "id": {
+      "episode": 53,
+      "name": "Bodyguard"
+    }
+  },
+  {
+    "id": {
+      "episode": 53,
+      "name": "Piège mortel à Hawai"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0099871",
+    "id": {
+      "episode": 53,
+      "name": "L’echelle de Jacob"
+    }
+  },
+  {
+    "tconst": "tt0130236",
+    "jwMissing": true,
+    "id": {
+      "episode": 52,
+      "name": "Samourai Cop"
+    }
+  },
+  {
+    "id": {
+      "episode": 52,
+      "name": "Barbarians"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0086197",
+    "id": {
+      "episode": 51,
+      "name": "L’etoffe des héros"
+    }
+  },
+  {
+    "id": {
+      "episode": 50,
+      "name": "Mad Max"
+    },
+    "tconst": "tt0079501",
+    "comment": "Déjà classé dans les années 70 (épisode 21)"
+  },
+  {
+    "title": "Mister Dynamite",
+    "tconst": "tt0091431",
+    "id": {
+      "episode": 49,
+      "name": "Mr Dynamite"
+    }
+  },
+  {
+    "id": {
+      "episode": 49,
+      "name": "Allan Quatermain et les mines du roi Salomon"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0093409",
+    "id": {
+      "episode": 48,
+      "name": "L’arme fatale"
+    }
+  },
+  {
+    "tconst": "tt0093428",
+    "id": {
+      "episode": 46,
+      "name": "Tuer n’est pas jouer"
+    }
+  },
+  {
+    "id": {
+      "episode": 46,
+      "name": "Transformers: The Movie"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0097523",
+    "id": {
+      "episode": 45,
+      "name": "Chérie, j’ai rétréci les gosses"
+    }
+  },
+  {
+    "tconst": "tt0097428",
+    "id": {
+      "episode": 45,
+      "name": "Ghostbusters 2"
+    }
+  },
+  {
+    "id": {
+      "episode": 45,
+      "name": "Patlabor: the movie"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0086022",
+    "id": {
+      "episode": 44,
+      "name": "Nostalghia"
+    }
+  },
+  {
+    "title": "Possession",
+    "tconst": "tt0082933",
+    "id": {
+      "episode": 44,
+      "name": "Possessions"
+    }
+  },
+  {
+    "title": "Star Wars, Episode II : L’Attaque des clones",
+    "tconst": "tt0121765",
+    "id": {
+      "episode": 43,
+      "name": "Star Wars II: l’attaque des clones"
+    }
+  },
+  {
+    "tconst": "tt0346491",
+    "id": {
+      "episode": 43,
+      "name": "Alexander"
+    }
+  },
+  {
+    "tconst": "tt0414993",
+    "id": {
+      "episode": 42,
+      "name": "The Fountain"
+    }
+  },
+  {
+    "tconst": "tt0458352",
+    "id": {
+      "episode": 41,
+      "name": "Le diable s’habille en Prada"
+    }
+  },
+  {
+    "tconst": "tt0405094",
+    "id": {
+      "episode": 40,
+      "name": "La vie des autres"
+    }
+  },
+  {
+    "tconst": "tt0363163",
+    "id": {
+      "episode": 40,
+      "name": "La chute"
+    }
+  },
+  {
+    "tconst": "tt0996605",
+    "id": {
+      "episode": 39,
+      "name": "Les chansons d’amour"
+    }
+  },
+  {
+    "tconst": "tt0281108",
+    "id": {
+      "episode": 38,
+      "name": "Le raid"
+    }
+  },
+  {
+    "tconst": "tt0332452",
+    "id": {
+      "episode": 38,
+      "name": "Troie"
+    }
+  },
+  {
+    "imdbType": "video",
+    "jwMissing": true,
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTA0ZTNmYTItNGJkMy00MjhjLWExNjctMWY4M2Q3YzY2MWI5XkEyXkFqcGc@._V1_.jpg",
+    "id": {
+      "episode": 37,
+      "name": "Fucking Kassovitz"
+    }
+  },
+  {
+    "tconst": "tt0162222",
+    "id": {
+      "episode": 37,
+      "name": "Seul au monde"
+    }
+  },
+  {
+    "tconst": "tt0163978",
+    "id": {
+      "episode": 36,
+      "name": "La plage"
+    }
+  },
+  {
+    "id": {
+      "episode": 36,
+      "name": "Appaloosa"
+    },
+    "jwMissing": true
+  },
+  {
+    "title": "Irréversible",
+    "tconst": "tt0290673",
+    "id": {
+      "episode": 35,
+      "name": "Irreversible"
+    }
+  },
+  {
+    "tconst": "tt0898367",
+    "id": {
+      "episode": 34,
+      "name": "The Road"
+    }
+  },
+  {
+    "tconst": "tt0262429",
+    "id": {
+      "episode": 33,
+      "name": "Gamer"
+    }
+  },
+  {
+    "tconst": "tt0386695",
+    "id": {
+      "episode": 32,
+      "name": "Les 11 Commandements"
+    }
+  },
+  {
+    "title": "Prédictions",
+    "tconst": "tt0448011",
+    "id": {
+      "episode": 31,
+      "name": "Predictions"
+    }
+  },
+  {
+    "id": {
+      "episode": 31,
+      "name": "Narc"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 30,
+      "name": "Avalon"
+    },
+    "tconst": "tt0267287",
+    "tmdbId": "10881"
+  },
+  {
+    "id": {
+      "episode": 30,
+      "name": "Prête moi ta main"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0483607",
+    "id": {
+      "episode": 29,
+      "name": "Doomsday"
+    }
+  },
+  {
+    "tconst": "tt1329454",
+    "id": {
+      "episode": 29,
+      "name": "Vengeance"
+    }
+  },
+  {
+    "tconst": "tt0230600",
+    "id": {
+      "episode": 28,
+      "name": "Les autres"
+    }
+  },
+  {
+    "tconst": "tt0467406",
+    "id": {
+      "episode": 28,
+      "name": "Juno"
+    }
+  },
+  {
+    "id": {
+      "episode": 26,
+      "name": "Le samourai du crépuscule"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0363226",
+    "id": {
+      "episode": 26,
+      "name": "Zatoichi"
+    }
+  },
+  {
+    "tconst": "tt0376968",
+    "id": {
+      "episode": 26,
+      "name": "Le retour"
+    }
+  },
+  {
+    "tconst": "tt0397535",
+    "id": {
+      "episode": 25,
+      "name": "Memoire d’une geïsha"
+    }
+  },
+  {
+    "tconst": "tt0814314",
+    "id": {
+      "episode": 25,
+      "name": "7 vies"
+    }
+  },
+  {
+    "id": {
+      "episode": 25,
+      "name": "Visitor Q"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0340855",
+    "id": {
+      "episode": 25,
+      "name": "Monster"
+    }
+  },
+  {
+    "tconst": "tt0075793",
+    "tmdbId": "42269",
+    "jwMissing": true,
+    "id": {
+      "episode": 22,
+      "name": "Nous nous sommes tant aimés"
+    }
+  },
+  {
+    "title": "Mondwest",
+    "tconst": "tt0070909",
+    "id": {
+      "episode": 22,
+      "name": "MondWest / West World"
+    }
+  },
+  {
+    "tconst": "tt0074103",
+    "id": {
+      "episode": 22,
+      "name": "L’aile ou la cuisse"
+    }
+  },
+  {
+    "id": {
+      "episode": 22,
+      "name": "Hanzo the Razor: sword of justice"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 22,
+      "name": "Godzilla vs Mecha Godzilla"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 22,
+      "name": "The street fighter"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0077416",
+    "id": {
+      "episode": 21,
+      "name": "Voyage au bout de l’enfer"
+    }
+  },
+  {
+    "tconst": "tt0076070",
+    "id": {
+      "episode": 21,
+      "name": "L’épreuve de force"
+    }
+  },
+  {
+    "tconst": "tt0067023",
+    "id": {
+      "episode": 21,
+      "name": "Duel"
+    }
+  },
+  {
+    "tconst": "tt0079501",
+    "id": {
+      "episode": 21,
+      "name": "Mad Max"
+    }
+  },
+  {
+    "tconst": "tt0077402",
+    "id": {
+      "episode": 21,
+      "name": "Zombie"
+    }
+  },
+  {
+    "tconst": "tt0075314",
+    "id": {
+      "episode": 21,
+      "name": "Taxi Driver"
+    }
+  },
+  {
+    "id": {
+      "episode": 21,
+      "name": "Vanishing Point"
+    },
+    "jwMissing": true
+  },
+  {
+    "title": "On l’appelle Trinita",
+    "tconst": "tt0067355",
+    "id": {
+      "episode": 20,
+      "name": "On l’appellait Trinita"
+    }
+  },
+  {
+    "tconst": "tt0071615",
+    "id": {
+      "episode": 20,
+      "name": "La montagne sacrée"
+    }
+  },
+  {
+    "tconst": "tt0074102",
+    "id": {
+      "episode": 18,
+      "name": "L’empire des sens"
+    }
+  },
+  {
+    "tconst": "tt0076752",
+    "id": {
+      "episode": 18,
+      "name": "L’espion qui m’aimait"
+    }
+  },
+  {
+    "id": {
+      "episode": 18,
+      "name": "Histoire d’O"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 18,
+      "name": "Salo ou les 120 journées de Sodome"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 17,
+      "name": "La femme scorpion"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0068815",
+    "id": {
+      "episode": 17,
+      "name": "Baby Cart"
+    }
+  },
+  {
+    "tconst": "tt0072901",
+    "id": {
+      "episode": 17,
+      "name": "Les douze travaux d’Astérix"
+    }
+  },
+  {
+    "tconst": "tt0068473",
+    "id": {
+      "episode": 17,
+      "name": "Delivrance"
+    }
+  },
+  {
+    "tconst": "tt0077631",
+    "id": {
+      "episode": 17,
+      "name": "Grease"
+    }
+  },
+  {
+    "tconst": "tt0070354",
+    "id": {
+      "episode": 17,
+      "name": "Le Magnifique"
+    }
+  },
+  {
+    "tconst": "tt0070246",
+    "id": {
+      "episode": 17,
+      "name": "Combat sans code d’honneur"
+    }
+  },
+  {
+    "tconst": "tt0193524",
+    "jwMissing": true,
+    "id": {
+      "episode": 16,
+      "name": "Star Wars Holiday Special"
+    }
+  },
+  {
+    "tconst": "tt0072353",
+    "id": {
+      "episode": 16,
+      "name": "Les Valseuses"
+    }
+  },
+  {
+    "tconst": "tt0070735",
+    "id": {
+      "episode": 16,
+      "name": "L’arnaque"
+    }
+  },
+  {
+    "tconst": "tt0073341",
+    "id": {
+      "episode": 16,
+      "name": "L’Homme qui voulut être roi"
+    }
+  },
+  {
+    "id": {
+      "episode": 16,
+      "name": "Le commando des morts-vivants"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 15,
+      "name": "Lady Oscar"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0068699",
+    "id": {
+      "episode": 15,
+      "name": "L’homme des Hautes Plaines"
+    }
+  },
+  {
+    "id": {
+      "episode": 15,
+      "name": "Le convoi de la peur"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 13,
+      "name": "Basketball Diaries"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 13,
+      "name": "The Blade"
+    },
+    "jwMissing": true
+  },
+  {
+    "title": "Niki Larson",
+    "tconst": "tt0103950",
+    "id": {
+      "episode": 13,
+      "name": "Nicky Larson"
+    }
+  },
+  {
+    "tconst": "tt0142236",
+    "comment": "La sortie cinéma en France était composée de Fusions + L’Attaque du dragon",
+    "id": {
+      "episode": 13,
+      "name": "Dragon Ball Z Le Film"
+    }
+  },
+  {
+    "tconst": "tt0117571",
+    "id": {
+      "episode": 13,
+      "name": "Scream"
+    }
+  },
+  {
+    "tconst": "tt0119345",
+    "id": {
+      "episode": 13,
+      "name": "Souviens toi l’été dernier"
+    }
+  },
+  {
+    "tconst": "tt0106519",
+    "id": {
+      "episode": 13,
+      "name": "L’impasse"
+    }
+  },
+  {
+    "tconst": "tt0099487",
+    "id": {
+      "episode": 12,
+      "name": "Edward aux mains d’argent"
+    }
+  },
+  {
+    "tconst": "tt0118799",
+    "id": {
+      "episode": 12,
+      "name": "La vie est belle"
+    }
+  },
+  {
+    "id": {
+      "episode": 12,
+      "name": "Spanking the monkey"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0109440",
+    "id": {
+      "episode": 11,
+      "name": "La cité de la peur"
+    }
+  },
+  {
+    "tconst": "tt0120611",
+    "id": {
+      "episode": 11,
+      "name": "Blade"
+    }
+  },
+  {
+    "id": {
+      "episode": 10,
+      "name": "Aladdin"
+    },
+    "tconst": "tt0103639",
+    "jwId": 1476738,
+    "jwFullPath": "/fr/film/aladdin"
+  },
+  {
+    "tconst": "tt0119418",
+    "jwMissing": true,
+    "id": {
+      "episode": 10,
+      "name": "Le jour et la Nuit"
+    }
+  },
+  {
+    "tconst": "tt0152930",
+    "id": {
+      "episode": 10,
+      "name": "Taxi"
+    }
+  },
+  {
+    "tconst": "tt0113409",
+    "id": {
+      "episode": 10,
+      "name": "L’antre de la folie"
+    }
+  },
+  {
+    "tconst": "tt0106856",
+    "id": {
+      "episode": 10,
+      "name": "Chute Libre"
+    }
+  },
+  {
+    "id": {
+      "episode": 10,
+      "name": "Le Voleur et le Cordonnier"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 10,
+      "name": "Fortress"
+    },
+    "tconst": "tt0106950",
+    "jwId": 189235,
+    "jwFullPath": "/fr/film/fortress"
+  },
+  {
+    "tconst": "tt0111161",
+    "id": {
+      "episode": 9,
+      "name": "Les évadés"
+    }
+  },
+  {
+    "tconst": "tt0199683",
+    "id": {
+      "episode": 9,
+      "name": "L’été de Kikujiro"
+    }
+  },
+  {
+    "tconst": "tt0108500",
+    "id": {
+      "episode": 9,
+      "name": "Les Visiteurs"
+    }
+  },
+  {
+    "timestamp": 3394,
+    "id": {
+      "episode": 9,
+      "name": "La Ligne Verte"
+    }
+  },
+  {
+    "id": {
+      "episode": 8,
+      "name": "Bernie"
+    },
+    "tconst": "tt0115658",
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0118929",
+    "id": {
+      "episode": 8,
+      "name": "Dark City"
+    }
+  },
+  {
+    "tconst": "tt0120685",
+    "id": {
+      "episode": 8,
+      "name": "Godzilla"
+    }
+  },
+  {
+    "title": "Independence Day",
+    "tconst": "tt0116629",
+    "id": {
+      "episode": 8,
+      "name": "ID4"
+    }
+  },
+  {
+    "tconst": "tt0151137",
+    "id": {
+      "episode": 8,
+      "name": "Jeanne d’Arc"
+    }
+  },
+  {
+    "title": "Piège à Hong Kong",
+    "tconst": "tt0120724",
+    "id": {
+      "episode": 7,
+      "name": "Piege à HK"
+    }
+  },
+  {
+    "tconst": "tt0118880",
+    "id": {
+      "episode": 7,
+      "name": "Les Ailes de l’Enfer"
+    }
+  },
+  {
+    "id": {
+      "episode": 6,
+      "name": "Bad Taste"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0082183",
+    "id": {
+      "episode": 6,
+      "name": "La chèvre"
+    }
+  },
+  {
+    "tconst": "tt0093260",
+    "id": {
+      "episode": 6,
+      "name": "L’aventure intérieure"
+    }
+  },
+  {
+    "tconst": "tt0092965",
+    "id": {
+      "episode": 6,
+      "name": "L’empire du soleil"
+    }
+  },
+  {
+    "tconst": "tt0081541",
+    "id": {
+      "episode": 6,
+      "name": "Les Sous doués"
+    }
+  },
+  {
+    "id": {
+      "episode": 5,
+      "name": "The Killer"
+    },
+    "tconst": "tt0097202",
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 5,
+      "name": "Macross: Do you Remember Love"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0080736",
+    "id": {
+      "episode": 5,
+      "name": "Nimitz, retour vers l’enfer"
+    }
+  },
+  {
+    "tconst": "tt0091278",
+    "jwMissing": true,
+    "id": {
+      "episode": 5,
+      "name": "L’aigle de fer"
+    }
+  },
+  {
+    "tconst": "tt0080661",
+    "id": {
+      "episode": 5,
+      "name": "Pulsions"
+    }
+  },
+  {
+    "title": "Le Solitaire",
+    "tconst": "tt0083190",
+    "id": {
+      "episode": 4,
+      "name": "Thief (Le Solitaire)"
+    }
+  },
+  {
+    "tconst": "tt0096895",
+    "id": {
+      "episode": 4,
+      "name": "Batman"
+    }
+  },
+  {
+    "id": {
+      "episode": 4,
+      "name": "Beverly Hills Cop"
+    },
+    "title": "Le Flic de Beverly Hills",
+    "primaryTitle": "Beverly Hills Cop"
+  },
+  {
+    "tconst": "tt0092070",
+    "id": {
+      "episode": 3,
+      "name": "Terminus"
+    }
+  },
+  {
+    "tconst": "tt0080745",
+    "id": {
+      "episode": 3,
+      "name": "Flash"
+    }
+  },
+  {
+    "tconst": "tt0091730",
+    "id": {
+      "episode": 3,
+      "name": "Le passage"
+    }
+  },
+  {
+    "title": "La soupe aux choux",
+    "id": {
+      "episode": 3,
+      "name": "la soupe aux choux"
+    }
+  },
+  {
+    "title": "Masters of the Universe",
+    "tconst": "tt0093507",
+    "jwMissing": true,
+    "id": {
+      "episode": 3,
+      "name": "Master of The Universe"
+    }
+  },
+  {
+    "gsheetsKey": {
+      "episode": 3,
+      "name": "Beverly Hills Cop"
+    },
+    "id": {
+      "episode": 3,
+      "name": "la soupe aux choux"
+    },
+    "title": "La Soupe aux Choux",
+    "tconst": "tt0083109"
+  },
+  {
+    "id": {
+      "episode": 2,
+      "name": "Critters"
+    },
+    "jwMissing": true
+  },
+  {
+    "tconst": "tt0096874",
+    "id": {
+      "episode": 1,
+      "name": "Back to the Future 2"
+    }
+  },
+  {
+    "tconst": "tt0090859",
+    "id": {
+      "episode": 1,
+      "name": "Cobra"
+    }
+  },
+  {
+    "tconst": "tt0088323",
+    "id": {
+      "episode": 1,
+      "name": "L’histoire sans fin"
+    }
+  },
+  {
+    "id": {
+      "episode": 1,
+      "name": "Running Man"
+    },
+    "jwMissing": true
+  },
+  {
+    "title": "Monty Python: Le Sens de la vie",
+    "tconst": "tt0085959",
+    "id": {
+      "episode": 0,
+      "name": "Monthy Python: le Sens de la vie"
+    }
+  },
+  {
+    "title": "Legend",
+    "tconst": "tt0089469",
+    "id": {
+      "episode": 0,
+      "name": "Legends"
+    }
+  }
+]

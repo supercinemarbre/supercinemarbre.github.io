@@ -39,7 +39,7 @@ export interface Movie {
    */
   decade: string;
   /**
-   * Display title (usually title, but can be corrected in case of typos)
+   * SCB title (may contain typos, prefer using "primaryTitle" if available)
    */
   title: string;
   /**
@@ -50,6 +50,10 @@ export interface Movie {
    * Special handwritten comment to display
    */
   comment?: string;
+  /**
+   * GSheets movie ID with a more correct movie name
+   */
+  gsheetsKey?: MovieID;
 
   // ===================== IMDB ===================== */
 
@@ -65,6 +69,10 @@ export interface Movie {
    * Release title in original language (/!\ no longer fetched from IMDB)
    */
   originalTitle?: string;
+  /**
+   * Manual tag to fix movie detection when not classified as a movie in IMDB (eg. "Fucking Kassovitz" is classified as a "video" in IMDB)
+   */
+  imdbType?: string;
 
   // ===================== OMDB ===================== */
 

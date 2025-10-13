@@ -1,12 +1,10 @@
 import csvParser from "csv-parser";
 import * as fs from "fs";
-import { isEqual } from "lodash";
-import { dataPath, readData } from "./io";
+import { dataPath } from "./io";
+import * as patch from "./movie-patch";
 import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
 import { findMatchingMovies } from "./scb-matcher";
 import { Movie, MovieID } from "./types";
-
-export type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
 
 interface TimestampInfo {
   Classement: string;
@@ -20,30 +18,27 @@ export async function importTimestampsRankingsAndMissingMovies() {
 
   const decades = Object.keys(await readListUrls());
   const movies = await readMovieRankings();
-  const timestampsPatches = await readTimestampsPatches();
   const maxEpisode = getMaxEpisode(movies);
 
   for (const decade of decades) {
     const filePath = dataPath(`timestamps${decade}.csv`);
     const timestampInfos = await parseCSV<TimestampInfo>(filePath);
 
-    timestampInfos.forEach(timestampInfo => {
+    for (const timestampInfo of timestampInfos) {
       if (timestampInfo.Classement.includes("Déjà classé")) {
         return;
       }
 
       const gsheetsKey: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
-      const patch = timestampsPatches.find(p => isEqual(p.gsheetsKey, gsheetsKey));
-      const id: MovieID = patch?.id ?? gsheetsKey;
-
+      const id = await patch.gsheetsKeyToId(gsheetsKey);
       const matches = findMatchingMovies(id, movies);
 
       let movie: Movie;
       if (matches.length === 1) {
         movie = matches[0];
-        movie.timestamp = patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
-        movie.ranking = parseInt(timestampInfo.Classement, 10);
-      } else if (id.episode > maxEpisode || patch?.forceImport) {
+        movie.timestamp = movie?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
+        movie.ranking =  movie.ranking ?? parseInt(timestampInfo.Classement, 10);
+      } else if (id.episode > maxEpisode || await patch.mustForceImport(id)) {
         console.log(` - Adding Ep. ${id.episode} movie "${id.name}"`);
         const movie: Movie = {
           id,
@@ -55,16 +50,10 @@ export async function importTimestampsRankingsAndMissingMovies() {
         movies.push(movie);
       }
 
-      if (movie) {
-        if (patch) {
-          delete patch.gsheetsKey;
-          delete patch.forceImport;
-          Object.assign(matches[0], patch);
-        }
-      } else {
+      if (!movie) {
         console.log(` - Unknown movie : ${timestampInfo.Films} (Ep. ${timestampInfo.Émission})`);
       }
-    });
+    }
   }
 
   const moviesWithoutTimestamps = movies.filter(movie => !movie.timestamp);
@@ -75,15 +64,6 @@ export async function importTimestampsRankingsAndMissingMovies() {
   }
 
   await writeMovieRankings(movies);
-}
-
-export async function readTimestampsPatches(): Promise<GSheetsPatch[]> {
-  const patches = await readData("timestamps_patch.json");
-  if (Array.isArray(patches)) {
-    return patches;
-  } else {
-    return Object.values(patches); // XXX array is sometimes parsed as an object
-  }
 }
 
 function parseCSV<T>(filePath: string): Promise<T[]> {

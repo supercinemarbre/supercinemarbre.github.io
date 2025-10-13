@@ -1,6 +1,5 @@
 import download from "download";
 import { readApiKey } from "./io";
-import * as scb from "./scb";
 import { Movie } from "./types";
 
 const TMDB_API_KEY = readApiKey("tmdbapikey");
@@ -43,15 +42,23 @@ export async function fetchMissingTMDBData(movies: Movie[]): Promise<Movie[]> {
         let tmdbResults: TmdbResults;
 
         if (movie.tconst) {
-          const tmdbString = await download(`https://api.themoviedb.org/3/find/${movie.tconst}?api_key=${TMDB_API_KEY}`
-            + '&language=fr-FR&external_source=imdb_id&type=movie');
+          const tmdbString = await download(
+            `https://api.themoviedb.org/3/find/${movie.tconst}?api_key=${TMDB_API_KEY}` +
+              "&language=fr-FR&external_source=imdb_id&type=movie"
+          );
           try {
             tmdbResults = JSON.parse(tmdbString.toString()) as TmdbResults;
             if (tmdbResults?.movie_results?.length !== 1) {
-              throw new Error(`Unexpected result count: ${tmdbResults?.movie_results?.length}`);
+              throw new Error(
+                `Unexpected result count: ${tmdbResults?.movie_results?.length}`
+              );
             }
           } catch (e) {
-            console.error(`  - Error while searching ${JSON.stringify(movie.id)} with IMDB ID ${movie.tconst}`);
+            console.error(
+              `  - Error while searching ${JSON.stringify(
+                movie.id
+              )} with IMDB ID ${movie.tconst}`
+            );
             console.error(`    ${tmdbString.toString()}`);
             movieIndex++;
             continue;
@@ -61,12 +68,16 @@ export async function fetchMissingTMDBData(movies: Movie[]): Promise<Movie[]> {
         if (tmdbResults?.movie_results?.length === 1) {
           const tmdbMovie = tmdbResults.movie_results[0];
 
-          movie.tmdbId = tmdbMovie.id;
-          movie.tmdbVoteAverage = tmdbMovie.vote_average;
+          movie.tmdbId = movie.tmdbId ?? tmdbMovie.id;
+          movie.tmdbVoteAverage = movie.tmdbVoteAverage ??tmdbMovie.vote_average;
 
-          console.log(` - ${movieIndex}/${movies.length}: OK for ${movie.title}`);
+          console.log(
+            ` - ${movieIndex}/${movies.length}: OK for ${movie.title}`
+          );
         } else {
-          console.log(` - ${movieIndex}/${movies.length}: ${movie.title} not found in TMDB`);
+          console.log(
+            ` - ${movieIndex}/${movies.length}: ${movie.title} not found in TMDB`
+          );
         }
       }
       movieIndex++;
@@ -76,13 +87,17 @@ export async function fetchMissingTMDBData(movies: Movie[]): Promise<Movie[]> {
   } catch (e) {
     if (e.statusCode === 401) {
       // Untested
-      const missingMovies = movies.filter(r => !r.tmdbId);
-      console.warn(`  SKIPPED: TMDB request limit reached :(  ${missingMovies} movies yet to be matched.`);
+      const missingMovies = movies.filter((r) => !r.tmdbId);
+      console.warn(
+        `  SKIPPED: TMDB request limit reached :(  ${missingMovies} movies yet to be matched.`
+      );
       if (missingMovies.length < 100) {
-        console.warn(`  Missing movies: ${missingMovies.map(m => m.tconst).join(' ')}`);
+        console.warn(
+          `  Missing movies: ${missingMovies.map((m) => m.tconst).join(" ")}`
+        );
       }
 
-    return movies;
+      return movies;
     } else {
       throw e;
     }

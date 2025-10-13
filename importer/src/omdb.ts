@@ -2,6 +2,7 @@ import download from "download";
 import { readApiKey, readData } from "./io";
 import * as scb from "./scb";
 import { Movie } from "./types";
+import { assignMissing } from "./utils/assign-missing";
 
 const OMDB_API_KEY = readApiKey("omdbapikey");
 
@@ -11,7 +12,7 @@ interface OmdbMovie {
   Rated: string;
   Released: string; // eg. "31 Mar 1999"
   Runtime: string; // eg. "136 min",
-  Genre: string;// comma-separated
+  Genre: string; // comma-separated
   Director: string; // comma-separated
   Writer: string; // comma-separated
   Actors: string; // comma-separated
@@ -54,11 +55,11 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
     let movieIndex = 1;
     for (const movie of movies) {
       if (hasMissingOMDBData(movie)) {
-        let omdbMovie = omdbDump.find(m => m.imdbID === movie.tconst);
-        if (!omdbMovie && movie.tconst) {
+        let rawOmdbMovie = omdbDump.find(m => m.imdbID === movie.tconst);
+        if (!rawOmdbMovie && movie.tconst) {
           const omdbString = await download(`http://www.omdbapi.com/?i=${movie.tconst}&apikey=${OMDB_API_KEY}`);
           try {
-            omdbMovie = JSON.parse(omdbString.toString()) as OmdbMovie;
+            rawOmdbMovie = JSON.parse(omdbString.toString()) as OmdbMovie;
           } catch (e) {
             console.error(`  - Error while searching ${JSON.stringify(movie.id)} with IMDB ID ${movie.tconst}`);
             console.error(`    ${omdbString.toString()}`);
@@ -67,37 +68,40 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
           }
         }
 
-        if (omdbMovie?.Response === "True") {
-          Object.keys(omdbMovie).forEach(key => {
-            if (omdbMovie[key] === 'N/A') {
-              omdbMovie[key] = '';
+        if (rawOmdbMovie?.Response === "True") {
+          Object.keys(rawOmdbMovie).forEach(key => {
+            if (rawOmdbMovie[key] === 'N/A') {
+              rawOmdbMovie[key] = '';
             }
           });
 
-          movie.year = parseInt(omdbMovie.Year, 10);
-          movie.runtimeMinutes = omdbMovie.Runtime.split(" ")[0];
-          movie.posterUrl = omdbMovie.Poster;
+          const omdbMovie: Partial<Movie> = {};
 
-          movie.imdbRating = parseFloat(omdbMovie.imdbRating);
-          movie.imdbVotes = parseInt(omdbMovie.imdbVotes.replace(/,/g, ''));
-          movie.metascore = omdbMovie.Metascore ? parseInt(omdbMovie.Metascore, 10) : undefined;
-          const rottenTomatoesRating = omdbMovie.Ratings.find(r => r.Source === "Rotten Tomatoes")?.Value;
-          movie.rottenTomatoesRating = rottenTomatoesRating ? parseInt(rottenTomatoesRating, 10) : undefined;
+          omdbMovie.year = parseInt(rawOmdbMovie.Year, 10);
+          omdbMovie.runtimeMinutes = rawOmdbMovie.Runtime.split(" ")[0];
+          omdbMovie.posterUrl = rawOmdbMovie.Poster;
 
-          movie.usaRating = omdbMovie.Rated !== 'N/A' ? omdbMovie.Rated : undefined;
-          movie.directors = omdbMovie.Director.split(', ');
-          movie.writers = omdbMovie.Writer.split(', ');
-          movie.actors = omdbMovie.Actors.split(', ');
-          movie.production = omdbMovie.Production !== 'N/A' ? omdbMovie.Production : undefined;
+          omdbMovie.imdbRating = parseFloat(rawOmdbMovie.imdbRating);
+          omdbMovie.imdbVotes = parseInt(rawOmdbMovie.imdbVotes.replace(/,/g, ''));
+          omdbMovie.metascore = rawOmdbMovie.Metascore ? parseInt(rawOmdbMovie.Metascore, 10) : undefined;
+          const rottenTomatoesRating = rawOmdbMovie.Ratings.find(r => r.Source === "Rotten Tomatoes")?.Value;
+          omdbMovie.rottenTomatoesRating = rottenTomatoesRating ? parseInt(rottenTomatoesRating, 10) : undefined;
 
-          if (omdbMovie.Released) {
-            const releaseDateWithOffset = new Date(omdbMovie.Released);
+          omdbMovie.usaRating = rawOmdbMovie.Rated !== 'N/A' ? rawOmdbMovie.Rated : undefined;
+          omdbMovie.directors = rawOmdbMovie.Director.split(', ');
+          omdbMovie.writers = rawOmdbMovie.Writer.split(', ');
+          omdbMovie.actors = rawOmdbMovie.Actors.split(', ');
+          omdbMovie.production = rawOmdbMovie.Production !== 'N/A' ? rawOmdbMovie.Production : undefined;
+
+          if (rawOmdbMovie.Released) {
+            const releaseDateWithOffset = new Date(rawOmdbMovie.Released);
             const releaseDate = new Date(releaseDateWithOffset.getTime() - releaseDateWithOffset.getTimezoneOffset() * 60000);
-            movie.releaseDate = releaseDate.toISOString();
+            omdbMovie.releaseDate = releaseDate.toISOString();
           }
-          movie.countries = omdbMovie.Country.split(', ');
-          movie.languages = omdbMovie.Language.split(', ');
-          movie.genres = omdbMovie.Genre.split(', ');
+          omdbMovie.countries = rawOmdbMovie.Country.split(', ');
+          omdbMovie.languages = rawOmdbMovie.Language.split(', ');
+          omdbMovie.genres = rawOmdbMovie.Genre.split(', ');
+          assignMissing(movie, omdbMovie);
 
           console.log(` - ${movieIndex}/${movies.length}: OK for ${movie.title}`);
         } else {

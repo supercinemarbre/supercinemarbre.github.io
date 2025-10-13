@@ -1,11 +1,10 @@
 import * as cheerio from "cheerio";
+import { Element } from "domhandler";
 import download from "download";
 import { readData, writeData } from "./io";
 import { markAsUpdated, needsUpdate } from "./last-updated";
-import { Episode, Movie, MovieID } from "./types";
-import { Element } from "domhandler";
+import { Episode, Movie } from "./types";
 
-export type MoviePatch = Partial<Movie> & { scbKey: MovieID, imdbType?: string };
 export type EpisodePatch = Partial<Episode> & { number: number };
 
 export function readListUrls(): Promise<Record<string, string>> {
@@ -144,15 +143,6 @@ async function readScbEpisodes(): Promise<Episode[]> {
 async function writeScbEpisodes(episodes: Episode[]): Promise<void> {
   await writeData(`../../webapp/public/scb_episodes.json`, episodes);
   await writeData(`../../docs/scb_episodes.json`, episodes);
-}
-
-export async function readScbPatches(): Promise<MoviePatch[]> {
-  const patches = await readData("scb_patch.json");
-  if (Array.isArray(patches)) {
-    return patches;
-  } else {
-    return Object.values(patches); // XXX Array is sometimes parsed as object
-  }
 }
 
 async function readScbEpisodePatches(): Promise<EpisodePatch[]> {
