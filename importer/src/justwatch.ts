@@ -49,7 +49,7 @@ export async function fetchMissingJWData(movies: Movie[]): Promise<Movie[]> {
           );
           console.log("   " + JSON.stringify(movie.id));
           console.log(
-            '   (Add scb_patch.json entry with "jwMissing" set to true to ignore)'
+            '   (Add movie_patch.json entry with "jwMissing" set to true to ignore)'
           );
         }
       }
