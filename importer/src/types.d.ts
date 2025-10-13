@@ -65,6 +65,10 @@ export interface Movie {
    * Release title in original language (/!\ no longer fetched from IMDB)
    */
   originalTitle?: string;
+  /**
+   * Manually-set patch data for special cases not categorized as movies in IMDB (eg. "Fucking Kassovitz")
+   */
+  imdbType?: string;
 
   // ===================== OMDB ===================== */
 

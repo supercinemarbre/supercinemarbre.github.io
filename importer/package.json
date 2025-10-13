@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cross-env ts-node import.ts",
     "jwsearch": "cross-env ts-node jwsearch.ts",
-    "invalidate": "ts-node invalidate.ts"
+    "check": "cross-env ts-node check.ts",
+    "invalidate": "cross-env ts-node invalidate.ts"
   },
   "author": "",
   "license": "ISC",

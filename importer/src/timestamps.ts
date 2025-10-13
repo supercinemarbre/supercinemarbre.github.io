@@ -6,7 +6,10 @@ import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
 import { findMatchingMovies } from "./scb-matcher";
 import { Movie, MovieID } from "./types";
 
-export type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
+export type GSheetsPatch = Partial<Movie> & {
+  gsheetsKey: MovieID;
+  forceImport?: boolean;
+};
 
 interface TimestampInfo {
   Classement: string;
@@ -27,13 +30,18 @@ export async function importTimestampsRankingsAndMissingMovies() {
     const filePath = dataPath(`timestamps${decade}.csv`);
     const timestampInfos = await parseCSV<TimestampInfo>(filePath);
 
-    timestampInfos.forEach(timestampInfo => {
+    timestampInfos.forEach((timestampInfo) => {
       if (timestampInfo.Classement.includes("Déjà classé")) {
         return;
       }
 
-      const gsheetsKey: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
-      const patch = timestampsPatches.find(p => isEqual(p.gsheetsKey, gsheetsKey));
+      const gsheetsKey: MovieID = {
+        episode: parseInt(timestampInfo.Émission, 10),
+        name: timestampInfo.Films,
+      };
+      const patch = timestampsPatches.find((p) =>
+        isEqual(p.gsheetsKey, gsheetsKey)
+      );
       const id: MovieID = patch?.id ?? gsheetsKey;
 
       const matches = findMatchingMovies(id, movies);
@@ -41,7 +49,8 @@ export async function importTimestampsRankingsAndMissingMovies() {
       let movie: Movie;
       if (matches.length === 1) {
         movie = matches[0];
-        movie.timestamp = patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
+        movie.timestamp =
+          patch?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
         movie.ranking = parseInt(timestampInfo.Classement, 10);
       } else if (id.episode > maxEpisode || patch?.forceImport) {
         console.log(` - Adding Ep. ${id.episode} movie "${id.name}"`);
@@ -50,7 +59,7 @@ export async function importTimestampsRankingsAndMissingMovies() {
           decade,
           title: timestampInfo.Films,
           ranking: parseInt(timestampInfo.Classement, 10),
-          timestamp: timestampToSeconds(timestampInfo.Timestamp)
+          timestamp: timestampToSeconds(timestampInfo.Timestamp),
         };
         movies.push(movie);
       }
@@ -62,14 +71,20 @@ export async function importTimestampsRankingsAndMissingMovies() {
           Object.assign(matches[0], patch);
         }
       } else {
-        console.log(` - Unknown movie : ${timestampInfo.Films} (Ep. ${timestampInfo.Émission})`);
+        console.log(
+          ` - Unknown movie : ${timestampInfo.Films} (Ep. ${timestampInfo.Émission})`
+        );
       }
     });
   }
 
-  const moviesWithoutTimestamps = movies.filter(movie => !movie.timestamp);
+  const moviesWithoutTimestamps = movies.filter((movie) => !movie.timestamp);
   if (moviesWithoutTimestamps.length > 0) {
-    console.log(`  Movies left without timestamps (${moviesWithoutTimestamps.length}): ${moviesWithoutTimestamps.map(m => m.title)}`);
+    console.log(
+      `  Movies left without timestamps (${
+        moviesWithoutTimestamps.length
+      }): ${moviesWithoutTimestamps.map((m) => m.title)}`
+    );
   } else {
     console.log(`  OK, all ${movies.length} SCB movies have timestamps`);
   }
@@ -91,17 +106,20 @@ function parseCSV<T>(filePath: string): Promise<T[]> {
     const results: T[] = [];
     fs.createReadStream(filePath)
       .pipe(csvParser())
-      .on('data', (data) => results.push(data))
-      .on('end', () => resolve(results));
-  })
+      .on("data", (data) => results.push(data))
+      .on("end", () => resolve(results));
+  });
 }
 
 function timestampToSeconds(timestamp: string) {
-  const elements = timestamp.split(' ').map(t => t.slice(0, t.length - 1));
-  return parseInt(elements[0], 10) * 3600 + parseInt(elements[1], 10) * 60 + parseInt(elements[2], 10);
+  const elements = timestamp.split(" ").map((t) => t.slice(0, t.length - 1));
+  return (
+    parseInt(elements[0], 10) * 3600 +
+    parseInt(elements[1], 10) * 60 +
+    parseInt(elements[2], 10)
+  );
 }
 
 function getMaxEpisode(movies: Movie[]) {
-  return movies.map(m => m.id.episode)
-    .reduceRight((a, b) => Math.max(a, b));
+  return movies.map((m) => m.id.episode).reduceRight((a, b) => Math.max(a, b));
 }

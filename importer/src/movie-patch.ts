@@ -1,12 +1,12 @@
 import { isEqual } from "lodash";
 import { readData } from "./io";
 import * as scb from "./scb";
+import { Movie } from "./types";
 
-export async function patchMovies(): Promise<void> {
+export async function applyMoviePatches(movies: Movie[]): Promise<Movie[]> {
   console.log("Patching movie data");
 
-  const movies = await scb.readMovieRankings() || [];
-  const patch = await scb.readScbPatches() || [];
+  const patch = await readMoviePatches() || [];
 
   for (const movie of movies) {
     movie.directors = await patchPersons(movie.directors);
@@ -14,12 +14,12 @@ export async function patchMovies(): Promise<void> {
     movie.actors = await patchPersons(movie.actors);
 
     const matchingPatch = patch.find(p => isEqual(p.id, movie.id));
-    if (matchingPatch) {
+    if (matchingPatch && typeof matchingPatch === 'object') {
       Object.assign(movie, matchingPatch);
     }
   }
 
-  await scb.writeMovieRankings(movies);
+  return movies;
 }
 
 async function patchPersons(persons: string[]) {
@@ -33,4 +33,13 @@ async function readPersonPatch(): Promise<Record<string, string>> {
     personPatchCache = await readData("person_patch.json");
   }
   return personPatchCache;
+}
+
+export async function readMoviePatches(): Promise<scb.MoviePatch[]> {
+  const patches = await readData("movie_patch.json");
+  if (Array.isArray(patches)) {
+    return patches;
+  } else {
+    return Object.values(patches); // XXX Array is sometimes parsed as object
+  }
 }

@@ -73,7 +73,7 @@ npm start
 
 1. Retrouver le film en erreur dans `webapp/public/scb_movies.json`, et en particulier sa clef `"id"`.
 
-2. Modifier `scb_patch.json`, en ajoutant un objet avec l'ID du film. Compléter alors l'objet avec les valeurs à écraser. Généralement on souhaite juste réparer une correspondance de film : pour ça aller sur le bon film dans IMDB, retrouver son "tconst" en regardant l'URL (qui est au format `https://www.imdb.com/title/[TCONST]/`), puis ajouter au patch une clef `"tconst"`.
+2. Modifier `movie_patch.json`, en ajoutant un objet avec l'ID du film. Compléter alors l'objet avec les valeurs à écraser. Généralement on souhaite juste réparer une correspondance de film : pour ça aller sur le bon film dans IMDB, retrouver son "tconst" en regardant l'URL (qui est au format `https://www.imdb.com/title/[TCONST]/`), puis ajouter au patch une clef `"tconst"`.
 
 3. Si les données du film (jaquette, note IMDB etc.) avaient déjà été importées dans `scb_movies.json`, il faut les invalider, de préférence avec l'outil en ligne de commande dédié :
 

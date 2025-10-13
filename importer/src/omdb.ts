@@ -1,6 +1,5 @@
 import download from "download";
 import { readApiKey, readData } from "./io";
-import * as scb from "./scb";
 import { Movie } from "./types";
 
 const OMDB_API_KEY = readApiKey("omdbapikey");
@@ -11,7 +10,7 @@ interface OmdbMovie {
   Rated: string;
   Released: string; // eg. "31 Mar 1999"
   Runtime: string; // eg. "136 min",
-  Genre: string;// comma-separated
+  Genre: string; // comma-separated
   Director: string; // comma-separated
   Writer: string; // comma-separated
   Actors: string; // comma-separated
@@ -36,7 +35,7 @@ interface OmdbMovie {
   Response: "True" | any;
 }
 
-export async function fetchMissingOMDBData(sublist?: Movie[]) {
+export async function applyMissingOMDBData(movies?: Movie[]) {
   console.log("Filling any missing OMDB data");
 
   if (!OMDB_API_KEY) {
@@ -47,86 +46,106 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
     return;
   }
 
-  const movies = sublist ?? await scb.readMovieRankings();
-  const patch = await scb.readScbPatches();
   const omdbDump = await readOMDBDump();
 
   try {
-    let i = 1, pendingWrites = 0;
+    let movieIndex = 1;
     for (const movie of movies) {
       if (hasMissingOMDBData(movie)) {
-        let omdbMovie = omdbDump.find(m => m.imdbID === movie.tconst);
+        let omdbMovie = omdbDump.find((m) => m.imdbID === movie.tconst);
         if (!omdbMovie && movie.tconst) {
-          const omdbString = await download(`http://www.omdbapi.com/?i=${movie.tconst}&apikey=${OMDB_API_KEY}`);
+          const omdbString = await download(
+            `http://www.omdbapi.com/?i=${movie.tconst}&apikey=${OMDB_API_KEY}`
+          );
           try {
             omdbMovie = JSON.parse(omdbString.toString()) as OmdbMovie;
           } catch (e) {
-            console.error(`  - Error while searching ${JSON.stringify(movie.id)} with IMDB ID ${movie.tconst}`);
+            console.error(
+              `  - Error while searching ${JSON.stringify(
+                movie.id
+              )} with IMDB ID ${movie.tconst}`
+            );
             console.error(`    ${omdbString.toString()}`);
-            i++;
+            movieIndex++;
             continue;
           }
         }
 
         if (omdbMovie?.Response === "True") {
-          Object.keys(omdbMovie).forEach(key => {
-            if (omdbMovie[key] === 'N/A') {
-              omdbMovie[key] = '';
+          Object.keys(omdbMovie).forEach((key) => {
+            if (omdbMovie[key] === "N/A") {
+              omdbMovie[key] = "";
             }
           });
 
-          movie.year = parseInt(omdbMovie.Year, 10);
-          movie.runtimeMinutes = omdbMovie.Runtime.split(" ")[0];
-          movie.posterUrl = omdbMovie.Poster;
+          movie.year = movie.year ?? parseInt(omdbMovie.Year, 10);
+          movie.runtimeMinutes =
+            movie.runtimeMinutes ?? omdbMovie.Runtime.split(" ")[0];
+          movie.posterUrl = movie.posterUrl ?? omdbMovie.Poster;
 
-          movie.imdbRating = parseFloat(omdbMovie.imdbRating);
-          movie.imdbVotes = parseInt(omdbMovie.imdbVotes.replace(/,/g, ''));
-          movie.metascore = omdbMovie.Metascore ? parseInt(omdbMovie.Metascore, 10) : undefined;
-          const rottenTomatoesRating = omdbMovie.Ratings.find(r => r.Source === "Rotten Tomatoes")?.Value;
-          movie.rottenTomatoesRating = rottenTomatoesRating ? parseInt(rottenTomatoesRating, 10) : undefined;
+          movie.imdbRating =
+            movie.imdbRating ?? parseFloat(omdbMovie.imdbRating);
+          movie.imdbVotes =
+            movie.imdbVotes ?? parseInt(omdbMovie.imdbVotes.replace(/,/g, ""));
+          movie.metascore =
+            movie.metascore ??
+            (omdbMovie.Metascore
+              ? parseInt(omdbMovie.Metascore, 10)
+              : undefined);
+          const rottenTomatoesRating = omdbMovie.Ratings.find(
+            (r) => r.Source === "Rotten Tomatoes"
+          )?.Value;
+          movie.rottenTomatoesRating =
+            movie.rottenTomatoesRating ?? rottenTomatoesRating
+              ? parseInt(rottenTomatoesRating, 10)
+              : undefined;
 
-          movie.usaRating = omdbMovie.Rated !== 'N/A' ? omdbMovie.Rated : undefined;
-          movie.directors = omdbMovie.Director.split(', ');
-          movie.writers = omdbMovie.Writer.split(', ');
-          movie.actors = omdbMovie.Actors.split(', ');
-          movie.production = omdbMovie.Production !== 'N/A' ? omdbMovie.Production : undefined;
+          movie.usaRating =
+            movie.usaRating ??
+            (omdbMovie.Rated !== "N/A" ? omdbMovie.Rated : undefined);
+          movie.directors = movie.directors ?? omdbMovie.Director.split(", ");
+          movie.writers = movie.writers ?? omdbMovie.Writer.split(", ");
+          movie.actors = movie.actors ?? omdbMovie.Actors.split(", ");
+          movie.production =
+            movie.production ??
+            (omdbMovie.Production !== "N/A" ? omdbMovie.Production : undefined);
 
-          if (omdbMovie.Released) {
+          if (omdbMovie.Released && !movie.releaseDate) {
             const releaseDateWithOffset = new Date(omdbMovie.Released);
-            const releaseDate = new Date(releaseDateWithOffset.getTime() - releaseDateWithOffset.getTimezoneOffset() * 60000);
+            const releaseDate = new Date(
+              releaseDateWithOffset.getTime() -
+                releaseDateWithOffset.getTimezoneOffset() * 60000
+            );
             movie.releaseDate = releaseDate.toISOString();
           }
-          movie.countries = omdbMovie.Country.split(', ');
-          movie.languages = omdbMovie.Language.split(', ');
-          movie.genres = omdbMovie.Genre.split(', ');
-          if (patch[movie.title] && typeof patch[movie.title] === 'object') {
-            Object.assign(movie, patch[movie.title]);
-          }
-
-          if (!sublist && ++pendingWrites % 50 === 0) {
-            await scb.writeMovieRankings(movies);
-            pendingWrites = 0;
-          }
-          console.log(` - ${i}/${movies.length}: OK for ${movie.title}`);
+          movie.countries = movie.countries ?? omdbMovie.Country.split(", ");
+          movie.languages = movie.languages ?? omdbMovie.Language.split(", ");
+          movie.genres = movie.genres ?? omdbMovie.Genre.split(", ");
+          console.log(
+            ` - ${movieIndex}/${movies.length}: OK for ${movie.title}`
+          );
         } else {
-          console.log(` - ${i}/${movies.length}: ${movie.title} not found in OMDB`);
+          console.log(
+            ` - ${movieIndex}/${movies.length}: ${movie.title} not found in OMDB`
+          );
         }
       }
-      i++;
+      movieIndex++;
     }
-
-    if (!sublist) {
-      await scb.writeMovieRankings(movies);
-    }
+    return movies;
   } catch (e) {
     if (e.statusCode === 401) {
       console.warn("  SKIPPED: Daily OMDB limit reached :(");
-      const missingMovies = movies.filter(r => !r.posterUrl);
-      if (missingMovies.length < 100) {
-        console.warn(`  Missing movies: ${missingMovies.map(m => m.tconst).join(' ')}`);
-        console.warn("  If you're in a hurry you can get them manually at http://www.omdbapi.com/ and put them in omdb_dump.json");
-      }
-      await scb.writeMovieRankings(movies);
+      const missingMovies = movies.filter((r) => !r.posterUrl);
+      const missingMoviesDetails =
+        missingMovies.length > 100
+          ? `${missingMovies.length} movies`
+          : missingMovies.map((m) => m.tconst).join(" ");
+      console.warn(`  Missing movies: ${missingMoviesDetails}`);
+      console.warn(
+        "  If you're in a hurry you can get them manually at http://www.omdbapi.com/ and put them in omdb_dump.json"
+      );
+      return movies;
     } else {
       throw e;
     }
@@ -152,11 +171,12 @@ export function invalidateOMDBData(movie: Movie) {
 }
 
 function hasMissingOMDBData(movie: Movie) {
-  return !movie.year ||
-    !movie.posterUrl;
+  return !movie.year || !movie.posterUrl;
 }
 
 async function readOMDBDump(): Promise<OmdbMovie[]> {
-  const dumpObject = await readData<Record<string, OmdbMovie>>("omdb_dump.json");
+  const dumpObject = await readData<Record<string, OmdbMovie>>(
+    "omdb_dump.json"
+  );
   return Object.values(dumpObject);
 }

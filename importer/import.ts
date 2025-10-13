@@ -3,7 +3,7 @@ import * as googleSheets from "./src/google-sheets";
 import * as imdb from "./src/imdb";
 import * as justWatch from "./src/justwatch";
 import * as omdb from "./src/omdb";
-import * as patch from "./src/patch";
+import * as patch from "./src/movie-patch";
 import * as scb from "./src/scb";
 import * as timestamps from "./src/timestamps";
 import * as tmdb from "./src/tmdb";
@@ -19,16 +19,18 @@ import * as tmdb from "./src/tmdb";
 
     await scb.scrapeScbEpisodes();
 
-    // IMDB/OMDB data fetching
+    // Movie metadata
 
-    await imdb.fetchMissingIMDBData();
-    await omdb.fetchMissingOMDBData();
-    await tmdb.fetchMissingTMDBData();
-    await justWatch.fetchMissingJWData();
+    let movies = await scb.readMovieRankings();
+    movies = await patch.applyMoviePatches(movies);
 
-    // Patching of final results
+    movies = await imdb.applyMissingIMDBData(movies);
+    movies = await omdb.applyMissingOMDBData(movies);
+    movies = await tmdb.applyMissingTMDBData(movies);
+    movies = await justWatch.applyMissingJWData(movies);
 
-    await patch.patchMovies();
+    movies = await patch.applyMoviePatches(movies); // Require for persons
+    await scb.writeMovieRankings(movies);
   } catch (e) {
     console.error("ERROR: ", e, e.stack);
   }
