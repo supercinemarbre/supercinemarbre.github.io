@@ -1,8 +1,7 @@
-import type { MovieID } from "./movie-id.model"
-import { toSearchString } from "./search-string"
+import type { MovieID } from './movie-id.model'
+import { toSearchString } from './search-string'
 
 export class Movie {
-
   // ===================== SUPER CINE BATTLE ===================== */
 
   /**
@@ -148,12 +147,15 @@ export class Movie {
 
   constructor(movie: Omit<Movie, 'searchString'>) {
     Object.assign(this, movie)
-    this.searchString = toSearchString(this.primaryTitle + '|' +
-        this.title + '|' +
-        this.actors?.join('|') + '|' +
-        this.directors?.join('|') +
-        this.year + '|' +
-        'episode ' + this.id.episode)
+    this.searchString = [
+      this.primaryTitle,
+      this.title,
+      ...this.actors,
+      ...this.directors,
+      this.year
+    ]
+      .map(toSearchString)
+      .join('|')
   }
 
   get episode() {
@@ -161,6 +163,7 @@ export class Movie {
   }
 
   matches(text: string) {
+    if (!text) return true;
     return this.searchString.includes(toSearchString(text))
   }
 }

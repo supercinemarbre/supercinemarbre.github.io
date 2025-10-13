@@ -19,7 +19,6 @@ const props = defineProps<{
   state?: 'loading' | 'loaded',
   movies: Movie[],
   episodes: Episode[],
-  search: string,
   sortBy: VuetifySortItem[],
   itemsPerPage: number,
 }>()
@@ -39,7 +38,7 @@ const headers = [
 
 <template>
   <!-- eslint-disable vue/valid-v-slot -->
-  <v-data-table :loading="state === 'loading'" :search="search" :headers="headers" :items="movies"
+  <v-data-table :loading="state === 'loading'" :headers="headers" :items="movies"
     :items-per-page="itemsPerPage" :disable-pagination="!!currentDecade" hide-default-footer no-data-text=""
     :sort-by="sortBy" :footer-props="{
       showFirstLastPage: true,

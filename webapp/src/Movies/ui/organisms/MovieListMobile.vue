@@ -18,7 +18,6 @@ const props = defineProps<{
   state?: 'loading' | 'loaded',
   movies: Movie[],
   episodes: Episode[],
-  search: string,
   sortBy: VuetifySortItem[],
   itemsPerPage: number,
 }>()
@@ -27,7 +26,7 @@ const episodeByNumber = computed<EpisodeByNumber>(() => toEpisodeByNumber(props.
 </script>
 
 <template>
-  <v-data-table :loading="state === 'loading'" :search="search" :headers="[{ title: 'Film', value: 'searchString' }]"
+  <v-data-table :loading="state === 'loading'" :headers="[{ title: 'Film', value: 'searchString' }]"
     :items="movies" :items-per-page="itemsPerPage" :mobile-breakpoint="0" :disable-pagination="!!currentDecade"
     hide-default-footer no-data-text="" :sort-by="sortBy" :fixed-header="true"
     :row-props="rowPropsHighlightingCurrentMovie" item-key="tconst">

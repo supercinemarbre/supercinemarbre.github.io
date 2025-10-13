@@ -69,9 +69,9 @@ router.afterEach(async () => {
     @hide-movies-above-episode="spoilerFreeFromEpisode = $event"></MovieFilters>
 
   <MovieListDesktop v-if="!isMobileMode" :movies="filteredMovies" :episodes="episodes" :currentDecade="props.decade"
-    :state="state" :search="searchInput" :sortBy="decade ? [] : [{ key: 'episode', order: 'desc' }]"
+    :state="state" :sortBy="decade ? [] : [{ key: 'episode', order: 'desc' }]"
     :itemsPerPage="itemsPerPage"></MovieListDesktop>
   <MovieListMobile v-if="isMobileMode" :movies="filteredMovies" :episodes="episodes" :currentDecade="props.decade"
-    :state="state" :search="searchInput" :sortBy="decade ? [] : [{ key: 'episode', order: 'desc' }]"
+    :state="state" :sortBy="decade ? [] : [{ key: 'episode', order: 'desc' }]"
     :itemsPerPage="itemsPerPage"></MovieListMobile>
 </template>
