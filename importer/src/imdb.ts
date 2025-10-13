@@ -17,7 +17,7 @@ export async function fetchMissingIMDBData(movies?: Movie[]) {
         ? { acceptTypes: [movie?.imdbType] }
         : undefined;
       let imdbMovie: ImdbMovie = await getIMDBSuggestion(
-        movie.tconst ?? movie.primaryTitle ?? movie.gsheetsKey.name ?? movie.id.name,
+        movie.tconst ?? movie.primaryTitle ?? movie.gsheetsKey?.name ?? movie.id.name,
         imdbSuggestionOptions
       );
 
