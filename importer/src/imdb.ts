@@ -1,8 +1,8 @@
-import download from 'download';
-import { isEqual } from 'lodash';
+import download from "download";
+import { isEqual } from "lodash";
 import * as scb from "./scb";
 import * as timestamps from "./timestamps";
-import { Movie } from './types';
+import { Movie } from "./types";
 
 export interface ImdbMovie {
   tconst: string;
@@ -11,28 +11,47 @@ export interface ImdbMovie {
 
 export async function fetchMissingIMDBData(sublist?: Movie[]) {
   console.log("Filling any missing IMDB data");
-  const movies = sublist ?? await scb.readMovieRankings();
+  const movies = sublist ?? (await scb.readMovieRankings());
   const patches = await scb.readScbPatches();
   const timestampPatches = await timestamps.readTimestampsPatches();
 
-  let i = 1, pendingWrites = 0;
+  let i = 1,
+    pendingWrites = 0;
   for (const movie of movies) {
+    const matchingPatch =
+      patches.find(
+        (p) => isEqual(p.scbKey, movie.id) || isEqual(p.id, movie.id)
+      ) ||
+      timestampPatches.find(
+        (p) => isEqual(p.gsheetsKey, movie.id) || isEqual(p.id, movie.id)
+      );
+
+    if (matchingPatch?.tconst) {
+      movie.tconst = matchingPatch.tconst; // XXX provides movie ID to all importers, to refactor
+    }
+
     if (hasMissingIMDBData(movie)) {
-      const matchingPatch = patches.find(p => isEqual(p.scbKey, movie.id) || isEqual(p.id, movie.id))
-        || timestampPatches.find(p => isEqual(p.gsheetsKey, movie.id) || isEqual(p.id, movie.id));
-      
-      let imdbMovie: ImdbMovie = await getIMDBSuggestion(matchingPatch?.tconst || movie.title);
+      const imdbSuggestionOptions =
+        "imdbType" in matchingPatch
+          ? { acceptTypes: [matchingPatch?.imdbType] }
+          : undefined;
+      let imdbMovie: ImdbMovie = await getIMDBSuggestion(
+        matchingPatch?.tconst || movie.title,
+        imdbSuggestionOptions
+      );
 
       if (!imdbMovie) {
-        console.log(` - ${i}/${movies.length}: No match found for ${movie.id.episode} ${movie.id.name}`);
+        console.log(
+          ` - ${i}/${movies.length}: No match found for ${movie.id.episode} ${movie.id.name}`
+        );
         if (!patches[movie.title]) {
           patches[movie.title] = null;
         }
       } else {
-        console.log(` - ${i}/${movies.length}: OK for ${movie.title}`)
+        console.log(` - ${i}/${movies.length}: OK for ${movie.title}`);
         Object.assign(movie, imdbMovie);
         const patchValue = patches[movie.title];
-        if (typeof patchValue !== 'string') {
+        if (typeof patchValue !== "string") {
           Object.assign(movie, patchValue);
         }
         if (!sublist && ++pendingWrites % 50 == 0) {
@@ -49,13 +68,18 @@ export async function fetchMissingIMDBData(sublist?: Movie[]) {
   }
 }
 
-async function getIMDBSuggestion(titleOrTconst: string): Promise<ImdbMovie | undefined> {
+async function getIMDBSuggestion(
+  titleOrTconst: string,
+  options?: { acceptTypes?: string[] }
+): Promise<ImdbMovie | undefined> {
   try {
-    const searchString = titleOrTconst.trim()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    const searchString = titleOrTconst
+      .trim()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
-      .replace(/ /g, '_')
-      .replace(/[^a-z0-9_]/g, '')
+      .replace(/ /g, "_")
+      .replace(/[^a-z0-9_]/g, "")
       .slice(0, 20);
     const imdbUrl = `https://v2.sg.media-imdb.com/suggestion/${searchString[0]}/${searchString}.json`;
     const resultString = await download(imdbUrl);
@@ -63,24 +87,28 @@ async function getIMDBSuggestion(titleOrTconst: string): Promise<ImdbMovie | und
       d: Array<{
         i: {
           imageUrl: string;
-        },
-        q: 'feature' | string; // type
+        };
+        q: "feature" | string; // type
         l: string; // title
         id: string; // tconst
-      }>
+      }>;
     };
     if (result.d) {
-      const movies = result.d.filter(r => (r.q === 'feature' || r.q === 'TV movie'));
+      const movies = result.d.filter((r) =>
+        (options?.acceptTypes ?? ["feature", "TV movie"]).includes(r.q)
+      );
       if (movies.length > 0) {
         const suggestion = movies[0];
         return {
           tconst: suggestion.id,
-          primaryTitle: suggestion.l
+          primaryTitle: suggestion.l,
         };
       }
     }
   } catch (e) {
-    console.warn(`Failed to search ${titleOrTconst} on IMDB suggestions endpoint`);
+    console.warn(
+      `Failed to search ${titleOrTconst} on IMDB suggestions endpoint`
+    );
   }
 }
 
@@ -90,6 +118,5 @@ export function invalidateIMDBData(movie: Movie) {
 }
 
 function hasMissingIMDBData(movie: Movie) {
-  return (!movie.tconst
-      || !movie.primaryTitle);
+  return !movie.tconst || !movie.primaryTitle
 }

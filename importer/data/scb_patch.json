@@ -46,7 +46,8 @@
       "episode": 212,
       "name": "Les gladiateurs"
     },
-    "tconst": "tt0046899"
+    "tconst": "tt0046899",
+    "jwMissing": true
   },
   {
     "id": {
@@ -60,7 +61,8 @@
       "episode": 210,
       "name": "À l'abordage"
     },
-    "tconst": "tt0044333"
+    "tconst": "tt0044333",
+    "jwMissing": true
   },
   {
     "id": {
@@ -1808,8 +1810,9 @@
       "episode": 37,
       "name": "Fucking Kassovitz"
     },
-    "tconst": "tt2114385",
-    "jwMissing": true
+    "imdbType": "video",
+    "jwMissing": true,
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTA0ZTNmYTItNGJkMy00MjhjLWExNjctMWY4M2Q3YzY2MWI5XkEyXkFqcGc@._V1_.jpg"
   },
   {
     "scbKey": {
@@ -2606,5 +2609,19 @@
     },
     "title": "Legend",
     "tconst": "tt0089469"
+  },
+  {
+    "id": {
+      "episode": 77,
+      "name": "Devil Story"
+    },
+    "jwMissing": true
+  },
+  {
+    "id": {
+      "episode": 219,
+      "name": "Patlabor 2: The Movie"
+    },
+    "jwMissing": true
   }
 ]

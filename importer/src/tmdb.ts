@@ -72,7 +72,7 @@ export async function fetchMissingTMDBData() {
           }
           console.log(` - ${i}/${movies.length}: OK for ${movie.title}`);
         } else {
-          console.log(` - ${i}/${movies.length}: ${movie.title} not found in OMDB`);
+          console.log(` - ${i}/${movies.length}: ${movie.title} not found in TMDB`);
         }
       }
       i++;

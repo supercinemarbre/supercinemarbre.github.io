@@ -6,7 +6,7 @@ import { readListUrls, readMovieRankings, writeMovieRankings } from "./scb";
 import { findMatchingMovies } from "./scb-matcher";
 import { Movie, MovieID } from "./types";
 
-type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
+export type GSheetsPatch = Partial<Movie> & { gsheetsKey: MovieID; forceImport?: boolean; };
 
 interface TimestampInfo {
   Classement: string;

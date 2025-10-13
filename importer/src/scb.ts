@@ -5,7 +5,7 @@ import { markAsUpdated, needsUpdate } from "./last-updated";
 import { Episode, Movie, MovieID } from "./types";
 import { Element } from "domhandler";
 
-export type MoviePatch = Partial<Movie> & { scbKey: MovieID };
+export type MoviePatch = Partial<Movie> & { scbKey: MovieID, imdbType?: string };
 export type EpisodePatch = Partial<Episode> & { number: number };
 
 export function readListUrls(): Promise<Record<string, string>> {
