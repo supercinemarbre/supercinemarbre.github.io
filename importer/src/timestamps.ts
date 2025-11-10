@@ -11,6 +11,7 @@ interface TimestampInfo {
   Films: string;
   Émission: string;
   Timestamp: string;
+  tconst: string;
 }
 
 export async function importTimestampsRankingsAndMissingMovies() {
@@ -25,27 +26,27 @@ export async function importTimestampsRankingsAndMissingMovies() {
     const timestampInfos = await parseCSV<TimestampInfo>(filePath);
 
     for (const timestampInfo of timestampInfos) {
-      if (timestampInfo.Classement.includes("Déjà classé")) {
-        return;
-      }
-
       const gsheetsKey: MovieID = { episode: parseInt(timestampInfo.Émission, 10), name: timestampInfo.Films };
       const id = await patch.gsheetsKeyToId(gsheetsKey);
       const matches = findMatchingScbMovies(id, movies);
 
       let movie: Movie;
       if (matches.length === 1) {
+        // Update existing movie (ranking may have changed due to new movies)
         movie = matches[0];
-        movie.timestamp = movie?.timestamp ?? timestampToSeconds(timestampInfo.Timestamp);
-        movie.ranking =  movie.ranking ?? parseInt(timestampInfo.Classement, 10);
+        movie.timestamp = timestampToSeconds(timestampInfo.Timestamp);
+        movie.ranking = parseInt(timestampInfo.Classement, 10);
+
       } else if (id.episode > maxEpisode || await patch.mustForceImport(id)) {
+        // Import new movie
         console.log(` - Adding Ep. ${id.episode} movie "${id.name}"`);
         const movie: Movie = {
           id,
           decade,
           title: timestampInfo.Films,
           ranking: parseInt(timestampInfo.Classement, 10),
-          timestamp: timestampToSeconds(timestampInfo.Timestamp)
+          timestamp: timestampToSeconds(timestampInfo.Timestamp),
+          tconst: timestampInfo.tconst
         };
         movies.push(movie);
       }
