@@ -42,7 +42,7 @@ export async function refreshTimestampFiles() {
     let rowIndex = 0;
     await sheet.loadCells("A1:E1000");
     while (sheet.getCell(rowIndex, 0).value !== null) {
-      const timestampCsvRow = [0, 1, 2, 3]
+      const timestampCsvRow = [0, 1, 2, 3, 4]
         .map(columnIndex => sheet.getCell(rowIndex, columnIndex).formattedValue)
         .map(value => typeof value === "number" ? value : `"${value}"`)
         .join(',');
