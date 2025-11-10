@@ -36,6 +36,7 @@ export async function importTimestampsRankingsAndMissingMovies() {
         movie = matches[0];
         movie.timestamp = timestampToSeconds(timestampInfo.Timestamp);
         movie.ranking = parseInt(timestampInfo.Classement, 10);
+        movie.tconst = movie.tconst ?? timestampInfo.tconst;
 
       } else if (id.episode > maxEpisode || await patch.mustForceImport(id)) {
         // Import new movie
