@@ -79,7 +79,6 @@ export async function fetchMissingOMDBData(sublist?: Movie[]) {
 
           omdbMovie.year = parseInt(rawOmdbMovie.Year, 10);
           omdbMovie.runtimeMinutes = rawOmdbMovie.Runtime.split(" ")[0];
-          omdbMovie.posterUrl = rawOmdbMovie.Poster;
 
           omdbMovie.imdbRating = parseFloat(rawOmdbMovie.imdbRating);
           omdbMovie.imdbVotes = parseInt(rawOmdbMovie.imdbVotes.replace(/,/g, ''));

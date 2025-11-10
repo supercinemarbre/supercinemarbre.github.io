@@ -5,6 +5,7 @@ import { assignMissing } from "./utils/assign-missing";
 export interface ImdbMovie {
   tconst: string;
   primaryTitle: string;
+  posterUrl: string;
 }
 
 export async function fetchMissingIMDBData(movies?: Movie[]) {
@@ -70,6 +71,7 @@ async function getIMDBSuggestion(
         return {
           tconst: suggestion.id,
           primaryTitle: suggestion.l,
+          posterUrl: suggestion.i.imageUrl,
         };
       }
     }
