@@ -879,27 +879,6 @@
     }
   },
   {
-    "scbKey": {
-      "episode": null,
-      "name": "Contagion"
-    },
-    "id": {
-      "episode": 112,
-      "name": "Contagion"
-    },
-    "tconst": "tt1598778"
-  },
-  {
-    "scbKey": {
-      "episode": null,
-      "name": "Taxi 5"
-    },
-    "id": {
-      "episode": 112,
-      "name": "Taxi 5"
-    }
-  },
-  {
     "id": {
       "episode": 112,
       "name": "Les Ailes d'Honnéamise"
@@ -1509,16 +1488,6 @@
     }
   },
   {
-    "scbKey": {
-      "episode": 72,
-      "name": "Opération Dragon"
-    },
-    "id": {
-      "episode": 73,
-      "name": "Opération Dragon"
-    }
-  },
-  {
     "tconst": "tt0079116",
     "id": {
       "episode": 73,
@@ -1536,17 +1505,6 @@
     "id": {
       "episode": 72,
       "name": "Soldier of Orange"
-    },
-    "jwMissing": true
-  },
-  {
-    "scbKey": {
-      "episode": 71,
-      "name": "Sex and Fury"
-    },
-    "id": {
-      "episode": 72,
-      "name": "Sex and Fury"
     },
     "jwMissing": true
   },
