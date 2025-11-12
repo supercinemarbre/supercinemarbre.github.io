@@ -1,4 +1,5 @@
 import { isUrlBroken } from "./src/checkUrl";
+import { invalidateIMDBData } from "./src/imdb";
 import { invalidateOMDBData } from "./src/omdb";
 import * as scb from "./src/scb";
 
@@ -9,7 +10,7 @@ import * as scb from "./src/scb";
     const testUrl = await isUrlBroken(movie.posterUrl);
     if (testUrl){
       console.log(movie.title);
-      invalidateOMDBData(movie);
+      invalidateIMDBData(movie);
     }
   }
   await scb.writeMovieRankings(movies);
